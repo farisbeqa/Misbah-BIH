@@ -14,6 +14,8 @@ function createPrismaClient(): PrismaClient {
       authToken: process.env.TURSO_AUTH_TOKEN ?? '',
     })
     const adapter = new PrismaLibSQL(libsql)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error -- driverAdapters is a Prisma preview feature; types lag behind
     return new PrismaClient({ adapter })
   }
 
