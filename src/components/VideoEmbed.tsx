@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { ExternalLink, Facebook, Instagram } from 'lucide-react'
 
 interface VideoEmbedProps {
@@ -64,7 +64,7 @@ export default function VideoEmbed({ platform, embedUrl, isShortForm, originalUr
   if (platform === 'youtube' && isShortForm) {
     return (
       <div className="flex flex-col items-center gap-3">
-        <div className="w-full" style={{ maxWidth: 360 }}>
+        <div className="w-full mx-auto" style={{ maxWidth: 'min(100%, 360px)' }}>
           <div className="relative w-full" style={{ paddingBottom: '177.78%', height: 0 }}>
             <iframe
               src={embedUrl}
@@ -87,7 +87,7 @@ export default function VideoEmbed({ platform, embedUrl, isShortForm, originalUr
     const postUrl = shortcode ? `https://www.instagram.com/p/${shortcode}/` : originalUrl
     return (
       <div className="flex flex-col items-center gap-3">
-        <div style={{ maxWidth: 540, width: '100%' }}>
+        <div className="w-full" style={{ maxWidth: 540 }}>
           <blockquote
             className="instagram-media"
             data-instgrm-permalink={postUrl}
@@ -99,7 +99,7 @@ export default function VideoEmbed({ platform, embedUrl, isShortForm, originalUr
               boxShadow: '0 0 1px rgba(0,0,0,0.08),0 1px 5px rgba(0,0,0,0.1)',
               margin: '0 auto',
               maxWidth: 540,
-              minWidth: 326,
+              minWidth: 0, // removed 326px minWidth that caused horizontal scroll
               padding: 0,
               width: '100%',
             }}
@@ -128,7 +128,7 @@ export default function VideoEmbed({ platform, embedUrl, isShortForm, originalUr
   if (platform === 'upload') {
     return (
       <div className={`flex ${isShortForm ? 'justify-center' : ''}`}>
-        <div className={isShortForm ? 'w-full' : 'w-full'} style={isShortForm ? { maxWidth: 380 } : undefined}>
+        <div className="w-full mx-auto" style={isShortForm ? { maxWidth: 'min(100%, 380px)' } : undefined}>
           <video
             controls
             className="w-full rounded-2xl shadow-lg bg-black"
@@ -147,32 +147,28 @@ export default function VideoEmbed({ platform, embedUrl, isShortForm, originalUr
   if (platform === 'tiktok') {
     return (
       <div className="flex flex-col items-center gap-3">
-        <div style={{ maxWidth: 340, width: '100%' }}>
-          <iframe
-            src={embedUrl}
-            title={title}
-            allow="encrypted-media"
-            allowFullScreen
-            style={{
-              width: '100%',
-              height: 740,
-              borderRadius: 16,
-              border: 'none',
-              display: 'block',
-            }}
-          />
+        <div className="w-full mx-auto" style={{ maxWidth: 'min(100%, 340px)' }}>
+          <div className="relative w-full" style={{ paddingBottom: '177.78%', height: 0 }}>
+            <iframe
+              src={embedUrl}
+              title={title}
+              allow="encrypted-media"
+              allowFullScreen
+              className="absolute inset-0 w-full h-full"
+              style={{ borderRadius: 16, border: 'none' }}
+            />
+          </div>
         </div>
         <OriginalLink href={originalUrl} platform="TikTok" />
       </div>
     )
   }
 
-  // ── Facebook — direktni link jer embed zahtijeva whitelist domene ─────────
+  // ── Facebook ─────────────────────────────────────────────────────────────
   if (platform === 'facebook') {
     return (
       <div className="flex flex-col items-center gap-6">
-        <div className="w-full rounded-2xl overflow-hidden bg-[#1877f2]/5 border border-[#1877f2]/20"
-          style={{ maxWidth: 560 }}>
+        <div className="w-full rounded-2xl overflow-hidden bg-[#1877f2]/5 border border-[#1877f2]/20">
           <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0 }}>
             <iframe
               src={embedUrl}
@@ -190,7 +186,7 @@ export default function VideoEmbed({ platform, embedUrl, isShortForm, originalUr
           <Facebook size={16} />
           Gledaj na Facebooku
         </a>
-        <p className="text-xs text-zinc-400 text-center max-w-sm">
+        <p className="text-xs text-zinc-400 text-center max-w-sm px-4">
           Ako video nije dostupan ovdje, klikni dugme iznad da ga gledaš direktno na Facebooku.
         </p>
       </div>

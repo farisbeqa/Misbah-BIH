@@ -33,7 +33,7 @@ export default async function HomePage() {
       >
         <div className="hero-glow absolute inset-0 z-0 pointer-events-none" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-28 sm:py-36">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-28 lg:py-36">
           <div className="max-w-2xl">
             <p className="font-mono text-xs tracking-[0.25em] mb-8 uppercase" style={{ color: '#E0C99A' }}>
               بسم الله الرحمن الرحيم

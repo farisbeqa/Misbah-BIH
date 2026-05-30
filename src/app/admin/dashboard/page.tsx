@@ -81,7 +81,7 @@ export default async function AdminDashboard() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
           {[
             { label: 'Predavanja', value: videoCount, icon: <Play size={16} className="text-red-500" />, bg: 'bg-red-50', href: null },
             { label: 'Blog postovi', value: postCount, icon: <BookOpen size={16} className="text-amber-500" />, bg: 'bg-amber-50', href: null },

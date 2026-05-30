@@ -29,7 +29,7 @@ export default function VideosPage() {
   }, [filter])
 
   return (
-    <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16" style={{ minHeight: '60vh' }}>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16" style={{ minHeight: '60vh' }}>
       {/* Header */}
       <div className="mb-12">
         <p className="font-mono text-[11px] text-brand-light uppercase tracking-widest mb-2">Sadržaj</p>

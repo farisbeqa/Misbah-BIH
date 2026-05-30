@@ -4,8 +4,9 @@ import { ArrowLeft, Calendar, MessageSquare, Heart, Users } from 'lucide-react'
 import { requireAuth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 
+const MONTHS = ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec']
 function fmt(d: Date) {
-  return d.toLocaleDateString('bs-BA', { day: 'numeric', month: 'short', year: 'numeric' })
+  return `${d.getDate()}. ${MONTHS[d.getMonth()]} ${d.getFullYear()}.`
 }
 
 export default async function AdminUsersPage() {
@@ -14,9 +15,7 @@ export default async function AdminUsersPage() {
 
   const users = await prisma.user.findMany({
     orderBy: { createdAt: 'desc' },
-    include: {
-      _count: { select: { likes: true, comments: true } },
-    },
+    include: { _count: { select: { likes: true, comments: true } } },
   })
 
   return (
@@ -38,7 +37,7 @@ export default async function AdminUsersPage() {
         </Link>
 
         <div className="flex items-center gap-3 mb-8">
-          <div className="w-10 h-10 bg-brand-dim rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-brand-dim rounded-xl flex items-center justify-center flex-shrink-0">
             <Users size={20} className="text-brand" />
           </div>
           <div>
@@ -54,36 +53,59 @@ export default async function AdminUsersPage() {
           </div>
         ) : (
           <div className="bg-white rounded-2xl border border-zinc-100 shadow-card overflow-hidden">
-            {/* Header */}
-            <div className="grid grid-cols-12 gap-3 px-4 py-2.5 bg-zinc-50 border-b border-zinc-100 text-xs font-semibold text-zinc-400 uppercase tracking-wider">
+            {/* Desktop header — hidden on mobile */}
+            <div className="hidden sm:grid sm:grid-cols-12 gap-3 px-4 py-2.5 bg-zinc-50 border-b border-zinc-100 text-xs font-semibold text-zinc-400 uppercase tracking-wider">
               <div className="col-span-1">#</div>
               <div className="col-span-4">Korisnik</div>
-              <div className="col-span-3">Registrovan</div>
-              <div className="col-span-2 text-center">Lajkovi</div>
-              <div className="col-span-2 text-center">Komentari</div>
+              <div className="col-span-4">Registrovan</div>
+              <div className="col-span-1 text-center">❤</div>
+              <div className="col-span-2 text-center">💬</div>
             </div>
 
             {users.map((user, i) => (
               <div key={user.id}
-                className={`grid grid-cols-12 gap-3 items-center px-4 py-3 hover:bg-zinc-50 transition-colors ${i > 0 ? 'border-t border-zinc-100' : ''}`}>
-                <div className="col-span-1 text-zinc-300 text-xs font-mono">{user.id}</div>
-                <div className="col-span-4 flex items-center gap-2.5 min-w-0">
-                  <div className="w-8 h-8 rounded-full bg-brand flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                className={`px-4 py-3 hover:bg-zinc-50 transition-colors ${i > 0 ? 'border-t border-zinc-100' : ''}`}>
+                {/* Desktop layout */}
+                <div className="hidden sm:grid sm:grid-cols-12 gap-3 items-center">
+                  <div className="col-span-1 text-zinc-300 text-xs font-mono">{user.id}</div>
+                  <div className="col-span-4 flex items-center gap-2.5 min-w-0">
+                    <div className="w-8 h-8 rounded-full bg-brand flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                      {user.username[0].toUpperCase()}
+                    </div>
+                    <span className="font-medium text-zinc-900 text-sm truncate">{user.username}</span>
+                  </div>
+                  <div className="col-span-4 flex items-center gap-1.5 text-zinc-400 text-xs">
+                    <Calendar size={10} /> {fmt(user.createdAt)}
+                  </div>
+                  <div className="col-span-1 flex items-center justify-center gap-1 text-zinc-500 text-sm">
+                    <Heart size={12} className="text-rose-400" />
+                    <span className="font-medium text-xs">{user._count.likes}</span>
+                  </div>
+                  <div className="col-span-2 flex items-center justify-center gap-1 text-zinc-500 text-sm">
+                    <MessageSquare size={12} className="text-blue-400" />
+                    <span className="font-medium text-xs">{user._count.comments}</span>
+                  </div>
+                </div>
+
+                {/* Mobile card layout */}
+                <div className="flex sm:hidden items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-brand flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
                     {user.username[0].toUpperCase()}
                   </div>
-                  <span className="font-medium text-zinc-900 text-sm truncate">{user.username}</span>
-                </div>
-                <div className="col-span-3 flex items-center gap-1.5 text-zinc-400 text-xs">
-                  <Calendar size={10} />
-                  {fmt(user.createdAt)}
-                </div>
-                <div className="col-span-2 flex items-center justify-center gap-1 text-zinc-500 text-sm">
-                  <Heart size={12} className="text-rose-400" />
-                  <span className="font-medium">{user._count.likes}</span>
-                </div>
-                <div className="col-span-2 flex items-center justify-center gap-1 text-zinc-500 text-sm">
-                  <MessageSquare size={12} className="text-blue-400" />
-                  <span className="font-medium">{user._count.comments}</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-zinc-900 text-sm truncate">{user.username}</p>
+                    <div className="flex items-center gap-1 text-zinc-400 text-xs mt-0.5">
+                      <Calendar size={9} /> {fmt(user.createdAt)}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 flex-shrink-0 text-xs">
+                    <span className="flex items-center gap-1 text-zinc-500">
+                      <Heart size={11} className="text-rose-400" /> {user._count.likes}
+                    </span>
+                    <span className="flex items-center gap-1 text-zinc-500">
+                      <MessageSquare size={11} className="text-blue-400" /> {user._count.comments}
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}

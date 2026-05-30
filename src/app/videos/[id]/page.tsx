@@ -37,7 +37,7 @@ export default async function VideoDetailPage({ params }: PageProps) {
   const [bg, fg] = (platformColors[video.platform] || '#f5f2ef / #5a4f49').split(' / ')
 
   return (
-    <div className="max-w-4xl mx-auto px-6 lg:px-8 py-12">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <Link href="/videos"
         className="inline-flex items-center gap-2 text-warm-400 hover:text-warm-700 text-sm mb-8 transition-colors font-mono tracking-wide">
         <ArrowLeft size={14} /> Nazad na predavanja

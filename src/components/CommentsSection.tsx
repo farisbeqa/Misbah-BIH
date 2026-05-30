@@ -122,7 +122,7 @@ export default function CommentsSection({ targetType, targetId }: Props) {
                 </div>
                 {user?.id === c.userId && (
                   <button onClick={() => handleDelete(c.id)} disabled={deletingId === c.id}
-                    className="opacity-0 group-hover:opacity-100 text-warm-300 hover:text-red-400 transition-all flex-shrink-0 p-1">
+                    className="sm:opacity-0 sm:group-hover:opacity-100 text-warm-300 hover:text-red-400 transition-all flex-shrink-0 p-2">
                     {deletingId === c.id ? <Loader2 size={12} className="animate-spin" /> : <Trash2 size={12} />}
                   </button>
                 )}

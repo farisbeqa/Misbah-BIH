@@ -28,7 +28,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   if (!post) notFound()
 
   return (
-    <div className="max-w-2xl mx-auto px-6 py-12">
+    <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <Link href="/blog"
         className="inline-flex items-center gap-2 text-warm-400 hover:text-warm-700 text-sm mb-10 transition-colors font-mono tracking-wide">
         <ArrowLeft size={14} /> Nazad na blog
