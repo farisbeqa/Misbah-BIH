@@ -1,0 +1,37 @@
+import type { Metadata } from 'next'
+import { Manrope, IBM_Plex_Mono } from 'next/font/google'
+import './globals.css'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
+
+const manrope = Manrope({
+  subsets: ['latin'],
+  variable: '--font-manrope',
+  display: 'swap',
+  weight: ['300', '400', '500', '600', '700', '800'],
+})
+
+const ibmMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  variable: '--font-ibm-mono',
+  display: 'swap',
+  weight: ['400', '500'],
+})
+
+export const metadata: Metadata = {
+  title: 'Misbah BIH — Islamska predavanja i sadržaj',
+  description: 'Islamska predavanja, hutbe i sadržaj efendije Hamde Solo, imama džamije Carina, Sarajevo.',
+  keywords: 'Misbah BIH, islamska predavanja, hutba, Hamdo Solo, Sarajevo, džamija Carina',
+}
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="bs" className={`${manrope.variable} ${ibmMono.variable}`}>
+      <body className="min-h-screen flex flex-col font-sans antialiased" style={{ background: '#F5F2EF' }}>
+        <Navbar />
+        <main className="flex-1">{children}</main>
+        <Footer />
+      </body>
+    </html>
+  )
+}
