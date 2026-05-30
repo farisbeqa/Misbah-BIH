@@ -8,6 +8,10 @@ const nextConfig = {
       { protocol: 'https', hostname: 'scontent.cdninstagram.com' },
       { protocol: 'https', hostname: '*.fbcdn.net' },
       { protocol: 'https', hostname: 'images.unsplash.com' },
+      // Cloudflare R2 public bucket / custom domain
+      { protocol: 'https', hostname: '*.r2.dev' },
+      { protocol: 'https', hostname: '*.r2.cloudflarestorage.com' },
+      // Allow any https image (covers custom R2 domains)
       { protocol: 'https', hostname: '**' },
     ],
   },

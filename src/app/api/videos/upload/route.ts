@@ -6,16 +6,39 @@ import { requireAuth } from '@/lib/auth'
 
 export const runtime = 'nodejs'
 
-const ALLOWED_VIDEO_TYPES = ['video/mp4', 'video/webm', 'video/quicktime', 'video/x-msvideo', 'video/mpeg']
-const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
-const MAX_VIDEO_SIZE = 500 * 1024 * 1024 // 500 MB
-const MAX_THUMB_SIZE = 10 * 1024 * 1024  // 10 MB
+const ALLOWED_VIDEO = ['video/mp4', 'video/webm', 'video/quicktime', 'video/x-msvideo', 'video/mpeg']
+const ALLOWED_IMAGE = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
+const MAX_VIDEO_SIZE = 500 * 1024 * 1024
+const MAX_THUMB_SIZE = 10 * 1024 * 1024
 
 export async function POST(request: NextRequest) {
   const session = await requireAuth()
   if (!session) return NextResponse.json({ error: 'Nije autorizovano' }, { status: 401 })
 
   try {
+    // Production path: video already uploaded to R2, just save metadata
+    const contentType = request.headers.get('content-type') ?? ''
+    if (contentType.includes('application/json')) {
+      const { title, description, isShortForm, videoUrl, thumbnailUrl } = await request.json()
+      if (!title?.trim() || !videoUrl)
+        return NextResponse.json({ error: 'Naslov i URL videa su obavezni' }, { status: 400 })
+
+      const video = await prisma.video.create({
+        data: {
+          title: title.trim(),
+          description: description?.trim() || null,
+          url: videoUrl,
+          platform: 'upload',
+          embedUrl: videoUrl,
+          thumbnailUrl: thumbnailUrl || null,
+          isShortForm: Boolean(isShortForm),
+          published: true,
+        },
+      })
+      return NextResponse.json(video, { status: 201 })
+    }
+
+    // Development path: multipart form upload to local filesystem
     const formData = await request.formData()
     const file = formData.get('video') as File | null
     const title = (formData.get('title') as string | null)?.trim()
@@ -29,8 +52,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Naslov je obavezan' }, { status: 400 })
     if (file.size > MAX_VIDEO_SIZE)
       return NextResponse.json({ error: 'Video je prevelik (max 500 MB)' }, { status: 400 })
-    if (!ALLOWED_VIDEO_TYPES.includes(file.type))
-      return NextResponse.json({ error: 'Nepodržani format. Koristite MP4, WebM ili MOV.' }, { status: 400 })
+    if (!ALLOWED_VIDEO.includes(file.type))
+      return NextResponse.json({ error: 'Nepodržan format. Koristite MP4, WebM ili MOV.' }, { status: 400 })
 
     const uploadsDir = path.join(process.cwd(), 'public', 'uploads')
     await mkdir(uploadsDir, { recursive: true })
@@ -44,7 +67,7 @@ export async function POST(request: NextRequest) {
     if (thumbnailFile && thumbnailFile.size > 0) {
       if (thumbnailFile.size > MAX_THUMB_SIZE)
         return NextResponse.json({ error: 'Thumbnail je prevelik (max 10 MB)' }, { status: 400 })
-      if (!ALLOWED_IMAGE_TYPES.includes(thumbnailFile.type))
+      if (!ALLOWED_IMAGE.includes(thumbnailFile.type))
         return NextResponse.json({ error: 'Thumbnail mora biti JPG, PNG ili WebP' }, { status: 400 })
       const thumbExt = thumbnailFile.name.split('.').pop()?.toLowerCase() || 'jpg'
       const thumbFilename = `thumb-${Date.now()}-${Math.random().toString(36).slice(2)}.${thumbExt}`
@@ -53,16 +76,7 @@ export async function POST(request: NextRequest) {
     }
 
     const video = await prisma.video.create({
-      data: {
-        title,
-        description,
-        url: videoUrl,
-        platform: 'upload',
-        embedUrl: videoUrl,
-        thumbnailUrl,
-        isShortForm,
-        published: true,
-      },
+      data: { title, description, url: videoUrl, platform: 'upload', embedUrl: videoUrl, thumbnailUrl, isShortForm, published: true },
     })
 
     return NextResponse.json(video, { status: 201 })

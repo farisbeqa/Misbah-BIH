@@ -217,21 +217,69 @@ function UploadMode() {
 
   const handleUpload = async () => {
     if (!videoFile || !title.trim()) return
-    setUploading(true); setError(''); setProgress('Uploadovanje videa...')
+    setUploading(true); setError('')
 
     try {
-      const formData = new FormData()
-      formData.append('video', videoFile)
-      formData.append('title', title.trim())
-      formData.append('description', description.trim())
-      formData.append('isShortForm', String(isShortForm))
-      if (thumbFile) formData.append('thumbnail', thumbFile)
+      let videoUrl = ''
+      let thumbnailUrl = ''
 
-      const res = await fetch('/api/videos/upload', { method: 'POST', body: formData })
-      const data = await res.json()
+      // Try to get a presigned URL (production / R2)
+      const presignRes = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename: videoFile.name, contentType: videoFile.type, folder: 'videos' }),
+      })
 
-      if (res.ok) { router.push('/admin/dashboard'); router.refresh() }
-      else setError(data.error || 'Greška pri uploadu')
+      if (presignRes.ok) {
+        // Production: upload directly to R2
+        const { uploadUrl, publicUrl } = await presignRes.json()
+        setProgress('Uploadovanje videa na R2...')
+        const uploadRes = await fetch(uploadUrl, {
+          method: 'PUT', body: videoFile, headers: { 'Content-Type': videoFile.type },
+        })
+        if (!uploadRes.ok) { setError('Greška pri uploadu na R2'); return }
+        videoUrl = publicUrl
+
+        // Upload thumbnail to R2 if provided
+        if (thumbFile) {
+          setProgress('Uploadovanje naslovne slike...')
+          const tRes = await fetch('/api/upload', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ filename: thumbFile.name, contentType: thumbFile.type, folder: 'thumbs' }),
+          })
+          if (tRes.ok) {
+            const { uploadUrl: tUrl, publicUrl: tPublicUrl } = await tRes.json()
+            await fetch(tUrl, { method: 'PUT', body: thumbFile, headers: { 'Content-Type': thumbFile.type } })
+            thumbnailUrl = tPublicUrl
+          }
+        }
+
+        // Save metadata to DB
+        setProgress('Snimanje u bazu...')
+        const saveRes = await fetch('/api/videos/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title: title.trim(), description: description.trim(), isShortForm, videoUrl, thumbnailUrl }),
+        })
+        const data = await saveRes.json()
+        if (saveRes.ok) { router.push('/admin/dashboard'); router.refresh() }
+        else setError(data.error || 'Greška pri snimanju')
+      } else {
+        // Development: multipart upload to local filesystem
+        setProgress('Uploadovanje videa...')
+        const formData = new FormData()
+        formData.append('video', videoFile)
+        formData.append('title', title.trim())
+        formData.append('description', description.trim())
+        formData.append('isShortForm', String(isShortForm))
+        if (thumbFile) formData.append('thumbnail', thumbFile)
+
+        const res = await fetch('/api/videos/upload', { method: 'POST', body: formData })
+        const data = await res.json()
+        if (res.ok) { router.push('/admin/dashboard'); router.refresh() }
+        else setError(data.error || 'Greška pri uploadu')
+      }
     } catch { setError('Greška pri conexiji') }
     finally { setUploading(false); setProgress('') }
   }
