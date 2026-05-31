@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { prisma } from '@/lib/db'
+
+export const dynamic = 'force-dynamic'
 import LikeButton from '@/components/LikeButton'
 import CommentsSection from '@/components/CommentsSection'
 import BlogImage from '@/components/BlogImage'

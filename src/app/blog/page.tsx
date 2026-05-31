@@ -2,6 +2,8 @@ import { prisma } from '@/lib/db'
 import BlogCard from '@/components/BlogCard'
 import { FileText } from 'lucide-react'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata = {
   title: 'Blog — Misbah EDU',
   description: 'Islamski tekstovi i razmišljanja',

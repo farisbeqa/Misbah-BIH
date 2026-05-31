@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { ArrowRight, Youtube, Instagram, Facebook, Play, BookOpen } from 'lucide-react'
 import { prisma } from '@/lib/db'
+
+export const dynamic = 'force-dynamic'
 import VideoCard from '@/components/VideoCard'
 import BlogCard from '@/components/BlogCard'
 
