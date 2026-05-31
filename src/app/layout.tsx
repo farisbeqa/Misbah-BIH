@@ -18,8 +18,7 @@ const ibmMono = IBM_Plex_Mono({
   weight: ['400', '500'],
 })
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ||
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
+const siteUrl = 'https://www.misbah-edu.com'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
