@@ -7,12 +7,14 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     const platform = searchParams.get('platform')
-    const limit = parseInt(searchParams.get('limit') || '100')
+    const category = searchParams.get('category')
+    const limit    = parseInt(searchParams.get('limit') || '100')
 
     const videos = await prisma.video.findMany({
       where: {
         published: true,
         ...(platform && platform !== 'all' ? { platform } : {}),
+        ...(category && category !== 'all' ? { category } : {}),
       },
       orderBy: { createdAt: 'desc' },
       take: limit,
@@ -28,22 +30,19 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const session = await requireAuth()
-    if (!session) {
-      return NextResponse.json({ error: 'Nije autorizovano' }, { status: 401 })
-    }
+    if (!session) return NextResponse.json({ error: 'Nije autorizovano' }, { status: 401 })
 
     const body = await request.json()
-    const { title, description, url } = body
+    const { title, description, url, category } = body
 
-    if (!url) {
-      return NextResponse.json({ error: 'URL je obavezan' }, { status: 400 })
-    }
+    if (!url) return NextResponse.json({ error: 'URL je obavezan' }, { status: 400 })
 
     const videoInfo = parseVideoUrl(url)
+    if (videoInfo.platform === 'unknown')
+      return NextResponse.json({ error: 'Nepodržana platforma. Koristite YouTube, TikTok ili Facebook.' }, { status: 400 })
 
-    if (videoInfo.platform === 'unknown') {
-      return NextResponse.json({ error: 'Nepodržana platforma. Koristite YouTube, Instagram, TikTok ili Facebook.' }, { status: 400 })
-    }
+    const validCategories = ['predavanja', 'kuran', 'podcast']
+    const resolvedCategory = validCategories.includes(category) ? category : 'predavanja'
 
     const video = await prisma.video.create({
       data: {
@@ -54,6 +53,7 @@ export async function POST(request: NextRequest) {
         embedUrl: videoInfo.embedUrl,
         thumbnailUrl: videoInfo.thumbnailUrl,
         isShortForm: videoInfo.isShortForm,
+        category: resolvedCategory,
         published: true,
       },
     })

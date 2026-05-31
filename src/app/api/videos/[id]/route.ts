@@ -27,13 +27,15 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     }
 
     const body = await request.json()
-    const { title, description, url, published, thumbnailUrl } = body
+    const { title, description, url, published, thumbnailUrl, category } = body
 
     const updateData: Record<string, unknown> = {}
     if (title !== undefined) updateData.title = title
     if (description !== undefined) updateData.description = description
     if (published !== undefined) updateData.published = published
     if (thumbnailUrl !== undefined) updateData.thumbnailUrl = thumbnailUrl || null
+    const validCats = ['predavanja', 'kuran', 'podcast']
+    if (category !== undefined && validCats.includes(category)) updateData.category = category
 
     if (url) {
       const videoInfo = parseVideoUrl(url)

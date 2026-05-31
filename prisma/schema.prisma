@@ -15,6 +15,7 @@ model Video {
   embedUrl     String
   thumbnailUrl String?
   isShortForm  Boolean   @default(false)
+  category     String    @default("predavanja") // predavanja | kuran | podcast
   published    Boolean   @default(true)
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt

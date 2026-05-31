@@ -18,7 +18,10 @@ interface AuthUser { id: number; username: string }
 const navLinks = [
   { href: '/', label: 'Početna' },
   { href: '/videos', label: 'Predavanja' },
+  { href: '/kuran', label: "Kur'an" },
+  { href: '/podcasts', label: 'Podcasts' },
   { href: '/blog', label: 'Blog' },
+  { href: '/donacije', label: 'Donacije' },
 ]
 
 const socials = [

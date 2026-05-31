@@ -52,11 +52,39 @@ function formatBytes(bytes: number) {
 
 // ─── URL mode ────────────────────────────────────────────────────────────────
 
+const CATEGORIES = [
+  { key: 'predavanja', label: 'Predavanje' },
+  { key: 'kuran',      label: "Kur'an / Učanje" },
+  { key: 'podcast',    label: 'Podcast' },
+]
+
+function CategorySelect({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  return (
+    <div>
+      <label className="block text-sm font-semibold text-gray-700 mb-1.5">Kategorija</label>
+      <div className="flex gap-2 flex-wrap">
+        {CATEGORIES.map(c => (
+          <button key={c.key} type="button" onClick={() => onChange(c.key)}
+            className="px-3 py-1.5 rounded-lg text-sm font-medium transition-all border"
+            style={{
+              background: value === c.key ? '#8B1E3F' : 'white',
+              color: value === c.key ? 'white' : '#5A4F49',
+              borderColor: value === c.key ? '#8B1E3F' : '#E8E1DB',
+            }}>
+            {c.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function UrlMode() {
   const router = useRouter()
   const [url, setUrl] = useState('')
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+  const [category, setCategory] = useState('predavanja')
   const [preview, setPreview] = useState<Preview | null>(null)
   const [previewLoading, setPreviewLoading] = useState(false)
   const [previewError, setPreviewError] = useState('')
@@ -84,7 +112,7 @@ function UrlMode() {
     try {
       const res = await fetch('/api/videos', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: url.trim(), title: title.trim() || 'Bez naslova', description: description.trim() || null }),
+        body: JSON.stringify({ url: url.trim(), title: title.trim() || 'Bez naslova', description: description.trim() || null, category }),
       })
       const data = await res.json()
       if (res.ok) { router.push('/admin/dashboard'); router.refresh() }
@@ -157,6 +185,7 @@ function UrlMode() {
               placeholder="Kratki opis predavanja..." rows={3}
               className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand text-sm resize-none" />
           </div>
+          <CategorySelect value={category} onChange={setCategory} />
         </div>
       )}
 
@@ -188,6 +217,7 @@ function UploadMode() {
   const [thumbPreview, setThumbPreview] = useState<string | null>(null)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+  const [category, setCategory] = useState('predavanja')
   const [isShortForm, setIsShortForm] = useState(true)
   const [dragging, setDragging] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -260,7 +290,7 @@ function UploadMode() {
         const saveRes = await fetch('/api/videos/upload', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title: title.trim(), description: description.trim(), isShortForm, videoUrl, thumbnailUrl }),
+          body: JSON.stringify({ title: title.trim(), description: description.trim(), isShortForm, videoUrl, thumbnailUrl, category }),
         })
         const data = await saveRes.json()
         if (saveRes.ok) { router.push('/admin/dashboard'); router.refresh() }
@@ -372,6 +402,8 @@ function UploadMode() {
               </button>
             )}
           </div>
+
+          <CategorySelect value={category} onChange={setCategory} />
 
           {/* Short-form toggle */}
           <div className="flex items-center justify-between py-1">

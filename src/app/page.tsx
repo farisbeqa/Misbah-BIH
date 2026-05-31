@@ -14,16 +14,18 @@ const TikTokIcon = ({ size = 16 }: { size?: number }) => (
 
 async function getData() {
   try {
-    const [videos, posts] = await Promise.all([
-      prisma.video.findMany({ where: { published: true }, orderBy: { createdAt: 'desc' }, take: 6 }),
+    const [predavanja, kuran, podcasts, posts] = await Promise.all([
+      prisma.video.findMany({ where: { published: true, category: 'predavanja' }, orderBy: { createdAt: 'desc' }, take: 6 }),
+      prisma.video.findMany({ where: { published: true, category: 'kuran' }, orderBy: { createdAt: 'desc' }, take: 3 }),
+      prisma.video.findMany({ where: { published: true, category: 'podcast' }, orderBy: { createdAt: 'desc' }, take: 3 }),
       prisma.blogPost.findMany({ where: { published: true }, orderBy: { createdAt: 'desc' }, take: 3 }),
     ])
-    return { videos, posts }
-  } catch { return { videos: [], posts: [] } }
+    return { predavanja, kuran, podcasts, posts }
+  } catch { return { predavanja: [], kuran: [], podcasts: [], posts: [] } }
 }
 
 export default async function HomePage() {
-  const { videos, posts } = await getData()
+  const { predavanja, kuran, podcasts, posts } = await getData()
 
   return (
     <div>
@@ -94,23 +96,22 @@ export default async function HomePage() {
           style={{ background: 'linear-gradient(to bottom, transparent, #F5F2EF)' }} />
       </section>
 
-      {/* ── Latest Videos ──────────────────────────────────────────────── */}
-      <section style={{ background: '#F5F2EF' }} className="py-24 px-6 lg:px-8">
+      {/* ── Latest Predavanja ──────────────────────────────────────────── */}
+      <section style={{ background: '#F5F2EF' }} className="py-20 sm:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <SectionHeader eyebrow="Najnovija" title="Predavanja" href="/videos" show={videos.length > 0} />
-          {videos.length === 0
+          <SectionHeader eyebrow="Najnovija" title="Predavanja" href="/videos" show={predavanja.length > 0} />
+          {predavanja.length === 0
             ? <EmptySlate icon={<Play size={36} />} text="Nema predavanja još uvijek" />
             : <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {videos.map(v => (
+                {predavanja.map(v => (
                   <VideoCard key={v.id} id={v.id} title={v.title} description={v.description}
                     platform={v.platform} thumbnailUrl={v.thumbnailUrl} isShortForm={v.isShortForm} createdAt={v.createdAt} />
                 ))}
               </div>
           }
-          {videos.length > 0 && (
+          {predavanja.length > 0 && (
             <div className="mt-10 text-center">
-              <Link href="/videos"
-                className="inline-flex items-center gap-2 font-semibold text-sm transition-colors text-brand hover:text-brand-light">
+              <Link href="/videos" className="inline-flex items-center gap-2 font-semibold text-sm transition-colors text-brand hover:text-brand-light">
                 Vidi sva predavanja <ArrowRight size={14} />
               </Link>
             </div>
@@ -118,12 +119,60 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Warm divider */}
-      <div style={{ height: 1, background: '#D6CCC3', margin: '0 3rem' }} />
+      <div style={{ height: 1, background: '#D6CCC3', margin: '0 2rem' }} />
+
+      {/* ── Latest Kur'an ──────────────────────────────────────────────── */}
+      <section style={{ background: '#F6EFE7' }} className="py-20 sm:py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <SectionHeader eyebrow="Najnovije" title="Kur'an" href="/kuran" show={kuran.length > 0} />
+          {kuran.length === 0
+            ? <EmptySlate icon={<BookOpen size={36} />} text="Nema Kur'an sadržaja još uvijek" />
+            : <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {kuran.map(v => (
+                  <VideoCard key={v.id} id={v.id} title={v.title} description={v.description}
+                    platform={v.platform} thumbnailUrl={v.thumbnailUrl} isShortForm={v.isShortForm} createdAt={v.createdAt} />
+                ))}
+              </div>
+          }
+          {kuran.length > 0 && (
+            <div className="mt-10 text-center">
+              <Link href="/kuran" className="inline-flex items-center gap-2 font-semibold text-sm transition-colors text-brand hover:text-brand-light">
+                Vidi sve Kur'an snimke <ArrowRight size={14} />
+              </Link>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <div style={{ height: 1, background: '#D6CCC3', margin: '0 2rem' }} />
+
+      {/* ── Latest Podcasts ─────────────────────────────────────────────── */}
+      <section style={{ background: '#F5F2EF' }} className="py-20 sm:py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <SectionHeader eyebrow="Najnoviji" title="Podcasts" href="/podcasts" show={podcasts.length > 0} />
+          {podcasts.length === 0
+            ? <EmptySlate icon={<Play size={36} />} text="Nema podcast epizoda još uvijek" />
+            : <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {podcasts.map(v => (
+                  <VideoCard key={v.id} id={v.id} title={v.title} description={v.description}
+                    platform={v.platform} thumbnailUrl={v.thumbnailUrl} isShortForm={v.isShortForm} createdAt={v.createdAt} />
+                ))}
+              </div>
+          }
+          {podcasts.length > 0 && (
+            <div className="mt-10 text-center">
+              <Link href="/podcasts" className="inline-flex items-center gap-2 font-semibold text-sm transition-colors text-brand hover:text-brand-light">
+                Vidi sve podcast epizode <ArrowRight size={14} />
+              </Link>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <div style={{ height: 1, background: '#D6CCC3', margin: '0 2rem' }} />
 
       {/* ── Latest Blog ─────────────────────────────────────────────────── */}
-      {/* Slightly different warm beige section for visual rhythm */}
-      <section style={{ background: '#F6EFE7' }} className="py-24 px-6 lg:px-8">
+      <section style={{ background: '#F6EFE7' }} className="py-20 sm:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <SectionHeader eyebrow="Najnoviji" title="Blog" href="/blog" show={posts.length > 0} />
           {posts.length === 0
@@ -137,8 +186,7 @@ export default async function HomePage() {
           }
           {posts.length > 0 && (
             <div className="mt-10 text-center">
-              <Link href="/blog"
-                className="inline-flex items-center gap-2 font-semibold text-sm transition-colors text-brand hover:text-brand-light">
+              <Link href="/blog" className="inline-flex items-center gap-2 font-semibold text-sm transition-colors text-brand hover:text-brand-light">
                 Vidi sve postove <ArrowRight size={14} />
               </Link>
             </div>
@@ -171,6 +219,14 @@ export default async function HomePage() {
                 <s.Icon size={15} /> {s.label}
               </a>
             ))}
+          </div>
+          <div className="mt-8 pt-8" style={{ borderTop: '1px solid #CDB8A6' }}>
+            <p className="font-mono text-xs text-warm-500 mb-3 tracking-wide">Podržite naš rad</p>
+            <Link href="/donacije"
+              className="inline-flex items-center gap-2 font-semibold px-6 py-3 text-sm transition-all hover:opacity-90"
+              style={{ background: '#8B1E3F', color: 'white', borderRadius: 8 }}>
+              ❤ Donirajte
+            </Link>
           </div>
         </div>
       </section>

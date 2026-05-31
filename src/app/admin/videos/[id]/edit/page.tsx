@@ -5,6 +5,12 @@ import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Loader2, Save } from 'lucide-react'
 
+const CATEGORIES = [
+  { key: 'predavanja', label: 'Predavanje' },
+  { key: 'kuran',      label: "Kur'an / Učanje" },
+  { key: 'podcast',    label: 'Podcast' },
+]
+
 export default function EditVideoPage() {
   const router = useRouter()
   const { id } = useParams<{ id: string }>()
@@ -12,6 +18,7 @@ export default function EditVideoPage() {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [thumbnailUrl, setThumbnailUrl] = useState('')
+  const [category, setCategory] = useState('predavanja')
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
@@ -23,6 +30,7 @@ export default function EditVideoPage() {
         setTitle(data.title || '')
         setDescription(data.description || '')
         setThumbnailUrl(data.thumbnailUrl || '')
+        setCategory(data.category || 'predavanja')
         setLoading(false)
       })
       .catch(() => setLoading(false))
@@ -35,15 +43,10 @@ export default function EditVideoPage() {
       const res = await fetch(`/api/videos/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: title.trim(), description: description.trim() || null, thumbnailUrl: thumbnailUrl.trim() || null }),
+        body: JSON.stringify({ title: title.trim(), description: description.trim() || null, thumbnailUrl: thumbnailUrl.trim() || null, category }),
       })
-      if (res.ok) {
-        router.push('/admin/dashboard')
-        router.refresh()
-      } else {
-        const d = await res.json()
-        setError(d.error || 'Greška')
-      }
+      if (res.ok) { router.push('/admin/dashboard'); router.refresh() }
+      else { const d = await res.json(); setError(d.error || 'Greška') }
     } catch { setError('Greška pri conexiji') }
     finally { setSaving(false) }
   }
@@ -61,7 +64,7 @@ export default function EditVideoPage() {
         <Link href="/admin/dashboard" className="inline-flex items-center gap-2 text-zinc-500 hover:text-zinc-800 mb-6 text-sm transition-colors">
           <ArrowLeft size={15} /> Nazad
         </Link>
-        <h1 className="text-2xl font-black text-zinc-900 mb-6">Uredi predavanje</h1>
+        <h1 className="text-2xl font-black text-zinc-900 mb-6">Uredi sadržaj</h1>
 
         {loading ? (
           <div className="flex justify-center py-12"><Loader2 size={28} className="animate-spin text-zinc-400" /></div>
@@ -70,24 +73,39 @@ export default function EditVideoPage() {
             <div>
               <label className="block text-sm font-semibold text-zinc-700 mb-1.5">Naslov *</label>
               <input type="text" value={title} onChange={e => setTitle(e.target.value)}
-                className="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-600 text-sm" />
+                className="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand text-sm" />
             </div>
             <div>
               <label className="block text-sm font-semibold text-zinc-700 mb-1.5">Opis <span className="text-zinc-400 font-normal">(opciono)</span></label>
               <textarea value={description} onChange={e => setDescription(e.target.value)} rows={4}
-                className="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-600 text-sm resize-none" />
+                className="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand text-sm resize-none" />
             </div>
             <div>
               <label className="block text-sm font-semibold text-zinc-700 mb-1.5">
-                URL slike (thumbnail) <span className="text-zinc-400 font-normal">(opciono — za Facebook, Instagram, TikTok)</span>
+                URL slike (thumbnail) <span className="text-zinc-400 font-normal">(opciono)</span>
               </label>
               <input type="url" value={thumbnailUrl} onChange={e => setThumbnailUrl(e.target.value)}
-                placeholder="https://..."
-                className="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-600 text-sm" />
+                placeholder="https://..." className="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand text-sm" />
               {thumbnailUrl && (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={thumbnailUrl} alt="Preview" className="mt-2 rounded-lg max-h-32 object-cover" />
               )}
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-zinc-700 mb-2">Kategorija</label>
+              <div className="flex gap-2 flex-wrap">
+                {CATEGORIES.map(c => (
+                  <button key={c.key} type="button" onClick={() => setCategory(c.key)}
+                    className="px-3 py-1.5 rounded-lg text-sm font-medium transition-all border"
+                    style={{
+                      background: category === c.key ? '#8B1E3F' : 'white',
+                      color: category === c.key ? 'white' : '#5A4F49',
+                      borderColor: category === c.key ? '#8B1E3F' : '#E8E1DB',
+                    }}>
+                    {c.label}
+                  </button>
+                ))}
+              </div>
             </div>
             {error && <p className="text-red-500 text-sm">{error}</p>}
             <div className="flex gap-3 pt-2">
@@ -96,7 +114,8 @@ export default function EditVideoPage() {
                 Odustani
               </Link>
               <button onClick={handleSave} disabled={saving || !title.trim()}
-                className="flex-1 flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-600 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors disabled:opacity-40">
+                className="flex-1 flex items-center justify-center gap-2 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors disabled:opacity-40"
+                style={{ background: '#8B1E3F' }}>
                 {saving ? <Loader2 size={15} className="animate-spin" /> : <Save size={15} />}
                 {saving ? 'Snimanje...' : 'Spremi'}
               </button>
