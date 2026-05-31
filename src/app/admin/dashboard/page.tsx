@@ -1,6 +1,9 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { Plus, Play, BookOpen, ExternalLink, Youtube, Instagram, Facebook, Calendar, Pencil, Users, ShieldCheck } from 'lucide-react'
+import {
+  Plus, Play, BookOpen, ExternalLink, Youtube, Instagram, Facebook,
+  Calendar, Pencil, Users, ShieldCheck, Music2, BookMarked, Mic,
+} from 'lucide-react'
 import { requireAuth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import { getPlatformLabel } from '@/lib/videoUtils'
@@ -27,19 +30,114 @@ function fmt(d: Date) {
   return d.toLocaleDateString('bs-BA', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
+type Video = Awaited<ReturnType<typeof prisma.video.findMany>>[number]
+
+function VideoSection({
+  title, items, cat, accentColor, publicHref, icon,
+}: {
+  title: string
+  items: Video[]
+  cat: string
+  accentColor: string
+  publicHref: string
+  icon: React.ReactNode
+}) {
+  return (
+    <section className="mb-8">
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="font-bold text-zinc-900 flex items-center gap-2">
+          <span className="flex-shrink-0">{icon}</span>
+          {title}
+          <span className="text-zinc-400 font-normal text-sm">({items.length})</span>
+        </h2>
+        <div className="flex items-center gap-3">
+          <Link href={publicHref} target="_blank"
+            className="text-xs text-zinc-400 hover:text-zinc-600 flex items-center gap-1">
+            <ExternalLink size={11} /> Javna
+          </Link>
+          <Link href={`/admin/videos/new?category=${cat}`}
+            className="text-xs hover:underline flex items-center gap-1 font-medium"
+            style={{ color: accentColor }}>
+            <Plus size={12} /> Dodaj
+          </Link>
+        </div>
+      </div>
+      {items.length === 0 ? (
+        <div className="bg-white rounded-2xl p-6 text-center border border-dashed border-zinc-200">
+          <p className="text-zinc-400 text-sm">
+            Nema sadržaja.{' '}
+            <Link href={`/admin/videos/new?category=${cat}`}
+              className="hover:underline font-medium" style={{ color: accentColor }}>
+              Dodaj prvi.
+            </Link>
+          </p>
+        </div>
+      ) : (
+        <div className="bg-white rounded-2xl border border-zinc-100 shadow-card overflow-hidden">
+          {items.slice(0, 5).map((v, i) => (
+            <div key={v.id}
+              className={`flex items-center gap-3 px-4 py-3 hover:bg-zinc-50 transition-colors ${i > 0 ? 'border-t border-zinc-100' : ''}`}>
+              <PlatformIcon platform={v.platform} />
+              <div className="flex-1 min-w-0">
+                <p className="font-medium text-zinc-900 text-sm truncate">{v.title}</p>
+                <div className="flex items-center gap-2 text-zinc-400 text-xs mt-0.5">
+                  <span>{getPlatformLabel(v.platform)}</span>
+                  <span>·</span>
+                  <Calendar size={9} /><span>{fmt(v.createdAt)}</span>
+                  {v.isShortForm && <span className="bg-zinc-100 px-1.5 py-0.5 rounded text-zinc-500">Kratki</span>}
+                </div>
+              </div>
+              <div className="flex items-center gap-1 flex-shrink-0">
+                <Link href={`/admin/videos/${v.id}/edit`} title="Uredi"
+                  className="p-1.5 text-zinc-300 hover:text-brand transition-colors">
+                  <Pencil size={13} />
+                </Link>
+                <Link href={`/videos/${v.id}`} target="_blank" title="Pregledaj"
+                  className="p-1.5 text-zinc-300 hover:text-zinc-600 transition-colors">
+                  <ExternalLink size={13} />
+                </Link>
+                <DeleteButton id={v.id} type="video" />
+              </div>
+            </div>
+          ))}
+          {items.length > 5 && (
+            <div className="px-4 py-2.5 border-t border-zinc-100 text-center">
+              <span className="text-xs text-zinc-400">
+                + još {items.length - 5} stavki
+              </span>
+            </div>
+          )}
+        </div>
+      )}
+    </section>
+  )
+}
+
 export default async function AdminDashboard() {
   const session = await requireAuth()
   if (!session) redirect('/admin')
 
-  const [videos, posts, activities, videoCount, postCount, userCount, activityCount] = await Promise.all([
+  const [videos, posts, activities, userCount] = await Promise.all([
     prisma.video.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.blogPost.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.activity.findMany({ orderBy: { date: 'desc' } }),
-    prisma.video.count(),
-    prisma.blogPost.count(),
     prisma.user.count(),
-    prisma.activity.count(),
   ])
+
+  const byCat = (cat: string) => videos.filter(v => v.category === cat)
+  const predavanja = byCat('predavanja')
+  const kuran      = byCat('kuran')
+  const ilahije    = byCat('ilahije')
+  const zikrovi    = byCat('zikrovi')
+  const podcasts   = byCat('podcast')
+
+  const videoSections = [
+    { cat: 'predavanja', label: 'Predavanja',      items: predavanja, color: '#8B1E3F', publicHref: '/videos',   icon: <Play size={14} className="text-red-500" /> },
+    { cat: 'kuran',      label: "Kur'an / Učanje",  items: kuran,      color: '#059669', publicHref: '/kuran',    icon: <BookMarked size={14} className="text-emerald-600" /> },
+    { cat: 'ilahije',    label: 'Ilahije i kaside', items: ilahije,    color: '#7C3AED', publicHref: '/ilahije',  icon: <Music2 size={14} className="text-purple-500" /> },
+    { cat: 'zikrovi',    label: 'Zikrovi i dove',   items: zikrovi,    color: '#2563EB', publicHref: '/zikrovi',  icon: <BookOpen size={14} className="text-blue-500" /> },
+    { cat: 'podcast',    label: 'Podcasts',          items: podcasts,   color: '#EA580C', publicHref: '/podcasts', icon: <Mic size={14} className="text-orange-500" /> },
+  ]
 
   return (
     <div className="min-h-screen bg-zinc-50">
@@ -62,6 +160,7 @@ export default async function AdminDashboard() {
       </nav>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+        {/* Header */}
         <div className="mb-8 flex items-start justify-between gap-4 flex-wrap">
           <div>
             <div className="flex items-center gap-2">
@@ -85,13 +184,14 @@ export default async function AdminDashboard() {
         {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
           {[
-            { label: 'Predavanja', value: videoCount,    icon: <Play size={16} className="text-red-500" />,    bg: 'bg-red-50',      href: null },
-            { label: 'Blog postovi', value: postCount,   icon: <BookOpen size={16} className="text-amber-500" />, bg: 'bg-amber-50',  href: null },
-            { label: 'Aktivnosti', value: activityCount, icon: <span className="text-base">🏔️</span>,          bg: 'bg-green-50',    href: null },
-            { label: 'Korisnici',  value: userCount,     icon: <Users size={16} className="text-brand" />,     bg: 'bg-brand-dim',   href: '/admin/users' },
+            { label: 'Video sadržaj', value: videos.length,     icon: <Play size={16} className="text-red-500" />,      bg: 'bg-red-50' },
+            { label: 'Blog postovi',  value: posts.length,      icon: <BookOpen size={16} className="text-amber-500" />, bg: 'bg-amber-50' },
+            { label: 'Aktivnosti',    value: activities.length, icon: <span className="text-base">🏔️</span>,            bg: 'bg-green-50' },
+            { label: 'Korisnici',     value: userCount,         icon: <Users size={16} className="text-brand" />,       bg: 'bg-brand-dim', href: '/admin/users' },
           ].map(s => (
             s.href ? (
-              <Link key={s.label} href={s.href} className="bg-white rounded-2xl p-4 sm:p-5 border border-zinc-100 shadow-card hover:border-brand/30 transition-colors block">
+              <Link key={s.label} href={s.href}
+                className="bg-white rounded-2xl p-4 sm:p-5 border border-zinc-100 shadow-card hover:border-brand/30 transition-colors block">
                 <div className={`w-8 h-8 ${s.bg} rounded-lg flex items-center justify-center mb-2`}>{s.icon}</div>
                 <p className="text-2xl sm:text-3xl font-black text-zinc-900">{s.value}</p>
                 <p className="text-zinc-400 text-xs mt-0.5">{s.label}</p>
@@ -106,82 +206,74 @@ export default async function AdminDashboard() {
           ))}
         </div>
 
-        {/* Quick actions */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
-          <Link href="/admin/videos/new"
-            className="flex items-center gap-3 bg-brand hover:bg-brand-light text-white p-5 rounded-2xl transition-colors shadow-sm">
-            <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0"><Plus size={20} /></div>
-            <div className="min-w-0">
-              <p className="font-bold">Dodaj predavanje</p>
-              <p className="text-white/70 text-xs mt-0.5 truncate">YouTube · TikTok · Upload</p>
-            </div>
-          </Link>
+        {/* Quick actions — one button per section */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10">
+          {videoSections.map(s => (
+            <Link key={s.cat} href={`/admin/videos/new?category=${s.cat}`}
+              className="flex items-center gap-3 text-white p-4 rounded-2xl transition-opacity hover:opacity-90 shadow-sm"
+              style={{ background: s.color }}>
+              <div className="w-8 h-8 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                <Plus size={18} />
+              </div>
+              <div className="min-w-0">
+                <p className="font-bold text-sm leading-tight">{s.label}</p>
+                <p className="text-white/60 text-xs mt-0.5">{s.items.length} objava</p>
+              </div>
+            </Link>
+          ))}
           <Link href="/admin/blog/new"
-            className="flex items-center gap-3 bg-amber-400 hover:bg-amber-300 text-zinc-900 p-5 rounded-2xl transition-colors shadow-sm">
-            <div className="w-10 h-10 bg-black/10 rounded-xl flex items-center justify-center flex-shrink-0"><Plus size={20} /></div>
+            className="flex items-center gap-3 text-zinc-900 p-4 rounded-2xl transition-opacity hover:opacity-90 shadow-sm bg-amber-400">
+            <div className="w-8 h-8 bg-black/10 rounded-xl flex items-center justify-center flex-shrink-0">
+              <Plus size={18} />
+            </div>
             <div className="min-w-0">
-              <p className="font-bold">Dodaj blog post</p>
-              <p className="text-amber-800 text-xs mt-0.5">Tekst sa slikom</p>
+              <p className="font-bold text-sm leading-tight">Blog</p>
+              <p className="text-amber-800 text-xs mt-0.5">{posts.length} objava</p>
             </div>
           </Link>
           <Link href="/admin/activities/new"
-            className="flex items-center gap-3 text-white p-5 rounded-2xl transition-colors shadow-sm"
+            className="flex items-center gap-3 text-white p-4 rounded-2xl transition-opacity hover:opacity-90 shadow-sm"
             style={{ background: '#2d6a4f' }}>
-            <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0"><Plus size={20} /></div>
+            <div className="w-8 h-8 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+              <Plus size={18} />
+            </div>
             <div className="min-w-0">
-              <p className="font-bold">Dodaj aktivnost</p>
-              <p className="text-white/70 text-xs mt-0.5">Obilaske, izlete, događaje</p>
+              <p className="font-bold text-sm leading-tight">Aktivnosti</p>
+              <p className="text-white/60 text-xs mt-0.5">{activities.length} objava</p>
             </div>
           </Link>
         </div>
 
-        {/* Videos */}
-        <section className="mb-8">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="font-bold text-zinc-900">Predavanja <span className="text-zinc-400 font-normal text-sm">({videoCount})</span></h2>
-            <Link href="/admin/videos/new" className="text-xs text-brand hover:underline flex items-center gap-1"><Plus size={12} /> Dodaj</Link>
-          </div>
-          {videos.length === 0 ? (
-            <div className="bg-white rounded-2xl p-8 text-center border border-dashed border-zinc-200">
-              <Play size={32} className="text-zinc-200 mx-auto mb-2" />
-              <p className="text-zinc-400 text-sm">Nema predavanja. Dodaj prvo.</p>
-            </div>
-          ) : (
-            <div className="bg-white rounded-2xl border border-zinc-100 shadow-card overflow-hidden">
-              {videos.map((v, i) => (
-                <div key={v.id} className={`flex items-center gap-3 px-4 py-3 hover:bg-zinc-50 transition-colors ${i > 0 ? 'border-t border-zinc-100' : ''}`}>
-                  <PlatformIcon platform={v.platform} />
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-zinc-900 text-sm truncate">{v.title}</p>
-                    <div className="flex items-center gap-2 text-zinc-400 text-xs mt-0.5">
-                      <span>{getPlatformLabel(v.platform)}</span>
-                      <span>·</span>
-                      <Calendar size={9} /><span>{fmt(v.createdAt)}</span>
-                      {v.isShortForm && <span className="bg-zinc-100 px-1.5 py-0.5 rounded text-zinc-500">Kratki</span>}
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1 flex-shrink-0">
-                    <Link href={`/admin/videos/${v.id}/edit`} title="Uredi"
-                      className="p-1.5 text-zinc-300 hover:text-brand transition-colors">
-                      <Pencil size={13} />
-                    </Link>
-                    <Link href={`/videos/${v.id}`} target="_blank" title="Pregledaj"
-                      className="p-1.5 text-zinc-300 hover:text-zinc-600 transition-colors">
-                      <ExternalLink size={13} />
-                    </Link>
-                    <DeleteButton id={v.id} type="video" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
+        {/* Video sections per category */}
+        {videoSections.map(s => (
+          <VideoSection key={s.cat}
+            title={s.label}
+            items={s.items}
+            cat={s.cat}
+            accentColor={s.color}
+            publicHref={s.publicHref}
+            icon={s.icon}
+          />
+        ))}
 
         {/* Blog posts */}
-        <section>
+        <section className="mb-8">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="font-bold text-zinc-900">Blog postovi <span className="text-zinc-400 font-normal text-sm">({postCount})</span></h2>
-            <Link href="/admin/blog/new" className="text-xs text-brand hover:underline flex items-center gap-1"><Plus size={12} /> Dodaj</Link>
+            <h2 className="font-bold text-zinc-900 flex items-center gap-2">
+              <BookOpen size={14} className="text-amber-400" />
+              Blog postovi
+              <span className="text-zinc-400 font-normal text-sm">({posts.length})</span>
+            </h2>
+            <div className="flex items-center gap-3">
+              <Link href="/blog" target="_blank"
+                className="text-xs text-zinc-400 hover:text-zinc-600 flex items-center gap-1">
+                <ExternalLink size={11} /> Javna
+              </Link>
+              <Link href="/admin/blog/new"
+                className="text-xs text-amber-500 hover:underline flex items-center gap-1 font-medium">
+                <Plus size={12} /> Dodaj
+              </Link>
+            </div>
           </div>
           {posts.length === 0 ? (
             <div className="bg-white rounded-2xl p-8 text-center border border-dashed border-zinc-200">
@@ -190,8 +282,9 @@ export default async function AdminDashboard() {
             </div>
           ) : (
             <div className="bg-white rounded-2xl border border-zinc-100 shadow-card overflow-hidden">
-              {posts.map((p, i) => (
-                <div key={p.id} className={`flex items-center gap-3 px-4 py-3 hover:bg-zinc-50 transition-colors ${i > 0 ? 'border-t border-zinc-100' : ''}`}>
+              {posts.slice(0, 5).map((p, i) => (
+                <div key={p.id}
+                  className={`flex items-center gap-3 px-4 py-3 hover:bg-zinc-50 transition-colors ${i > 0 ? 'border-t border-zinc-100' : ''}`}>
                   <BookOpen size={15} className="text-amber-400 flex-shrink-0" />
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-zinc-900 text-sm truncate">{p.title}</p>
@@ -212,15 +305,34 @@ export default async function AdminDashboard() {
                   </div>
                 </div>
               ))}
+              {posts.length > 5 && (
+                <div className="px-4 py-2.5 border-t border-zinc-100 text-center">
+                  <span className="text-xs text-zinc-400">+ još {posts.length - 5} postova</span>
+                </div>
+              )}
             </div>
           )}
         </section>
 
         {/* Activities */}
-        <section className="mt-8">
+        <section className="mb-8">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="font-bold text-zinc-900">Aktivnosti <span className="text-zinc-400 font-normal text-sm">({activityCount})</span></h2>
-            <Link href="/admin/activities/new" className="text-xs text-brand hover:underline flex items-center gap-1"><Plus size={12} /> Dodaj</Link>
+            <h2 className="font-bold text-zinc-900 flex items-center gap-2">
+              <span>🏔️</span>
+              Aktivnosti
+              <span className="text-zinc-400 font-normal text-sm">({activities.length})</span>
+            </h2>
+            <div className="flex items-center gap-3">
+              <Link href="/aktivnosti" target="_blank"
+                className="text-xs text-zinc-400 hover:text-zinc-600 flex items-center gap-1">
+                <ExternalLink size={11} /> Javna
+              </Link>
+              <Link href="/admin/activities/new"
+                className="text-xs hover:underline flex items-center gap-1 font-medium"
+                style={{ color: '#2d6a4f' }}>
+                <Plus size={12} /> Dodaj
+              </Link>
+            </div>
           </div>
           {activities.length === 0 ? (
             <div className="bg-white rounded-2xl p-8 text-center border border-dashed border-zinc-200">
@@ -229,8 +341,9 @@ export default async function AdminDashboard() {
             </div>
           ) : (
             <div className="bg-white rounded-2xl border border-zinc-100 shadow-card overflow-hidden">
-              {activities.map((a, i) => (
-                <div key={a.id} className={`flex items-center gap-3 px-4 py-3 hover:bg-zinc-50 transition-colors ${i > 0 ? 'border-t border-zinc-100' : ''}`}>
+              {activities.slice(0, 5).map((a, i) => (
+                <div key={a.id}
+                  className={`flex items-center gap-3 px-4 py-3 hover:bg-zinc-50 transition-colors ${i > 0 ? 'border-t border-zinc-100' : ''}`}>
                   <span className="text-base flex-shrink-0">🏔️</span>
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-zinc-900 text-sm truncate">{a.title}</p>
@@ -251,6 +364,11 @@ export default async function AdminDashboard() {
                   </div>
                 </div>
               ))}
+              {activities.length > 5 && (
+                <div className="px-4 py-2.5 border-t border-zinc-100 text-center">
+                  <span className="text-xs text-zinc-400">+ još {activities.length - 5} aktivnosti</span>
+                </div>
+              )}
             </div>
           )}
         </section>

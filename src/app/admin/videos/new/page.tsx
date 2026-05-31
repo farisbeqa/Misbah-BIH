@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useRef, useCallback } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useRef, useCallback, Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import {
   ArrowLeft, Loader2, Search, Youtube, Instagram, Facebook,
@@ -81,12 +81,12 @@ function CategorySelect({ value, onChange }: { value: string; onChange: (v: stri
   )
 }
 
-function UrlMode() {
+function UrlMode({ initialCategory = 'predavanja' }: { initialCategory?: string }) {
   const router = useRouter()
   const [url, setUrl] = useState('')
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [category, setCategory] = useState('predavanja')
+  const [category, setCategory] = useState(initialCategory)
   const [preview, setPreview] = useState<Preview | null>(null)
   const [previewLoading, setPreviewLoading] = useState(false)
   const [previewError, setPreviewError] = useState('')
@@ -210,7 +210,7 @@ function UrlMode() {
 
 // ─── Upload mode ──────────────────────────────────────────────────────────────
 
-function UploadMode() {
+function UploadMode({ initialCategory = 'predavanja' }: { initialCategory?: string }) {
   const router = useRouter()
   const videoInputRef = useRef<HTMLInputElement>(null)
   const thumbInputRef = useRef<HTMLInputElement>(null)
@@ -219,7 +219,7 @@ function UploadMode() {
   const [thumbPreview, setThumbPreview] = useState<string | null>(null)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [category, setCategory] = useState('predavanja')
+  const [category, setCategory] = useState(initialCategory)
   const [isShortForm, setIsShortForm] = useState(true)
   const [dragging, setDragging] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -447,8 +447,19 @@ function UploadMode() {
 
 // ─── Main page ────────────────────────────────────────────────────────────────
 
-export default function AddVideoPage() {
+const CAT_LABELS: Record<string, string> = {
+  predavanja: 'Dodaj predavanje',
+  kuran:      "Dodaj Kur'an / Učanje",
+  ilahije:    'Dodaj ilahiju / kasidu',
+  zikrovi:    'Dodaj zikr / dovu',
+  podcast:    'Dodaj podcast',
+}
+
+function AddVideoPageInner() {
+  const searchParams = useSearchParams()
+  const initialCategory = searchParams.get('category') || 'predavanja'
   const [mode, setMode] = useState<'url' | 'upload'>('url')
+  const pageTitle = CAT_LABELS[initialCategory] ?? 'Dodaj video'
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -466,7 +477,7 @@ export default function AddVideoPage() {
           <ArrowLeft size={15} /> Nazad na dashboard
         </Link>
 
-        <h1 className="text-2xl font-black text-gray-900 mb-6">Dodaj predavanje</h1>
+        <h1 className="text-2xl font-black text-gray-900 mb-6">{pageTitle}</h1>
 
         {/* Mode tabs */}
         <div className="flex gap-1 p-1 bg-gray-100 rounded-2xl mb-6">
@@ -488,8 +499,16 @@ export default function AddVideoPage() {
           </button>
         </div>
 
-        {mode === 'url' ? <UrlMode /> : <UploadMode />}
+        {mode === 'url' ? <UrlMode initialCategory={initialCategory} /> : <UploadMode initialCategory={initialCategory} />}
       </div>
     </div>
+  )
+}
+
+export default function AddVideoPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50" />}>
+      <AddVideoPageInner />
+    </Suspense>
   )
 }

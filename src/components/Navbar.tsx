@@ -16,7 +16,6 @@ const TikTokIcon = ({ size = 16 }: { size?: number }) => (
 interface AuthUser { id: number; username: string }
 
 const navLinks = [
-  { href: '/', label: 'Početna' },
   { href: '/videos', label: 'Predavanja' },
   { href: '/kuran', label: "Kur'an" },
   { href: '/ilahije', label: 'Ilahije' },
@@ -26,6 +25,11 @@ const navLinks = [
   { href: '/blog', label: 'Blog' },
   { href: '/o-nama', label: 'O Nama' },
   { href: '/donacije', label: 'Donacije' },
+]
+
+const mobileLinks = [
+  { href: '/', label: 'Početna' },
+  ...navLinks,
 ]
 
 const socials = [
@@ -77,10 +81,10 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-3">
             {navLinks.map(link => (
               <Link key={link.href} href={link.href}
-                className="text-sm font-medium transition-colors"
+                className="text-[13px] font-medium transition-colors whitespace-nowrap"
                 style={{ color: pathname === link.href ? '#C8A96B' : 'rgba(255,255,255,0.65)' }}
                 onMouseEnter={e => { if (pathname !== link.href) (e.target as HTMLElement).style.color = 'white' }}
                 onMouseLeave={e => { if (pathname !== link.href) (e.target as HTMLElement).style.color = 'rgba(255,255,255,0.65)' }}>
@@ -143,7 +147,7 @@ export default function Navbar() {
         {mobileOpen && (
           <div style={{ background: '#4A0D21', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
             <div className="px-4 py-3 space-y-0.5">
-              {navLinks.map(link => (
+              {mobileLinks.map(link => (
                 <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)}
                   className="block py-2.5 px-3 rounded-lg text-sm font-medium transition-colors"
                   style={{
