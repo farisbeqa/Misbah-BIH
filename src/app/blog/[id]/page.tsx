@@ -12,8 +12,8 @@ export async function generateMetadata({ params }: PageProps) {
   try {
     const post = await prisma.blogPost.findUnique({ where: { id: parseInt(params.id) } })
     if (!post) return { title: 'Post nije pronađen' }
-    return { title: `${post.title} — Misbah BIH`, description: post.content.slice(0, 160) }
-  } catch { return { title: 'Misbah BIH' } }
+    return { title: `${post.title} — Misbah EDU`, description: post.content.slice(0, 160) }
+  } catch { return { title: 'Misbah EDU' } }
 }
 
 function formatDate(d: Date) {

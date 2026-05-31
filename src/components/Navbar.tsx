@@ -63,9 +63,9 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
-            <Image src="/logo.jpg" alt="Misbah BIH" width={32} height={32} className="rounded-lg object-cover" />
+            <Image src="/logo.jpg" alt="Misbah EDU" width={32} height={32} className="rounded-lg object-cover" />
             <span className="font-extrabold text-[15px] tracking-tight text-white group-hover:text-gold transition-colors">
-              Misbah <span className="text-gold">BIH</span>
+              Misbah <span className="text-gold">EDU</span>
             </span>
           </Link>
 

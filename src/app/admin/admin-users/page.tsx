@@ -23,7 +23,7 @@ export default async function AdminUsersPage() {
       <nav className="bg-zinc-950 text-white px-4 sm:px-6 py-4 sticky top-0 z-30 border-b border-zinc-800">
         <div className="max-w-4xl mx-auto flex items-center gap-2.5">
           <div className="w-7 h-7 rounded-lg bg-brand flex items-center justify-center text-white font-black text-sm">م</div>
-          <span className="font-black text-sm">Misbah BIH</span>
+          <span className="font-black text-sm">Misbah EDU</span>
           <span className="text-zinc-500 text-xs font-medium px-2 py-0.5 bg-zinc-800 rounded-md">Admin</span>
           <span className="text-amber-400 text-xs font-medium px-2 py-0.5 bg-amber-400/10 rounded-md flex items-center gap-1">
             <ShieldCheck size={10} /> Super Admin

@@ -46,7 +46,7 @@ export default async function AdminDashboard() {
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-7 h-7 rounded-lg bg-brand flex items-center justify-center text-white font-black text-sm">م</div>
-            <span className="font-black text-sm">Misbah BIH</span>
+            <span className="font-black text-sm">Misbah EDU</span>
             <span className="text-zinc-500 text-xs font-medium px-2 py-0.5 bg-zinc-800 rounded-md">Admin</span>
           </div>
           <div className="flex items-center gap-4">

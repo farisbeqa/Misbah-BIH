@@ -33,10 +33,10 @@ export default function Footer() {
           {/* Brand */}
           <div className="sm:col-span-5">
             <div className="flex items-center gap-3 mb-4">
-              <Image src="/logo.jpg" alt="Misbah BIH" width={36} height={36} className="rounded-lg object-cover" />
+              <Image src="/logo.jpg" alt="Misbah EDU" width={36} height={36} className="rounded-lg object-cover" />
               <span className="font-extrabold text-base tracking-tight" style={{ color: TEXT }}>
                 Misbah{' '}
-                <span style={{ color: BURGUNDY }}>BIH</span>
+                <span style={{ color: BURGUNDY }}>EDU</span>
               </span>
             </div>
             <p className="text-sm leading-relaxed max-w-xs" style={{ color: MUTED }}>

@@ -42,7 +42,7 @@ export default async function HomePage() {
             <h1 className="font-extrabold leading-[1.02] tracking-tight text-white mb-6"
               style={{ fontSize: 'clamp(2.8rem, 7.5vw, 5.2rem)' }}>
               Misbah
-              <span style={{ color: '#C8A96B' }}> BIH</span>
+              <span style={{ color: '#C8A96B' }}> EDU</span>
             </h1>
 
             <p className="text-lg sm:text-xl font-light leading-relaxed mb-3 max-w-lg"
@@ -151,7 +151,7 @@ export default async function HomePage() {
             Prati nas
           </p>
           <h2 className="font-extrabold text-2xl sm:text-3xl tracking-tight mb-3" style={{ color: '#241F1D' }}>
-            Misbah BIH na svim platformama
+            Misbah EDU na svim platformama
           </h2>
           <p className="font-mono text-xs mb-10 tracking-wide" style={{ color: '#746860' }}>
             Dugi sadržaj na YouTubeu · Kratki sadržaj na Instagramu, TikToku i Facebooku

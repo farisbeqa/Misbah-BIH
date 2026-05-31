@@ -3,7 +3,7 @@ import BlogCard from '@/components/BlogCard'
 import { FileText } from 'lucide-react'
 
 export const metadata = {
-  title: 'Blog — Misbah BIH',
+  title: 'Blog — Misbah EDU',
   description: 'Islamski tekstovi i razmišljanja',
 }
 

@@ -53,7 +53,7 @@ export default function EditVideoPage() {
       <nav className="bg-zinc-900 text-white px-4 sm:px-6 py-4">
         <div className="max-w-2xl mx-auto flex items-center gap-3">
           <div className="w-7 h-7 rounded-full bg-amber-400 flex items-center justify-center text-zinc-900 font-black text-xs">م</div>
-          <span className="font-bold">Misbah BIH</span>
+          <span className="font-bold">Misbah EDU</span>
           <span className="text-zinc-400 text-xs">Admin</span>
         </div>
       </nav>

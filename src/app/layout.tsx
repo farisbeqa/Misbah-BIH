@@ -19,9 +19,9 @@ const ibmMono = IBM_Plex_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Misbah BIH — Islamska predavanja i sadržaj',
+  title: 'Misbah EDU — Islamska predavanja i sadržaj',
   description: 'Islamska predavanja, hutbe i sadržaj efendije Hamde Solo, imama džamije Carina, Sarajevo.',
-  keywords: 'Misbah BIH, islamska predavanja, hutba, Hamdo Solo, Sarajevo, džamija Carina',
+  keywords: 'Misbah EDU, islamska predavanja, hutba, Hamdo Solo, Sarajevo, džamija Carina',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

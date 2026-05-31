@@ -39,7 +39,7 @@ export default function AdminLoginPage() {
             م
           </div>
           <h1 className="text-white font-extrabold text-xl tracking-tight">
-            Misbah <span className="text-gold">BIH</span>
+            Misbah <span className="text-gold">EDU</span>
           </h1>
           <p className="font-mono text-[11px] text-warm-700 mt-1.5 flex items-center justify-center gap-1.5 tracking-widest">
             <ShieldCheck size={10} /> ADMIN PORTAL

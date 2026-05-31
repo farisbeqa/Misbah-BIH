@@ -97,7 +97,7 @@ export default function AddBlogPostPage() {
           <div className="w-7 h-7 rounded-full bg-[#c9a227] flex items-center justify-center text-[#0f3d1d] font-black text-xs">
             م
           </div>
-          <span className="font-bold">Misbah BIH</span>
+          <span className="font-bold">Misbah EDU</span>
           <span className="text-green-300 text-xs">Admin</span>
         </div>
       </nav>

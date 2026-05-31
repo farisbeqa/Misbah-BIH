@@ -421,7 +421,7 @@ export default function AddVideoPage() {
       <nav className="bg-zinc-950 text-white px-4 sm:px-6 py-4 sticky top-0 z-30 border-b border-zinc-800">
         <div className="max-w-3xl mx-auto flex items-center gap-3">
           <div className="w-7 h-7 rounded-lg bg-brand flex items-center justify-center text-white font-black text-sm">م</div>
-          <span className="font-bold">Misbah BIH</span>
+          <span className="font-bold">Misbah EDU</span>
           <span className="text-zinc-500 text-xs font-medium px-2 py-0.5 bg-zinc-800 rounded-md">Admin</span>
         </div>
       </nav>
