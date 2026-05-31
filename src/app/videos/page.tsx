@@ -9,52 +9,24 @@ interface Video {
   platform: string; thumbnailUrl: string | null; isShortForm: boolean; createdAt: string
 }
 
-const FILTERS = [
-  { key: 'all', label: 'Sve' },
-  { key: 'youtube', label: 'YouTube' },
-  { key: 'instagram', label: 'Instagram' },
-  { key: 'tiktok', label: 'TikTok' },
-  { key: 'facebook', label: 'Facebook' },
-]
-
 export default function VideosPage() {
   const [videos, setVideos] = useState<Video[]>([])
-  const [filter, setFilter] = useState('all')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    setLoading(true)
-    const url = filter === 'all' ? '/api/videos' : `/api/videos?platform=${filter}`
-    fetch(url).then(r => r.json()).then(d => { setVideos(d); setLoading(false) }).catch(() => setLoading(false))
-  }, [filter])
+    fetch('/api/videos?category=predavanja')
+      .then(r => r.json()).then(d => { setVideos(d); setLoading(false) })
+      .catch(() => setLoading(false))
+  }, [])
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16" style={{ minHeight: '60vh' }}>
-      {/* Header */}
       <div className="mb-12">
         <p className="font-mono text-[11px] text-brand-light uppercase tracking-widest mb-2">Sadržaj</p>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-warm-900 tracking-tight mb-2">Predavanja</h1>
         <p className="text-warm-500 text-sm">Hutbe, predavanja i kratki sadržaj efendije Hamde Solo</p>
       </div>
 
-      {/* Filters */}
-      <div className="flex flex-wrap gap-2 mb-10">
-        {FILTERS.map(f => (
-          <button key={f.key} onClick={() => setFilter(f.key)}
-            className="font-mono text-xs px-4 py-2 transition-all"
-            style={{
-              borderRadius: 6,
-              border: filter === f.key ? 'none' : '1px solid #D6CCC3',
-              background: filter === f.key ? '#8B1E3F' : '#EDE5DC',
-              color: filter === f.key ? '#fff' : '#5A4F49',
-              fontWeight: filter === f.key ? 600 : 400,
-            }}>
-            {f.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Grid */}
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {Array.from({ length: 6 }).map((_, i) => (
@@ -71,9 +43,7 @@ export default function VideosPage() {
         <div className="flex flex-col items-center justify-center py-24 text-warm-400"
           style={{ background: '#FAF7F2', border: '1px dashed #E8E1DB', borderRadius: 8 }}>
           <Play size={40} className="text-warm-300 mb-3" />
-          <p className="font-mono text-sm text-warm-400">
-            {filter === 'all' ? 'Nema predavanja' : `Nema ${filter} sadržaja`}
-          </p>
+          <p className="font-mono text-sm text-warm-400">Nema predavanja</p>
         </div>
       ) : (
         <>
