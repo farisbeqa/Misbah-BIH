@@ -1,7 +1,7 @@
-import { Heart, Building2, CreditCard, Copy } from 'lucide-react'
+﻿import { Heart, Building2, CreditCard, Copy } from 'lucide-react'
 
 export const metadata = {
-  title: 'Donacije — Misbah EDU',
+  title: 'Donacije - Misbah EDU',
   description: 'Podržite rad Misbah EDU projekta',
 }
 
@@ -12,7 +12,7 @@ const DONATION_CONFIG = {
   iban: 'BA39 XXXX XXXX XXXX XXXX XX',   // ← unesite IBAN
   banka: 'Naziv banke d.d.',               // ← unesite naziv banke
   naziv: 'Strossa d.o.o.',                 // ← naziv primaoca
-  svrha: 'Donacija — Misbah EDU',
+  svrha: 'Donacija - Misbah EDU',
   paypalLink: '',                           // ← npr. https://paypal.me/MisbahEDU
 }
 // ────────────────────────────────────────────────────────────────────────────
@@ -34,7 +34,7 @@ export default function DonacijePage() {
           Podržite Misbah EDU
         </h1>
         <p className="text-warm-500 leading-relaxed max-w-lg mx-auto">
-          Svaka donacija pomaže nam u produkciji islamskog sadržaja — predavanja, Kur'an snimaka i podcasta
+          Svaka donacija pomaže nam u produkciji islamskog sadržaja - predavanja, Kur'an snimaka i podcasta
           koji besplatno dolaze do zajednice.
         </p>
       </div>
@@ -46,7 +46,7 @@ export default function DonacijePage() {
           {[
             'Produkcija i snimanje islamskih predavanja',
             'Održavanje Misbah EDU platforme',
-            'Razvoj novih sadržaja — Kur\'an, podcast, blog',
+            'Razvoj novih sadržaja - Kur\'an, podcast, blog',
             'Educiranje muslimanske zajednice u BiH i dijaspori',
           ].map((item, i) => (
             <li key={i} className="flex items-start gap-3">
@@ -120,7 +120,7 @@ export default function DonacijePage() {
       {/* Jazakallahu */}
       <div className="text-center py-8">
         <p className="text-2xl mb-2" style={{ color: '#C8A96B', fontFamily: 'serif' }}>جَزَاكَ اللّٰهُ خَيْرًا</p>
-        <p className="font-mono text-xs text-warm-400 tracking-wider">Džazakallahu hajren — Allah vam nagradio dobrim</p>
+        <p className="font-mono text-xs text-warm-400 tracking-wider">Džazakallahu hajren - Allah vam nagradio dobrim</p>
       </div>
     </div>
   )

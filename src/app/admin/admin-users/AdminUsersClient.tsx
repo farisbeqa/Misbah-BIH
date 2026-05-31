@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import { ShieldCheck, ShieldOff, Trash2, Plus, Loader2, Eye, EyeOff, Calendar } from 'lucide-react'
@@ -142,7 +142,7 @@ export default function AdminUsersClient({ initialAdmins }: { initialAdmins: Adm
               </div>
             </div>
 
-            {/* Delete — only non-super-admins can be deleted */}
+            {/* Delete - only non-super-admins can be deleted */}
             {!admin.isSuperAdmin && (
               <button onClick={() => handleDelete(admin)} disabled={deletingId === admin.id}
                 className="p-1.5 text-zinc-300 hover:text-red-500 transition-colors flex-shrink-0">

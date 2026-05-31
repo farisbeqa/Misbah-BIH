@@ -1,10 +1,10 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import Image from 'next/image'
 import { prisma } from '@/lib/db'
 import { MapPin, Calendar } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
-export const metadata = { title: "Aktivnosti — Misbah EDU" }
+export const metadata = { title: "Aktivnosti - Misbah EDU" }
 
 const MONTHS = ['jan','feb','mar','apr','maj','jun','jul','aug','sep','okt','nov','dec']
 function fmt(d: Date) { return `${d.getDate()}. ${MONTHS[d.getMonth()]} ${d.getFullYear()}.` }

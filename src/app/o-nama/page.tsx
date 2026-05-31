@@ -1,7 +1,7 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { FileText, Mail, Users, ArrowRight } from 'lucide-react'
 
-export const metadata = { title: 'O Nama — Misbah EDU' }
+export const metadata = { title: 'O Nama - Misbah EDU' }
 
 export default function ONamaPage() {
   return (

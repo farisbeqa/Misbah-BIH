@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation'
+﻿import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, ExternalLink } from 'lucide-react'
 import { prisma } from '@/lib/db'
@@ -14,7 +14,7 @@ interface PageProps { params: { id: string } }
 export async function generateMetadata({ params }: PageProps) {
   try {
     const v = await prisma.video.findUnique({ where: { id: parseInt(params.id) } })
-    return v ? { title: `${v.title} — Misbah EDU` } : { title: 'Misbah EDU' }
+    return v ? { title: `${v.title} - Misbah EDU` } : { title: 'Misbah EDU' }
   } catch { return { title: 'Misbah EDU' } }
 }
 
@@ -80,7 +80,7 @@ export default async function VideoDetailPage({ params }: PageProps) {
         </div>
       )}
 
-      {/* Original link — not shown for local uploads */}
+      {/* Original link - not shown for local uploads */}
       {video.platform !== 'upload' && (
         <div className="flex justify-center mb-12">
           <a href={video.url} target="_blank" rel="noopener noreferrer"

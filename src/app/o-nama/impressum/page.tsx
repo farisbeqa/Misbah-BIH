@@ -1,7 +1,7 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 
-export const metadata = { title: 'Impressum — Misbah EDU' }
+export const metadata = { title: 'Impressum - Misbah EDU' }
 
 const UREDNICI = ['Hamdo Solo', 'Mubina Suljić Solo', 'Hamza Bajraktarević', 'Esma Klisura']
 const DRUSTVENE_MREZE = ['Adna Kurtanović', 'Abdulah Hodžić', 'Edin Imamović']

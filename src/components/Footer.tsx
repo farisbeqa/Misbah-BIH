@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import Image from 'next/image'
 import { Youtube, Instagram, Facebook } from 'lucide-react'
 
@@ -15,7 +15,7 @@ const socials = [
   { href: 'https://www.facebook.com/MisbahBIH/',   Icon: Facebook,   label: 'Facebook' },
 ]
 
-// Warm beige footer — rich and editorial, no black
+// Warm beige footer - rich and editorial, no black
 const BG      = '#E7D6C7'  // secondary-default
 const BORDER  = '#CDB8A6'  // secondary-dark
 const TEXT    = '#3F3733'  // warm-800

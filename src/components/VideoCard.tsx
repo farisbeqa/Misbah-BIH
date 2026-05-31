@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { Play, Youtube, Instagram, Facebook, Film } from 'lucide-react'
 
 const TikTokIcon = ({ size = 13 }: { size?: number }) => (
@@ -53,7 +53,7 @@ export default function VideoCard({ id, title, description, platform, thumbnailU
         className="h-full flex flex-col shadow-card group-hover:shadow-card-hover group-hover:-translate-y-0.5 transition-all duration-200 overflow-hidden"
         style={{ background: '#FAF7F2', border: '1px solid #E8E1DB', borderRadius: 8 }}
       >
-        {/* Image — full bleed, no padding */}
+        {/* Image - full bleed, no padding */}
         <div className="flex-shrink-0">
           <div className="overflow-hidden relative" style={{
             borderRadius: '8px 8px 0 0',
@@ -96,7 +96,7 @@ export default function VideoCard({ id, title, description, platform, thumbnailU
         </div>
 
         {/* Content */}
-        <div className="px-4 pb-4 flex flex-col overflow-hidden">
+        <div className="px-4 pt-3 pb-4 flex flex-col overflow-hidden">
           <time className="font-mono text-[11px] block mb-1.5 tracking-wide flex-shrink-0" style={{ color: '#A94A61' }}>
             {formatDate(createdAt)}
           </time>
@@ -105,7 +105,7 @@ export default function VideoCard({ id, title, description, platform, thumbnailU
             {title}
           </h3>
           {description && (
-            /* 3 lines max — never grows the card */
+            /* 3 lines max - never grows the card */
             <p className="text-xs leading-relaxed line-clamp-3 overflow-hidden"
               style={{ color: '#978A81' }}>
               {description}

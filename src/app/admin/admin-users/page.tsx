@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { ArrowLeft, ShieldCheck, ShieldOff } from 'lucide-react'
 import { requireSuperAdmin } from '@/lib/auth'
@@ -50,8 +50,8 @@ export default async function AdminUsersPage() {
 
         {/* Legend */}
         <div className="mt-6 flex items-center gap-6 text-xs text-zinc-400 font-mono">
-          <span className="flex items-center gap-1.5"><ShieldCheck size={12} className="text-amber-500" /> Super Admin — puni pristup</span>
-          <span className="flex items-center gap-1.5"><ShieldOff size={12} className="text-zinc-400" /> Admin — upravljanje sadržajem</span>
+          <span className="flex items-center gap-1.5"><ShieldCheck size={12} className="text-amber-500" /> Super Admin - puni pristup</span>
+          <span className="flex items-center gap-1.5"><ShieldOff size={12} className="text-zinc-400" /> Admin - upravljanje sadržajem</span>
         </div>
       </div>
     </div>

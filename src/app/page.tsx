@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { ArrowRight, Youtube, Instagram, Facebook, Play, BookOpen, MapPin } from 'lucide-react'
 import { prisma } from '@/lib/db'
 
@@ -11,6 +11,7 @@ const TikTokIcon = ({ size = 16 }: { size?: number }) => (
     <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.25 8.25 0 004.84 1.55V6.79a4.85 4.85 0 01-1.07-.1z" />
   </svg>
 )
+// TikTokIcon used in Social CTA section below
 
 async function getData() {
   try {
@@ -31,70 +32,67 @@ export default async function HomePage() {
   return (
     <div>
 
-      {/* ── Hero — rich burgundy, NOT black ─────────────────────────── */}
-      <section
-        className="relative overflow-hidden hero-pattern grain"
-        style={{ background: '#8B1E3F' }}
-      >
-        <div className="hero-glow absolute inset-0 z-0 pointer-events-none" />
+      {/* Hero */}
+      <section style={{ background: '#FAF7F2' }} className="overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2" style={{ minHeight: 580 }}>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-28 lg:py-36">
-          <div className="max-w-2xl">
-            <p className="font-mono text-xs tracking-[0.25em] mb-8 uppercase" style={{ color: '#E0C99A' }}>
-              بسم الله الرحمن الرحيم
-            </p>
-
-            <h1 className="font-extrabold leading-[1.02] tracking-tight text-white mb-6"
-              style={{ fontSize: 'clamp(2.8rem, 7.5vw, 5.2rem)' }}>
-              Misbah
-              <span style={{ color: '#C8A96B' }}> EDU</span>
-            </h1>
-
-            <p className="text-lg sm:text-xl font-light leading-relaxed mb-3 max-w-lg"
-              style={{ color: 'rgba(255,255,255,0.72)' }}>
-              Islamska predavanja i sadržaj
-            </p>
-            <p className="font-mono text-xs tracking-widest mb-12"
-              style={{ color: 'rgba(255,255,255,0.35)' }}>
-              Islamska predavanja · Bosna i Hercegovina
-            </p>
-
-            <div className="flex flex-wrap gap-4">
-              <Link href="/videos"
-                className="inline-flex items-center gap-2 font-semibold text-sm px-6 py-3 text-white transition-colors bg-brand-dark hover:bg-brand"
-                style={{ borderRadius: 8 }}>
-                <Play size={15} fill="currentColor" />
-                Gledaj predavanja
-              </Link>
-              <Link href="/blog"
-                className="inline-flex items-center gap-2 font-medium text-sm px-6 py-3 transition-colors"
-                style={{ border: '1px solid rgba(255,255,255,0.22)', borderRadius: 8, color: 'rgba(255,255,255,0.82)', backdropFilter: 'blur(4px)' }}>
-                <BookOpen size={15} />
-                Čitaj blog
-              </Link>
+            {/* Left - text */}
+            <div className="flex flex-col justify-center px-6 sm:px-10 lg:px-14 xl:px-20 py-16 sm:py-20 lg:py-0">
+              <p className="mb-5 text-sm" style={{ color: '#8B1E3F', fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+                بسم الله الرحمن الرحيم
+              </p>
+              <h1 className="font-extrabold tracking-tight mb-5" style={{
+                color: '#1A1210',
+                fontSize: 'clamp(2.2rem, 5vw, 3.6rem)',
+                lineHeight: 1.06,
+              }}>
+                Svjetlo znanja<br />za srce i razum.
+              </h1>
+              <p className="leading-relaxed mb-8 max-w-sm sm:max-w-md" style={{ color: '#746860', fontSize: '1.0625rem' }}>
+                Pažljivo odabrana predavanja, hutbe i sadržaji koji inspirišu razum, oplemenjuju srce i približavaju vjeru svakodnevnici.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Link href="/videos"
+                  className="inline-flex items-center gap-2 font-semibold text-sm px-6 py-3 text-white transition-opacity hover:opacity-90"
+                  style={{ background: '#8B1E3F', borderRadius: 8 }}>
+                  <Play size={15} fill="currentColor" />
+                  Gledaj predavanja
+                  <ArrowRight size={14} />
+                </Link>
+                <Link href="/blog"
+                  className="inline-flex items-center gap-2 font-medium text-sm px-6 py-3 transition-colors hover:bg-warm-200"
+                  style={{ border: '1.5px solid #CDB8A6', borderRadius: 8, color: '#5A4F49' }}>
+                  <BookOpen size={15} />
+                  Čitaj blog
+                </Link>
+              </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-6 mt-12"
-              style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 24 }}>
-              {[
-                { href: 'https://www.youtube.com/@misbah_ba',    Icon: Youtube,    label: 'YouTube' },
-                { href: 'https://www.instagram.com/misbah_bih/', Icon: Instagram,  label: 'Instagram' },
-                { href: 'https://www.tiktok.com/@misbah_ba',     Icon: TikTokIcon, label: 'TikTok' },
-                { href: 'https://www.facebook.com/MisbahBIH/',   Icon: Facebook,   label: 'Facebook' },
-              ].map(s => (
-                <a key={s.href} href={s.href} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 font-mono text-xs tracking-wide transition-opacity hover:opacity-100"
-                  style={{ color: 'rgba(255,255,255,0.45)' }}>
-                  <s.Icon size={13} /> {s.label}
-                </a>
-              ))}
+            {/* Right - decorative panel (replace src with /hero.jpg when image is ready) */}
+            <div className="hidden lg:block relative overflow-hidden" style={{ minHeight: 580 }}>
+              <div className="absolute inset-0" style={{
+                background: 'linear-gradient(150deg, #F5E5C8 0%, #E8C87A 42%, #C89848 80%, #B07830 100%)',
+              }} />
+              <div className="absolute inset-0 opacity-[0.07]" style={{
+                backgroundImage: 'radial-gradient(circle, #3F2010 1.5px, transparent 1.5px)',
+                backgroundSize: '26px 26px',
+              }} />
+              <div className="absolute inset-0" style={{
+                background: 'radial-gradient(ellipse at 58% 42%, rgba(255,228,140,0.5) 0%, transparent 58%)',
+              }} />
+              {/* Arabic watermark */}
+              <div className="absolute inset-0 flex items-center justify-center select-none pointer-events-none" aria-hidden="true">
+                <span style={{ fontSize: 420, color: 'rgba(139,30,63,0.055)', fontFamily: 'Georgia, serif', lineHeight: 1 }}>م</span>
+              </div>
+              {/* Soft left fade to match bg */}
+              <div className="absolute left-0 inset-y-0 w-20 pointer-events-none" style={{
+                background: 'linear-gradient(to right, #FAF7F2, transparent)',
+              }} />
             </div>
+
           </div>
         </div>
-
-        {/* Straight fade — no wave — to body background */}
-        <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none"
-          style={{ background: 'linear-gradient(to bottom, transparent, #F5F2EF)' }} />
       </section>
 
       {/* ── Latest Predavanja ──────────────────────────────────────────── */}
@@ -238,7 +236,7 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* ── Social CTA — warm beige, NOT black ─────────────────────────── */}
+      {/* ── Social CTA - warm beige, NOT black ─────────────────────────── */}
       <section style={{ background: '#E7D6C7', borderTop: '1px solid #CDB8A6' }} className="py-20">
         <div className="max-w-2xl mx-auto px-6 text-center">
           <p className="font-mono text-[11px] uppercase tracking-widest mb-4" style={{ color: '#8B1E3F' }}>

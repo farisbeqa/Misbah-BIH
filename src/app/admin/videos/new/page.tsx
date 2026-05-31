@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useRef, useCallback, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -411,7 +411,7 @@ function UploadMode({ initialCategory = 'predavanja' }: { initialCategory?: stri
           <div className="flex items-center justify-between py-1">
             <div>
               <p className="font-semibold text-gray-700 text-sm">Kratki sadržaj (Short / Reel)</p>
-              <p className="text-gray-400 text-xs mt-0.5">Vertikalni format — prikazuje se kao short</p>
+              <p className="text-gray-400 text-xs mt-0.5">Vertikalni format - prikazuje se kao short</p>
             </div>
             <button onClick={() => setIsShortForm(!isShortForm)}
               className={`relative w-11 h-6 rounded-full transition-colors ${isShortForm ? 'bg-brand' : 'bg-gray-200'}`}>

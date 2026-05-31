@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation'
+﻿import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { prisma } from '@/lib/db'
@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: PageProps) {
   try {
     const post = await prisma.blogPost.findUnique({ where: { id: parseInt(params.id) } })
     if (!post) return { title: 'Post nije pronađen' }
-    return { title: `${post.title} — Misbah EDU`, description: post.content.slice(0, 160) }
+    return { title: `${post.title} - Misbah EDU`, description: post.content.slice(0, 160) }
   } catch { return { title: 'Misbah EDU' } }
 }
 
@@ -72,7 +72,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             style={{ background: 'linear-gradient(to right, #8B1E3F, #C8A96B40, transparent)' }} />
         </header>
 
-        {/* Body — premium reading experience */}
+        {/* Body - premium reading experience */}
         <div className="prose-blog">
           {post.content.split('\n').map((line, i) =>
             line.trim()

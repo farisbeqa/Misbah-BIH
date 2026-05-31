@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import { Manrope, IBM_Plex_Mono } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar'
@@ -22,7 +22,7 @@ const siteUrl = 'https://www.misbah-edu.com'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: 'Misbah EDU — Islamska predavanja i sadržaj',
+  title: 'Misbah EDU - Islamska predavanja i sadržaj',
   description: 'Islamska predavanja, hutbe i sadržaj efendije Hamde Solo, imama džamije Carina, Sarajevo.',
   keywords: 'Misbah EDU, islamska predavanja, hutba, Hamdo Solo, Sarajevo, džamija Carina',
   icons: {
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     apple: '/logo.jpg',
   },
   openGraph: {
-    title: 'Misbah EDU — Islamska predavanja i sadržaj',
+    title: 'Misbah EDU - Islamska predavanja i sadržaj',
     description: 'Islamska predavanja, hutbe i sadržaj efendije Hamde Solo, imama džamije Carina, Sarajevo.',
     siteName: 'Misbah EDU',
     images: [{ url: '/logo.jpg' }],

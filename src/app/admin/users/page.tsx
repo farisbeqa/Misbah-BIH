@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { ArrowLeft, Calendar, MessageSquare, Heart, Users } from 'lucide-react'
 import { requireAuth } from '@/lib/auth'
@@ -53,7 +53,7 @@ export default async function AdminUsersPage() {
           </div>
         ) : (
           <div className="bg-white rounded-2xl border border-zinc-100 shadow-card overflow-hidden">
-            {/* Desktop header — hidden on mobile */}
+            {/* Desktop header - hidden on mobile */}
             <div className="hidden sm:grid sm:grid-cols-12 gap-3 px-4 py-2.5 bg-zinc-50 border-b border-zinc-100 text-xs font-semibold text-zinc-400 uppercase tracking-wider">
               <div className="col-span-1">#</div>
               <div className="col-span-4">Korisnik</div>

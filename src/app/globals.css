@@ -1,4 +1,4 @@
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -19,7 +19,7 @@ body {
   background-size: 80px 80px;
 }
 
-/* ── Radial glow — tuned for burgundy hero bg ───────────────────────── */
+/* ── Radial glow - tuned for burgundy hero bg ───────────────────────── */
 .hero-glow {
   background:
     radial-gradient(ellipse 65% 50% at 10% 70%, rgba(200,169,107,0.18) 0%, transparent 62%),

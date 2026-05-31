@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation'
+﻿import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Calendar, MapPin } from 'lucide-react'
 import { prisma } from '@/lib/db'
@@ -10,7 +10,7 @@ interface PageProps { params: { id: string } }
 export async function generateMetadata({ params }: PageProps) {
   try {
     const a = await prisma.activity.findUnique({ where: { id: parseInt(params.id) } })
-    return a ? { title: `${a.title} — Misbah EDU` } : { title: 'Misbah EDU' }
+    return a ? { title: `${a.title} - Misbah EDU` } : { title: 'Misbah EDU' }
   } catch { return { title: 'Misbah EDU' } }
 }
 

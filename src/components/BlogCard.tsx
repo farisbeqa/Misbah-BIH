@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import Link from 'next/link'
 import { FileText, ArrowRight } from 'lucide-react'
 
@@ -23,7 +23,7 @@ export default function BlogCard({ id, title, content, imageUrl, createdAt }: Bl
         className="h-full flex flex-col shadow-card group-hover:shadow-card-hover group-hover:-translate-y-0.5 transition-all duration-200 overflow-hidden"
         style={{ background: '#FAF7F2', border: '1px solid #E8E1DB', borderRadius: 8 }}
       >
-        {/* Cover — 8px padding, 4px inner radius */}
+        {/* Cover - 8px padding, 4px inner radius */}
         <div className="p-2 flex-shrink-0">
           <div className="overflow-hidden" style={{ borderRadius: 4, height: 168 }}>
             {imageUrl ? (
@@ -39,8 +39,8 @@ export default function BlogCard({ id, title, content, imageUrl, createdAt }: Bl
           </div>
         </div>
 
-        {/* Content — strict bounds */}
-        <div className="px-4 pb-4 flex flex-col overflow-hidden">
+        {/* Content - strict bounds */}
+        <div className="px-4 pt-3 pb-4 flex flex-col overflow-hidden">
           <time className="font-mono text-[11px] block mb-1.5 tracking-wide flex-shrink-0" style={{ color: '#A94A61' }}>
             {formatDate(createdAt)}
           </time>
@@ -50,7 +50,7 @@ export default function BlogCard({ id, title, content, imageUrl, createdAt }: Bl
             {title}
           </h3>
 
-          {/* Body excerpt — 3 lines max */}
+          {/* Body excerpt - 3 lines max */}
           <p className="text-sm leading-relaxed line-clamp-3 overflow-hidden"
             style={{ color: '#978A81' }}>
             {content.replace(/\n+/g, ' ').trim()}

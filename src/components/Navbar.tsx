@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
@@ -62,7 +62,7 @@ export default function Navbar() {
 
   if (pathname.startsWith('/admin')) return null
 
-  // Burgundy navbar — warm and premium, not black
+  // Burgundy navbar - warm and premium, not black
   const navBg = '#5E1028'
   const navBorder = 'rgba(255,255,255,0.08)'
 

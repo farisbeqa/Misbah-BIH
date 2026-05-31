@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import {
   Plus, Play, BookOpen, ExternalLink, Youtube, Instagram, Facebook,
@@ -206,7 +206,7 @@ export default async function AdminDashboard() {
           ))}
         </div>
 
-        {/* Quick actions — one button per section */}
+        {/* Quick actions - one button per section */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10">
           {videoSections.map(s => (
             <Link key={s.cat} href={`/admin/videos/new?category=${s.cat}`}

@@ -1,7 +1,7 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { ArrowLeft, Mail, Phone } from 'lucide-react'
 
-export const metadata = { title: 'Kontakt — Misbah EDU' }
+export const metadata = { title: 'Kontakt - Misbah EDU' }
 
 // ── Ažurirajte kontakt podatke ovdje ──────────────────────────────────────
 const KONTAKT = {

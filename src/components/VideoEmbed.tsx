@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEffect } from 'react'
 import { ExternalLink, Facebook, Instagram } from 'lucide-react'
@@ -81,7 +81,7 @@ export default function VideoEmbed({ platform, embedUrl, isShortForm, originalUr
     )
   }
 
-  // ── Instagram — blockquote embed ─────────────────────────────────────────
+  // ── Instagram - blockquote embed ─────────────────────────────────────────
   if (platform === 'instagram') {
     const shortcode = embedUrl.match(/\/p\/([A-Za-z0-9_-]+)\//)?.[1]
     const postUrl = shortcode ? `https://www.instagram.com/p/${shortcode}/` : originalUrl
@@ -124,7 +124,7 @@ export default function VideoEmbed({ platform, embedUrl, isShortForm, originalUr
     )
   }
 
-  // ── Uploaded video — HTML5 player ────────────────────────────────────────
+  // ── Uploaded video - HTML5 player ────────────────────────────────────────
   if (platform === 'upload') {
     return (
       <div className={`flex ${isShortForm ? 'justify-center' : ''}`}>
