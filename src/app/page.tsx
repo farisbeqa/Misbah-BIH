@@ -33,65 +33,67 @@ export default async function HomePage() {
     <div>
 
       {/* Hero */}
-      <section style={{ background: '#FAF7F2' }} className="overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2" style={{ minHeight: 580 }}>
+      <section className="bg-white overflow-hidden">
+        <div className="flex flex-col lg:flex-row">
 
-            {/* Left - text */}
-            <div className="flex flex-col justify-center px-6 sm:px-10 lg:px-14 xl:px-20 py-16 sm:py-20 lg:py-0">
-              <p className="mb-5 text-sm" style={{ color: '#8B1E3F', fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+          {/* Left - text panel */}
+          <div
+            className="flex flex-col justify-end gap-14 lg:gap-20 px-3 pb-10 pt-[60px] lg:px-[60px] lg:py-[104px] lg:shrink-0"
+            style={{ background: '#faf7f2', width: undefined }}
+          >
+            <div className="flex flex-col gap-2 lg:w-[678px]">
+              {/* Bismillah */}
+              <p className="font-medium text-base text-[#141110]" dir="auto">
                 بسم الله الرحمن الرحيم
               </p>
-              <h1 className="font-extrabold tracking-tight mb-5" style={{
-                color: '#1A1210',
-                fontSize: 'clamp(2.2rem, 5vw, 3.6rem)',
-                lineHeight: 1.06,
-              }}>
-                Svjetlo znanja<br />za srce i razum.
-              </h1>
-              <p className="leading-relaxed mb-8 max-w-sm sm:max-w-md" style={{ color: '#746860', fontSize: '1.0625rem' }}>
-                Pažljivo odabrana predavanja, hutbe i sadržaji koji inspirišu razum, oplemenjuju srce i približavaju vjeru svakodnevnici.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <Link href="/videos"
-                  className="inline-flex items-center gap-2 font-semibold text-sm px-6 py-3 text-white transition-opacity hover:opacity-90"
-                  style={{ background: '#8B1E3F', borderRadius: 8 }}>
-                  <Play size={15} fill="currentColor" />
-                  Gledaj predavanja
-                  <ArrowRight size={14} />
-                </Link>
-                <Link href="/blog"
-                  className="inline-flex items-center gap-2 font-medium text-sm px-6 py-3 transition-colors hover:bg-warm-200"
-                  style={{ border: '1.5px solid #CDB8A6', borderRadius: 8, color: '#5A4F49' }}>
-                  <BookOpen size={15} />
-                  Čitaj blog
-                </Link>
+              {/* Title + description */}
+              <div className="flex flex-col gap-5 lg:gap-6 mt-2">
+                <h1
+                  className="font-semibold leading-[1.3] text-[#141110] tracking-[-0.28px] lg:tracking-[-1.04px]"
+                  style={{ fontSize: 'clamp(1.75rem, 4vw, 3.25rem)' }}
+                >
+                  Svjetlo znanja za srce i razum.
+                </h1>
+                <p className="text-[#5a4f49] leading-relaxed text-base lg:text-[18px] lg:tracking-[-0.18px]">
+                  Pažljivo odabrana predavanja, hutbe i sadržaji koji inspirišu razum, oplemenjuju srce i približavaju vjeru svakodnevnici.
+                </p>
               </div>
             </div>
 
-            {/* Right - decorative panel (replace src with /hero.jpg when image is ready) */}
-            <div className="hidden lg:block relative overflow-hidden" style={{ minHeight: 580 }}>
-              <div className="absolute inset-0" style={{
-                background: 'linear-gradient(150deg, #F5E5C8 0%, #E8C87A 42%, #C89848 80%, #B07830 100%)',
-              }} />
-              <div className="absolute inset-0 opacity-[0.07]" style={{
-                backgroundImage: 'radial-gradient(circle, #3F2010 1.5px, transparent 1.5px)',
-                backgroundSize: '26px 26px',
-              }} />
-              <div className="absolute inset-0" style={{
-                background: 'radial-gradient(ellipse at 58% 42%, rgba(255,228,140,0.5) 0%, transparent 58%)',
-              }} />
-              {/* Arabic watermark */}
-              <div className="absolute inset-0 flex items-center justify-center select-none pointer-events-none" aria-hidden="true">
-                <span style={{ fontSize: 420, color: 'rgba(139,30,63,0.055)', fontFamily: 'Georgia, serif', lineHeight: 1 }}>م</span>
-              </div>
-              {/* Soft left fade to match bg */}
-              <div className="absolute left-0 inset-y-0 w-20 pointer-events-none" style={{
-                background: 'linear-gradient(to right, #FAF7F2, transparent)',
-              }} />
+            {/* Buttons */}
+            <div className="flex flex-wrap gap-4 items-start">
+              <Link
+                href="/videos"
+                className="inline-flex items-center gap-1 text-white text-base leading-[1.5] pl-8 pr-6 py-3 hover:opacity-90 transition-opacity"
+                style={{ background: '#8b1e3f' }}
+              >
+                Gledaj predavanja
+                <svg className="w-6 h-6 flex-shrink-0" fill="none" viewBox="0 0 11.5 11.5">
+                  <path d="M0.75 10.75L10.75 0.75M10.75 10.75V0.75H0.75" stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                </svg>
+              </Link>
+              <Link
+                href="/blog"
+                className="inline-flex items-center justify-center px-6 py-3 text-[#8b1e3f] text-base leading-[1.5] relative hover:opacity-75 transition-opacity"
+                style={{ border: '1px solid #8b1e3f' }}
+              >
+                Čitaj blog
+              </Link>
             </div>
-
           </div>
+
+          {/* Right - hero image (desktop: fills remaining width; mobile: fixed height below text) */}
+          <div className="relative overflow-hidden h-[326px] lg:h-auto lg:flex-1 lg:self-stretch">
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/hero.png"
+                alt=""
+                className="absolute left-0 max-w-none w-full lg:h-[134.25%] lg:-top-[34.32%] h-[154.19%] -top-[54.14%]"
+              />
+            </div>
+          </div>
+
         </div>
       </section>
 
