@@ -53,7 +53,7 @@ export default function Footer() {
               Navigacija
             </p>
             <ul className="space-y-2.5">
-              {[['/', 'Početna'], ['/videos', 'Predavanja'], ['/kuran', "Kur'an"], ['/podcasts', 'Podcasts'], ['/blog', 'Blog'], ['/donacije', 'Donacije']].map(([href, label]) => (
+              {[['/', 'Početna'], ['/videos', 'Predavanja'], ['/kuran', "Kur'an"], ['/ilahije', 'Ilahije'], ['/zikrovi', 'Zikrovi'], ['/podcasts', 'Podcasts'], ['/aktivnosti', 'Aktivnosti'], ['/blog', 'Blog'], ['/o-nama', 'O Nama'], ['/donacije', 'Donacije']].map(([href, label]) => (
                 <li key={href}>
                   <Link href={href} className="text-sm transition-colors hover:underline"
                     style={{ color: LINK }}>

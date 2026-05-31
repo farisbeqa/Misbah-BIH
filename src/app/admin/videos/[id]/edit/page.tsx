@@ -9,6 +9,8 @@ const CATEGORIES = [
   { key: 'predavanja', label: 'Predavanje' },
   { key: 'kuran',      label: "Kur'an / Učanje" },
   { key: 'podcast',    label: 'Podcast' },
+  { key: 'ilahije',    label: 'Ilahije i kaside' },
+  { key: 'zikrovi',    label: 'Zikrovi i dove' },
 ]
 
 export default function EditVideoPage() {

@@ -34,7 +34,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     if (description !== undefined) updateData.description = description
     if (published !== undefined) updateData.published = published
     if (thumbnailUrl !== undefined) updateData.thumbnailUrl = thumbnailUrl || null
-    const validCats = ['predavanja', 'kuran', 'podcast']
+    const validCats = ['predavanja', 'kuran', 'podcast', 'ilahije', 'zikrovi']
     if (category !== undefined && validCats.includes(category)) updateData.category = category
 
     if (url) {

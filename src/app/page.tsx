@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight, Youtube, Instagram, Facebook, Play, BookOpen } from 'lucide-react'
+import { ArrowRight, Youtube, Instagram, Facebook, Play, BookOpen, MapPin } from 'lucide-react'
 import { prisma } from '@/lib/db'
 
 export const dynamic = 'force-dynamic'
@@ -14,18 +14,19 @@ const TikTokIcon = ({ size = 16 }: { size?: number }) => (
 
 async function getData() {
   try {
-    const [predavanja, kuran, podcasts, posts] = await Promise.all([
+    const [predavanja, kuran, podcasts, posts, activities] = await Promise.all([
       prisma.video.findMany({ where: { published: true, category: 'predavanja' }, orderBy: { createdAt: 'desc' }, take: 6 }),
       prisma.video.findMany({ where: { published: true, category: 'kuran' }, orderBy: { createdAt: 'desc' }, take: 3 }),
       prisma.video.findMany({ where: { published: true, category: 'podcast' }, orderBy: { createdAt: 'desc' }, take: 3 }),
       prisma.blogPost.findMany({ where: { published: true }, orderBy: { createdAt: 'desc' }, take: 3 }),
+      prisma.activity.findMany({ where: { published: true }, orderBy: { date: 'desc' }, take: 3 }),
     ])
-    return { predavanja, kuran, podcasts, posts }
-  } catch { return { predavanja: [], kuran: [], podcasts: [], posts: [] } }
+    return { predavanja, kuran, podcasts, posts, activities }
+  } catch { return { predavanja: [], kuran: [], podcasts: [], posts: [], activities: [] } }
 }
 
 export default async function HomePage() {
-  const { predavanja, kuran, podcasts, posts } = await getData()
+  const { predavanja, kuran, podcasts, posts, activities } = await getData()
 
   return (
     <div>
@@ -193,6 +194,49 @@ export default async function HomePage() {
           )}
         </div>
       </section>
+
+      <div style={{ height: 1, background: '#D6CCC3', margin: '0 2rem' }} />
+
+      {/* ── Latest Aktivnosti ───────────────────────────────────────────── */}
+      {activities.length > 0 && (
+        <section style={{ background: '#F5F2EF' }} className="py-20 sm:py-24 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <SectionHeader eyebrow="Zajednica" title="Aktivnosti" href="/aktivnosti" show={true} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {activities.map(a => (
+                <Link key={a.id} href={`/aktivnosti/${a.id}`} className="group block">
+                  <article className="h-full flex flex-col overflow-hidden transition-all duration-200 group-hover:-translate-y-0.5 shadow-card group-hover:shadow-card-hover"
+                    style={{ background: '#FAF7F2', border: '1px solid #E8E1DB', borderRadius: 8 }}>
+                    {a.imageUrl ? (
+                      <div className="overflow-hidden flex-shrink-0" style={{ borderRadius: '8px 8px 0 0', aspectRatio: '16/9' }}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={a.imageUrl} alt={a.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                      </div>
+                    ) : (
+                      <div className="flex-shrink-0 flex items-center justify-center" style={{ borderRadius: '8px 8px 0 0', aspectRatio: '16/9', background: 'linear-gradient(135deg,#8B1E3F,#5E1028)' }}>
+                        <MapPin size={32} className="text-white/40" />
+                      </div>
+                    )}
+                    <div className="px-4 py-4">
+                      <h3 className="font-bold text-[15px] leading-snug group-hover:text-brand transition-colors line-clamp-2" style={{ color: '#241F1D' }}>
+                        {a.title}
+                      </h3>
+                      <p className="text-sm line-clamp-2 mt-1.5" style={{ color: '#978A81' }}>
+                        {a.content.replace(/\n+/g, ' ').trim()}
+                      </p>
+                    </div>
+                  </article>
+                </Link>
+              ))}
+            </div>
+            <div className="mt-10 text-center">
+              <Link href="/aktivnosti" className="inline-flex items-center gap-2 font-semibold text-sm transition-colors text-brand hover:text-brand-light">
+                Vidi sve aktivnosti <ArrowRight size={14} />
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── Social CTA — warm beige, NOT black ─────────────────────────── */}
       <section style={{ background: '#E7D6C7', borderTop: '1px solid #CDB8A6' }} className="py-20">

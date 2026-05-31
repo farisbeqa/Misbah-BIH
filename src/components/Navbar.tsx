@@ -19,8 +19,12 @@ const navLinks = [
   { href: '/', label: 'Početna' },
   { href: '/videos', label: 'Predavanja' },
   { href: '/kuran', label: "Kur'an" },
+  { href: '/ilahije', label: 'Ilahije' },
+  { href: '/zikrovi', label: 'Zikrovi' },
   { href: '/podcasts', label: 'Podcasts' },
+  { href: '/aktivnosti', label: 'Aktivnosti' },
   { href: '/blog', label: 'Blog' },
+  { href: '/o-nama', label: 'O Nama' },
   { href: '/donacije', label: 'Donacije' },
 ]
 

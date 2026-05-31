@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
     if (videoInfo.platform === 'unknown')
       return NextResponse.json({ error: 'Nepodržana platforma. Koristite YouTube, TikTok ili Facebook.' }, { status: 400 })
 
-    const validCategories = ['predavanja', 'kuran', 'podcast']
+    const validCategories = ['predavanja', 'kuran', 'podcast', 'ilahije', 'zikrovi']
     const resolvedCategory = validCategories.includes(category) ? category : 'predavanja'
 
     const video = await prisma.video.create({
