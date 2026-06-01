@@ -32,68 +32,105 @@ export default async function HomePage() {
   return (
     <div>
 
-      {/* Hero */}
-      <section className="bg-white overflow-hidden">
-        <div className="flex flex-col lg:flex-row">
-
-          {/* Left - text panel */}
-          <div
-            className="flex flex-col justify-end gap-14 lg:gap-20 px-3 pb-10 pt-[60px] lg:px-[60px] lg:py-[104px] lg:shrink-0"
-            style={{ background: '#faf7f2', width: undefined }}
-          >
-            <div className="flex flex-col gap-2 lg:w-[678px]">
-              {/* Bismillah */}
-              <p className="font-medium text-base text-[#141110]" dir="auto">
+      {/* Hero - Desktop */}
+      <section className="hidden lg:block bg-white px-5 pb-5">
+        <div className="flex items-stretch w-full max-w-[1400px] mx-auto">
+          {/* Left: cream content panel */}
+          <div className="bg-[#faf7f2] flex flex-col justify-end gap-20 shrink-0"
+            style={{ width: '57%', paddingLeft: 60, paddingRight: 60, paddingTop: 104, paddingBottom: 104 }}>
+            {/* Bismillah */}
+            <div className="flex flex-col gap-2">
+              <p className="text-[#141110] text-[16px] text-center"
+                dir="rtl" style={{ fontFamily: "Manrope, 'Noto Sans Arabic', sans-serif", fontWeight: 500 }}>
                 بسم الله الرحمن الرحيم
               </p>
-              {/* Title + description */}
-              <div className="flex flex-col gap-5 lg:gap-6 mt-2">
-                <h1
-                  className="font-semibold leading-[1.3] text-[#141110] tracking-[-0.28px] lg:tracking-[-1.04px]"
-                  style={{ fontSize: 'clamp(1.75rem, 4vw, 3.25rem)' }}
-                >
+              <div className="flex flex-col gap-6 mt-2">
+                <h1 className="text-[#141110]"
+                  style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 600,
+                    fontSize: 'clamp(28px, 3.2vw, 52px)', lineHeight: 1.3,
+                    letterSpacing: 'clamp(-0.28px, -0.08vw, -1.04px)' }}>
                   Svjetlo znanja za srce i razum.
                 </h1>
-                <p className="text-[#5a4f49] leading-relaxed text-base lg:text-[18px] lg:tracking-[-0.18px]">
+                <p className="text-[#5a4f49]"
+                  style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 400,
+                    fontSize: 'clamp(15px, 1.2vw, 18px)', lineHeight: 1.5, letterSpacing: '-0.18px' }}>
                   Pažljivo odabrana predavanja, hutbe i sadržaji koji inspirišu razum, oplemenjuju srce i približavaju vjeru svakodnevnici.
                 </p>
               </div>
             </div>
-
             {/* Buttons */}
-            <div className="flex flex-wrap gap-4 items-start">
-              <Link
-                href="/videos"
-                className="inline-flex items-center gap-1 text-white text-base leading-[1.5] pl-8 pr-6 py-3 hover:opacity-90 transition-opacity"
-                style={{ background: '#8b1e3f' }}
-              >
+            <div className="flex gap-4 items-center flex-wrap">
+              <Link href="/predavanja/duga"
+                className="bg-[#8b1e3f] text-white flex items-center gap-1 pl-8 pr-6 py-3 text-[16px] hover:opacity-90 transition-opacity"
+                style={{ fontFamily: 'Manrope, sans-serif' }}>
                 Gledaj predavanja
-                <svg className="w-6 h-6 flex-shrink-0" fill="none" viewBox="0 0 11.5 11.5">
-                  <path d="M0.75 10.75L10.75 0.75M10.75 10.75V0.75H0.75" stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
-                </svg>
+                <span className="w-6 h-6 flex items-center justify-center flex-shrink-0">
+                  <svg width="12" height="12" viewBox="0 0 11.5 11.5" fill="none">
+                    <path d="M0.75 10.75L10.75 0.75M10.75 10.75V0.75H0.75" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </span>
               </Link>
-              <Link
-                href="/blog"
-                className="inline-flex items-center justify-center px-6 py-3 text-[#8b1e3f] text-base leading-[1.5] relative hover:opacity-75 transition-opacity"
-                style={{ border: '1px solid #8b1e3f' }}
-              >
+              <Link href="/blog"
+                className="border border-[#8b1e3f] text-[#8b1e3f] px-6 py-3 text-[16px] hover:bg-[#8b1e3f] hover:text-white transition-colors"
+                style={{ fontFamily: 'Manrope, sans-serif' }}>
                 Čitaj blog
               </Link>
             </div>
           </div>
+          {/* Right: hero image */}
+          <div className="flex-1 relative overflow-hidden" style={{ minHeight: 500 }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/hero.png" alt=""
+              className="absolute w-full object-cover object-center"
+              style={{ top: '-34.32%', height: '134.25%' }} />
+          </div>
+        </div>
+      </section>
 
-          {/* Right - hero image (desktop: fills remaining width; mobile: fixed height below text) */}
-          <div className="relative overflow-hidden h-[326px] lg:h-auto lg:flex-1 lg:self-stretch">
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/hero.png"
-                alt=""
-                className="absolute left-0 max-w-none w-full lg:h-[134.25%] lg:-top-[34.32%] h-[154.19%] -top-[54.14%]"
-              />
+      {/* Hero - Mobile */}
+      <section className="lg:hidden bg-white px-2 pb-2">
+        <div className="flex flex-col w-full">
+          <div className="bg-[#faf7f2] px-3 flex flex-col gap-14"
+            style={{ paddingTop: 60, paddingBottom: 40 }}>
+            <div className="flex flex-col gap-2">
+              <p className="text-[#141110] text-[16px] text-center"
+                dir="rtl" style={{ fontFamily: "Manrope, 'Noto Sans Arabic', sans-serif", fontWeight: 500 }}>
+                بسم الله الرحمن الرحيم
+              </p>
+              <div className="flex flex-col gap-5 mt-2">
+                <h1 className="text-[#141110]"
+                  style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 600,
+                    fontSize: 'clamp(24px, 7vw, 32px)', lineHeight: 1.3, letterSpacing: '-0.28px' }}>
+                  Svjetlo znanja za srce i razum.
+                </h1>
+                <p className="text-[#5a4f49] text-[15px] leading-relaxed"
+                  style={{ fontFamily: 'Manrope, sans-serif' }}>
+                  Pažljivo odabrana predavanja, hutbe i sadržaji koji inspirišu razum, oplemenjuju srce i približavaju vjeru svakodnevnici.
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-4 items-center flex-wrap">
+              <Link href="/predavanja/duga"
+                className="bg-[#8b1e3f] text-white flex items-center gap-1 pl-7 pr-5 py-3 text-[15px] hover:opacity-90 transition-opacity"
+                style={{ fontFamily: 'Manrope, sans-serif' }}>
+                Gledaj predavanja
+                <svg width="12" height="12" viewBox="0 0 11.5 11.5" fill="none">
+                  <path d="M0.75 10.75L10.75 0.75M10.75 10.75V0.75H0.75" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
+              <Link href="/blog"
+                className="border border-[#8b1e3f] text-[#8b1e3f] px-5 py-3 text-[15px] hover:bg-[#8b1e3f] hover:text-white transition-colors"
+                style={{ fontFamily: 'Manrope, sans-serif' }}>
+                Čitaj blog
+              </Link>
             </div>
           </div>
-
+          <div className="relative overflow-hidden w-full" style={{ height: 326 }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/hero.png" alt=""
+              className="absolute w-full object-cover"
+              style={{ top: '-54%', height: '154%' }} />
+          </div>
         </div>
       </section>
 

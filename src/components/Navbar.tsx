@@ -4,51 +4,37 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { Menu, X, Youtube, Instagram, Facebook, LogOut, LogIn, UserPlus, ChevronDown } from 'lucide-react'
+import { Menu, X, ChevronDown, LogOut, LogIn, UserPlus } from 'lucide-react'
 import AuthModal from './AuthModal'
-
-const TikTokIcon = ({ size = 16 }: { size?: number }) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: size, height: size }}>
-    <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.25 8.25 0 004.84 1.55V6.79a4.85 4.85 0 01-1.07-.1z" />
-  </svg>
-)
 
 interface AuthUser { id: number; username: string }
 
-// Predavanja has its own dropdown - not in this array
 const navLinks = [
-  { href: '/kuran', label: "Kur'an" },
-  { href: '/zikrovi', label: 'Zikrovi' },
-  { href: '/ilahije', label: 'Ilahije' },
-  { href: '/podcasts', label: 'Podcasts' },
+  { href: '/kuran',      label: "Kur'an" },
+  { href: '/zikrovi',    label: 'Zikrovi' },
+  { href: '/ilahije',    label: 'Ilahije' },
+  { href: '/podcasts',   label: 'Podcasts' },
   { href: '/aktivnosti', label: 'Aktivnosti' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/o-nama', label: 'O Nama' },
-  { href: '/donacije', label: 'Donacije' },
+  { href: '/blog',       label: 'Blog' },
+  { href: '/o-nama',     label: 'O Nama' },
+  { href: '/donacije',   label: 'Donacije' },
 ]
 
 const mobileLinks = [
-  { href: '/', label: 'Početna' },
-  { href: '/predavanja/duga', label: 'Duga predavanja' },
+  { href: '/',                  label: 'Početna' },
+  { href: '/predavanja/duga',   label: 'Duga predavanja' },
   { href: '/predavanja/kratka', label: 'Kratka predavanja' },
   ...navLinks,
-]
-
-const socials = [
-  { href: 'https://www.youtube.com/@misbah_ba', Icon: Youtube, label: 'YouTube' },
-  { href: 'https://www.instagram.com/misbah_bih/', Icon: Instagram, label: 'Instagram' },
-  { href: 'https://www.facebook.com/MisbahBIH/', Icon: Facebook, label: 'Facebook' },
-  { href: 'https://www.tiktok.com/@misbah_ba', Icon: TikTokIcon, label: 'TikTok' },
 ]
 
 export default function Navbar() {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [predOpen, setPredOpen] = useState(false)
-  const [user, setUser] = useState<AuthUser | null>(null)
+  const [predOpen, setPredOpen]     = useState(false)
+  const [user, setUser]             = useState<AuthUser | null>(null)
   const [authChecked, setAuthChecked] = useState(false)
-  const [modalOpen, setModalOpen] = useState(false)
-  const [modalMode, setModalMode] = useState<'login' | 'register'>('login')
+  const [modalOpen, setModalOpen]   = useState(false)
+  const [modalMode, setModalMode]   = useState<'login' | 'register'>('login')
   const predRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -74,175 +60,161 @@ export default function Navbar() {
 
   if (pathname.startsWith('/admin')) return null
 
-  const navBg = '#5E1028'
-  const navBorder = 'rgba(255,255,255,0.08)'
   const isPredavanja = pathname.startsWith('/predavanja') || pathname === '/videos'
+
+  const linkStyle = (active: boolean) => ({
+    color: active ? '#8b1e3f' : '#5a4f49',
+    fontWeight: active ? 600 : 400,
+  })
 
   return (
     <>
-      <nav className="sticky top-0 z-40" style={{ background: navBg, borderBottom: `1px solid ${navBorder}` }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-8"
-          style={{ height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      {/* ── Desktop ─────────────────────────────────────────────────────── */}
+      <nav className="bg-white w-full sticky top-0 z-40 border-b border-[#ede5dc] hidden lg:flex items-center justify-between px-5 xl:px-20 py-4">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2 shrink-0 group">
+          <Image src="/logo.jpg" alt="Misbah EDU" width={48} height={48} className="rounded-lg object-cover" />
+          <span className="font-bold text-[22px] xl:text-[26px] leading-none whitespace-nowrap"
+            style={{ fontFamily: 'Manrope, sans-serif', color: '#8b1e3f' }}>
+            Misbah <span style={{ color: '#c8a96b' }}>EDU</span>
+          </span>
+        </Link>
 
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
-            <Image src="/logo.jpg" alt="Misbah EDU" width={32} height={32} className="rounded-lg object-cover" />
-            <span className="font-extrabold text-[15px] tracking-tight text-white group-hover:text-gold transition-colors">
-              Misbah <span className="text-gold">EDU</span>
-            </span>
-          </Link>
-
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-3">
-
-            {/* Predavanja dropdown */}
-            <div ref={predRef} className="relative">
-              <button
-                onClick={() => setPredOpen(v => !v)}
-                className="flex items-center gap-0.5 text-[13px] font-medium transition-colors whitespace-nowrap"
-                style={{ color: isPredavanja ? '#C8A96B' : 'rgba(255,255,255,0.65)' }}
-                onMouseEnter={e => { if (!isPredavanja) (e.currentTarget).style.color = 'white' }}
-                onMouseLeave={e => { if (!isPredavanja) (e.currentTarget).style.color = 'rgba(255,255,255,0.65)' }}
-              >
-                Predavanja
-                <ChevronDown size={13} className={`transition-transform ${predOpen ? 'rotate-180' : ''}`} />
-              </button>
-              {predOpen && (
-                <div className="absolute top-full left-0 mt-2 rounded-xl overflow-hidden shadow-xl z-50"
-                  style={{ background: '#3A0A1C', border: '1px solid rgba(255,255,255,0.1)', minWidth: 180 }}>
-                  <Link href="/predavanja/duga"
-                    onClick={() => setPredOpen(false)}
-                    className="block px-4 py-3 text-sm transition-colors hover:bg-white/10"
-                    style={{ color: pathname === '/predavanja/duga' ? '#C8A96B' : 'rgba(255,255,255,0.85)' }}>
-                    Duga predavanja
-                  </Link>
-                  <div style={{ height: 1, background: 'rgba(255,255,255,0.07)' }} />
-                  <Link href="/predavanja/kratka"
-                    onClick={() => setPredOpen(false)}
-                    className="block px-4 py-3 text-sm transition-colors hover:bg-white/10"
-                    style={{ color: pathname === '/predavanja/kratka' ? '#C8A96B' : 'rgba(255,255,255,0.85)' }}>
-                    Kratka predavanja
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {navLinks.map(link => (
-              <Link key={link.href} href={link.href}
-                className="text-[13px] font-medium transition-colors whitespace-nowrap"
-                style={{ color: pathname === link.href ? '#C8A96B' : 'rgba(255,255,255,0.65)' }}
-                onMouseEnter={e => { if (pathname !== link.href) (e.target as HTMLElement).style.color = 'white' }}
-                onMouseLeave={e => { if (pathname !== link.href) (e.target as HTMLElement).style.color = 'rgba(255,255,255,0.65)' }}>
-                {link.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Right */}
-          <div className="hidden md:flex items-center gap-5">
-            <div className="flex items-center gap-3">
-              {socials.map(s => (
-                <a key={s.href} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}
-                  className="transition-opacity hover:opacity-100 opacity-40" style={{ color: 'white' }}>
-                  <s.Icon size={15} />
-                </a>
-              ))}
-            </div>
-            <div style={{ width: 1, height: 16, background: 'rgba(255,255,255,0.15)' }} />
-            {authChecked && (
-              user ? (
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-2 text-sm" style={{ color: 'rgba(255,255,255,0.8)' }}>
-                    <div className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold"
-                      style={{ background: '#C8A96B', color: '#5E1028' }}>
-                      {user.username[0].toUpperCase()}
-                    </div>
-                    <span className="font-medium">{user.username}</span>
-                  </div>
-                  <button onClick={handleLogout}
-                    className="flex items-center gap-1 text-xs transition-opacity hover:opacity-100 opacity-50"
-                    style={{ color: 'white' }}>
-                    <LogOut size={12} /> Odjava
-                  </button>
-                </div>
-              ) : (
-                <div className="flex items-center gap-2">
-                  <button onClick={() => openModal('login')}
-                    className="text-sm font-medium transition-opacity hover:opacity-100 opacity-70 flex items-center gap-1.5"
-                    style={{ color: 'white' }}>
-                    <LogIn size={13} /> Prijava
-                  </button>
-                  <button onClick={() => openModal('register')}
-                    className="text-sm font-semibold px-4 py-2 transition-all flex items-center gap-1.5"
-                    style={{ background: '#C8A96B', color: '#5E1028', borderRadius: 8 }}>
-                    <UserPlus size={13} /> Registruj se
-                  </button>
-                </div>
-              )
+        {/* Nav links */}
+        <div className="flex items-center gap-0.5 xl:gap-1">
+          {/* Predavanja dropdown */}
+          <div ref={predRef} className="relative">
+            <button
+              onClick={() => setPredOpen(v => !v)}
+              className="flex items-center gap-0.5 px-2 py-2 text-[14px] xl:text-[15px] whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
+              style={{ fontFamily: 'Manrope, sans-serif', ...linkStyle(isPredavanja) }}
+            >
+              Predavanja
+              <ChevronDown size={13} className={`transition-transform ${predOpen ? 'rotate-180' : ''}`} />
+            </button>
+            {predOpen && (
+              <div className="absolute top-full left-0 mt-1 bg-white rounded-xl shadow-lg border border-[#ede5dc] overflow-hidden z-50"
+                style={{ minWidth: 190 }}>
+                <Link href="/predavanja/duga" onClick={() => setPredOpen(false)}
+                  className="block px-4 py-3 text-sm hover:bg-[#faf7f2] transition-colors"
+                  style={{ color: pathname === '/predavanja/duga' ? '#8b1e3f' : '#5a4f49', fontWeight: pathname === '/predavanja/duga' ? 600 : 400 }}>
+                  Duga predavanja
+                </Link>
+                <div className="border-t border-[#f0ebe4]" />
+                <Link href="/predavanja/kratka" onClick={() => setPredOpen(false)}
+                  className="block px-4 py-3 text-sm hover:bg-[#faf7f2] transition-colors"
+                  style={{ color: pathname === '/predavanja/kratka' ? '#8b1e3f' : '#5a4f49', fontWeight: pathname === '/predavanja/kratka' ? 600 : 400 }}>
+                  Kratka predavanja
+                </Link>
+              </div>
             )}
           </div>
 
-          <button onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden p-1 transition-opacity hover:opacity-100 opacity-70" style={{ color: 'white' }}>
-            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
+          {navLinks.map(link => (
+            <Link key={link.href} href={link.href}
+              className="px-2 py-2 text-[14px] xl:text-[15px] whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
+              style={{ fontFamily: 'Manrope, sans-serif', ...linkStyle(pathname === link.href) }}>
+              {link.label}
+            </Link>
+          ))}
         </div>
 
-        {/* Mobile menu */}
-        {mobileOpen && (
-          <div style={{ background: '#4A0D21', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-            <div className="px-4 py-3 space-y-0.5">
-              {mobileLinks.map(link => (
-                <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)}
-                  className="block py-2.5 px-3 rounded-lg text-sm font-medium transition-colors"
-                  style={{
-                    background: pathname === link.href ? '#C8A96B' : 'transparent',
-                    color: pathname === link.href ? '#5E1028' : 'rgba(255,255,255,0.7)',
-                  }}>
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-            <div className="flex items-center gap-4 px-7 py-3" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-              {socials.map(s => (
-                <a key={s.href} href={s.href} target="_blank" rel="noopener noreferrer"
-                  className="opacity-50 hover:opacity-100 transition-opacity" style={{ color: 'white' }}>
-                  <s.Icon size={16} />
-                </a>
-              ))}
-            </div>
-            <div className="px-4 py-3" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-              {user ? (
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-sm" style={{ color: 'rgba(255,255,255,0.8)' }}>
-                    <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold"
-                      style={{ background: '#C8A96B', color: '#5E1028' }}>
-                      {user.username[0].toUpperCase()}
-                    </div>
-                    {user.username}
+        {/* Auth */}
+        <div className="flex items-center gap-3 shrink-0">
+          {authChecked && (
+            user ? (
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 text-sm" style={{ color: '#5a4f49' }}>
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white"
+                    style={{ background: '#8b1e3f' }}>
+                    {user.username[0].toUpperCase()}
                   </div>
-                  <button onClick={handleLogout} className="text-sm opacity-60" style={{ color: 'white' }}>
-                    Odjava
-                  </button>
+                  <span>{user.username}</span>
                 </div>
-              ) : (
-                <div className="flex gap-2">
-                  <button onClick={() => openModal('login')}
-                    className="flex-1 py-2.5 text-sm font-medium rounded-lg"
-                    style={{ border: '1px solid rgba(255,255,255,0.2)', color: 'white' }}>
-                    Prijava
-                  </button>
-                  <button onClick={() => openModal('register')}
-                    className="flex-1 py-2.5 text-sm font-semibold rounded-lg"
-                    style={{ background: '#C8A96B', color: '#5E1028' }}>
-                    Registruj se
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
+                <button onClick={handleLogout}
+                  className="flex items-center gap-1 text-sm transition-colors hover:text-[#8b1e3f]"
+                  style={{ color: '#978a81' }}>
+                  <LogOut size={13} /> Odjava
+                </button>
+              </div>
+            ) : (
+              <>
+                <button onClick={() => openModal('register')}
+                  className="bg-[#8b1e3f] text-white px-5 xl:px-7 py-2.5 text-[14px] xl:text-[15px] hover:opacity-90 transition-opacity"
+                  style={{ fontFamily: 'Manrope, sans-serif' }}>
+                  Registruj se
+                </button>
+                <button onClick={() => openModal('login')}
+                  className="border border-[#8b1e3f] text-[#8b1e3f] px-4 xl:px-6 py-2.5 text-[14px] xl:text-[15px] hover:bg-[#8b1e3f] hover:text-white transition-colors"
+                  style={{ fontFamily: 'Manrope, sans-serif' }}>
+                  Prijava
+                </button>
+              </>
+            )
+          )}
+        </div>
       </nav>
+
+      {/* ── Mobile ──────────────────────────────────────────────────────── */}
+      <nav className="bg-white w-full sticky top-0 z-40 border-b border-[#ede5dc] lg:hidden flex items-center justify-between px-5 py-4">
+        <Link href="/" className="flex items-center gap-2 shrink-0">
+          <Image src="/logo.jpg" alt="Misbah EDU" width={36} height={36} className="rounded-lg object-cover" />
+          <span className="font-bold text-[20px] leading-none"
+            style={{ fontFamily: 'Manrope, sans-serif', color: '#8b1e3f' }}>
+            Misbah <span style={{ color: '#c8a96b' }}>EDU</span>
+          </span>
+        </Link>
+        <button onClick={() => setMobileOpen(!mobileOpen)} className="p-1" aria-label="Toggle menu">
+          {mobileOpen
+            ? <X size={22} style={{ color: '#8b1e3f' }} />
+            : (
+              <svg width="22" height="14" viewBox="0 0 20 14" fill="none">
+                <path d="M1 7H19M1 1H19M1 13H19" stroke="#8B1E3F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            )}
+        </button>
+      </nav>
+
+      {/* Mobile dropdown */}
+      {mobileOpen && (
+        <div className="lg:hidden bg-white border-b border-[#ede5dc] px-5 py-4 flex flex-col gap-0.5 sticky top-[65px] z-30 shadow-md">
+          {mobileLinks.map(link => (
+            <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)}
+              className="py-2.5 text-[15px] border-b border-[#f5f0eb] last:border-0 transition-colors hover:text-[#8b1e3f]"
+              style={{ fontFamily: 'Manrope, sans-serif', ...linkStyle(pathname === link.href) }}>
+              {link.label}
+            </Link>
+          ))}
+          <div className="flex gap-3 pt-3 mt-1">
+            {user ? (
+              <div className="flex items-center justify-between w-full">
+                <div className="flex items-center gap-2 text-sm" style={{ color: '#5a4f49' }}>
+                  <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ background: '#8b1e3f' }}>
+                    {user.username[0].toUpperCase()}
+                  </div>
+                  {user.username}
+                </div>
+                <button onClick={handleLogout} className="text-sm flex items-center gap-1" style={{ color: '#978a81' }}>
+                  <LogOut size={13} /> Odjava
+                </button>
+              </div>
+            ) : (
+              <>
+                <button onClick={() => openModal('register')}
+                  className="flex-1 bg-[#8b1e3f] text-white py-2.5 text-[14px]"
+                  style={{ fontFamily: 'Manrope, sans-serif' }}>
+                  Registruj se
+                </button>
+                <button onClick={() => openModal('login')}
+                  className="flex-1 border border-[#8b1e3f] text-[#8b1e3f] py-2.5 text-[14px]"
+                  style={{ fontFamily: 'Manrope, sans-serif' }}>
+                  Prijava
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
 
       <AuthModal open={modalOpen} mode={modalMode}
         onClose={() => setModalOpen(false)}
