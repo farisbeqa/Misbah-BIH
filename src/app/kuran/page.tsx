@@ -9,47 +9,21 @@ interface Video {
   platform: string; thumbnailUrl: string | null; isShortForm: boolean; createdAt: string
 }
 
-const FILTERS = [
-  { key: 'all',       label: 'Sve' },
-  { key: 'youtube',   label: 'YouTube' },
-  { key: 'tiktok',    label: 'TikTok' },
-  { key: 'upload',    label: 'Upload' },
-]
-
 export default function KuranPage() {
   const [videos, setVideos] = useState<Video[]>([])
-  const [filter, setFilter]   = useState('all')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    setLoading(true)
-    const base = '/api/videos?category=kuran'
-    const url  = filter === 'all' ? base : `${base}&platform=${filter}`
-    fetch(url).then(r => r.json()).then(d => { setVideos(d); setLoading(false) }).catch(() => setLoading(false))
-  }, [filter])
+    fetch('/api/videos?category=kuran')
+      .then(r => r.json()).then(d => { setVideos(d); setLoading(false) })
+      .catch(() => setLoading(false))
+  }, [])
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16" style={{ minHeight: '60vh' }}>
       <div className="mb-12">
-        <p className="font-mono text-[11px] text-brand-light uppercase tracking-widest mb-2">Učenje</p>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-warm-900 tracking-tight mb-2">Kur'an</h1>
-        <p className="text-warm-500 text-sm">Učenje i tefsir Kur'ana časnog</p>
-      </div>
-
-      <div className="flex flex-wrap gap-2 mb-10">
-        {FILTERS.map(f => (
-          <button key={f.key} onClick={() => setFilter(f.key)}
-            className="font-mono text-xs px-4 py-2 transition-all"
-            style={{
-              borderRadius: 6,
-              border: filter === f.key ? 'none' : '1px solid #D6CCC3',
-              background: filter === f.key ? '#8B1E3F' : '#EDE5DC',
-              color: filter === f.key ? '#fff' : '#5A4F49',
-              fontWeight: filter === f.key ? 600 : 400,
-            }}>
-            {f.label}
-          </button>
-        ))}
+        <p className="text-warm-500 text-sm">Učenje Kur'ana / Tilavet</p>
       </div>
 
       {loading ? (
@@ -57,7 +31,7 @@ export default function KuranPage() {
           {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className="animate-pulse" style={{ background: '#FAF7F2', border: '1px solid #E8E1DB', borderRadius: 8, overflow: 'hidden' }}>
               <div className="aspect-video bg-warm-200" />
-              <div className="px-4 py-4 space-y-2">
+              <div className="px-4 pt-3 pb-4 space-y-2">
                 <div className="h-2.5 bg-warm-200 rounded w-24" />
                 <div className="h-3.5 bg-warm-200 rounded w-3/4" />
               </div>

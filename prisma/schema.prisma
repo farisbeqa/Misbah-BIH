@@ -15,7 +15,8 @@ model Video {
   embedUrl     String
   thumbnailUrl String?
   isShortForm  Boolean   @default(false)
-  category     String    @default("predavanja") // predavanja | kuran | podcast
+  category     String    @default("predavanja") // predavanja | kuran | podcast | ilahije | zikrovi
+  topic        String?   // sura | tefsir | opste | akida | fikh | historija
   published    Boolean   @default(true)
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt

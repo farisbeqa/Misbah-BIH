@@ -40,7 +40,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm leading-relaxed max-w-xs" style={{ color: MUTED }}>
-              Islamska predavanja i sadržaj za muslimansku zajednicu u Bosni i Hercegovini.
+              Misbah EDU je platforma posvećena promociji znanja, vjere i pozitivnih društvenih vrijednosti. Kroz inspirativne priče, edukativne sadržaje i savremene medijske formate nastoji osnažiti mlade i podstaći ih na lični i duhovni razvoj.
             </p>
             <p className="font-mono text-xs mt-4 tracking-wider" style={{ color: MUTED }}>
               بسم الله الرحمن الرحيم

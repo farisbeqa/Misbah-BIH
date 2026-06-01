@@ -102,9 +102,10 @@ function VideoSection({
           ))}
           {items.length > 5 && (
             <div className="px-4 py-2.5 border-t border-zinc-100 text-center">
-              <span className="text-xs text-zinc-400">
-                + još {items.length - 5} stavki
-              </span>
+              <Link href={`/admin/videos/sve?cat=${cat}`}
+                className="text-xs text-brand hover:underline font-medium">
+                Vidi svih {items.length} stavki →
+              </Link>
             </div>
           )}
         </div>
@@ -307,7 +308,9 @@ export default async function AdminDashboard() {
               ))}
               {posts.length > 5 && (
                 <div className="px-4 py-2.5 border-t border-zinc-100 text-center">
-                  <span className="text-xs text-zinc-400">+ još {posts.length - 5} postova</span>
+                  <Link href="/admin/blog/svi" className="text-xs text-amber-500 hover:underline font-medium">
+                    Vidi svih {posts.length} postova →
+                  </Link>
                 </div>
               )}
             </div>
@@ -366,7 +369,9 @@ export default async function AdminDashboard() {
               ))}
               {activities.length > 5 && (
                 <div className="px-4 py-2.5 border-t border-zinc-100 text-center">
-                  <span className="text-xs text-zinc-400">+ još {activities.length - 5} aktivnosti</span>
+                  <Link href="/admin/activities/sve" className="text-xs hover:underline font-medium" style={{ color: '#2d6a4f' }}>
+                    Vidi svih {activities.length} aktivnosti →
+                  </Link>
                 </div>
               )}
             </div>

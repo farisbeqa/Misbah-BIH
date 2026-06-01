@@ -22,7 +22,7 @@ export default async function AktivnostiPage() {
       <div className="mb-12">
         <p className="font-mono text-[11px] text-brand-light uppercase tracking-widest mb-2">Zajednica</p>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-warm-900 tracking-tight mb-2">Aktivnosti</h1>
-        <p className="text-warm-500 text-sm">Obilaske, hikinge, posjete i događaje džemata i omladine</p>
+        <p className="text-warm-500 text-sm">Kvizovi, radionice, posjete, obilasci, volontiranje, druženja</p>
       </div>
 
       {activities.length === 0 ? (

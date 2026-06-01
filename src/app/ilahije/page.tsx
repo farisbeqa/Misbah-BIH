@@ -22,9 +22,7 @@ export default function IlahijePage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16" style={{ minHeight: '60vh' }}>
       <div className="mb-12">
-        <p className="font-mono text-[11px] text-brand-light uppercase tracking-widest mb-2">Sevdah za Allaha</p>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-warm-900 tracking-tight mb-2">Ilahije i kaside</h1>
-        <p className="text-warm-500 text-sm">Ilahije i kaside u izvođenju džemata Carina</p>
       </div>
 
       {loading ? (

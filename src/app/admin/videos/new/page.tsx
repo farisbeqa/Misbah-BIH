@@ -60,6 +60,37 @@ const CATEGORIES = [
   { key: 'zikrovi',    label: 'Zikrovi i dove' },
 ]
 
+const TOPICS = [
+  { key: 'sura',      label: 'Sura' },
+  { key: 'tefsir',    label: 'Tefsir' },
+  { key: 'opste',     label: 'Opšte teme' },
+  { key: 'akida',     label: 'Akida' },
+  { key: 'fikh',      label: 'Fikh' },
+  { key: 'historija', label: 'Historija' },
+]
+
+function TopicSelect({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  return (
+    <div className="mt-3">
+      <label className="block text-sm font-semibold text-gray-700 mb-1.5">Tema <span className="text-gray-400 font-normal">(opciono)</span></label>
+      <div className="flex gap-2 flex-wrap">
+        <button type="button" onClick={() => onChange('')}
+          className="px-3 py-1.5 rounded-lg text-sm font-medium transition-all border"
+          style={{ background: !value ? '#8B1E3F' : 'white', color: !value ? 'white' : '#5A4F49', borderColor: !value ? '#8B1E3F' : '#E8E1DB' }}>
+          Bez teme
+        </button>
+        {TOPICS.map(t => (
+          <button key={t.key} type="button" onClick={() => onChange(t.key)}
+            className="px-3 py-1.5 rounded-lg text-sm font-medium transition-all border"
+            style={{ background: value === t.key ? '#8B1E3F' : 'white', color: value === t.key ? 'white' : '#5A4F49', borderColor: value === t.key ? '#8B1E3F' : '#E8E1DB' }}>
+            {t.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function CategorySelect({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   return (
     <div>
@@ -87,6 +118,7 @@ function UrlMode({ initialCategory = 'predavanja' }: { initialCategory?: string 
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [category, setCategory] = useState(initialCategory)
+  const [topic, setTopic] = useState('')
   const [preview, setPreview] = useState<Preview | null>(null)
   const [previewLoading, setPreviewLoading] = useState(false)
   const [previewError, setPreviewError] = useState('')
@@ -114,7 +146,7 @@ function UrlMode({ initialCategory = 'predavanja' }: { initialCategory?: string 
     try {
       const res = await fetch('/api/videos', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: url.trim(), title: title.trim() || 'Bez naslova', description: description.trim() || null, category }),
+        body: JSON.stringify({ url: url.trim(), title: title.trim() || 'Bez naslova', description: description.trim() || null, category, topic: topic || null }),
       })
       const data = await res.json()
       if (res.ok) { router.push('/admin/dashboard'); router.refresh() }
@@ -188,6 +220,7 @@ function UrlMode({ initialCategory = 'predavanja' }: { initialCategory?: string 
               className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand text-sm resize-none" />
           </div>
           <CategorySelect value={category} onChange={setCategory} />
+          {category === 'predavanja' && <TopicSelect value={topic} onChange={setTopic} />}
         </div>
       )}
 
@@ -220,6 +253,7 @@ function UploadMode({ initialCategory = 'predavanja' }: { initialCategory?: stri
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [category, setCategory] = useState(initialCategory)
+  const [topic, setTopic] = useState('')
   const [isShortForm, setIsShortForm] = useState(true)
   const [dragging, setDragging] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -292,7 +326,7 @@ function UploadMode({ initialCategory = 'predavanja' }: { initialCategory?: stri
         const saveRes = await fetch('/api/videos/upload', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title: title.trim(), description: description.trim(), isShortForm, videoUrl, thumbnailUrl, category }),
+          body: JSON.stringify({ title: title.trim(), description: description.trim(), isShortForm, videoUrl, thumbnailUrl, category, topic: topic || null }),
         })
         const data = await saveRes.json()
         if (saveRes.ok) { router.push('/admin/dashboard'); router.refresh() }
@@ -406,12 +440,19 @@ function UploadMode({ initialCategory = 'predavanja' }: { initialCategory?: stri
           </div>
 
           <CategorySelect value={category} onChange={setCategory} />
+          {category === 'predavanja' && <TopicSelect value={topic} onChange={setTopic} />}
 
           {/* Short-form toggle */}
           <div className="flex items-center justify-between py-1">
             <div>
-              <p className="font-semibold text-gray-700 text-sm">Kratki sadržaj (Short / Reel)</p>
-              <p className="text-gray-400 text-xs mt-0.5">Vertikalni format - prikazuje se kao short</p>
+              <p className="font-semibold text-gray-700 text-sm">
+                {category === 'predavanja' ? 'Vrsta predavanja' : 'Kratki sadržaj (Short / Reel)'}
+              </p>
+              <p className="text-gray-400 text-xs mt-0.5">
+                {category === 'predavanja'
+                  ? (isShortForm ? 'Kratko predavanje' : 'Dugo predavanje')
+                  : 'Vertikalni format - prikazuje se kao short'}
+              </p>
             </div>
             <button onClick={() => setIsShortForm(!isShortForm)}
               className={`relative w-11 h-6 rounded-full transition-colors ${isShortForm ? 'bg-brand' : 'bg-gray-200'}`}>

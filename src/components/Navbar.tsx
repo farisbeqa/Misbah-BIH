@@ -1,10 +1,10 @@
-﻿'use client'
+'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { Menu, X, Youtube, Instagram, Facebook, LogOut, LogIn, UserPlus } from 'lucide-react'
+import { Menu, X, Youtube, Instagram, Facebook, LogOut, LogIn, UserPlus, ChevronDown } from 'lucide-react'
 import AuthModal from './AuthModal'
 
 const TikTokIcon = ({ size = 16 }: { size?: number }) => (
@@ -15,11 +15,11 @@ const TikTokIcon = ({ size = 16 }: { size?: number }) => (
 
 interface AuthUser { id: number; username: string }
 
+// Predavanja has its own dropdown - not in this array
 const navLinks = [
-  { href: '/videos', label: 'Predavanja' },
   { href: '/kuran', label: "Kur'an" },
-  { href: '/ilahije', label: 'Ilahije' },
   { href: '/zikrovi', label: 'Zikrovi' },
+  { href: '/ilahije', label: 'Ilahije' },
   { href: '/podcasts', label: 'Podcasts' },
   { href: '/aktivnosti', label: 'Aktivnosti' },
   { href: '/blog', label: 'Blog' },
@@ -29,6 +29,8 @@ const navLinks = [
 
 const mobileLinks = [
   { href: '/', label: 'Početna' },
+  { href: '/predavanja/duga', label: 'Duga predavanja' },
+  { href: '/predavanja/kratka', label: 'Kratka predavanja' },
   ...navLinks,
 ]
 
@@ -42,13 +44,23 @@ const socials = [
 export default function Navbar() {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [predOpen, setPredOpen] = useState(false)
   const [user, setUser] = useState<AuthUser | null>(null)
   const [authChecked, setAuthChecked] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
   const [modalMode, setModalMode] = useState<'login' | 'register'>('login')
+  const predRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     fetch('/api/auth/me').then(r => r.json()).then(d => { setUser(d.user); setAuthChecked(true) })
+  }, [])
+
+  useEffect(() => {
+    const handle = (e: MouseEvent) => {
+      if (predRef.current && !predRef.current.contains(e.target as Node)) setPredOpen(false)
+    }
+    document.addEventListener('mousedown', handle)
+    return () => document.removeEventListener('mousedown', handle)
   }, [])
 
   const handleLogout = async () => {
@@ -62,9 +74,9 @@ export default function Navbar() {
 
   if (pathname.startsWith('/admin')) return null
 
-  // Burgundy navbar - warm and premium, not black
   const navBg = '#5E1028'
   const navBorder = 'rgba(255,255,255,0.08)'
+  const isPredavanja = pathname.startsWith('/predavanja') || pathname === '/videos'
 
   return (
     <>
@@ -82,6 +94,39 @@ export default function Navbar() {
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-3">
+
+            {/* Predavanja dropdown */}
+            <div ref={predRef} className="relative">
+              <button
+                onClick={() => setPredOpen(v => !v)}
+                className="flex items-center gap-0.5 text-[13px] font-medium transition-colors whitespace-nowrap"
+                style={{ color: isPredavanja ? '#C8A96B' : 'rgba(255,255,255,0.65)' }}
+                onMouseEnter={e => { if (!isPredavanja) (e.currentTarget).style.color = 'white' }}
+                onMouseLeave={e => { if (!isPredavanja) (e.currentTarget).style.color = 'rgba(255,255,255,0.65)' }}
+              >
+                Predavanja
+                <ChevronDown size={13} className={`transition-transform ${predOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {predOpen && (
+                <div className="absolute top-full left-0 mt-2 rounded-xl overflow-hidden shadow-xl z-50"
+                  style={{ background: '#3A0A1C', border: '1px solid rgba(255,255,255,0.1)', minWidth: 180 }}>
+                  <Link href="/predavanja/duga"
+                    onClick={() => setPredOpen(false)}
+                    className="block px-4 py-3 text-sm transition-colors hover:bg-white/10"
+                    style={{ color: pathname === '/predavanja/duga' ? '#C8A96B' : 'rgba(255,255,255,0.85)' }}>
+                    Duga predavanja
+                  </Link>
+                  <div style={{ height: 1, background: 'rgba(255,255,255,0.07)' }} />
+                  <Link href="/predavanja/kratka"
+                    onClick={() => setPredOpen(false)}
+                    className="block px-4 py-3 text-sm transition-colors hover:bg-white/10"
+                    style={{ color: pathname === '/predavanja/kratka' ? '#C8A96B' : 'rgba(255,255,255,0.85)' }}>
+                    Kratka predavanja
+                  </Link>
+                </div>
+              )}
+            </div>
+
             {navLinks.map(link => (
               <Link key={link.href} href={link.href}
                 className="text-[13px] font-medium transition-colors whitespace-nowrap"
@@ -143,7 +188,7 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile */}
+        {/* Mobile menu */}
         {mobileOpen && (
           <div style={{ background: '#4A0D21', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
             <div className="px-4 py-3 space-y-0.5">
