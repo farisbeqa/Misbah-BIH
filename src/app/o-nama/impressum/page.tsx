@@ -5,10 +5,10 @@ import { BIOS } from '@/lib/bios'
 export const metadata = { title: 'Impressum - Misbah EDU' }
 
 const UREDNICI: { name: string; slug?: string }[] = [
-  { name: 'Hamdo Solo' },
+  { name: 'Hamdo Solo',          slug: 'hamdo-solo' },
   { name: 'Mubina Suljić Solo' },
   { name: 'Hamza Bajraktarević' },
-  { name: 'Esma Klisura', slug: 'esma-klisura' },
+  { name: 'Esma Klisura',        slug: 'esma-klisura' },
 ]
 
 const DRUSTVENE_MREZE: { name: string; slug?: string }[] = [
