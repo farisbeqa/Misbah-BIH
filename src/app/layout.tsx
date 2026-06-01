@@ -2,7 +2,7 @@
 import { Manrope, IBM_Plex_Mono } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
+import ConditionalFooter from '@/components/ConditionalFooter'
 
 const manrope = Manrope({
   subsets: ['latin'],
@@ -51,7 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen flex flex-col font-sans antialiased" style={{ background: '#F5F2EF' }}>
         <Navbar />
         <main className="flex-1">{children}</main>
-        <Footer />
+        <ConditionalFooter />
       </body>
     </html>
   )

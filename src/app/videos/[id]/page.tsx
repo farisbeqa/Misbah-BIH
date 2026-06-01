@@ -1,6 +1,6 @@
 ﻿import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, ExternalLink } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 import { prisma } from '@/lib/db'
 
 export const dynamic = 'force-dynamic'
@@ -77,17 +77,6 @@ export default async function VideoDetailPage({ params }: PageProps) {
         <div className="mb-8 p-6" style={{ background: '#FAF7F2', border: '1px solid #E8E1DB', borderRadius: 8 }}>
           <p className="font-mono text-[11px] text-warm-400 uppercase tracking-widest mb-3">Opis</p>
           <p className="text-warm-600 text-sm leading-relaxed whitespace-pre-line break-words">{video.description}</p>
-        </div>
-      )}
-
-      {/* Original link - not shown for local uploads */}
-      {video.platform !== 'upload' && (
-        <div className="flex justify-center mb-12">
-          <a href={video.url} target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 font-mono text-xs text-warm-400 hover:text-warm-700 transition-colors px-4 py-2"
-            style={{ border: '1px solid #E8E1DB', borderRadius: 6 }}>
-            <ExternalLink size={11} /> Otvori na {getPlatformLabel(video.platform)}
-          </a>
         </div>
       )}
 

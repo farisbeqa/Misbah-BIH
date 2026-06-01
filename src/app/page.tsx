@@ -33,7 +33,7 @@ export default async function HomePage() {
     <div>
 
       {/* Hero - Desktop */}
-      <section className="hidden lg:block bg-white px-5 pb-5">
+      <section className="hidden lg:block bg-[#faf7f2] px-5 pb-5">
         <div className="flex items-stretch w-full max-w-[1400px] mx-auto">
           {/* Left: cream content panel */}
           <div className="bg-[#faf7f2] flex flex-col justify-end gap-20 shrink-0"
@@ -88,7 +88,7 @@ export default async function HomePage() {
       </section>
 
       {/* Hero - Mobile */}
-      <section className="lg:hidden bg-white px-2 pb-2">
+      <section className="lg:hidden bg-[#faf7f2] px-2 pb-2">
         <div className="flex flex-col w-full">
           <div className="bg-[#faf7f2] px-3 flex flex-col gap-14"
             style={{ paddingTop: 60, paddingBottom: 40 }}>
