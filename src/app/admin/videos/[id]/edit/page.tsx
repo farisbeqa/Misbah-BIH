@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
@@ -14,8 +14,8 @@ const CATEGORIES = [
 ]
 
 const TOPICS = [
-  { key: 'sura',      label: 'Sura' },
   { key: 'tefsir',    label: 'Tefsir' },
+  { key: 'sira',      label: 'Sira' },
   { key: 'opste',     label: 'Opšte teme' },
   { key: 'akida',     label: 'Akida' },
   { key: 'fikh',      label: 'Fikh' },

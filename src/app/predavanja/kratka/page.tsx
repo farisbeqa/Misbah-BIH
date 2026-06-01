@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import { Play } from 'lucide-react'
@@ -11,8 +11,8 @@ interface Video {
 
 const TOPICS = [
   { key: 'all',       label: 'Sve' },
-  { key: 'sura',      label: 'Sura' },
   { key: 'tefsir',    label: 'Tefsir' },
+  { key: 'sira',      label: 'Sira' },
   { key: 'opste',     label: 'Opšte teme' },
   { key: 'akida',     label: 'Akida' },
   { key: 'fikh',      label: 'Fikh' },
