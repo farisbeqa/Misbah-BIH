@@ -118,10 +118,11 @@ export default async function AdminDashboard() {
   const session = await requireAuth()
   if (!session) redirect('/admin')
 
-  const [videos, posts, activities, userCount] = await Promise.all([
+  const [videos, posts, activities, galleryImages, userCount] = await Promise.all([
     prisma.video.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.blogPost.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.activity.findMany({ orderBy: { date: 'desc' } }),
+    prisma.galleryImage.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.user.count(),
   ])
 
@@ -241,6 +242,17 @@ export default async function AdminDashboard() {
             <div className="min-w-0">
               <p className="font-bold text-sm leading-tight">Aktivnosti</p>
               <p className="text-white/60 text-xs mt-0.5">{activities.length} objava</p>
+            </div>
+          </Link>
+          <Link href="/admin/gallery/new"
+            className="flex items-center gap-3 text-white p-4 rounded-2xl transition-opacity hover:opacity-90 shadow-sm"
+            style={{ background: '#0369a1' }}>
+            <div className="w-8 h-8 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+              <Plus size={18} />
+            </div>
+            <div className="min-w-0">
+              <p className="font-bold text-sm leading-tight">Galerija</p>
+              <p className="text-white/60 text-xs mt-0.5">{galleryImages.length} slika</p>
             </div>
           </Link>
         </div>
@@ -372,6 +384,55 @@ export default async function AdminDashboard() {
                   <Link href="/admin/activities/sve" className="text-xs hover:underline font-medium" style={{ color: '#2d6a4f' }}>
                     Vidi svih {activities.length} aktivnosti →
                   </Link>
+                </div>
+              )}
+            </div>
+          )}
+        </section>
+
+        {/* Gallery */}
+        <section className="mb-8">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="font-bold text-zinc-900 flex items-center gap-2">
+              <span>🖼️</span>
+              Galerija
+              <span className="text-zinc-400 font-normal text-sm">({galleryImages.length})</span>
+            </h2>
+            <div className="flex items-center gap-3">
+              <Link href="/galerija" target="_blank"
+                className="text-xs text-zinc-400 hover:text-zinc-600 flex items-center gap-1">
+                <ExternalLink size={11} /> Javna
+              </Link>
+              <Link href="/admin/gallery/new"
+                className="text-xs hover:underline flex items-center gap-1 font-medium"
+                style={{ color: '#0369a1' }}>
+                <Plus size={12} /> Dodaj
+              </Link>
+            </div>
+          </div>
+          {galleryImages.length === 0 ? (
+            <div className="bg-white rounded-2xl p-8 text-center border border-dashed border-zinc-200">
+              <span className="text-3xl block mb-2">🖼️</span>
+              <p className="text-zinc-400 text-sm">Nema slika u galeriji. Dodaj prvu.</p>
+            </div>
+          ) : (
+            <div className="bg-white rounded-2xl border border-zinc-100 shadow-card overflow-hidden">
+              {/* Image grid preview */}
+              <div className="grid grid-cols-5 sm:grid-cols-8 gap-1.5 p-3">
+                {galleryImages.slice(0, 16).map(img => (
+                  <div key={img.id} className="group relative aspect-square rounded-lg overflow-hidden"
+                    style={{ background: '#E8E1DB' }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={img.imageUrl} alt={img.title || ''} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                      <DeleteButton id={img.id} type="gallery" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {galleryImages.length > 16 && (
+                <div className="px-4 py-2.5 border-t border-zinc-100 text-center">
+                  <span className="text-xs text-zinc-400">+ još {galleryImages.length - 16} slika</span>
                 </div>
               )}
             </div>

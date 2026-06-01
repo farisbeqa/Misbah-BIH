@@ -42,9 +42,6 @@ export default function Footer() {
             <p className="text-sm leading-relaxed max-w-xs" style={{ color: MUTED }}>
               Misbah EDU je platforma posvećena promociji znanja, vjere i pozitivnih društvenih vrijednosti. Kroz inspirativne priče, edukativne sadržaje i savremene medijske formate nastoji osnažiti mlade i podstaći ih na lični i duhovni razvoj.
             </p>
-            <p className="font-mono text-xs mt-4 tracking-wider" style={{ color: MUTED }}>
-              بسم الله الرحمن الرحيم
-            </p>
           </div>
 
           {/* Nav */}
@@ -53,7 +50,7 @@ export default function Footer() {
               Navigacija
             </p>
             <ul className="space-y-2.5">
-              {[['/', 'Početna'], ['/videos', 'Predavanja'], ['/kuran', "Kur'an"], ['/ilahije', 'Ilahije'], ['/zikrovi', 'Zikrovi'], ['/podcasts', 'Podcasts'], ['/aktivnosti', 'Aktivnosti'], ['/blog', 'Blog'], ['/o-nama', 'O Nama'], ['/donacije', 'Donacije']].map(([href, label]) => (
+              {[['/', 'Početna'], ['/predavanja/duga', 'Predavanja'], ['/kuran', "Kur'an"], ['/ilahije', 'Ilahije'], ['/zikrovi', 'Zikrovi'], ['/podcasts', 'Podcasts'], ['/aktivnosti', 'Aktivnosti'], ['/galerija', 'Galerija'], ['/blog', 'Blog'], ['/o-nama', 'O Nama'], ['/donacije', 'Donacije']].map(([href, label]) => (
                 <li key={href}>
                   <Link href={href} className="text-sm transition-colors hover:underline"
                     style={{ color: LINK }}>

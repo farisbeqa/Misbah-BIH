@@ -4,49 +4,61 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { Menu, X, ChevronDown, LogOut, LogIn, UserPlus } from 'lucide-react'
+import { Menu, X, ChevronDown, LogOut } from 'lucide-react'
 import AuthModal from './AuthModal'
 
 interface AuthUser { id: number; username: string }
 
+// Links that are plain (no dropdown)
 const navLinks = [
-  { href: '/kuran',      label: "Kur'an" },
-  { href: '/zikrovi',    label: 'Zikrovi' },
-  { href: '/ilahije',    label: 'Ilahije' },
-  { href: '/podcasts',   label: 'Podcasts' },
-  { href: '/aktivnosti', label: 'Aktivnosti' },
-  { href: '/blog',       label: 'Blog' },
-  { href: '/o-nama',     label: 'O Nama' },
-  { href: '/donacije',   label: 'Donacije' },
+  { href: '/kuran',    label: "Kur'an" },
+  { href: '/zikrovi',  label: 'Zikrovi' },
+  { href: '/ilahije',  label: 'Ilahije' },
+  { href: '/podcasts', label: 'Podcasts' },
+  { href: '/blog',     label: 'Blog' },
+  { href: '/o-nama',   label: 'O Nama' },
+  { href: '/donacije', label: 'Donacije' },
 ]
 
 const mobileLinks = [
   { href: '/',                  label: 'Početna' },
   { href: '/predavanja/duga',   label: 'Duga predavanja' },
   { href: '/predavanja/kratka', label: 'Kratka predavanja' },
-  ...navLinks,
+  { href: '/kuran',             label: "Kur'an" },
+  { href: '/zikrovi',           label: 'Zikrovi' },
+  { href: '/ilahije',           label: 'Ilahije' },
+  { href: '/podcasts',          label: 'Podcasts' },
+  { href: '/aktivnosti',        label: 'Aktivnosti' },
+  { href: '/galerija',          label: 'Galerija' },
+  { href: '/blog',              label: 'Blog' },
+  { href: '/o-nama',            label: 'O Nama' },
+  { href: '/donacije',          label: 'Donacije' },
 ]
+
+function useDropdown() {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const h = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false) }
+    document.addEventListener('mousedown', h)
+    return () => document.removeEventListener('mousedown', h)
+  }, [])
+  return { open, setOpen, ref }
+}
 
 export default function Navbar() {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [predOpen, setPredOpen]     = useState(false)
   const [user, setUser]             = useState<AuthUser | null>(null)
   const [authChecked, setAuthChecked] = useState(false)
   const [modalOpen, setModalOpen]   = useState(false)
   const [modalMode, setModalMode]   = useState<'login' | 'register'>('login')
-  const predRef = useRef<HTMLDivElement>(null)
+
+  const pred      = useDropdown()
+  const zajednica = useDropdown()
 
   useEffect(() => {
     fetch('/api/auth/me').then(r => r.json()).then(d => { setUser(d.user); setAuthChecked(true) })
-  }, [])
-
-  useEffect(() => {
-    const handle = (e: MouseEvent) => {
-      if (predRef.current && !predRef.current.contains(e.target as Node)) setPredOpen(false)
-    }
-    document.addEventListener('mousedown', handle)
-    return () => document.removeEventListener('mousedown', handle)
   }, [])
 
   const handleLogout = async () => {
@@ -60,18 +72,53 @@ export default function Navbar() {
 
   if (pathname.startsWith('/admin')) return null
 
-  const isPredavanja = pathname.startsWith('/predavanja') || pathname === '/videos'
+  const isPredavanja  = pathname.startsWith('/predavanja') || pathname === '/videos'
+  const isZajednica   = pathname.startsWith('/aktivnosti') || pathname.startsWith('/galerija')
 
-  const linkStyle = (active: boolean) => ({
+  const ls = (active: boolean) => ({
     color: active ? '#8b1e3f' : '#5a4f49',
     fontWeight: active ? 600 : 400,
   })
 
+  const Dropdown = ({
+    ctrl, label, isActive, items,
+  }: {
+    ctrl: ReturnType<typeof useDropdown>
+    label: string
+    isActive: boolean
+    items: { href: string; label: string }[]
+  }) => (
+    <div ref={ctrl.ref} className="relative">
+      <button
+        onClick={() => ctrl.setOpen(v => !v)}
+        className="flex items-center gap-0.5 px-2 py-2 text-[14px] xl:text-[15px] whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
+        style={{ fontFamily: 'Manrope, sans-serif', ...ls(isActive) }}
+      >
+        {label}
+        <ChevronDown size={13} className={`transition-transform ${ctrl.open ? 'rotate-180' : ''}`} />
+      </button>
+      {ctrl.open && (
+        <div className="absolute top-full left-0 mt-1 bg-white rounded-xl shadow-lg border border-[#ede5dc] overflow-hidden z-50"
+          style={{ minWidth: 190 }}>
+          {items.map((item, i) => (
+            <div key={item.href}>
+              {i > 0 && <div className="border-t border-[#f0ebe4]" />}
+              <Link href={item.href} onClick={() => ctrl.setOpen(false)}
+                className="block px-4 py-3 text-sm hover:bg-[#faf7f2] transition-colors"
+                style={{ color: pathname === item.href ? '#8b1e3f' : '#5a4f49', fontWeight: pathname === item.href ? 600 : 400 }}>
+                {item.label}
+              </Link>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+
   return (
     <>
-      {/* ── Desktop ─────────────────────────────────────────────────────── */}
+      {/* Desktop */}
       <nav className="bg-white w-full sticky top-0 z-40 border-b border-[#ede5dc] hidden lg:flex items-center justify-between px-5 xl:px-20 py-4">
-        {/* Logo */}
         <Link href="/" className="flex items-center gap-2 shrink-0 group">
           <Image src="/logo.jpg" alt="Misbah EDU" width={48} height={48} className="rounded-lg object-cover" />
           <span className="font-bold text-[22px] xl:text-[26px] leading-none whitespace-nowrap"
@@ -80,40 +127,33 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Nav links */}
         <div className="flex items-center gap-0.5 xl:gap-1">
           {/* Predavanja dropdown */}
-          <div ref={predRef} className="relative">
-            <button
-              onClick={() => setPredOpen(v => !v)}
-              className="flex items-center gap-0.5 px-2 py-2 text-[14px] xl:text-[15px] whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
-              style={{ fontFamily: 'Manrope, sans-serif', ...linkStyle(isPredavanja) }}
-            >
-              Predavanja
-              <ChevronDown size={13} className={`transition-transform ${predOpen ? 'rotate-180' : ''}`} />
-            </button>
-            {predOpen && (
-              <div className="absolute top-full left-0 mt-1 bg-white rounded-xl shadow-lg border border-[#ede5dc] overflow-hidden z-50"
-                style={{ minWidth: 190 }}>
-                <Link href="/predavanja/duga" onClick={() => setPredOpen(false)}
-                  className="block px-4 py-3 text-sm hover:bg-[#faf7f2] transition-colors"
-                  style={{ color: pathname === '/predavanja/duga' ? '#8b1e3f' : '#5a4f49', fontWeight: pathname === '/predavanja/duga' ? 600 : 400 }}>
-                  Duga predavanja
-                </Link>
-                <div className="border-t border-[#f0ebe4]" />
-                <Link href="/predavanja/kratka" onClick={() => setPredOpen(false)}
-                  className="block px-4 py-3 text-sm hover:bg-[#faf7f2] transition-colors"
-                  style={{ color: pathname === '/predavanja/kratka' ? '#8b1e3f' : '#5a4f49', fontWeight: pathname === '/predavanja/kratka' ? 600 : 400 }}>
-                  Kratka predavanja
-                </Link>
-              </div>
-            )}
-          </div>
+          <Dropdown ctrl={pred} label="Predavanja" isActive={isPredavanja} items={[
+            { href: '/predavanja/duga',   label: 'Duga predavanja' },
+            { href: '/predavanja/kratka', label: 'Kratka predavanja' },
+          ]} />
 
-          {navLinks.map(link => (
+          {/* Plain links up to Podcasts */}
+          {navLinks.slice(0, 4).map(link => (
             <Link key={link.href} href={link.href}
               className="px-2 py-2 text-[14px] xl:text-[15px] whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
-              style={{ fontFamily: 'Manrope, sans-serif', ...linkStyle(pathname === link.href) }}>
+              style={{ fontFamily: 'Manrope, sans-serif', ...ls(pathname === link.href) }}>
+              {link.label}
+            </Link>
+          ))}
+
+          {/* Zajednica dropdown */}
+          <Dropdown ctrl={zajednica} label="Zajednica" isActive={isZajednica} items={[
+            { href: '/aktivnosti', label: 'Aktivnosti' },
+            { href: '/galerija',   label: 'Galerija' },
+          ]} />
+
+          {/* Rest: Blog, O Nama, Donacije */}
+          {navLinks.slice(4).map(link => (
+            <Link key={link.href} href={link.href}
+              className="px-2 py-2 text-[14px] xl:text-[15px] whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
+              style={{ fontFamily: 'Manrope, sans-serif', ...ls(pathname === link.href) }}>
               {link.label}
             </Link>
           ))}
@@ -155,7 +195,7 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* ── Mobile ──────────────────────────────────────────────────────── */}
+      {/* Mobile nav bar */}
       <nav className="bg-white w-full sticky top-0 z-40 border-b border-[#ede5dc] lg:hidden flex items-center justify-between px-5 py-4">
         <Link href="/" className="flex items-center gap-2 shrink-0">
           <Image src="/logo.jpg" alt="Misbah EDU" width={36} height={36} className="rounded-lg object-cover" />
@@ -181,7 +221,7 @@ export default function Navbar() {
           {mobileLinks.map(link => (
             <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)}
               className="py-2.5 text-[15px] border-b border-[#f5f0eb] last:border-0 transition-colors hover:text-[#8b1e3f]"
-              style={{ fontFamily: 'Manrope, sans-serif', ...linkStyle(pathname === link.href) }}>
+              style={{ fontFamily: 'Manrope, sans-serif', ...ls(pathname === link.href) }}>
               {link.label}
             </Link>
           ))}

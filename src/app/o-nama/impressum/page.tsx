@@ -1,10 +1,50 @@
-﻿import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
+import Link from 'next/link'
+import { ArrowLeft, ExternalLink } from 'lucide-react'
+import { BIOS } from '@/lib/bios'
 
 export const metadata = { title: 'Impressum - Misbah EDU' }
 
-const UREDNICI = ['Hamdo Solo', 'Mubina Suljić Solo', 'Hamza Bajraktarević', 'Esma Klisura']
-const DRUSTVENE_MREZE = ['Adna Kurtanović', 'Abdulah Hodžić', 'Edin Imamović']
+const UREDNICI: { name: string; slug?: string }[] = [
+  { name: 'Hamdo Solo' },
+  { name: 'Mubina Suljić Solo' },
+  { name: 'Hamza Bajraktarević' },
+  { name: 'Esma Klisura', slug: 'esma-klisura' },
+]
+
+const DRUSTVENE_MREZE: { name: string; slug?: string }[] = [
+  { name: 'Adna Kurtanović' },
+  { name: 'Abdulah Hodžić' },
+  { name: 'Edin Imamović' },
+]
+
+function MemberCard({ name, slug, accent }: { name: string; slug?: string; accent: string }) {
+  const bio = slug ? BIOS[slug] : undefined
+  return (
+    <li className="flex items-center gap-3 py-2">
+      <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 shadow-sm">
+        {bio?.photo ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={bio.photo} alt={name} className="w-full h-full object-cover object-top" />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-xs font-bold text-white"
+            style={{ background: accent }}>
+            {name[0]}
+          </div>
+        )}
+      </div>
+      <div className="flex-1 min-w-0">
+        <p className="text-sm font-medium text-warm-900 truncate">{name}</p>
+      </div>
+      {slug && (
+        <Link href={`/o-nama/tim/${slug}`}
+          className="flex items-center gap-1 text-xs font-medium px-3 py-1.5 rounded-lg transition-colors hover:opacity-80 flex-shrink-0"
+          style={{ background: '#F5EDE8', color: '#8B1E3F' }}>
+          Biografija <ExternalLink size={10} />
+        </Link>
+      )}
+    </li>
+  )
+}
 
 export default function ImpressumPage() {
   return (
@@ -37,29 +77,17 @@ export default function ImpressumPage() {
         <div className="grid sm:grid-cols-2 gap-4 mb-6">
           <div className="p-5 rounded-2xl" style={{ background: '#FAF7F2', border: '1px solid #E8E1DB' }}>
             <p className="font-mono text-[11px] uppercase tracking-widest mb-3" style={{ color: '#A94A61' }}>Urednici</p>
-            <ul className="space-y-2">
-              {UREDNICI.map(name => (
-                <li key={name} className="flex items-center gap-2.5 text-sm text-warm-800">
-                  <div className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0"
-                    style={{ background: '#8B1E3F' }}>
-                    {name[0]}
-                  </div>
-                  {name}
-                </li>
+            <ul className="divide-y divide-[#EDE5DB]">
+              {UREDNICI.map(m => (
+                <MemberCard key={m.name} name={m.name} slug={m.slug} accent="#8B1E3F" />
               ))}
             </ul>
           </div>
           <div className="p-5 rounded-2xl" style={{ background: '#FAF7F2', border: '1px solid #E8E1DB' }}>
             <p className="font-mono text-[11px] uppercase tracking-widest mb-3" style={{ color: '#A94A61' }}>Društvene mreže</p>
-            <ul className="space-y-2">
-              {DRUSTVENE_MREZE.map(name => (
-                <li key={name} className="flex items-center gap-2.5 text-sm text-warm-800">
-                  <div className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0"
-                    style={{ background: '#C8A96B' }}>
-                    {name[0]}
-                  </div>
-                  {name}
-                </li>
+            <ul className="divide-y divide-[#EDE5DB]">
+              {DRUSTVENE_MREZE.map(m => (
+                <MemberCard key={m.name} name={m.name} slug={m.slug} accent="#C8A96B" />
               ))}
             </ul>
           </div>
