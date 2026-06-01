@@ -7,7 +7,7 @@ export const metadata = { title: 'Impressum - Misbah EDU' }
 const UREDNICI: { name: string; slug?: string }[] = [
   { name: 'Hamdo Solo',          slug: 'hamdo-solo' },
   { name: 'Mubina Suljić Solo' },
-  { name: 'Hamza Bajraktarević' },
+  { name: 'Hamza Bajraktarević', slug: 'hamza-bajraktarevic' },
   { name: 'Esma Klisura',        slug: 'esma-klisura' },
 ]
 

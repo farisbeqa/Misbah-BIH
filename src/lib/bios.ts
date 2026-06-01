@@ -87,6 +87,56 @@ export const BIOS: Record<string, Bio> = {
     ],
   },
 
+  'hamza-bajraktarevic': {
+    name: 'Hamza Bajraktarević',
+    role: 'Urednik',
+    photo: '/tim/hamza-bajraktarevic.jpg',
+    sections: [
+      {
+        title: 'O Hamzi',
+        items: [
+          'Imam džemata Bjelave u Islamskoj zajednici u Bosni i Hercegovini.',
+          'Student prava na Internacionalnom univerzitetu u Sarajevu (IUS) — dobitnik pune stipendije.',
+          'Istovremeno studira islamsku teologiju na Fakultetu islamskih nauka Univerziteta u Sarajevu.',
+          'Oblasti interesovanja: evropsko, međunarodno i komparativno pravo, islamsko pravo i etika.',
+        ],
+      },
+      {
+        title: 'Obrazovanje',
+        items: [
+          '2022– Pravni fakultet (LL.B.) — Internacionalni univerzitet u Sarajevu (IUS) · Dobitnik pune stipendije',
+          '2024– Teološki studij — Fakultet islamskih nauka, Univerzitet u Sarajevu',
+          '2018–2022. Gazi Husrev-begova medresa — završio s odličnim uspjehom',
+        ],
+      },
+      {
+        title: 'Radno iskustvo',
+        items: [
+          'Imam — Islamska zajednica u BiH, Džemat Bjelave (2025 – u toku)',
+          'Mujezin — Džemat Bjelave (2020–2025)',
+          'Urednik i voditelj omladinskih programa — Radio BIR (2021–2022)',
+        ],
+      },
+      {
+        title: 'Aktivnosti pri Misbah EDU',
+        items: [
+          'Organizuje i uređuje edukativna video predavanja iz serijala sire Božijeg Poslanika s.a.v.s.',
+          'Piše edukativne tekstove iz oblasti sire Božijeg Poslanika s.a.v.s.',
+          'Narator raznovrsnog edukativnog sadržaja',
+          'Prevođenje edukativnog materijala sa engleskog i arapskog na bosanski jezik',
+        ],
+      },
+      {
+        title: 'Edukacije i certifikati',
+        items: [
+          'Deloitte Youth Talent Program — Deloitte',
+          'Akademija liderstva — Studentski centar Islamske zajednice u BiH (2024)',
+          'Seminar za radijsko novinarstvo i produkciju — Radio BIR (2022)',
+        ],
+      },
+    ],
+  },
+
   'hamdo-solo': {
     name: 'Hamdo Solo',
     role: 'Urednik / Imam džemata Carina Vratnik',
