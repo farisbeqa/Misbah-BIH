@@ -14,7 +14,6 @@ const UREDNICI: { name: string; slug?: string }[] = [
 const DRUSTVENE_MREZE: { name: string; slug?: string }[] = [
   { name: 'Adna Kurtanović' },
   { name: 'Abdulah Hodžić' },
-  { name: 'Edin Imamović' },
 ]
 
 function MemberCard({ name, slug, accent }: { name: string; slug?: string; accent: string }) {
