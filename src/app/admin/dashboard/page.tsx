@@ -118,11 +118,12 @@ export default async function AdminDashboard() {
   const session = await requireAuth()
   if (!session) redirect('/admin')
 
-  const [videos, posts, activities, galleryImages, userCount] = await Promise.all([
+  const [videos, posts, activities, galleryImages, quotes, userCount] = await Promise.all([
     prisma.video.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.blogPost.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.activity.findMany({ orderBy: { date: 'desc' } }),
     prisma.galleryImage.findMany({ orderBy: { createdAt: 'desc' } }),
+    prisma.quote.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.user.count(),
   ])
 
@@ -253,6 +254,17 @@ export default async function AdminDashboard() {
             <div className="min-w-0">
               <p className="font-bold text-sm leading-tight">Galerija</p>
               <p className="text-white/60 text-xs mt-0.5">{galleryImages.length} slika</p>
+            </div>
+          </Link>
+          <Link href="/admin/quotes/new"
+            className="flex items-center gap-3 text-white p-4 rounded-2xl transition-opacity hover:opacity-90 shadow-sm"
+            style={{ background: '#7C3AED' }}>
+            <div className="w-8 h-8 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+              <Plus size={18} />
+            </div>
+            <div className="min-w-0">
+              <p className="font-bold text-sm leading-tight">Misao dana</p>
+              <p className="text-white/60 text-xs mt-0.5">{quotes.length} misli</p>
             </div>
           </Link>
         </div>
@@ -433,6 +445,54 @@ export default async function AdminDashboard() {
               {galleryImages.length > 16 && (
                 <div className="px-4 py-2.5 border-t border-zinc-100 text-center">
                   <span className="text-xs text-zinc-400">+ još {galleryImages.length - 16} slika</span>
+                </div>
+              )}
+            </div>
+          )}
+        </section>
+
+        {/* Quotes - Misao dana */}
+        <section className="mb-8">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="font-bold text-zinc-900 flex items-center gap-2">
+              <span>💬</span>
+              Misao dana
+              <span className="text-zinc-400 font-normal text-sm">({quotes.length})</span>
+            </h2>
+            <Link href="/admin/quotes/new"
+              className="text-xs hover:underline flex items-center gap-1 font-medium"
+              style={{ color: '#7C3AED' }}>
+              <Plus size={12} /> Dodaj
+            </Link>
+          </div>
+          {quotes.length === 0 ? (
+            <div className="bg-white rounded-2xl p-8 text-center border border-dashed border-zinc-200">
+              <span className="text-3xl block mb-2">💬</span>
+              <p className="text-zinc-400 text-sm">Nema misli. Dodaj prvu.</p>
+            </div>
+          ) : (
+            <div className="bg-white rounded-2xl border border-zinc-100 shadow-card overflow-hidden">
+              {quotes.slice(0, 5).map((q, i) => {
+                const typeColors: Record<string, string> = { ajet: '#8B1E3F', hadis: '#2563EB', izreka: '#059669' }
+                const typeLabels: Record<string, string> = { ajet: 'Ajet', hadis: 'Hadis', izreka: 'Izreka' }
+                return (
+                  <div key={q.id}
+                    className={`flex items-start gap-3 px-4 py-3 hover:bg-zinc-50 transition-colors ${i > 0 ? 'border-t border-zinc-100' : ''}`}>
+                    <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-1 rounded-full mt-0.5 flex-shrink-0"
+                      style={{ background: `${typeColors[q.type] ?? '#7C3AED'}15`, color: typeColors[q.type] ?? '#7C3AED' }}>
+                      {typeLabels[q.type] ?? q.type}
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-zinc-900 text-sm line-clamp-2">{q.text}</p>
+                      {q.source && <p className="text-zinc-400 text-xs mt-0.5">{q.source}</p>}
+                    </div>
+                    <DeleteButton id={q.id} type="quote" />
+                  </div>
+                )
+              })}
+              {quotes.length > 5 && (
+                <div className="px-4 py-2.5 border-t border-zinc-100 text-center">
+                  <span className="text-xs text-zinc-400">+ još {quotes.length - 5} misli</span>
                 </div>
               )}
             </div>

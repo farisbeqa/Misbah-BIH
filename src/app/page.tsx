@@ -5,6 +5,7 @@ import { prisma } from '@/lib/db'
 export const dynamic = 'force-dynamic'
 import VideoCard from '@/components/VideoCard'
 import BlogCard from '@/components/BlogCard'
+import QuoteCarousel from '@/components/QuoteCarousel'
 
 const TikTokIcon = ({ size = 16 }: { size?: number }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: size, height: size }}>
@@ -15,19 +16,20 @@ const TikTokIcon = ({ size = 16 }: { size?: number }) => (
 
 async function getData() {
   try {
-    const [predavanja, kuran, podcasts, posts, activities] = await Promise.all([
+    const [predavanja, kuran, podcasts, posts, activities, quotes] = await Promise.all([
       prisma.video.findMany({ where: { published: true, category: 'predavanja' }, orderBy: { createdAt: 'desc' }, take: 6 }),
       prisma.video.findMany({ where: { published: true, category: 'kuran' }, orderBy: { createdAt: 'desc' }, take: 3 }),
       prisma.video.findMany({ where: { published: true, category: 'podcast' }, orderBy: { createdAt: 'desc' }, take: 3 }),
       prisma.blogPost.findMany({ where: { published: true }, orderBy: { createdAt: 'desc' }, take: 3 }),
       prisma.activity.findMany({ where: { published: true }, orderBy: { date: 'desc' }, take: 3 }),
+      prisma.quote.findMany({ where: { published: true }, orderBy: { createdAt: 'desc' } }),
     ])
-    return { predavanja, kuran, podcasts, posts, activities }
-  } catch { return { predavanja: [], kuran: [], podcasts: [], posts: [], activities: [] } }
+    return { predavanja, kuran, podcasts, posts, activities, quotes }
+  } catch { return { predavanja: [], kuran: [], podcasts: [], posts: [], activities: [], quotes: [] } }
 }
 
 export default async function HomePage() {
-  const { predavanja, kuran, podcasts, posts, activities } = await getData()
+  const { predavanja, kuran, podcasts, posts, activities, quotes } = await getData()
 
   return (
     <div>
@@ -271,6 +273,23 @@ export default async function HomePage() {
                 Vidi sve aktivnosti <ArrowRight size={14} />
               </Link>
             </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── Misao dana ──────────────────────────────────────────────────── */}
+      {quotes.length > 0 && (
+        <section style={{ background: '#FAF7F2', borderTop: '1px solid #E8E1DB' }} className="py-20 sm:py-24 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-12">
+              <p className="font-mono text-[11px] text-brand-light uppercase tracking-widest mb-3">
+                Inspirisani Kur&apos;anom i Miljenikom
+              </p>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-warm-900 tracking-tight">
+                Misao dana
+              </h2>
+            </div>
+            <QuoteCarousel quotes={quotes} />
           </div>
         </section>
       )}
