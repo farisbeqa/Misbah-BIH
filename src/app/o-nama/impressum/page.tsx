@@ -11,19 +11,20 @@ const UREDNICI: { name: string; slug?: string }[] = [
   { name: 'Esma Klisura',        slug: 'esma-klisura' },
 ]
 
-const DRUSTVENE_MREZE: { name: string; slug?: string }[] = [
-  { name: 'Adna Kurtanović' },
-  { name: 'Abdulah Hodžić' },
+const DRUSTVENE_MREZE: { name: string; slug?: string; photo?: string }[] = [
+  { name: 'Adna Kurtanović',  photo: '/tim/adna-kurtanovic.jpg' },
+  { name: 'Abdulah Hodžić',   photo: '/tim/abdulah-hodzic.jpg' },
 ]
 
-function MemberCard({ name, slug, accent }: { name: string; slug?: string; accent: string }) {
+function MemberCard({ name, slug, photo, accent }: { name: string; slug?: string; photo?: string; accent: string }) {
   const bio = slug ? BIOS[slug] : undefined
+  const photoSrc = bio?.photo ?? photo
   return (
     <li className="flex items-center gap-3 py-2">
       <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 shadow-sm">
-        {bio?.photo ? (
+        {photoSrc ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={bio.photo} alt={name} className="w-full h-full object-cover object-top" />
+          <img src={photoSrc} alt={name} className="w-full h-full object-cover object-top" />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-xs font-bold text-white"
             style={{ background: accent }}>
@@ -86,7 +87,7 @@ export default function ImpressumPage() {
             <p className="font-mono text-[11px] uppercase tracking-widest mb-3" style={{ color: '#A94A61' }}>Društvene mreže</p>
             <ul className="divide-y divide-[#EDE5DB]">
               {DRUSTVENE_MREZE.map(m => (
-                <MemberCard key={m.name} name={m.name} slug={m.slug} accent="#C8A96B" />
+                <MemberCard key={m.name} name={m.name} slug={m.slug} photo={m.photo} accent="#C8A96B" />
               ))}
             </ul>
           </div>
