@@ -90,9 +90,8 @@ const PLAIN_LINKS_LEFT = [
 ]
 
 const PLAIN_LINKS_RIGHT = [
-  { href: '/blog',     label: 'Blog' },
-  { href: '/o-nama',   label: 'O Nama' },
-  { href: '/donacije', label: 'Donacije' },
+  { href: '/blog',   label: 'Blog' },
+  { href: '/o-nama', label: 'O Nama' },
 ]
 
 const MOBILE_LINKS = [
@@ -105,9 +104,8 @@ const MOBILE_LINKS = [
   { href: '/podcasts',          label: 'Podcasts' },
   { href: '/aktivnosti',        label: 'Aktivnosti' },
   { href: '/galerija',          label: 'Galerija' },
-  { href: '/blog',              label: 'Blog' },
-  { href: '/o-nama',            label: 'O Nama' },
-  { href: '/donacije',          label: 'Donacije' },
+  { href: '/blog',   label: 'Blog' },
+  { href: '/o-nama', label: 'O Nama' },
 ]
 
 // ─── Navbar ──────────────────────────────────────────────────────────────────
