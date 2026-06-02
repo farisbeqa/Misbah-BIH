@@ -320,14 +320,6 @@ export default async function HomePage() {
               </a>
             ))}
           </div>
-          <div className="mt-8 pt-8" style={{ borderTop: '1px solid #CDB8A6' }}>
-            <p className="font-mono text-xs text-warm-500 mb-3 tracking-wide">Podržite naš rad</p>
-            <Link href="/donacije"
-              className="inline-flex items-center gap-2 font-semibold px-6 py-3 text-sm transition-all hover:opacity-90"
-              style={{ background: '#8B1E3F', color: 'white', borderRadius: 8 }}>
-              ❤ Donirajte
-            </Link>
-          </div>
         </div>
       </section>
     </div>
