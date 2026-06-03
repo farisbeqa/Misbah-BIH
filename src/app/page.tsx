@@ -150,22 +150,22 @@ const BENEFITS = [
   {
     title: 'Duhovnost',
     description: 'Jačanje veze sa Allahom kroz znanje, ibadet i iskreno preispitivanje sebe.',
-    image: '/benefits/duhovnost.jpg',
+    image: '/benefits/duhovnost.svg',
   },
   {
     title: 'Porodica',
     description: 'Teme o zdravijim odnosima, snažnijim brakovima i odgoju djece.',
-    image: '/benefits/porodica.jpg',
+    image: '/benefits/porodica.svg',
   },
   {
     title: 'Društvo',
     description: 'Promišljanja o pitanjima koja oblikuju našu zajednicu i svakodnevni život.',
-    image: '/benefits/zajednica.jpg',
+    image: '/benefits/zajednica.svg',
   },
   {
     title: 'Karakter',
     description: 'Razvijajte vrijednosti i navike koje oblikuju snažan, odgovoran i ispunjen život.',
-    image: '/benefits/karakter.jpg',
+    image: '/benefits/karakter.svg',
   },
 ]
 
