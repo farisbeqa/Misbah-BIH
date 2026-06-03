@@ -12,6 +12,24 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ── Safari: sections overlapping fix ───────────────────────────────────
+   Safari sometimes leaks stacking contexts (from transforms/overflow)
+   across section boundaries. isolation:isolate contains each section's
+   stacking context so siblings can't overlap each other.             */
+section {
+  isolation: isolate;
+  position: relative;
+}
+
+/* ── Safari: sticky positioning (older Safari needs -webkit- prefix) ─── */
+.sticky {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+}
+
+/* ── Safari: flex min-height bug fix ──────────────────────────────────── */
+main { min-height: 0; }
+
 /* ── Islamic geometric hero pattern (gold on burgundy) ─────────────── */
 .hero-pattern {
   background-image:
