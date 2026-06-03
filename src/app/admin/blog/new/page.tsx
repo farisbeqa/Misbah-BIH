@@ -20,18 +20,30 @@ export default function AddBlogPostPage() {
 
   const handleImageUpload = async (file: File) => {
     setUploading(true)
+    setError('')
     try {
-      const formData = new FormData()
-      formData.append('file', file)
-      const res = await fetch('/api/upload', { method: 'POST', body: formData })
-      const data = await res.json()
-      if (res.ok) {
-        setImageUrl(data.url)
+      // Production: get R2 presigned URL, then PUT directly
+      const presignRes = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename: file.name, contentType: file.type, folder: 'images' }),
+      })
+      if (presignRes.ok) {
+        const { uploadUrl, publicUrl } = await presignRes.json()
+        const r2Res = await fetch(uploadUrl, { method: 'PUT', body: file, headers: { 'Content-Type': file.type } })
+        if (!r2Res.ok) throw new Error('R2 upload failed')
+        setImageUrl(publicUrl)
       } else {
-        setError(data.error || 'Greška pri uploadu slike')
+        // Development: FormData to local filesystem
+        const formData = new FormData()
+        formData.append('file', file)
+        const res = await fetch('/api/upload', { method: 'POST', body: formData })
+        const data = await res.json()
+        if (!res.ok) throw new Error(data.error || 'Upload failed')
+        setImageUrl(data.publicUrl)
       }
     } catch {
-      setError('Greška pri uploadu')
+      setError('Greška pri uploadu slike')
     } finally {
       setUploading(false)
     }
