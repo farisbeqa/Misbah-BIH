@@ -124,7 +124,7 @@ export default async function AdminDashboard() {
     prisma.activity.findMany({ orderBy: { date: 'desc' } }),
     prisma.galleryImage.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.quote.findMany({ orderBy: { createdAt: 'desc' } }),
-    prisma.ilahijaText.findMany({ orderBy: { createdAt: 'desc' } }),
+    prisma.ilahijaText.findMany({ orderBy: { createdAt: 'desc' } }).catch(() => []),
     prisma.user.count(),
   ])
 

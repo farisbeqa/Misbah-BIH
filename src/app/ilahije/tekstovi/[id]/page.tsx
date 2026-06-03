@@ -9,7 +9,7 @@ export default async function IlahijaTextPage({ params }: { params: { id: string
   const id = parseInt(params.id)
   if (isNaN(id)) notFound()
 
-  const tekst = await prisma.ilahijaText.findUnique({ where: { id } })
+  const tekst = await prisma.ilahijaText.findUnique({ where: { id } }).catch(() => null)
   if (!tekst || !tekst.published) notFound()
 
   return (

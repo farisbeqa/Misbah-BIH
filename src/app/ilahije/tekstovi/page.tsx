@@ -8,7 +8,7 @@ export default async function IlahijeTekstoviPage() {
   const tekstovi = await prisma.ilahijaText.findMany({
     where: { published: true },
     orderBy: { createdAt: 'desc' },
-  })
+  }).catch(() => [])
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16" style={{ minHeight: '60vh' }}>

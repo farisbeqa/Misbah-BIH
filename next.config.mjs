@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Prisma + libsql must run in Node.js runtime, not bundled by webpack
+  serverExternalPackages: ['@prisma/client', '@prisma/adapter-libsql', '@libsql/client'],
+
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'img.youtube.com' },
