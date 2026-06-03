@@ -12,10 +12,12 @@ interface Video {
 const TOPICS = [
   { key: 'all',       label: 'Sve' },
   { key: 'tefsir',    label: 'Tefsir' },
+  { key: 'hadis',     label: 'Hadis' },
   { key: 'sira',      label: 'Sira' },
   { key: 'opste',     label: 'Opšte teme' },
-  { key: 'akida',     label: 'Akida' },
+  { key: 'akaid',     label: 'Akaid' },
   { key: 'fikh',      label: 'Fikh' },
+  { key: 'duhovnost', label: 'Duhovnost' },
   { key: 'historija', label: 'Historija' },
 ]
 

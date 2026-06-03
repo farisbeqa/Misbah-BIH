@@ -70,7 +70,6 @@ function useDropdown() {
 const PLAIN_LINKS_LEFT = [
   { href: '/kuran',    label: "Kur'an" },
   { href: '/zikrovi',  label: 'Zikrovi' },
-  { href: '/ilahije',  label: 'Ilahije' },
   { href: '/podcasts', label: 'Podcast' },
 ]
 
@@ -85,7 +84,8 @@ const MOBILE_LINKS = [
   { href: '/predavanja/kratka', label: 'Kratka predavanja' },
   { href: '/kuran',             label: "Kur'an" },
   { href: '/zikrovi',           label: 'Zikrovi' },
-  { href: '/ilahije',           label: 'Ilahije' },
+  { href: '/ilahije/izvedba',   label: 'Ilahije – Izvedba' },
+  { href: '/ilahije/tekstovi',  label: 'Ilahije – Tekstovi' },
   { href: '/podcasts',          label: 'Podcast' },
   { href: '/aktivnosti',        label: 'Aktivnosti' },
   { href: '/galerija',          label: 'Galerija' },
@@ -102,6 +102,7 @@ export default function Navbar() {
   const [modalMode, setModalMode]   = useState<'login' | 'register'>('login')
 
   const pred      = useDropdown()
+  const ilahije   = useDropdown()
   const zajednica = useDropdown()
 
   useEffect(() => {
@@ -120,6 +121,7 @@ export default function Navbar() {
   if (pathname.startsWith('/admin')) return null
 
   const isPredavanja = pathname.startsWith('/predavanja') || pathname === '/videos'
+  const isIlahije    = pathname.startsWith('/ilahije')
   const isZajednica  = pathname.startsWith('/aktivnosti') || pathname.startsWith('/galerija')
 
   const ls = (active: boolean) => ({
@@ -155,6 +157,14 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
+          <NavDropdown
+            open={ilahije.open} setOpen={ilahije.setOpen} dropRef={ilahije.ref}
+            label="Ilahije" isActive={isIlahije} pathname={pathname}
+            items={[
+              { href: '/ilahije/izvedba',  label: 'Izvedba' },
+              { href: '/ilahije/tekstovi', label: 'Tekstovi' },
+            ]}
+          />
           <NavDropdown
             open={zajednica.open} setOpen={zajednica.setOpen} dropRef={zajednica.ref}
             label="Zajednica" isActive={isZajednica} pathname={pathname}

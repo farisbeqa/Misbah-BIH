@@ -91,7 +91,7 @@ export default function MisaoDana({ quotes }: { quotes: Quote[] }) {
 
             {/* Quote card */}
             <div className="bg-white flex-1 overflow-hidden">
-              <div className="flex flex-col gap-6 px-6 py-12">
+              <div className="flex flex-col gap-5 px-6 py-8">
                 <p
                   className="font-normal text-[#8b1e3f] leading-[1.5]"
                   style={{ fontSize: 'clamp(18px, 2.5vw, 24px)', letterSpacing: '-0.24px' }}
