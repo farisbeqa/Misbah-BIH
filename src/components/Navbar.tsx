@@ -130,7 +130,8 @@ export default function Navbar() {
   return (
     <>
       {/* Desktop nav */}
-      <nav className="bg-white w-full sticky top-0 z-40 border-b border-gray-100 hidden lg:flex items-center justify-between px-5 md:px-10 lg:px-20 py-5">
+      <nav className="bg-white w-full sticky top-0 z-40 border-b border-gray-100 hidden lg:block">
+      <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-5 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5 shrink-0">
           <Image src="/logo.jpg" alt="Misbah EDU" width={56} height={56} className="object-cover" />
           <span className="font-bold text-[26px] leading-none" style={{ color: '#8b1e3f' }}>
@@ -202,6 +203,7 @@ export default function Navbar() {
             )
           )}
         </div>
+      </div>
       </nav>
 
       {/* Mobile nav bar */}

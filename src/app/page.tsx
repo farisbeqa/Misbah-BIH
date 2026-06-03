@@ -208,7 +208,7 @@ export default async function HomePage() {
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
       <section className="bg-white w-full">
-        <div className="flex flex-col lg:flex-row items-stretch min-h-[520px] lg:min-h-[640px]">
+        <div className="max-w-[1440px] mx-auto w-full flex flex-col lg:flex-row items-stretch min-h-[520px] lg:min-h-[640px]">
           {/* Left panel */}
           <div
             className="bg-[#faf7f2] flex flex-col justify-end gap-16 lg:gap-20 px-6 sm:px-10 lg:px-[60px] py-16 lg:py-[104px] w-full lg:w-[55%] xl:w-[798px] shrink-0"
@@ -253,7 +253,7 @@ export default async function HomePage() {
 
       {/* ── Benefits ─────────────────────────────────────────────────────── */}
       <section className="bg-white w-full">
-        <div className="px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
+        <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
           <div className="flex flex-col gap-4 max-w-[705px]">
             <p className="font-medium text-[#8b1e3f] text-base">TEME KOJE ISTRAŽUJEMO</p>
             <div className="flex flex-col gap-6">
@@ -290,7 +290,7 @@ export default async function HomePage() {
 
       {/* ── Team ─────────────────────────────────────────────────────────── */}
       <section className="bg-[#fcfbfa] w-full">
-        <div className="px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
+        <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
           <div className="flex flex-col gap-4 max-w-[705px]">
             <p className="font-medium text-[#8b1e3f] text-base">LJUDI IZA SADRŽAJA</p>
             <div className="flex flex-col gap-6">
@@ -334,7 +334,7 @@ export default async function HomePage() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/quote-bg.png" alt="" className="absolute inset-0 w-full h-full object-cover object-center" />
         </div>
-        <div className="relative px-5 md:px-10 lg:px-20 py-24 lg:py-32">
+        <div className="relative max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-24 lg:py-32">
           <div className="max-w-[646px]">
             <blockquote className="font-medium text-[#8b1e3f] leading-[1.08]"
               style={{ fontSize: 'clamp(32px, 5vw, 64px)', letterSpacing: '-2.56px' }}>
@@ -350,7 +350,7 @@ export default async function HomePage() {
 
       {/* ── Predavanja ───────────────────────────────────────────────────── */}
       <section className="bg-white w-full">
-        <div className="px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
+        <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
           <SectionHead
             tag="NAJNOVIJI SADRŽAJI"
             title="Predavanja"
@@ -368,7 +368,7 @@ export default async function HomePage() {
 
       {/* ── Kur'an ───────────────────────────────────────────────────────── */}
       <section style={{ backgroundColor: '#fcfbfa' }} className="w-full">
-        <div className="px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
+        <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
           <SectionHead
             tag="KUR'ANSKE NAUKE"
             title="Kur'an"
@@ -386,7 +386,7 @@ export default async function HomePage() {
 
       {/* ── Podcast ──────────────────────────────────────────────────────── */}
       <section className="bg-white w-full">
-        <div className="px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
+        <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
           <SectionHead
             tag="RAZGOVORI"
             title="Podcast"
@@ -404,7 +404,7 @@ export default async function HomePage() {
 
       {/* ── Blog ─────────────────────────────────────────────────────────── */}
       <section style={{ backgroundColor: '#fcfbfa' }} className="w-full">
-        <div className="px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
+        <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
           <SectionHead
             tag="PROMIŠLJANJA"
             title="Blog"

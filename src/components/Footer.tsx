@@ -53,7 +53,7 @@ export default function Footer() {
   return (
     <footer className="bg-[#fcfbfa] w-full overflow-hidden">
       {/* Main row */}
-      <div className="px-5 md:px-10 lg:px-20 py-12 flex flex-col lg:flex-row items-start justify-between gap-10">
+      <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-12 flex flex-col lg:flex-row items-start justify-between gap-10">
         {/* Logo + description + social */}
         <div className="flex flex-col gap-8 max-w-[445px]">
           <Link href="/" className="flex items-center gap-3 shrink-0">
@@ -126,7 +126,7 @@ export default function Footer() {
 
       {/* Legal bar */}
       <div className="bg-[#f5f2ef]">
-        <div className="px-5 md:px-10 lg:px-20 py-3 flex items-center justify-between">
+        <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-3 flex items-center justify-between">
           <a
             href="https://strossa.com/"
             target="_blank"

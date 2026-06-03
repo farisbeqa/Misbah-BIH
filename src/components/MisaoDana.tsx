@@ -32,7 +32,7 @@ export default function MisaoDana({ quotes }: { quotes: Quote[] }) {
 
   return (
     <section className="bg-[#f5f2ef] w-full">
-      <div className="px-5 md:px-10 lg:px-20 py-20 lg:py-[100px] flex flex-col gap-3">
+      <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-20 lg:py-[100px] flex flex-col gap-3">
         <p className="font-medium text-[#8b1e3f] text-base leading-normal">PODSJETNIK</p>
 
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-20 items-start pt-4">
