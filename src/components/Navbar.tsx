@@ -9,11 +9,6 @@ import AuthModal from './AuthModal'
 
 interface AuthUser { id: number; username: string }
 
-// ─── Dropdown helper ─────────────────────────────────────────────────────────
-// NOTE: Must be defined at module level (outside Navbar) so React never
-// treats it as a new component type on re-renders, which would cause
-// unmount/remount loops and broken refs on macOS browsers.
-
 interface DropdownItem { href: string; label: string }
 
 interface NavDropdownProps {
@@ -27,21 +22,18 @@ interface NavDropdownProps {
 }
 
 function NavDropdown({ open, setOpen, dropRef, label, isActive, items, pathname }: NavDropdownProps) {
-  const activeColor   = '#8b1e3f'
-  const inactiveColor = '#5a4f49'
-
   return (
     <div ref={dropRef} className="relative">
       <button
         onClick={() => setOpen(v => !v)}
-        className="flex items-center gap-0.5 px-2 py-2 text-[14px] xl:text-[15px] whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
-        style={{ fontFamily: 'Manrope, sans-serif', color: isActive ? activeColor : inactiveColor, fontWeight: isActive ? 600 : 400 }}
+        className="flex items-center gap-0.5 px-1.5 py-2 text-base whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
+        style={{ color: isActive ? '#8b1e3f' : '#5a4f49', fontWeight: isActive ? 600 : 400 }}
       >
         {label}
         <ChevronDown size={13} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       {open && (
-        <div className="absolute top-full left-0 mt-1 bg-white rounded-xl shadow-lg border border-[#ede5dc] overflow-hidden z-50"
+        <div className="absolute top-full left-0 mt-1 bg-white shadow-lg border border-[#ede5dc] overflow-hidden z-50"
           style={{ minWidth: 190 }}>
           {items.map((item, i) => (
             <div key={item.href}>
@@ -50,10 +42,7 @@ function NavDropdown({ open, setOpen, dropRef, label, isActive, items, pathname 
                 href={item.href}
                 onClick={() => setOpen(false)}
                 className="block px-4 py-3 text-sm hover:bg-[#faf7f2] transition-colors"
-                style={{
-                  color: pathname === item.href ? activeColor : inactiveColor,
-                  fontWeight: pathname === item.href ? 600 : 400,
-                }}
+                style={{ color: pathname === item.href ? '#8b1e3f' : '#5a4f49', fontWeight: pathname === item.href ? 600 : 400 }}
               >
                 {item.label}
               </Link>
@@ -64,8 +53,6 @@ function NavDropdown({ open, setOpen, dropRef, label, isActive, items, pathname 
     </div>
   )
 }
-
-// ─── Hook ────────────────────────────────────────────────────────────────────
 
 function useDropdown() {
   const [open, setOpen] = useState(false)
@@ -80,13 +67,11 @@ function useDropdown() {
   return { open, setOpen, ref }
 }
 
-// ─── Nav data ────────────────────────────────────────────────────────────────
-
 const PLAIN_LINKS_LEFT = [
   { href: '/kuran',    label: "Kur'an" },
   { href: '/zikrovi',  label: 'Zikrovi' },
   { href: '/ilahije',  label: 'Ilahije' },
-  { href: '/podcasts', label: 'Podcasts' },
+  { href: '/podcasts', label: 'Podcast' },
 ]
 
 const PLAIN_LINKS_RIGHT = [
@@ -101,14 +86,12 @@ const MOBILE_LINKS = [
   { href: '/kuran',             label: "Kur'an" },
   { href: '/zikrovi',           label: 'Zikrovi' },
   { href: '/ilahije',           label: 'Ilahije' },
-  { href: '/podcasts',          label: 'Podcasts' },
+  { href: '/podcasts',          label: 'Podcast' },
   { href: '/aktivnosti',        label: 'Aktivnosti' },
   { href: '/galerija',          label: 'Galerija' },
-  { href: '/blog',   label: 'Blog' },
-  { href: '/o-nama', label: 'O Nama' },
+  { href: '/blog',              label: 'Blog' },
+  { href: '/o-nama',            label: 'O Nama' },
 ]
-
-// ─── Navbar ──────────────────────────────────────────────────────────────────
 
 export default function Navbar() {
   const pathname = usePathname()
@@ -146,21 +129,16 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ── Desktop nav ──────────────────────────────────────────────── */}
-      <nav className="bg-white w-full sticky top-0 z-40 border-b border-[#ede5dc] hidden lg:flex items-center justify-between px-5 xl:px-20 py-4">
-
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 shrink-0 group">
-          <Image src="/logo.jpg" alt="Misbah EDU" width={48} height={48} className="rounded-lg object-cover" />
-          <span className="font-bold text-[22px] xl:text-[26px] leading-none whitespace-nowrap"
-            style={{ fontFamily: 'Manrope, sans-serif', color: '#8b1e3f' }}>
+      {/* Desktop nav */}
+      <nav className="bg-white w-full sticky top-0 z-40 border-b border-gray-100 hidden lg:flex items-center justify-between px-5 md:px-10 lg:px-20 py-5">
+        <Link href="/" className="flex items-center gap-2.5 shrink-0">
+          <Image src="/logo.jpg" alt="Misbah EDU" width={56} height={56} className="object-cover" />
+          <span className="font-bold text-[26px] leading-none" style={{ color: '#8b1e3f' }}>
             Misbah <span style={{ color: '#c8a96b' }}>EDU</span>
           </span>
         </Link>
 
-        {/* Links */}
-        <div className="flex items-center gap-0.5 xl:gap-1">
-
+        <div className="flex items-center gap-1">
           <NavDropdown
             open={pred.open} setOpen={pred.setOpen} dropRef={pred.ref}
             label="Predavanja" isActive={isPredavanja} pathname={pathname}
@@ -169,15 +147,13 @@ export default function Navbar() {
               { href: '/predavanja/kratka', label: 'Kratka predavanja' },
             ]}
           />
-
           {PLAIN_LINKS_LEFT.map(link => (
             <Link key={link.href} href={link.href}
-              className="px-2 py-2 text-[14px] xl:text-[15px] whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
-              style={{ fontFamily: 'Manrope, sans-serif', ...ls(pathname === link.href) }}>
+              className="px-1.5 py-2 text-base whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
+              style={ls(pathname === link.href)}>
               {link.label}
             </Link>
           ))}
-
           <NavDropdown
             open={zajednica.open} setOpen={zajednica.setOpen} dropRef={zajednica.ref}
             label="Zajednica" isActive={isZajednica} pathname={pathname}
@@ -186,24 +162,21 @@ export default function Navbar() {
               { href: '/galerija',   label: 'Galerija' },
             ]}
           />
-
           {PLAIN_LINKS_RIGHT.map(link => (
             <Link key={link.href} href={link.href}
-              className="px-2 py-2 text-[14px] xl:text-[15px] whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
-              style={{ fontFamily: 'Manrope, sans-serif', ...ls(pathname === link.href) }}>
+              className="px-1.5 py-2 text-base whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
+              style={ls(pathname === link.href)}>
               {link.label}
             </Link>
           ))}
-
         </div>
 
-        {/* Auth */}
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex items-center gap-4 shrink-0">
           {authChecked && (
             user ? (
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2 text-sm" style={{ color: '#5a4f49' }}>
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white"
+                  <div className="w-8 h-8 flex items-center justify-center text-xs font-bold text-white"
                     style={{ background: '#8b1e3f' }}>
                     {user.username[0].toUpperCase()}
                   </div>
@@ -218,13 +191,11 @@ export default function Navbar() {
             ) : (
               <>
                 <button onClick={() => openModal('register')}
-                  className="bg-[#8b1e3f] text-white px-5 xl:px-7 py-2.5 text-[14px] xl:text-[15px] hover:opacity-90 transition-opacity"
-                  style={{ fontFamily: 'Manrope, sans-serif' }}>
+                  className="bg-[#8b1e3f] text-white px-8 py-3 text-base font-normal hover:bg-[#7a1a37] transition-colors">
                   Registruj se
                 </button>
                 <button onClick={() => openModal('login')}
-                  className="border border-[#8b1e3f] text-[#8b1e3f] px-4 xl:px-6 py-2.5 text-[14px] xl:text-[15px] hover:bg-[#8b1e3f] hover:text-white transition-colors"
-                  style={{ fontFamily: 'Manrope, sans-serif' }}>
+                  className="border border-[#8b1e3f] text-[#8b1e3f] px-6 py-3 text-base font-normal hover:bg-[#faf5f5] transition-colors">
                   Prijava
                 </button>
               </>
@@ -233,41 +204,38 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* ── Mobile nav bar ───────────────────────────────────────────── */}
-      <nav className="bg-white w-full sticky top-0 z-40 border-b border-[#ede5dc] lg:hidden flex items-center justify-between px-5 py-4">
+      {/* Mobile nav bar */}
+      <nav className="bg-white w-full sticky top-0 z-40 border-b border-gray-100 lg:hidden flex items-center justify-between px-5 py-4">
         <Link href="/" className="flex items-center gap-2 shrink-0">
-          <Image src="/logo.jpg" alt="Misbah EDU" width={36} height={36} className="rounded-lg object-cover" />
-          <span className="font-bold text-[20px] leading-none"
-            style={{ fontFamily: 'Manrope, sans-serif', color: '#8b1e3f' }}>
+          <Image src="/logo.jpg" alt="Misbah EDU" width={44} height={44} className="object-cover" />
+          <span className="font-bold text-[20px] leading-none" style={{ color: '#8b1e3f' }}>
             Misbah <span style={{ color: '#c8a96b' }}>EDU</span>
           </span>
         </Link>
         <button onClick={() => setMobileOpen(v => !v)} className="p-1" aria-label="Toggle menu">
           {mobileOpen
-            ? <X size={22} style={{ color: '#8b1e3f' }} />
-            : (
-              <svg width="22" height="14" viewBox="0 0 20 14" fill="none">
-                <path d="M1 7H19M1 1H19M1 13H19" stroke="#8B1E3F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            )}
+            ? <X size={24} style={{ color: '#8b1e3f' }} />
+            : <Menu size={24} style={{ color: '#141110' }} />
+          }
         </button>
       </nav>
 
-      {/* Mobile dropdown menu */}
       {mobileOpen && (
-        <div className="lg:hidden fixed top-[65px] left-0 right-0 bg-white border-b border-[#ede5dc] px-5 py-4 flex flex-col gap-0.5 z-30 shadow-md overflow-y-auto max-h-[calc(100vh-65px)]">
-          {MOBILE_LINKS.map(link => (
-            <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)}
-              className="py-2.5 text-[15px] border-b border-[#f5f0eb] last:border-0 transition-colors hover:text-[#8b1e3f]"
-              style={{ fontFamily: 'Manrope, sans-serif', ...ls(pathname === link.href) }}>
-              {link.label}
-            </Link>
-          ))}
-          <div className="flex gap-3 pt-3 mt-1">
+        <div className="lg:hidden fixed top-[65px] left-0 right-0 bg-white border-b border-gray-100 px-5 pb-5 flex flex-col gap-0.5 z-30 shadow-md overflow-y-auto max-h-[calc(100vh-65px)]">
+          <div className="flex flex-col gap-1 pt-2">
+            {MOBILE_LINKS.map(link => (
+              <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)}
+                className="py-2.5 text-base border-b border-[#f5f0eb] last:border-0 transition-colors hover:text-[#8b1e3f]"
+                style={ls(pathname === link.href)}>
+                {link.label}
+              </Link>
+            ))}
+          </div>
+          <div className="flex items-center gap-3 mt-4">
             {user ? (
               <div className="flex items-center justify-between w-full">
                 <div className="flex items-center gap-2 text-sm" style={{ color: '#5a4f49' }}>
-                  <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white"
+                  <div className="w-7 h-7 flex items-center justify-center text-xs font-bold text-white"
                     style={{ background: '#8b1e3f' }}>
                     {user.username[0].toUpperCase()}
                   </div>
@@ -280,13 +248,11 @@ export default function Navbar() {
             ) : (
               <>
                 <button onClick={() => openModal('register')}
-                  className="flex-1 bg-[#8b1e3f] text-white py-2.5 text-[14px]"
-                  style={{ fontFamily: 'Manrope, sans-serif' }}>
+                  className="flex-1 bg-[#8b1e3f] text-white py-3 text-base font-normal">
                   Registruj se
                 </button>
                 <button onClick={() => openModal('login')}
-                  className="flex-1 border border-[#8b1e3f] text-[#8b1e3f] py-2.5 text-[14px]"
-                  style={{ fontFamily: 'Manrope, sans-serif' }}>
+                  className="flex-1 border border-[#8b1e3f] text-[#8b1e3f] py-3 text-base font-normal">
                   Prijava
                 </button>
               </>
