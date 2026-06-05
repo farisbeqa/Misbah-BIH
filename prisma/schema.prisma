@@ -110,6 +110,7 @@ model IlahijaText {
   title     String
   content   String
   author    String?
+  audioUrl  String?
   published Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

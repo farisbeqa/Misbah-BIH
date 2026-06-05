@@ -8,6 +8,7 @@ import path from 'path'
 
 const ALLOWED_VIDEO = ['video/mp4', 'video/webm', 'video/quicktime', 'video/x-msvideo']
 const ALLOWED_IMAGE = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/jpg']
+const ALLOWED_AUDIO = ['audio/mpeg', 'audio/mp3', 'audio/ogg', 'audio/wav', 'audio/mp4', 'audio/aac', 'audio/webm', 'audio/x-m4a']
 
 export async function POST(request: NextRequest) {
   const session = await requireAuth()
@@ -17,7 +18,7 @@ export async function POST(request: NextRequest) {
     // Production: use R2 presigned URL
     if (process.env.R2_ACCOUNT_ID) {
       const { filename, contentType, folder = 'videos' } = await request.json()
-      const allowed = folder === 'thumbs' ? ALLOWED_IMAGE : [...ALLOWED_VIDEO, ...ALLOWED_IMAGE]
+      const allowed = folder === 'thumbs' ? ALLOWED_IMAGE : folder === 'audio' ? ALLOWED_AUDIO : [...ALLOWED_VIDEO, ...ALLOWED_IMAGE]
       if (!allowed.includes(contentType))
         return NextResponse.json({ error: 'Nepodržan tip fajla' }, { status: 400 })
 
@@ -34,7 +35,7 @@ export async function POST(request: NextRequest) {
     const file = formData.get('file') as File | null
     if (!file) return NextResponse.json({ error: 'Nije odabran fajl' }, { status: 400 })
 
-    const allowed = [...ALLOWED_VIDEO, ...ALLOWED_IMAGE]
+    const allowed = [...ALLOWED_VIDEO, ...ALLOWED_IMAGE, ...ALLOWED_AUDIO]
     if (!allowed.includes(file.type))
       return NextResponse.json({ error: 'Nepodržan tip fajla' }, { status: 400 })
 

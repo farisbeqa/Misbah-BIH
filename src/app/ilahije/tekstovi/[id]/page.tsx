@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { prisma } from '@/lib/db'
 import { ArrowLeft } from 'lucide-react'
+import IlahijaAudioPlayer from '@/components/IlahijaAudioPlayer'
 
 export const dynamic = 'force-dynamic'
 
@@ -20,7 +21,7 @@ export default async function IlahijaTextPage({ params }: { params: { id: string
         <ArrowLeft size={14} /> Sve ilahije
       </Link>
 
-      <header className="mb-10">
+      <header className="mb-6">
         <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-2" style={{ color: '#241F1D' }}>
           {tekst.title}
         </h1>
@@ -28,6 +29,8 @@ export default async function IlahijaTextPage({ params }: { params: { id: string
           <p className="text-sm font-medium" style={{ color: '#8B1E3F' }}>{tekst.author}</p>
         )}
       </header>
+
+      {tekst.audioUrl && <IlahijaAudioPlayer audioUrl={tekst.audioUrl} />}
 
       <div
         className="prose prose-sm sm:prose max-w-none leading-relaxed whitespace-pre-wrap"
