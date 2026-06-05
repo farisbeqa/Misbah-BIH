@@ -41,20 +41,20 @@ export default function EditIlahijaTextPage() {
     setUploading(true)
     setError('')
     try {
-      if (process.env.NODE_ENV === 'production' || process.env.NEXT_PUBLIC_R2) {
-        const presignRes = await fetch('/api/upload', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ filename: file.name, contentType: file.type, folder: 'audio' }),
-        })
-        if (presignRes.ok) {
-          const { uploadUrl, publicUrl } = await presignRes.json()
-          const r2Res = await fetch(uploadUrl, { method: 'PUT', body: file, headers: { 'Content-Type': file.type } })
-          if (!r2Res.ok) throw new Error('R2 upload failed')
-          setAudioUrl(publicUrl)
-          return
-        }
+      // Try R2 presigned URL first (production); fallback to local filesystem (dev)
+      const presignRes = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename: file.name, contentType: file.type, folder: 'audio' }),
+      })
+      if (presignRes.ok) {
+        const { uploadUrl, publicUrl } = await presignRes.json()
+        const r2Res = await fetch(uploadUrl, { method: 'PUT', body: file, headers: { 'Content-Type': file.type } })
+        if (!r2Res.ok) throw new Error('R2 upload failed')
+        setAudioUrl(publicUrl)
+        return
       }
+      // Development fallback: FormData to local filesystem
       const formData = new FormData()
       formData.append('file', file)
       const res = await fetch('/api/upload', { method: 'POST', body: formData })
