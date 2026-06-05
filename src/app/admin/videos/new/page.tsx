@@ -120,6 +120,10 @@ function UrlMode({ initialCategory = 'predavanja', defaultAuthor = '' }: { initi
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [author, setAuthor] = useState(defaultAuthor)
+
+  useEffect(() => {
+    if (defaultAuthor) setAuthor(defaultAuthor)
+  }, [defaultAuthor])
   const [category, setCategory] = useState(initialCategory)
   const [topic, setTopic] = useState('')
   const [preview, setPreview] = useState<Preview | null>(null)
@@ -152,7 +156,7 @@ function UrlMode({ initialCategory = 'predavanja', defaultAuthor = '' }: { initi
         body: JSON.stringify({ url: url.trim(), title: title.trim() || 'Bez naslova', description: description.trim() || null, author: author.trim() || null, category, topic: topic || null }),
       })
       const data = await res.json()
-      if (res.ok) { router.push('/admin/dashboard'); router.refresh() }
+      if (res.ok) { window.location.href = '/admin/dashboard' }
       else setError(data.error || 'Greška pri snimanju')
     } catch { setError('Greška pri conexiji') }
     finally { setSaving(false) }
@@ -340,7 +344,7 @@ function UploadMode({ initialCategory = 'predavanja' }: { initialCategory?: stri
           body: JSON.stringify({ title: title.trim(), description: description.trim(), isShortForm, videoUrl, thumbnailUrl, category, topic: topic || null }),
         })
         const data = await saveRes.json()
-        if (saveRes.ok) { router.push('/admin/dashboard'); router.refresh() }
+        if (saveRes.ok) { window.location.href = '/admin/dashboard' }
         else setError(data.error || 'Greška pri snimanju')
       } else {
         // Development: multipart upload to local filesystem
@@ -354,7 +358,7 @@ function UploadMode({ initialCategory = 'predavanja' }: { initialCategory?: stri
 
         const res = await fetch('/api/videos/upload', { method: 'POST', body: formData })
         const data = await res.json()
-        if (res.ok) { router.push('/admin/dashboard'); router.refresh() }
+        if (res.ok) { window.location.href = '/admin/dashboard' }
         else setError(data.error || 'Greška pri uploadu')
       }
     } catch { setError('Greška pri conexiji') }
@@ -516,7 +520,7 @@ function AddVideoPageInner() {
 
   useEffect(() => {
     fetch('/api/auth/admin-me').then(r => r.json()).then(d => {
-      if (d.admin?.username) setAdminUsername(d.admin.username)
+      if (d.admin) setAdminUsername(d.admin.fullName || d.admin.username || '')
     }).catch(() => {})
   }, [])
 

@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
       data: {
         title: title || 'Bez naslova',
         description: description || null,
-        author: author?.trim() || session.username,
+        author: author?.trim() || session.fullName || session.username,
         url,
         platform: videoInfo.platform,
         embedUrl: videoInfo.embedUrl,

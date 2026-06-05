@@ -8,7 +8,7 @@ export async function GET() {
   if (!session) return NextResponse.json({ error: 'Nije autorizovano' }, { status: 403 })
 
   const admins = await prisma.adminUser.findMany({
-    select: { id: true, username: true, isSuperAdmin: true, createdAt: true },
+    select: { id: true, username: true, fullName: true, isSuperAdmin: true, createdAt: true },
     orderBy: { createdAt: 'asc' },
   })
 
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
   if (!session) return NextResponse.json({ error: 'Nije autorizovano' }, { status: 403 })
 
   try {
-    const { username, password } = await request.json()
+    const { username, password, fullName } = await request.json()
 
     if (!username?.trim() || !password?.trim())
       return NextResponse.json({ error: 'Korisničko ime i lozinka su obavezni' }, { status: 400 })
@@ -34,8 +34,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Korisničko ime je već zauzeto' }, { status: 409 })
 
     const admin = await prisma.adminUser.create({
-      data: { username: username.trim(), passwordHash: hashPassword(password), isSuperAdmin: false },
-      select: { id: true, username: true, isSuperAdmin: true, createdAt: true },
+      data: {
+        username: username.trim(),
+        passwordHash: hashPassword(password),
+        fullName: fullName?.trim() || null,
+        isSuperAdmin: false,
+      },
+      select: { id: true, username: true, fullName: true, isSuperAdmin: true, createdAt: true },
     })
 
     return NextResponse.json(admin, { status: 201 })

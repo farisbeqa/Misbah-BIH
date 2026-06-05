@@ -6,5 +6,5 @@ export async function GET() {
   if (!session.isLoggedIn) {
     return NextResponse.json({ admin: null })
   }
-  return NextResponse.json({ admin: { username: session.username } })
+  return NextResponse.json({ admin: { username: session.username, fullName: session.fullName ?? null } })
 }

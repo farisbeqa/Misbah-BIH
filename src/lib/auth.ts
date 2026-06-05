@@ -4,6 +4,7 @@ import { cookies } from 'next/headers'
 export interface SessionData {
   isLoggedIn: boolean
   username?: string
+  fullName?: string
   isSuperAdmin?: boolean
 }
 

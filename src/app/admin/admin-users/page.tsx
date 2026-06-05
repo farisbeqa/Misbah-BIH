@@ -14,7 +14,7 @@ export default async function AdminUsersPage() {
   if (!session) redirect('/admin/dashboard')
 
   const admins = await prisma.adminUser.findMany({
-    select: { id: true, username: true, isSuperAdmin: true, createdAt: true },
+    select: { id: true, username: true, fullName: true, isSuperAdmin: true, createdAt: true },
     orderBy: { createdAt: 'asc' },
   })
 

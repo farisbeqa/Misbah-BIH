@@ -23,6 +23,7 @@ export async function POST(request: NextRequest) {
     const session = await getIronSession<SessionData>(request, response, sessionOptions)
     session.isLoggedIn = true
     session.username = adminUser.username
+    session.fullName = adminUser.fullName ?? undefined
     session.isSuperAdmin = adminUser.isSuperAdmin
     await session.save()
 

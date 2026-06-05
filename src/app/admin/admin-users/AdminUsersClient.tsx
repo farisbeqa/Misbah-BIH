@@ -6,6 +6,7 @@ import { ShieldCheck, ShieldOff, Trash2, Plus, Loader2, Eye, EyeOff, Calendar } 
 interface Admin {
   id: number
   username: string
+  fullName: string | null
   isSuperAdmin: boolean
   createdAt: string
 }
@@ -19,6 +20,7 @@ function fmtDate(s: string) {
 export default function AdminUsersClient({ initialAdmins }: { initialAdmins: Admin[] }) {
   const [admins, setAdmins] = useState<Admin[]>(initialAdmins)
   const [username, setUsername] = useState('')
+  const [fullName, setFullName] = useState('')
   const [password, setPassword] = useState('')
   const [showPass, setShowPass] = useState(false)
   const [adding, setAdding] = useState(false)
@@ -32,12 +34,12 @@ export default function AdminUsersClient({ initialAdmins }: { initialAdmins: Adm
     try {
       const res = await fetch('/api/admin/admin-users', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: username.trim(), password }),
+        body: JSON.stringify({ username: username.trim(), password, fullName: fullName.trim() || null }),
       })
       const data = await res.json()
       if (res.ok) {
         setAdmins(prev => [...prev, data])
-        setUsername(''); setPassword('')
+        setUsername(''); setFullName(''); setPassword('')
         setSuccess(`Admin "${data.username}" je uspješno dodan.`)
       } else {
         setError(data.error || 'Greška')
@@ -69,7 +71,7 @@ export default function AdminUsersClient({ initialAdmins }: { initialAdmins: Adm
         <h2 className="font-bold text-zinc-900 mb-4 flex items-center gap-2">
           <Plus size={16} className="text-brand" /> Dodaj novog admina
         </h2>
-        <form onSubmit={handleAdd} className="grid sm:grid-cols-3 gap-3 items-end">
+        <form onSubmit={handleAdd} className="grid sm:grid-cols-2 gap-3 items-end">
           <div>
             <label className="block text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-1.5">
               Korisničko ime
@@ -77,6 +79,15 @@ export default function AdminUsersClient({ initialAdmins }: { initialAdmins: Adm
             <input type="text" value={username} onChange={e => setUsername(e.target.value)}
               placeholder="npr. Ahmed"
               required minLength={3} maxLength={32}
+              className="w-full px-3 py-2.5 border border-zinc-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand" />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-1.5">
+              Puno ime <span className="text-zinc-400 font-normal normal-case">(prikazuje se kao Autor)</span>
+            </label>
+            <input type="text" value={fullName} onChange={e => setFullName(e.target.value)}
+              placeholder="npr. Ahmed Mehmedović"
+              maxLength={80}
               className="w-full px-3 py-2.5 border border-zinc-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand" />
           </div>
           <div>
@@ -95,7 +106,7 @@ export default function AdminUsersClient({ initialAdmins }: { initialAdmins: Adm
             </div>
           </div>
           <button type="submit" disabled={adding || !username.trim() || !password}
-            className="flex items-center justify-center gap-2 bg-brand hover:bg-brand-light text-white font-semibold py-2.5 px-4 rounded-xl text-sm transition-colors disabled:opacity-40">
+            className="flex items-center justify-center gap-2 bg-brand hover:bg-brand-light text-white font-semibold py-2.5 px-4 rounded-xl text-sm transition-colors disabled:opacity-40 self-end">
             {adding ? <Loader2 size={15} className="animate-spin" /> : <Plus size={15} />}
             {adding ? 'Dodavanje...' : 'Dodaj admina'}
           </button>
@@ -126,7 +137,12 @@ export default function AdminUsersClient({ initialAdmins }: { initialAdmins: Adm
             {/* Info */}
             <div className="flex-1 min-w-0">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="font-semibold text-zinc-900 text-sm truncate">{admin.username}</span>
+                <span className="font-semibold text-zinc-900 text-sm truncate">
+                  {admin.fullName || admin.username}
+                </span>
+                {admin.fullName && (
+                  <span className="text-zinc-400 text-xs truncate">@{admin.username}</span>
+                )}
                 {admin.isSuperAdmin ? (
                   <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.5 bg-amber-100 text-amber-700 rounded-md">
                     <ShieldCheck size={9} /> Super Admin
