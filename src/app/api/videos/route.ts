@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
 import { parseVideoUrl } from '@/lib/videoUtils'
@@ -64,6 +65,7 @@ export async function POST(request: NextRequest) {
       },
     })
 
+    revalidatePath('/')
     return NextResponse.json(video, { status: 201 })
   } catch (error) {
     console.error(error)

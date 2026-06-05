@@ -7,6 +7,7 @@ export default async function IlahijeTekstoviPage() {
   const tekstovi = await prisma.ilahijaText.findMany({
     where: { published: true },
     orderBy: { createdAt: 'desc' },
+    select: { id: true, title: true, author: true },
   }).catch(() => [])
 
   return (

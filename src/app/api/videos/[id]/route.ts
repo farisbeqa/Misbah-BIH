@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
 import { parseVideoUrl } from '@/lib/videoUtils'
@@ -54,6 +55,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       data: updateData,
     })
 
+    revalidatePath('/')
     return NextResponse.json(video)
   } catch {
     return NextResponse.json({ error: 'Greška pri ažuriranju' }, { status: 500 })
@@ -71,6 +73,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
       where: { id: parseInt(params.id) },
     })
 
+    revalidatePath('/')
     return NextResponse.json({ success: true })
   } catch {
     return NextResponse.json({ error: 'Greška pri brisanju' }, { status: 500 })
