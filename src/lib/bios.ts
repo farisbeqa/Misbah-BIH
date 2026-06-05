@@ -137,6 +137,42 @@ export const BIOS: Record<string, Bio> = {
     ],
   },
 
+  'muhamed-selimovic': {
+    name: 'Muhamed Selimović',
+    role: 'Autor edukativnog sadržaja',
+    photo: '/tim/muhamed-selimovic.jpg',
+    born: 'Konjic',
+    sections: [
+      {
+        title: 'O Muhamedu',
+        items: [
+          'Hafiz Muhamed Selimović rođen je u Konjicu, gdje završava osnovnu školu kao učenik generacije.',
+          'Još u mektebu učestvuje i pobjeđuje na mektebskom takmičenju na nivou Rijaseta.',
+          'U novembru 2022. godine položio je hifz pred komisijom Rijaseta IZ u BiH. Muhaffiz mu je bio hafiz Salih ef. Halilović.',
+          'Od 2022. godine je aktivan član projekta Misbah.',
+        ],
+      },
+      {
+        title: 'Obrazovanje',
+        items: [
+          'Osnovna škola u Konjicu — završio kao učenik generacije',
+          'Gazi Husrev-begova medresa u Sarajevu — završio s odličnim uspjehom',
+          'Fakultet Elektrotehnike — Internacionalni Univerzitet u Sarajevu (u toku)',
+        ],
+      },
+      {
+        title: 'Hifz i takmičenja',
+        items: [
+          'Hifz položen u novembru 2022. pred komisijom Rijaseta IZ u BiH (muhaffiz: hafiz Salih ef. Halilović)',
+          'Učestvovao na nekoliko takmičenja iz učenja Kur\'ana',
+          'Predvodio teravije i učio hafiske mukabele u Ferhadiji, Carevoj i Bakr-babinoj džamiji',
+          'Pobjednik 17. državnog takmičenja iz hifza u kategoriji 15 džuzeva',
+          'Drugoplasirani na Međunarodnom takmičenju u Zagrebu 2025. godine',
+        ],
+      },
+    ],
+  },
+
   'hamdo-solo': {
     name: 'Hamdo Solo',
     role: 'Urednik / Imam džemata Carina Vratnik',

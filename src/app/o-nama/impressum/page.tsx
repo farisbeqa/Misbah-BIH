@@ -8,12 +8,16 @@ const UREDNICI: { name: string; slug?: string }[] = [
   { name: 'Hamdo Solo',          slug: 'hamdo-solo' },
   { name: 'Mubina Suljić Solo' },
   { name: 'Hamza Bajraktarević', slug: 'hamza-bajraktarevic' },
-  { name: 'Esma Klisura',        slug: 'esma-klisura' },
 ]
 
 const DRUSTVENE_MREZE: { name: string; slug?: string; photo?: string }[] = [
   { name: 'Adna Kurtanović',  photo: '/tim/adna-kurtanovic.jpg' },
   { name: 'Abdulah Hodžić',   photo: '/tim/abdulah-hodzic.jpg' },
+]
+
+const AUTORI: { name: string; slug?: string }[] = [
+  { name: 'Esma Klisura',       slug: 'esma-klisura' },
+  { name: 'Muhamed Selimović',  slug: 'muhamed-selimovic' },
 ]
 
 function MemberCard({ name, slug, photo, accent }: { name: string; slug?: string; photo?: string; accent: string }) {
@@ -74,7 +78,7 @@ export default function ImpressumPage() {
       {/* Team */}
       <section className="mb-10">
         <h2 className="font-bold text-warm-900 mb-5 text-lg">Uredništvo</h2>
-        <div className="grid sm:grid-cols-2 gap-4 mb-6">
+        <div className="grid sm:grid-cols-2 gap-4">
           <div className="p-5 rounded-2xl" style={{ background: '#FAF7F2', border: '1px solid #E8E1DB' }}>
             <p className="font-mono text-[11px] uppercase tracking-widest mb-3" style={{ color: '#A94A61' }}>Urednici</p>
             <ul className="divide-y divide-[#EDE5DB]">
@@ -88,6 +92,14 @@ export default function ImpressumPage() {
             <ul className="divide-y divide-[#EDE5DB]">
               {DRUSTVENE_MREZE.map(m => (
                 <MemberCard key={m.name} name={m.name} slug={m.slug} photo={m.photo} accent="#C8A96B" />
+              ))}
+            </ul>
+          </div>
+          <div className="p-5 rounded-2xl sm:col-span-2" style={{ background: '#FAF7F2', border: '1px solid #E8E1DB' }}>
+            <p className="font-mono text-[11px] uppercase tracking-widest mb-3" style={{ color: '#A94A61' }}>Autori edukativnog sadržaja</p>
+            <ul className="divide-y divide-[#EDE5DB]">
+              {AUTORI.map(m => (
+                <MemberCard key={m.name} name={m.name} slug={m.slug} accent="#8B1E3F" />
               ))}
             </ul>
           </div>

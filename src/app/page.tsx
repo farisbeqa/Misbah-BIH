@@ -174,7 +174,6 @@ const TEAM = [
   { image: '/tim/hamdo-solo.jpg',          tag: "Kur'anske nauke i kiraeti", name: 'Hamdo Solo',          bio: "Kur'an, kiraeti i duhovni razvoj.",                      slug: 'hamdo-solo' },
   { image: '/tim/mubina-suljic-solo.jpg',  tag: 'Fikh i savremena pitanja', name: 'Mubina Suljić Solo',  bio: 'Ibadet, šerijatsko pravo i savremena pitanja muslimana.' },
   { image: '/tim/hamza-bajraktarevic.jpg', tag: 'Sira i islamska etika',    name: 'Hamza Bajraktarević', bio: 'Sira Poslanika ﷺ, islamska etika i životne lekcije.',    slug: 'hamza-bajraktarevic' },
-  { image: '/tim/esma-klisura.jpg',        tag: 'Odgoj i obrazovanje',      name: 'Esma Klisura',        bio: 'Odgoj, obrazovanje i savremeni izazovi mladih.',         slug: 'esma-klisura' },
 ]
 
 // ════════════════════════════════════════════════════════════════════════════
