@@ -6,7 +6,7 @@ import { Trash2, Loader2 } from 'lucide-react'
 
 interface DeleteButtonProps {
   id: number
-  type: 'video' | 'blog' | 'activity' | 'gallery' | 'quote'
+  type: 'video' | 'blog' | 'activity' | 'gallery' | 'quote' | 'ilahija-tekst'
 }
 
 export default function DeleteButton({ id, type }: DeleteButtonProps) {
@@ -14,7 +14,7 @@ export default function DeleteButton({ id, type }: DeleteButtonProps) {
   const [loading, setLoading] = useState(false)
 
   const handleDelete = async () => {
-    const labels: Record<string, string> = { video: 'predavanje', blog: 'blog post', activity: 'aktivnost', gallery: 'sliku', quote: 'misao' }
+    const labels: Record<string, string> = { video: 'predavanje', blog: 'blog post', activity: 'aktivnost', gallery: 'sliku', quote: 'misao', 'ilahija-tekst': 'tekst' }
     if (!confirm(`Jesi li siguran da želiš obrisati ovo ${labels[type]}?`)) return
 
     setLoading(true)
@@ -22,7 +22,7 @@ export default function DeleteButton({ id, type }: DeleteButtonProps) {
       const endpoints: Record<string, string> = {
         video: `/api/videos/${id}`, blog: `/api/blog/${id}`,
         activity: `/api/activities/${id}`, gallery: `/api/gallery/${id}`,
-        quote: `/api/quotes/${id}`,
+        quote: `/api/quotes/${id}`, 'ilahija-tekst': `/api/ilahije-tekstovi/${id}`,
       }
       const endpoint = endpoints[type]
       const res = await fetch(endpoint, { method: 'DELETE' })

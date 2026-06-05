@@ -3,13 +3,13 @@ import { redirect } from 'next/navigation'
 import { requireAuth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import { ArrowLeft } from 'lucide-react'
-import BlogListSearch from './ListSearch'
+import IlahijeListSearch from './ListSearch'
 
-export default async function AdminBlogSviPage() {
+export default async function AdminIlahijeTekstoviSviPage() {
   const session = await requireAuth()
   if (!session) redirect('/admin')
 
-  const posts = await prisma.blogPost.findMany({ orderBy: { createdAt: 'desc' } })
+  const tekstovi = await prisma.ilahijaText.findMany({ orderBy: { createdAt: 'desc' } })
 
   return (
     <div className="min-h-screen bg-zinc-50">
@@ -25,13 +25,16 @@ export default async function AdminBlogSviPage() {
           <ArrowLeft size={15} /> Nazad na dashboard
         </Link>
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-xl font-black text-zinc-900">Blog postovi <span className="text-zinc-400 font-normal text-base">({posts.length})</span></h1>
-          <Link href="/admin/blog/new"
-            className="text-sm font-semibold px-4 py-2 rounded-xl text-zinc-900 transition-opacity hover:opacity-90 bg-amber-400">
+          <h1 className="text-xl font-black text-zinc-900">
+            Tekstovi ilahija <span className="text-zinc-400 font-normal text-base">({tekstovi.length})</span>
+          </h1>
+          <Link href="/admin/ilahije-tekstovi/new"
+            className="text-sm font-semibold px-4 py-2 rounded-xl text-white transition-opacity hover:opacity-90"
+            style={{ background: '#9D174D' }}>
             + Dodaj
           </Link>
         </div>
-        <BlogListSearch posts={posts} />
+        <IlahijeListSearch tekstovi={tekstovi} />
       </div>
     </div>
   )

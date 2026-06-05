@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { Search } from 'lucide-react'
 import VideoCard from '@/components/VideoCard'
 
 interface Video {
@@ -11,12 +12,17 @@ interface Video {
 export default function IlahijeIzvedbaPage() {
   const [videos, setVideos] = useState<Video[]>([])
   const [loading, setLoading] = useState(true)
+  const [query, setQuery] = useState('')
 
   useEffect(() => {
     fetch('/api/videos?category=ilahije')
       .then(r => r.json()).then(d => { setVideos(d); setLoading(false) })
       .catch(() => setLoading(false))
   }, [])
+
+  const filtered = query.trim()
+    ? videos.filter(v => v.title.toLowerCase().includes(query.toLowerCase()))
+    : videos
 
   return (
     <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-12 sm:py-16" style={{ minHeight: '60vh' }}>
@@ -31,6 +37,13 @@ export default function IlahijeIzvedbaPage() {
         </p>
       </div>
 
+      <div className="relative mb-8">
+        <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#a89888] pointer-events-none" />
+        <input value={query} onChange={e => setQuery(e.target.value)}
+          placeholder="Pretraži po naslovu..."
+          className="w-full pl-9 pr-4 py-2.5 border border-[#D6CCC3] bg-white focus:outline-none focus:border-[#8b1e3f] text-sm transition-colors" />
+      </div>
+
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {Array.from({ length: 3 }).map((_, i) => (
@@ -43,13 +56,15 @@ export default function IlahijeIzvedbaPage() {
             </div>
           ))}
         </div>
-      ) : videos.length === 0 ? (
+      ) : filtered.length === 0 ? (
         <div className="flex items-center justify-center py-20 bg-[#f5f2ef] border border-black/5">
-          <p className="text-sm text-[#a89888]">Nema ilahija još uvijek</p>
+          <p className="text-sm text-[#a89888]">
+            {query.trim() ? `Nema rezultata za "${query}"` : 'Nema ilahija još uvijek'}
+          </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {videos.map(v => (
+          {filtered.map(v => (
             <VideoCard key={v.id} id={v.id} title={v.title} description={v.description}
               author={v.author} platform={v.platform} thumbnailUrl={v.thumbnailUrl}
               isShortForm={v.isShortForm} createdAt={v.createdAt} />

@@ -9,6 +9,7 @@ export default function AddBlogPostPage() {
 
   const errorRef = useRef<HTMLDivElement>(null)
   const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
   const [content, setContent] = useState('')
   const [imageUrl, setImageUrl] = useState('')
   const [imageUrlInput, setImageUrlInput] = useState('')
@@ -83,6 +84,7 @@ export default function AddBlogPostPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           title: title.trim(),
+          author: author.trim() || null,
           content: content.trim(),
           imageUrl: imageUrl || null,
         }),
@@ -132,6 +134,14 @@ export default function AddBlogPostPage() {
           <label className="block text-sm font-semibold text-gray-700 mb-2">Naslov *</label>
           <input type="text" value={title} onChange={e => setTitle(e.target.value)}
             placeholder="Unesite naslov blog posta"
+            className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1e5f34] text-sm" />
+        </div>
+
+        {/* Author */}
+        <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm mb-4">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Autor <span className="text-gray-400 font-normal">(opciono)</span></label>
+          <input type="text" value={author} onChange={e => setAuthor(e.target.value)}
+            placeholder="Ime i prezime autora"
             className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1e5f34] text-sm" />
         </div>
 

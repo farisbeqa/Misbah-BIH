@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { title, content, imageUrl } = body
+    const { title, content, author, imageUrl } = body
     console.log('[blog POST] title:', title?.slice(0, 60), '| content len:', content?.length)
 
     if (!title || !content) {
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
       data: {
         title,
         content,
-        author: session.fullName || session.username,
+        author: author?.trim() || null,
         imageUrl: imageUrl || null,
         published: true,
       },

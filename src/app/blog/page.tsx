@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/db'
-import BlogCard from '@/components/BlogCard'
+import BlogSearch from '@/components/BlogSearch'
 
 export const dynamic = 'force-dynamic'
 export const metadata = {
@@ -29,18 +29,7 @@ export default async function BlogPage() {
         </p>
       </div>
 
-      {posts.length === 0 ? (
-        <div className="flex items-center justify-center py-20 bg-[#f5f2ef] border border-black/5">
-          <p className="text-sm text-[#a89888]">Nema blog postova još uvijek</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {posts.map(p => (
-            <BlogCard key={p.id} id={p.id} title={p.title} content={p.content}
-              author={p.author} imageUrl={p.imageUrl} createdAt={p.createdAt} />
-          ))}
-        </div>
-      )}
+      <BlogSearch posts={posts} />
     </div>
   )
 }

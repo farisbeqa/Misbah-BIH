@@ -559,9 +559,17 @@ export default async function AdminDashboard() {
                       className="p-1.5 text-zinc-300 hover:text-zinc-600 transition-colors">
                       <ExternalLink size={13} />
                     </Link>
+                    <DeleteButton id={t.id} type="ilahija-tekst" />
                   </div>
                 </div>
               ))}
+              {ilahijeTekstovi.length > 5 && (
+                <div className="px-4 py-2.5 border-t border-zinc-100 text-center">
+                  <Link href="/admin/ilahije-tekstovi/svi" className="text-xs hover:underline font-medium" style={{ color: '#9D174D' }}>
+                    Vidi svih {ilahijeTekstovi.length} tekstova →
+                  </Link>
+                </div>
+              )}
             </div>
           )}
         </section>

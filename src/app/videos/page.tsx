@@ -1,17 +1,18 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Play } from 'lucide-react'
+import { Search } from 'lucide-react'
 import VideoCard from '@/components/VideoCard'
 
 interface Video {
-  id: number; title: string; description: string | null
+  id: number; title: string; description: string | null; author?: string | null
   platform: string; thumbnailUrl: string | null; isShortForm: boolean; createdAt: string
 }
 
 export default function VideosPage() {
   const [videos, setVideos] = useState<Video[]>([])
   const [loading, setLoading] = useState(true)
+  const [query, setQuery] = useState('')
 
   useEffect(() => {
     fetch('/api/videos?category=predavanja')
@@ -19,42 +20,56 @@ export default function VideosPage() {
       .catch(() => setLoading(false))
   }, [])
 
+  const filtered = query.trim()
+    ? videos.filter(v => v.title.toLowerCase().includes(query.toLowerCase()))
+    : videos
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16" style={{ minHeight: '60vh' }}>
+    <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-12 sm:py-16" style={{ minHeight: '60vh' }}>
       <div className="mb-12">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-warm-900 tracking-tight mb-2">Predavanja</h1>
+        <p className="font-medium text-[#8b1e3f] text-base mb-2">PREDAVANJA</p>
+        <h1 className="font-semibold text-[#141110] mb-3"
+          style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}>
+          Predavanja
+        </h1>
+        <p className="font-normal text-[#746860]" style={{ fontSize: 18 }}>
+          Islamska predavanja i pouke o vjeri, ibadetu i svakodnevnom životu.
+        </p>
+      </div>
+
+      <div className="relative mb-8">
+        <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#a89888] pointer-events-none" />
+        <input value={query} onChange={e => setQuery(e.target.value)}
+          placeholder="Pretraži po naslovu..."
+          className="w-full pl-9 pr-4 py-2.5 border border-[#D6CCC3] bg-white focus:outline-none focus:border-[#8b1e3f] text-sm transition-colors" />
       </div>
 
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="animate-pulse" style={{ background: '#FAF7F2', border: '1px solid #E8E1DB', borderRadius: 8, overflow: 'hidden' }}>
-              <div className="m-2 aspect-video bg-warm-200" style={{ borderRadius: 4 }} />
-              <div className="px-4 pb-4 space-y-2">
-                <div className="h-2.5 bg-warm-200 rounded w-24" />
-                <div className="h-3.5 bg-warm-200 rounded w-3/4" />
+            <div key={i} className="animate-pulse bg-[#f5f2ef] overflow-hidden border border-black/5">
+              <div className="h-[228px] bg-[#e0d8d0]" />
+              <div className="px-6 py-7 space-y-3">
+                <div className="h-2.5 bg-[#e0d8d0] rounded w-24" />
+                <div className="h-5 bg-[#e0d8d0] rounded w-3/4" />
               </div>
             </div>
           ))}
         </div>
-      ) : videos.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-24 text-warm-400"
-          style={{ background: '#FAF7F2', border: '1px dashed #E8E1DB', borderRadius: 8 }}>
-          <Play size={40} className="text-warm-300 mb-3" />
-          <p className="font-mono text-sm text-warm-400">Nema predavanja</p>
+      ) : filtered.length === 0 ? (
+        <div className="flex items-center justify-center py-20 bg-[#f5f2ef] border border-black/5">
+          <p className="text-sm text-[#a89888]">
+            {query.trim() ? `Nema rezultata za "${query}"` : 'Nema predavanja još uvijek'}
+          </p>
         </div>
       ) : (
-        <>
-          <p className="font-mono text-[11px] text-warm-400 mb-5 tracking-wide">
-            {videos.length} {videos.length === 1 ? 'predavanje' : 'predavanja'}
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {videos.map(v => (
-              <VideoCard key={v.id} id={v.id} title={v.title} description={v.description}
-                platform={v.platform} thumbnailUrl={v.thumbnailUrl} isShortForm={v.isShortForm} createdAt={v.createdAt} />
-            ))}
-          </div>
-        </>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filtered.map(v => (
+            <VideoCard key={v.id} id={v.id} title={v.title} description={v.description}
+              author={v.author} platform={v.platform} thumbnailUrl={v.thumbnailUrl}
+              isShortForm={v.isShortForm} createdAt={v.createdAt} />
+          ))}
+        </div>
       )}
     </div>
   )
