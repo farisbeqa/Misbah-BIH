@@ -27,7 +27,7 @@ export default function DeleteButton({ id, type }: DeleteButtonProps) {
       const endpoint = endpoints[type]
       const res = await fetch(endpoint, { method: 'DELETE' })
       if (res.ok) {
-        router.refresh()
+        window.location.reload()
       } else {
         alert('Greška pri brisanju')
       }

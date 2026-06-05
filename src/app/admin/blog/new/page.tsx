@@ -1,12 +1,13 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, Loader2, Upload, X, ImageIcon } from 'lucide-react'
+import { ArrowLeft, Loader2, Upload, X, AlertCircle } from 'lucide-react'
 
 export default function AddBlogPostPage() {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
+  const errorRef = useRef<HTMLDivElement>(null)
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [imageUrl, setImageUrl] = useState('')
@@ -15,6 +16,10 @@ export default function AddBlogPostPage() {
   const [uploading, setUploading] = useState(false)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    if (error) errorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }, [error])
 
   const handleImageUpload = async (file: File) => {
     setUploading(true)
@@ -240,8 +245,12 @@ Možete koristiti prazne redove za razdvajanje paragrafa."
         </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-xl mb-4">
-            {error}
+          <div ref={errorRef} className="flex items-start gap-3 bg-red-50 border-2 border-red-300 text-red-800 text-sm px-4 py-4 rounded-xl mb-4 shadow-md">
+            <AlertCircle size={18} className="flex-shrink-0 mt-0.5 text-red-500" />
+            <div>
+              <p className="font-bold mb-0.5">Greška pri objavljivanju</p>
+              <p>{error}</p>
+            </div>
           </div>
         )}
 

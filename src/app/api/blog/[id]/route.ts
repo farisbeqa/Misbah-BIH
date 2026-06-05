@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
 
@@ -26,17 +27,21 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     }
 
     const body = await request.json()
-    const { title, content, imageUrl, published } = body
+    const { title, content, author, imageUrl, published } = body
 
     const post = await prisma.blogPost.update({
       where: { id: parseInt(params.id) },
       data: {
         ...(title !== undefined && { title }),
         ...(content !== undefined && { content }),
+        ...(author !== undefined && { author: author || null }),
         ...(imageUrl !== undefined && { imageUrl }),
         ...(published !== undefined && { published }),
       },
     })
+
+    revalidatePath('/blog')
+    revalidatePath('/')
 
     return NextResponse.json(post)
   } catch {
@@ -54,6 +59,9 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     await prisma.blogPost.delete({
       where: { id: parseInt(params.id) },
     })
+
+    revalidatePath('/blog')
+    revalidatePath('/')
 
     return NextResponse.json({ success: true })
   } catch {

@@ -23,10 +23,19 @@ function formatDate(d: Date) {
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
-  const post = await prisma.blogPost.findUnique({
-    where: { id: parseInt(params.id), published: true },
-    include: { _count: { select: { likes: true, comments: true } } },
-  })
+  const id = parseInt(params.id)
+  if (isNaN(id)) notFound()
+
+  let post
+  try {
+    post = await prisma.blogPost.findUnique({
+      where: { id, published: true },
+      include: { _count: { select: { likes: true, comments: true } } },
+    })
+  } catch (error) {
+    console.error('[blog detail] Prisma error for id', id, error)
+    notFound()
+  }
   if (!post) notFound()
 
   return (
@@ -57,15 +66,26 @@ export default async function BlogPostPage({ params }: PageProps) {
           </h1>
 
           {/* Author */}
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-brand flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
-              HS
-            </div>
-            <div>
-              <p className="font-semibold text-warm-800 text-sm">Hamdo Solo</p>
-              <p className="font-mono text-warm-400 text-[11px]">Imam džamije Carina · Sarajevo</p>
-            </div>
-          </div>
+          {post.author && (() => {
+            const parts = post.author.split(/\s+/).filter(Boolean)
+            const initials = parts.length >= 2
+              ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+              : post.author[0].toUpperCase()
+            const isHamdo = post.author.toLowerCase().includes('hamdo')
+            return (
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full bg-brand flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                  {initials}
+                </div>
+                <div>
+                  <p className="font-semibold text-warm-800 text-sm">{post.author}</p>
+                  {isHamdo && (
+                    <p className="font-mono text-warm-400 text-[11px]">Imam džamije Carina · Sarajevo</p>
+                  )}
+                </div>
+              </div>
+            )
+          })()}
 
           {/* Rule */}
           <div className="mt-8 h-px"
