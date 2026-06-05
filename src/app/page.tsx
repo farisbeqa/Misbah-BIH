@@ -222,7 +222,7 @@ export default async function HomePage() {
           {/* Right: hero image */}
           <div className="relative flex-1 min-w-0 min-h-[300px] lg:min-h-0 overflow-hidden bg-[#ede6db]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/hero.png" alt="" className="absolute inset-0 w-full h-full object-contain object-center" />
+            <img src="/hero.png" alt="" className="absolute inset-0 w-full h-full" style={{ objectFit: 'fill' }} />
           </div>
         </div>
       </section>
