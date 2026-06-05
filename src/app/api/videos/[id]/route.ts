@@ -27,11 +27,12 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     }
 
     const body = await request.json()
-    const { title, description, url, published, thumbnailUrl, category, topic, isShortForm } = body
+    const { title, description, author, url, published, thumbnailUrl, category, topic, isShortForm } = body
 
     const updateData: Record<string, unknown> = {}
     if (title !== undefined) updateData.title = title
     if (description !== undefined) updateData.description = description
+    if (author !== undefined) updateData.author = author?.trim() || null
     if (published !== undefined) updateData.published = published
     if (thumbnailUrl !== undefined) updateData.thumbnailUrl = thumbnailUrl || null
     if (topic !== undefined) updateData.topic = topic || null

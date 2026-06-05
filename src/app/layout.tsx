@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   creator: 'Misbah EDU',
   publisher: 'Misbah EDU',
   alternates: { canonical: siteUrl },
-  icons: { icon: '/logo.jpg', apple: '/logo.jpg' },
+  icons: { icon: '/favicon.svg', apple: '/logo.jpg' },
   openGraph: {
     type: 'website',
     locale: 'bs_BA',
@@ -94,7 +94,7 @@ const jsonLd = {
       foundingLocation: { '@type': 'Place', name: 'Sarajevo, Bosna i Hercegovina' },
       sameAs: [
         'https://www.youtube.com/@misbah_ba',
-        'https://www.instagram.com/misbah_bih/',
+        'https://www.instagram.com/misbah_edu',
         'https://www.tiktok.com/@misbah_ba',
         'https://www.facebook.com/MisbahBIH/',
       ],

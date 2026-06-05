@@ -30,6 +30,7 @@ export default function EditVideoPage() {
 
   const [title, setTitle]             = useState('')
   const [description, setDescription] = useState('')
+  const [author, setAuthor]           = useState('')
   const [thumbnailUrl, setThumbnailUrl] = useState('')
   const [category, setCategory]       = useState('predavanja')
   const [topic, setTopic]             = useState('')
@@ -44,6 +45,7 @@ export default function EditVideoPage() {
       .then(data => {
         setTitle(data.title || '')
         setDescription(data.description || '')
+        setAuthor(data.author || '')
         setThumbnailUrl(data.thumbnailUrl || '')
         setCategory(data.category || 'predavanja')
         setTopic(data.topic || '')
@@ -63,6 +65,7 @@ export default function EditVideoPage() {
         body: JSON.stringify({
           title: title.trim(),
           description: description.trim() || null,
+          author: author.trim() || null,
           thumbnailUrl: thumbnailUrl.trim() || null,
           category,
           topic: topic || null,
@@ -98,6 +101,14 @@ export default function EditVideoPage() {
             <div>
               <label className="block text-sm font-semibold text-zinc-700 mb-1.5">Naslov *</label>
               <input type="text" value={title} onChange={e => setTitle(e.target.value)}
+                className="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand text-sm" />
+            </div>
+
+            {/* Autor */}
+            <div>
+              <label className="block text-sm font-semibold text-zinc-700 mb-1.5">Autor <span className="text-zinc-400 font-normal">(predavač)</span></label>
+              <input type="text" value={author} onChange={e => setAuthor(e.target.value)}
+                placeholder="npr. hfz. Hamdo Solo"
                 className="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand text-sm" />
             </div>
 

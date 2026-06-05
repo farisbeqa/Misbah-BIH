@@ -5,12 +5,19 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Loader2, Save } from 'lucide-react'
 
+const TAGS = [
+  { key: 'aktivnosti', label: 'Aktivnosti' },
+  { key: 'vijesti',    label: 'Vijesti' },
+  { key: 'novosti',    label: 'Novosti' },
+]
+
 export default function NewActivityPage() {
   const router = useRouter()
   const [title, setTitle]     = useState('')
   const [content, setContent] = useState('')
   const [imageUrl, setImageUrl] = useState('')
   const [date, setDate]       = useState(new Date().toISOString().split('T')[0])
+  const [tag, setTag]         = useState('aktivnosti')
   const [saving, setSaving]   = useState(false)
   const [error, setError]     = useState('')
 
@@ -20,7 +27,7 @@ export default function NewActivityPage() {
     try {
       const res = await fetch('/api/activities', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: title.trim(), content: content.trim(), imageUrl: imageUrl.trim() || null, date }),
+        body: JSON.stringify({ title: title.trim(), content: content.trim(), imageUrl: imageUrl.trim() || null, date, tag }),
       })
       if (res.ok) { router.push('/admin/dashboard'); router.refresh() }
       else { const d = await res.json(); setError(d.error || 'Greška') }
@@ -64,6 +71,18 @@ export default function NewActivityPage() {
               // eslint-disable-next-line @next/next/no-img-element
               <img src={imageUrl} alt="Preview" className="mt-2 rounded-lg max-h-40 object-cover" />
             )}
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-zinc-700 mb-1.5">Kategorija</label>
+            <div className="flex gap-2 flex-wrap">
+              {TAGS.map(t => (
+                <button key={t.key} type="button" onClick={() => setTag(t.key)}
+                  className="px-3 py-1.5 text-sm font-medium transition-all border"
+                  style={{ background: tag === t.key ? '#8B1E3F' : 'white', color: tag === t.key ? 'white' : '#5A4F49', borderColor: tag === t.key ? '#8B1E3F' : '#E8E1DB', borderRadius: 8 }}>
+                  {t.label}
+                </button>
+              ))}
+            </div>
           </div>
           <div>
             <label className="block text-sm font-semibold text-zinc-700 mb-1.5">Opis / Tekst *</label>

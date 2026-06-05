@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
   if (!session) return NextResponse.json({ error: 'Nije autorizovano' }, { status: 401 })
 
   try {
-    const { title, content, imageUrl, date } = await request.json()
+    const { title, content, imageUrl, date, tag } = await request.json()
     if (!title?.trim() || !content?.trim())
       return NextResponse.json({ error: 'Naslov i sadržaj su obavezni' }, { status: 400 })
 
@@ -29,6 +29,7 @@ export async function POST(request: NextRequest) {
         content: content.trim(),
         imageUrl: imageUrl?.trim() || null,
         date: date ? new Date(date) : new Date(),
+        tag: tag || 'aktivnosti',
         published: true,
       },
     })

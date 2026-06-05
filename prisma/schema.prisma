@@ -10,13 +10,14 @@ model Video {
   id           Int       @id @default(autoincrement())
   title        String
   description  String?
+  author       String?
   url          String
   platform     String
   embedUrl     String
   thumbnailUrl String?
   isShortForm  Boolean   @default(false)
   category     String    @default("predavanja") // predavanja | kuran | podcast | ilahije | zikrovi
-  topic        String?   // sura | tefsir | opste | akida | fikh | historija
+  topic        String?   // tefsir | hadis | sira | opste | akaid | fikh | duhovnost | historija
   published    Boolean   @default(true)
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
@@ -28,6 +29,7 @@ model BlogPost {
   id        Int       @id @default(autoincrement())
   title     String
   content   String
+  author    String?
   imageUrl  String?
   published Boolean   @default(true)
   createdAt DateTime  @default(now())
@@ -77,6 +79,7 @@ model Activity {
   content   String
   imageUrl  String?
   date      DateTime @default(now())
+  tag       String   @default("aktivnosti") // vijesti | novosti | aktivnosti
   published Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

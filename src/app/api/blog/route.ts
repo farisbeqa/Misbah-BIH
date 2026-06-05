@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { title, content, imageUrl } = body
+    const { title, content, author, imageUrl } = body
 
     if (!title || !content) {
       return NextResponse.json({ error: 'Naslov i sadržaj su obavezni' }, { status: 400 })
@@ -37,6 +37,7 @@ export async function POST(request: NextRequest) {
       data: {
         title,
         content,
+        author: author?.trim() || session.username,
         imageUrl: imageUrl || null,
         published: true,
       },

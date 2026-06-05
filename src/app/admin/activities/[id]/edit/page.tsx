@@ -5,21 +5,30 @@ import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Loader2, Save } from 'lucide-react'
 
+const TAGS = [
+  { key: 'aktivnosti', label: 'Aktivnosti' },
+  { key: 'vijesti',    label: 'Vijesti' },
+  { key: 'novosti',    label: 'Novosti' },
+]
+
 export default function EditActivityPage() {
   const router = useRouter()
   const { id } = useParams<{ id: string }>()
-  const [title, setTitle]     = useState('')
-  const [content, setContent] = useState('')
+  const [title, setTitle]       = useState('')
+  const [content, setContent]   = useState('')
   const [imageUrl, setImageUrl] = useState('')
-  const [date, setDate]       = useState('')
-  const [loading, setLoading] = useState(true)
-  const [saving, setSaving]   = useState(false)
-  const [error, setError]     = useState('')
+  const [date, setDate]         = useState('')
+  const [tag, setTag]           = useState('aktivnosti')
+  const [loading, setLoading]   = useState(true)
+  const [saving, setSaving]     = useState(false)
+  const [error, setError]       = useState('')
 
   useEffect(() => {
     fetch(`/api/activities/${id}`).then(r => r.json()).then(d => {
       setTitle(d.title || ''); setContent(d.content || ''); setImageUrl(d.imageUrl || '')
-      setDate(d.date ? new Date(d.date).toISOString().split('T')[0] : ''); setLoading(false)
+      setDate(d.date ? new Date(d.date).toISOString().split('T')[0] : '')
+      setTag(d.tag || 'aktivnosti')
+      setLoading(false)
     }).catch(() => setLoading(false))
   }, [id])
 
@@ -29,7 +38,7 @@ export default function EditActivityPage() {
     try {
       const res = await fetch(`/api/activities/${id}`, {
         method: 'PUT', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: title.trim(), content: content.trim(), imageUrl: imageUrl.trim() || null, date }),
+        body: JSON.stringify({ title: title.trim(), content: content.trim(), imageUrl: imageUrl.trim() || null, date, tag }),
       })
       if (res.ok) { router.push('/admin/dashboard'); router.refresh() }
       else { const d = await res.json(); setError(d.error || 'Greška') }
@@ -66,9 +75,22 @@ export default function EditActivityPage() {
                 className="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand text-sm" />
             </div>
             <div>
+              <label className="block text-sm font-semibold text-zinc-700 mb-1.5">Kategorija</label>
+              <div className="flex gap-2 flex-wrap">
+                {TAGS.map(t => (
+                  <button key={t.key} type="button" onClick={() => setTag(t.key)}
+                    className="px-3 py-1.5 text-sm font-medium transition-all border"
+                    style={{ background: tag === t.key ? '#8B1E3F' : 'white', color: tag === t.key ? 'white' : '#5A4F49', borderColor: tag === t.key ? '#8B1E3F' : '#E8E1DB', borderRadius: 8 }}>
+                    {t.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
               <label className="block text-sm font-semibold text-zinc-700 mb-1.5">Naslovna slika <span className="text-zinc-400 font-normal">(URL, opciono)</span></label>
               <input type="url" value={imageUrl} onChange={e => setImageUrl(e.target.value)}
                 placeholder="https://..." className="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand text-sm" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               {imageUrl && <img src={imageUrl} alt="Preview" className="mt-2 rounded-lg max-h-40 object-cover" />}
             </div>
             <div>

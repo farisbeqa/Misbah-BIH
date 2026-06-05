@@ -1,65 +1,120 @@
-﻿import Link from 'next/link'
-import Image from 'next/image'
-import { prisma } from '@/lib/db'
-import { MapPin, Calendar } from 'lucide-react'
+'use client'
 
-export const dynamic = 'force-dynamic'
-export const metadata = { title: "Aktivnosti - Misbah EDU" }
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { Calendar, MapPin } from 'lucide-react'
 
-const MONTHS = ['jan','feb','mar','apr','maj','jun','jul','aug','sep','okt','nov','dec']
-function fmt(d: Date) { return `${d.getDate()}. ${MONTHS[d.getMonth()]} ${d.getFullYear()}.` }
-
-async function getActivities() {
-  try { return await prisma.activity.findMany({ where: { published: true }, orderBy: { date: 'desc' } })
-  } catch { return [] }
+interface Activity {
+  id: number; title: string; content: string; imageUrl: string | null
+  date: string; tag: string
 }
 
-export default async function AktivnostiPage() {
-  const activities = await getActivities()
+const MONTHS = ['jan','feb','mar','apr','maj','jun','jul','aug','sep','okt','nov','dec']
+function fmt(d: string) {
+  const dt = new Date(d)
+  return `${dt.getDate()}. ${MONTHS[dt.getMonth()]} ${dt.getFullYear()}.`
+}
+
+const FILTERS = [
+  { key: 'all',        label: 'Sve' },
+  { key: 'vijesti',    label: 'Vijesti' },
+  { key: 'novosti',    label: 'Novosti' },
+  { key: 'aktivnosti', label: 'Aktivnosti' },
+]
+
+const TAG_LABELS: Record<string, string> = { vijesti: 'Vijesti', novosti: 'Novosti', aktivnosti: 'Aktivnosti' }
+
+export default function AktivnostiPage() {
+  const [activities, setActivities] = useState<Activity[]>([])
+  const [filter, setFilter] = useState('all')
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch('/api/activities')
+      .then(r => r.json())
+      .then(d => { setActivities(d); setLoading(false) })
+      .catch(() => setLoading(false))
+  }, [])
+
+  const filtered = filter === 'all' ? activities : activities.filter(a => a.tag === filter)
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
-      <div className="mb-12">
-        <p className="font-mono text-[11px] text-brand-light uppercase tracking-widest mb-2">Zajednica</p>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-warm-900 tracking-tight mb-2">Aktivnosti</h1>
-        <p className="text-warm-500 text-sm">Kvizovi, radionice, posjete, obilasci, volontiranje, druženja</p>
+    <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-12 sm:py-16">
+      <div className="mb-10">
+        <p className="font-medium text-[#8b1e3f] text-base mb-2">ZAJEDNICA</p>
+        <h1 className="font-semibold text-[#141110] mb-3"
+          style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}>
+          Aktivnosti
+        </h1>
+        <p className="font-normal text-[#746860]" style={{ fontSize: 18 }}>
+          Vijesti, novosti i aktivnosti zajednice — kvizovi, radionice, posjete i druženja.
+        </p>
       </div>
 
-      {activities.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-24"
-          style={{ background: '#FAF7F2', border: '1px dashed #E8E1DB', borderRadius: 8 }}>
-          <MapPin size={40} className="mb-3" style={{ color: '#D6CCC3' }} />
-          <p className="font-mono text-sm text-warm-400">Nema aktivnosti još uvijek</p>
+      {/* Filters */}
+      <div className="flex flex-wrap gap-2 mb-10">
+        {FILTERS.map(f => (
+          <button key={f.key} onClick={() => setFilter(f.key)}
+            className="text-sm font-medium px-4 py-2 transition-all"
+            style={{
+              border: filter === f.key ? 'none' : '1px solid #D6CCC3',
+              background: filter === f.key ? '#8B1E3F' : 'white',
+              color: filter === f.key ? '#fff' : '#5A4F49',
+            }}>
+            {f.label}
+          </button>
+        ))}
+      </div>
+
+      {loading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="animate-pulse bg-[#f5f2ef] overflow-hidden border border-black/5">
+              <div className="h-[228px] bg-[#e0d8d0]" />
+              <div className="px-6 py-7 space-y-3">
+                <div className="h-2.5 bg-[#e0d8d0] rounded w-24" />
+                <div className="h-5 bg-[#e0d8d0] rounded w-3/4" />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : filtered.length === 0 ? (
+        <div className="flex items-center justify-center py-20 bg-[#f5f2ef] border border-black/5">
+          <p className="text-sm text-[#a89888]">Nema stavki u ovoj kategoriji</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {activities.map(a => (
-            <Link key={a.id} href={`/aktivnosti/${a.id}`} className="group block">
-              <article className="h-full flex flex-col overflow-hidden transition-all duration-200 group-hover:-translate-y-0.5 shadow-card group-hover:shadow-card-hover"
-                style={{ background: '#FAF7F2', border: '1px solid #E8E1DB', borderRadius: 8 }}>
-                {a.imageUrl ? (
-                  <div className="overflow-hidden flex-shrink-0" style={{ borderRadius: '8px 8px 0 0', aspectRatio: '16/9' }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={a.imageUrl} alt={a.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+          {filtered.map(a => (
+            <Link key={a.id} href={`/aktivnosti/${a.id}`} className="group block h-full">
+              <div className="bg-[#f5f2ef] overflow-hidden border border-black/5 flex flex-col h-full">
+                <div className="relative h-[228px] w-full shrink-0 overflow-hidden">
+                  {a.imageUrl
+                    ? <img src={a.imageUrl} alt={a.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                    : <div className="absolute inset-0 flex items-center justify-center" style={{ background: 'linear-gradient(135deg,#8B1E3F,#5E1028)' }}>
+                        <MapPin size={36} className="text-white/40" />
+                      </div>
+                  }
+                  {/* Tag pill */}
+                  <div className="absolute top-4 left-4 bg-[#faf5f5] px-2.5 py-1.5">
+                    <span className="text-[#8b1e3f] uppercase" style={{ fontSize: 10, letterSpacing: '0.3px' }}>
+                      {TAG_LABELS[a.tag] ?? a.tag}
+                    </span>
                   </div>
-                ) : (
-                  <div className="flex-shrink-0 flex items-center justify-center" style={{ borderRadius: '8px 8px 0 0', aspectRatio: '16/9', background: 'linear-gradient(135deg,#8B1E3F,#5E1028)' }}>
-                    <MapPin size={36} className="text-white/40" />
+                </div>
+                <div className="flex flex-col gap-2.5 px-6 py-7 flex-1">
+                  <div className="flex items-center gap-1.5">
+                    <Calendar size={10} style={{ color: '#8B1E3F' }} />
+                    <p className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{fmt(a.date)}</p>
                   </div>
-                )}
-                <div className="px-4 py-4 flex flex-col flex-1">
-                  <div className="flex items-center gap-1.5 mb-2">
-                    <Calendar size={10} style={{ color: '#A94A61' }} />
-                    <time className="font-mono text-[11px] tracking-wide" style={{ color: '#A94A61' }}>{fmt(a.date)}</time>
-                  </div>
-                  <h3 className="font-bold text-[15px] leading-snug group-hover:text-brand transition-colors line-clamp-2" style={{ color: '#241F1D' }}>
+                  <p className="font-medium text-[#241f1d] leading-[1.12] line-clamp-2 group-hover:text-[#8b1e3f] transition-colors"
+                    style={{ fontSize: 20, letterSpacing: '-0.6px' }}>
                     {a.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed line-clamp-3 mt-2" style={{ color: '#978A81' }}>
+                  </p>
+                  <p className="font-normal text-[#5a4f49] text-base leading-normal line-clamp-3 mt-auto">
                     {a.content.replace(/\n+/g, ' ').trim()}
                   </p>
                 </div>
-              </article>
+              </div>
             </Link>
           ))}
         </div>

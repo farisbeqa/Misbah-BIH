@@ -1,6 +1,6 @@
 ﻿'use client'
 
-import { useState, useRef, useCallback, Suspense } from 'react'
+import { useState, useRef, useCallback, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import {
@@ -114,11 +114,12 @@ function CategorySelect({ value, onChange }: { value: string; onChange: (v: stri
   )
 }
 
-function UrlMode({ initialCategory = 'predavanja' }: { initialCategory?: string }) {
+function UrlMode({ initialCategory = 'predavanja', defaultAuthor = '' }: { initialCategory?: string; defaultAuthor?: string }) {
   const router = useRouter()
   const [url, setUrl] = useState('')
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+  const [author, setAuthor] = useState(defaultAuthor)
   const [category, setCategory] = useState(initialCategory)
   const [topic, setTopic] = useState('')
   const [preview, setPreview] = useState<Preview | null>(null)
@@ -148,7 +149,7 @@ function UrlMode({ initialCategory = 'predavanja' }: { initialCategory?: string 
     try {
       const res = await fetch('/api/videos', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: url.trim(), title: title.trim() || 'Bez naslova', description: description.trim() || null, category, topic: topic || null }),
+        body: JSON.stringify({ url: url.trim(), title: title.trim() || 'Bez naslova', description: description.trim() || null, author: author.trim() || null, category, topic: topic || null }),
       })
       const data = await res.json()
       if (res.ok) { router.push('/admin/dashboard'); router.refresh() }
@@ -211,6 +212,14 @@ function UrlMode({ initialCategory = 'predavanja' }: { initialCategory?: string 
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">Naslov *</label>
             <input type="text" value={title} onChange={e => setTitle(e.target.value)}
               placeholder="Unesite naslov predavanja"
+              className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand text-sm" />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+              Autor <span className="text-gray-400 font-normal">(predavač)</span>
+            </label>
+            <input type="text" value={author} onChange={e => setAuthor(e.target.value)}
+              placeholder="npr. hfz. Hamdo Solo"
               className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand text-sm" />
           </div>
           <div>
@@ -502,7 +511,14 @@ function AddVideoPageInner() {
   const searchParams = useSearchParams()
   const initialCategory = searchParams.get('category') || 'predavanja'
   const [mode, setMode] = useState<'url' | 'upload'>('url')
+  const [adminUsername, setAdminUsername] = useState('')
   const pageTitle = CAT_LABELS[initialCategory] ?? 'Dodaj video'
+
+  useEffect(() => {
+    fetch('/api/auth/admin-me').then(r => r.json()).then(d => {
+      if (d.admin?.username) setAdminUsername(d.admin.username)
+    }).catch(() => {})
+  }, [])
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -542,7 +558,7 @@ function AddVideoPageInner() {
           </button>
         </div>
 
-        {mode === 'url' ? <UrlMode initialCategory={initialCategory} /> : <UploadMode initialCategory={initialCategory} />}
+        {mode === 'url' ? <UrlMode initialCategory={initialCategory} defaultAuthor={adminUsername} /> : <UploadMode initialCategory={initialCategory} />}
       </div>
     </div>
   )

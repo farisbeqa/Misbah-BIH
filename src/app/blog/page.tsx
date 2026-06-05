@@ -1,12 +1,10 @@
-﻿import { prisma } from '@/lib/db'
+import { prisma } from '@/lib/db'
 import BlogCard from '@/components/BlogCard'
-import { FileText } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
-
 export const metadata = {
-  title: 'Blog - Misbah EDU',
-  description: 'Islamski tekstovi i razmišljanja',
+  title: 'Blog | Misbah EDU',
+  description: 'Islamski tekstovi, razmišljanja i članci',
 }
 
 async function getPosts() {
@@ -19,31 +17,29 @@ export default async function BlogPage() {
   const posts = await getPosts()
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+    <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-12 sm:py-16">
       <div className="mb-12">
-        <p className="font-mono text-[11px] text-brand-light uppercase tracking-widest mb-2">Tekstovi</p>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-warm-900 tracking-tight mb-2">Blog</h1>
-        <p className="text-warm-500 text-sm">Islamski tekstovi, razmišljanja i članci</p>
+        <p className="font-medium text-[#8b1e3f] text-base mb-2">PROMIŠLJANJA</p>
+        <h1 className="font-semibold text-[#141110] mb-3"
+          style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}>
+          Blog
+        </h1>
+        <p className="font-normal text-[#746860]" style={{ fontSize: 18 }}>
+          Tekstovi, osvrti i razmišljanja o vjeri, znanju i svakodnevnom životu.
+        </p>
       </div>
 
       {posts.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-24 text-warm-400"
-          style={{ background: '#FAF7F2', border: '1px dashed #E8E1DB', borderRadius: 8 }}>
-          <FileText size={40} className="text-warm-300 mb-3" />
-          <p className="font-mono text-sm">Nema blog postova još uvijek</p>
+        <div className="flex items-center justify-center py-20 bg-[#f5f2ef] border border-black/5">
+          <p className="text-sm text-[#a89888]">Nema blog postova još uvijek</p>
         </div>
       ) : (
-        <>
-          <p className="font-mono text-[11px] text-warm-400 mb-6 tracking-wide">
-            {posts.length} {posts.length === 1 ? 'objava' : 'objave'}
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {posts.map(p => (
-              <BlogCard key={p.id} id={p.id} title={p.title} content={p.content}
-                imageUrl={p.imageUrl} createdAt={p.createdAt} />
-            ))}
-          </div>
-        </>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {posts.map(p => (
+            <BlogCard key={p.id} id={p.id} title={p.title} content={p.content}
+              author={p.author} imageUrl={p.imageUrl} createdAt={p.createdAt} />
+          ))}
+        </div>
       )}
     </div>
   )

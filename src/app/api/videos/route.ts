@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     if (!session) return NextResponse.json({ error: 'Nije autorizovano' }, { status: 401 })
 
     const body = await request.json()
-    const { title, description, url, category, topic } = body
+    const { title, description, author, url, category, topic } = body
 
     if (!url) return NextResponse.json({ error: 'URL je obavezan' }, { status: 400 })
 
@@ -52,6 +52,7 @@ export async function POST(request: NextRequest) {
       data: {
         title: title || 'Bez naslova',
         description: description || null,
+        author: author?.trim() || session.username,
         url,
         platform: videoInfo.platform,
         embedUrl: videoInfo.embedUrl,

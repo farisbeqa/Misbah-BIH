@@ -12,6 +12,7 @@ export default function EditBlogPostPage() {
 
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const [author, setAuthor] = useState('')
   const [imageUrl, setImageUrl] = useState('')
   const [imageUrlInput, setImageUrlInput] = useState('')
   const [imageMode, setImageMode] = useState<'url' | 'upload'>('url')
@@ -26,6 +27,7 @@ export default function EditBlogPostPage() {
       .then(data => {
         setTitle(data.title || '')
         setContent(data.content || '')
+        setAuthor(data.author || '')
         setImageUrl(data.imageUrl || '')
         setImageUrlInput(data.imageUrl || '')
         setLoading(false)
@@ -68,7 +70,7 @@ export default function EditBlogPostPage() {
       const res = await fetch(`/api/blog/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: title.trim(), content: content.trim(), imageUrl: imageUrl || null }),
+        body: JSON.stringify({ title: title.trim(), content: content.trim(), author: author.trim() || null, imageUrl: imageUrl || null }),
       })
       if (res.ok) {
         router.push('/admin/dashboard')
@@ -104,6 +106,14 @@ export default function EditBlogPostPage() {
             <div className="bg-white rounded-2xl p-6 border border-zinc-100 shadow-sm">
               <label className="block text-sm font-semibold text-zinc-700 mb-1.5">Naslov *</label>
               <input type="text" value={title} onChange={e => setTitle(e.target.value)}
+                className="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-600 text-sm" />
+            </div>
+
+            {/* Author */}
+            <div className="bg-white rounded-2xl p-6 border border-zinc-100 shadow-sm">
+              <label className="block text-sm font-semibold text-zinc-700 mb-1.5">Autor <span className="text-zinc-400 font-normal">(opciono)</span></label>
+              <input type="text" value={author} onChange={e => setAuthor(e.target.value)}
+                placeholder="npr. hfz. Hamdo Solo"
                 className="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-600 text-sm" />
             </div>
 

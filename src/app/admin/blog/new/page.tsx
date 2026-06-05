@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Loader2, Upload, X, ImageIcon } from 'lucide-react'
@@ -11,6 +11,13 @@ export default function AddBlogPostPage() {
 
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const [author, setAuthor] = useState('')
+
+  useEffect(() => {
+    fetch('/api/auth/admin-me').then(r => r.json()).then(d => {
+      if (d.admin?.username) setAuthor(d.admin.username)
+    }).catch(() => {})
+  }, [])
   const [imageUrl, setImageUrl] = useState('')
   const [imageUrlInput, setImageUrlInput] = useState('')
   const [imageMode, setImageMode] = useState<'url' | 'upload'>('url')
@@ -81,6 +88,7 @@ export default function AddBlogPostPage() {
         body: JSON.stringify({
           title: title.trim(),
           content: content.trim(),
+          author: author.trim() || null,
           imageUrl: imageUrl || null,
         }),
       })
@@ -127,16 +135,20 @@ export default function AddBlogPostPage() {
 
         {/* Title */}
         <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm mb-4">
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
-            Naslov *
-          </label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Naslov *</label>
+          <input type="text" value={title} onChange={e => setTitle(e.target.value)}
             placeholder="Unesite naslov blog posta"
-            className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1e5f34] text-sm"
-          />
+            className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1e5f34] text-sm" />
+        </div>
+
+        {/* Author */}
+        <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm mb-4">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Autor <span className="text-gray-400 font-normal">(opciono)</span>
+          </label>
+          <input type="text" value={author} onChange={e => setAuthor(e.target.value)}
+            placeholder="npr. hfz. Hamdo Solo"
+            className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1e5f34] text-sm" />
         </div>
 
         {/* Image */}

@@ -1,11 +1,10 @@
-﻿'use client'
+'use client'
 
 import { useState, useEffect } from 'react'
-import { Play } from 'lucide-react'
 import VideoCard from '@/components/VideoCard'
 
 interface Video {
-  id: number; title: string; description: string | null
+  id: number; title: string; description: string | null; author?: string | null
   platform: string; thumbnailUrl: string | null; isShortForm: boolean; createdAt: string
 }
 
@@ -34,22 +33,26 @@ export default function DugaPredavanjaPage() {
   }, [topic])
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16" style={{ minHeight: '60vh' }}>
+    <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-12 sm:py-16" style={{ minHeight: '60vh' }}>
       <div className="mb-10">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-warm-900 tracking-tight mb-2">Duga predavanja</h1>
+        <p className="font-medium text-[#8b1e3f] text-base mb-2">PREDAVANJA</p>
+        <h1 className="font-semibold text-[#141110] mb-3"
+          style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}>
+          Duga predavanja
+        </h1>
+        <p className="font-normal text-[#746860]" style={{ fontSize: 18 }}>
+          Detaljna predavanja o islamskim temama, fikhu, siri i duhovnosti.
+        </p>
       </div>
 
-      {/* Topic filters */}
       <div className="flex flex-wrap gap-2 mb-10">
         {TOPICS.map(t => (
           <button key={t.key} onClick={() => setTopic(t.key)}
-            className="font-mono text-xs px-4 py-2 transition-all"
+            className="text-sm font-medium px-4 py-2 transition-all"
             style={{
-              borderRadius: 6,
               border: topic === t.key ? 'none' : '1px solid #D6CCC3',
-              background: topic === t.key ? '#8B1E3F' : '#EDE5DC',
+              background: topic === t.key ? '#8B1E3F' : 'white',
               color: topic === t.key ? '#fff' : '#5A4F49',
-              fontWeight: topic === t.key ? 600 : 400,
             }}>
             {t.label}
           </button>
@@ -59,33 +62,27 @@ export default function DugaPredavanjaPage() {
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="animate-pulse" style={{ background: '#FAF7F2', border: '1px solid #E8E1DB', borderRadius: 8, overflow: 'hidden' }}>
-              <div className="m-2 aspect-video bg-warm-200" style={{ borderRadius: 4 }} />
-              <div className="px-4 pt-3 pb-4 space-y-2">
-                <div className="h-2.5 bg-warm-200 rounded w-24" />
-                <div className="h-3.5 bg-warm-200 rounded w-3/4" />
+            <div key={i} className="animate-pulse bg-[#f5f2ef] overflow-hidden border border-black/5">
+              <div className="h-[228px] bg-[#e0d8d0]" />
+              <div className="px-6 py-7 space-y-3">
+                <div className="h-2.5 bg-[#e0d8d0] rounded w-24" />
+                <div className="h-5 bg-[#e0d8d0] rounded w-3/4" />
               </div>
             </div>
           ))}
         </div>
       ) : videos.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-24 text-warm-400"
-          style={{ background: '#FAF7F2', border: '1px dashed #E8E1DB', borderRadius: 8 }}>
-          <Play size={40} className="text-warm-300 mb-3" />
-          <p className="font-mono text-sm text-warm-400">Nema predavanja u ovoj kategoriji</p>
+        <div className="flex items-center justify-center py-20 bg-[#f5f2ef] border border-black/5">
+          <p className="text-sm text-[#a89888]">Nema predavanja u ovoj kategoriji</p>
         </div>
       ) : (
-        <>
-          <p className="font-mono text-[11px] text-warm-400 mb-5 tracking-wide">
-            {videos.length} {videos.length === 1 ? 'predavanje' : 'predavanja'}
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {videos.map(v => (
-              <VideoCard key={v.id} id={v.id} title={v.title} description={v.description}
-                platform={v.platform} thumbnailUrl={v.thumbnailUrl} isShortForm={v.isShortForm} createdAt={v.createdAt} />
-            ))}
-          </div>
-        </>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {videos.map(v => (
+            <VideoCard key={v.id} id={v.id} title={v.title} description={v.description}
+              author={v.author} platform={v.platform} thumbnailUrl={v.thumbnailUrl}
+              isShortForm={v.isShortForm} createdAt={v.createdAt} />
+          ))}
+        </div>
       )}
     </div>
   )

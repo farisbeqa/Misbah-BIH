@@ -36,7 +36,7 @@ function FacebookIcon() {
 const SOCIAL = [
   { href: 'https://www.tiktok.com/@misbah_ba',     Icon: TikTokIcon,    label: 'TikTok' },
   { href: 'https://www.youtube.com/@misbah_ba',    Icon: YouTubeIcon,   label: 'YouTube' },
-  { href: 'https://www.instagram.com/misbah_bih/', Icon: InstagramIcon, label: 'Instagram' },
+  { href: 'https://www.instagram.com/misbah_edu?igsh=c2N1MmJrMHQwcmZ1', Icon: InstagramIcon, label: 'Instagram' },
   { href: 'https://www.facebook.com/MisbahBIH/',   Icon: FacebookIcon,  label: 'Facebook' },
 ]
 
@@ -57,7 +57,7 @@ export default function Footer() {
         {/* Logo + description + social */}
         <div className="flex flex-col gap-8 max-w-[445px]">
           <Link href="/" className="flex items-center gap-3 shrink-0">
-            <Image src="/logo.jpg" alt="Misbah EDU" width={56} height={56} className="object-cover" />
+            <Image src="/logo.jpg" alt="Misbah EDU" width={56} height={56} className="object-cover mix-blend-multiply" />
             <span className="font-bold text-[28px] leading-none text-[#8b1e3f]">
               Misbah <span className="text-[#c8a96b]">EDU</span>
             </span>

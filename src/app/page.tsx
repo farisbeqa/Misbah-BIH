@@ -212,17 +212,17 @@ export default async function HomePage() {
                 Istraži sadržaj
                 <ArrowUpRight />
               </Link>
-              <Link href="/predavanja/duga"
+              <Link href="/podcasts"
                 className="border border-[#8b1e3f] text-[#8b1e3f] px-6 py-3 text-base font-normal hover:bg-[#faf5f5] transition-colors">
-                Najnovija predavanja
+                Podcasti
               </Link>
             </div>
           </div>
 
-          {/* Right: hero image — object-contain shows full image */}
-          <div className="relative flex-1 min-h-[300px] lg:min-h-0 overflow-hidden bg-[#ede6db]">
+          {/* Right: hero image */}
+          <div className="relative flex-1 min-w-0 min-h-[300px] lg:min-h-0 overflow-hidden bg-[#ede6db]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/hero.png" alt="" className="absolute inset-0 w-full h-full object-contain object-center" />
+            <img src="/hero.png" alt="" className="absolute inset-0 w-full h-full object-cover object-top" />
           </div>
         </div>
       </section>
@@ -305,6 +305,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── Misao dana ───────────────────────────────────────────────────── */}
+      {quotes.length > 0 && <MisaoDana quotes={quotes} />}
 
       {/* ── Qur'an quote with background ─────────────────────────────────── */}
       <section className="relative w-full overflow-hidden">
@@ -398,8 +401,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Misao dana ───────────────────────────────────────────────────── */}
-      {quotes.length > 0 && <MisaoDana quotes={quotes} />}
 
     </div>
   )
