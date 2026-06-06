@@ -60,14 +60,17 @@ export default function GalerijaPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85"
           onClick={() => setLightbox(null)}>
           <div className="relative max-w-4xl w-full mx-4" onClick={e => e.stopPropagation()}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={lightbox.imageUrl} alt={lightbox.title || ''} className="w-full max-h-[80vh] object-contain rounded-xl" />
-            {(lightbox.title || lightbox.description) && (
-              <div className="mt-3 text-center">
-                {lightbox.title && <p className="text-white font-semibold text-lg">{lightbox.title}</p>}
-                {lightbox.description && <p className="text-white/70 text-sm mt-1">{lightbox.description}</p>}
-              </div>
-            )}
+            <div className="relative">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={lightbox.imageUrl} alt={lightbox.title || ''} className="w-full max-h-[80vh] object-contain rounded-xl" />
+              {lightbox.title && (
+                <div className="absolute bottom-3 left-3">
+                  <span className="inline-block bg-black/60 backdrop-blur-sm text-white text-sm font-medium px-3 py-1.5 rounded-lg">
+                    {lightbox.title}
+                  </span>
+                </div>
+              )}
+            </div>
             <button onClick={() => setLightbox(null)}
               className="absolute -top-3 -right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center text-zinc-900 hover:bg-zinc-100 transition-colors text-lg font-bold">
               ×

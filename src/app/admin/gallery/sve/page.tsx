@@ -62,7 +62,7 @@ export default async function AdminGallerySvePage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-1 shrink-0">
-                  <Link href={img.imageUrl} target="_blank"
+                  <Link href={`/admin/gallery/${img.id}/edit`}
                     className="p-1.5 text-zinc-300 hover:text-zinc-600 transition-colors">
                     <Pencil size={13} />
                   </Link>

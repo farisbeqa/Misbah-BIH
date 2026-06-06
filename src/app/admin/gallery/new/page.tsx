@@ -9,6 +9,7 @@ interface ImageItem {
   id: string
   file: File
   preview: string
+  title: string
   status: 'pending' | 'uploading' | 'done' | 'error'
   url?: string
   error?: string
@@ -21,6 +22,7 @@ export default function NewGalleryImagePage() {
   const [dragging, setDragging] = useState(false)
   const [uploading, setUploading] = useState(false)
   const [urlInput, setUrlInput] = useState('')
+  const [urlTitle, setUrlTitle] = useState('')
   const [urlError, setUrlError] = useState('')
 
   const addFiles = (files: FileList | File[]) => {
@@ -31,6 +33,7 @@ export default function NewGalleryImagePage() {
         id: `${Date.now()}-${Math.random()}`,
         file: f,
         preview: URL.createObjectURL(f),
+        title: '',
         status: 'pending',
       }))
     setImages(prev => [...prev, ...newItems])
@@ -76,7 +79,7 @@ export default function NewGalleryImagePage() {
         // Save to gallery
         await fetch('/api/gallery', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ imageUrl }),
+          body: JSON.stringify({ imageUrl, title: item.title.trim() || null }),
         })
 
         setImages(prev => prev.map(i => i.id === item.id ? { ...i, status: 'done', url: imageUrl } : i))
@@ -94,7 +97,7 @@ export default function NewGalleryImagePage() {
     try {
       const res = await fetch('/api/gallery', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ imageUrl: urlInput.trim() }),
+        body: JSON.stringify({ imageUrl: urlInput.trim(), title: urlTitle.trim() || null }),
       })
       if (res.ok) {
         setUrlInput('')
@@ -155,36 +158,47 @@ export default function NewGalleryImagePage() {
 
         {/* Image preview grid */}
         {images.length > 0 && (
-          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3 mb-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
             {images.map(img => (
-              <div key={img.id} className="relative aspect-square rounded-xl overflow-hidden group"
-                style={{ background: '#E8E1DB' }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={img.preview} alt="" className="w-full h-full object-cover" />
+              <div key={img.id} className="flex flex-col gap-1.5">
+                <div className="relative aspect-square rounded-xl overflow-hidden group"
+                  style={{ background: '#E8E1DB' }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={img.preview} alt="" className="w-full h-full object-cover" />
 
-                {/* Status overlay */}
-                {img.status === 'uploading' && (
-                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                    <Loader2 size={20} className="text-white animate-spin" />
-                  </div>
-                )}
-                {img.status === 'done' && (
-                  <div className="absolute inset-0 bg-green-500/30 flex items-center justify-center">
-                    <CheckCircle size={20} className="text-white" />
-                  </div>
-                )}
-                {img.status === 'error' && (
-                  <div className="absolute inset-0 bg-red-500/40 flex items-center justify-center">
-                    <span className="text-white text-xs font-bold">!</span>
-                  </div>
-                )}
-
-                {/* Remove button (only for pending) */}
+                  {img.status === 'uploading' && (
+                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                      <Loader2 size={20} className="text-white animate-spin" />
+                    </div>
+                  )}
+                  {img.status === 'done' && (
+                    <div className="absolute inset-0 bg-green-500/30 flex items-center justify-center">
+                      <CheckCircle size={20} className="text-white" />
+                    </div>
+                  )}
+                  {img.status === 'error' && (
+                    <div className="absolute inset-0 bg-red-500/40 flex items-center justify-center">
+                      <span className="text-white text-xs font-bold">!</span>
+                    </div>
+                  )}
+                  {img.status === 'pending' && (
+                    <button onClick={() => remove(img.id)}
+                      className="absolute top-1.5 right-1.5 w-6 h-6 bg-black/60 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500">
+                      <X size={11} className="text-white" />
+                    </button>
+                  )}
+                </div>
                 {img.status === 'pending' && (
-                  <button onClick={() => remove(img.id)}
-                    className="absolute top-1 right-1 w-5 h-5 bg-black/60 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500">
-                    <X size={10} className="text-white" />
-                  </button>
+                  <input
+                    type="text"
+                    value={img.title}
+                    onChange={e => setImages(prev => prev.map(i => i.id === img.id ? { ...i, title: e.target.value } : i))}
+                    placeholder="Naslov (opciono)"
+                    className="w-full px-3 py-1.5 border border-zinc-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-brand bg-white"
+                  />
+                )}
+                {(img.status === 'done' || img.status === 'uploading') && img.title && (
+                  <p className="text-xs text-zinc-500 truncate px-1">{img.title}</p>
                 )}
               </div>
             ))}
@@ -217,16 +231,21 @@ export default function NewGalleryImagePage() {
         </div>
 
         {/* URL input fallback */}
-        <div className="flex gap-2">
-          <input type="url" value={urlInput} onChange={e => setUrlInput(e.target.value)}
-            placeholder="https://... (URL slike)"
-            className="flex-1 px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand text-sm"
-            onKeyDown={e => e.key === 'Enter' && addByUrl()} />
-          <button onClick={addByUrl} disabled={!urlInput.trim()}
-            className="px-4 py-2.5 text-sm font-semibold text-white rounded-xl disabled:opacity-40 transition-opacity hover:opacity-90"
-            style={{ background: '#8B1E3F' }}>
-            Dodaj
-          </button>
+        <div className="flex flex-col gap-2">
+          <div className="flex gap-2">
+            <input type="url" value={urlInput} onChange={e => setUrlInput(e.target.value)}
+              placeholder="https://... (URL slike)"
+              className="flex-1 px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand text-sm"
+              onKeyDown={e => e.key === 'Enter' && addByUrl()} />
+            <button onClick={addByUrl} disabled={!urlInput.trim()}
+              className="px-4 py-2.5 text-sm font-semibold text-white rounded-xl disabled:opacity-40 transition-opacity hover:opacity-90"
+              style={{ background: '#8B1E3F' }}>
+              Dodaj
+            </button>
+          </div>
+          <input type="text" value={urlTitle} onChange={e => setUrlTitle(e.target.value)}
+            placeholder="Naslov slike (opciono)"
+            className="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand text-sm" />
         </div>
         {urlError && <p className="text-red-500 text-xs mt-1.5">{urlError}</p>}
       </div>
