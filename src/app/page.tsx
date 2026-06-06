@@ -235,7 +235,7 @@ export default async function HomePage() {
               <p className="font-normal text-[#746860]"
                 style={{ fontSize: 18, lineHeight: 1.5, letterSpacing: '-0.18px' }}>
                 Od duhovnosti i ibadeta, preko porodice i odgoja, do izazova savremenog
-                društva — Misbah okuplja sadržaje koji pomažu razumjeti vjeru i živjeti
+                društva — Misbah okuplja mlade ljude kroz sadržaje koji pomažu razumjeti vjeru i živjeti
                 njene vrijednosti u svakodnevici.
               </p>
             </div>
