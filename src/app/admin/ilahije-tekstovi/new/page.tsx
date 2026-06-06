@@ -54,11 +54,12 @@ export default function NewIlahijaTextPage() {
   const handleSave = async () => {
     if (!title.trim() || !content.trim()) { setError('Naslov i tekst su obavezni'); return }
     setSaving(true); setError('')
+    const finalAudioUrl = audioUrl || (audioMode === 'url' && audioUrlInput.trim() ? audioUrlInput.trim() : null)
     try {
       const res = await fetch('/api/ilahije-tekstovi', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, content, author, audioUrl: audioUrl || null, published }),
+        body: JSON.stringify({ title, content, author, audioUrl: finalAudioUrl, published }),
       })
       const data = await res.json()
       if (res.ok) { router.push('/admin/dashboard'); router.refresh() }
