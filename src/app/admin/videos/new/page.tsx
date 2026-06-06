@@ -116,6 +116,7 @@ function CategorySelect({ value, onChange }: { value: string; onChange: (v: stri
 
 function UrlMode({ initialCategory = 'predavanja', defaultAuthor = '' }: { initialCategory?: string; defaultAuthor?: string }) {
   const router = useRouter()
+  const thumbInputRef = useRef<HTMLInputElement>(null)
   const [url, setUrl] = useState('')
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -131,6 +132,8 @@ function UrlMode({ initialCategory = 'predavanja', defaultAuthor = '' }: { initi
   const [previewError, setPreviewError] = useState('')
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+  const [thumbFile, setThumbFile] = useState<File | null>(null)
+  const [thumbPreview, setThumbPreview] = useState<string | null>(null)
 
   const handlePreview = async () => {
     if (!url.trim()) return
@@ -147,13 +150,31 @@ function UrlMode({ initialCategory = 'predavanja', defaultAuthor = '' }: { initi
     finally { setPreviewLoading(false) }
   }
 
+  const handleThumbFile = (file: File) => {
+    setThumbFile(file)
+    setThumbPreview(URL.createObjectURL(file))
+  }
+
   const handleSave = async () => {
     if (!url.trim() || !preview) return
     setSaving(true); setError('')
     try {
+      let customThumbnailUrl: string | undefined
+      if (thumbFile) {
+        const presignRes = await fetch('/api/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filename: thumbFile.name, contentType: thumbFile.type, folder: 'thumbs' }),
+        })
+        if (presignRes.ok) {
+          const { uploadUrl, publicUrl } = await presignRes.json()
+          const r2Res = await fetch(uploadUrl, { method: 'PUT', body: thumbFile, headers: { 'Content-Type': thumbFile.type } })
+          if (r2Res.ok) customThumbnailUrl = publicUrl
+        }
+      }
       const res = await fetch('/api/videos', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: url.trim(), title: title.trim() || 'Bez naslova', description: description.trim() || null, author: author.trim() || null, category, topic: topic || null }),
+        body: JSON.stringify({ url: url.trim(), title: title.trim() || 'Bez naslova', description: description.trim() || null, author: author.trim() || null, category, topic: topic || null, ...(customThumbnailUrl ? { thumbnailUrl: customThumbnailUrl } : {}) }),
       })
       const data = await res.json()
       if (res.ok) { window.location.href = '/admin/dashboard' }
@@ -206,12 +227,35 @@ function UrlMode({ initialCategory = 'predavanja', defaultAuthor = '' }: { initi
             <PlatformBadge platform={preview.platform} />
             {preview.isShortForm && <span className="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full">Kratki sadržaj</span>}
           </div>
-          {preview.thumbnailUrl && (
-            <div className="mb-4">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={preview.thumbnailUrl} alt="Preview" className="rounded-xl max-h-44 object-cover" />
-            </div>
-          )}
+          {/* Thumbnail preview + custom upload */}
+          <div className="mb-4">
+            <input ref={thumbInputRef} type="file" accept="image/jpeg,image/png,image/webp"
+              className="hidden" onChange={e => e.target.files?.[0] && handleThumbFile(e.target.files[0])} />
+            {thumbPreview ? (
+              <div className="relative inline-block">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={thumbPreview} alt="Custom thumbnail" className="rounded-xl max-h-44 object-cover" />
+                <button onClick={() => { setThumbFile(null); setThumbPreview(null) }}
+                  className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors">
+                  <X size={12} />
+                </button>
+              </div>
+            ) : preview.thumbnailUrl ? (
+              <div className="relative inline-block group">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={preview.thumbnailUrl} alt="Auto thumbnail" className="rounded-xl max-h-44 object-cover" />
+                <button onClick={() => thumbInputRef.current?.click()}
+                  className="absolute bottom-2 right-2 flex items-center gap-1.5 bg-black/60 hover:bg-black/80 text-white text-xs px-2.5 py-1.5 rounded-lg transition-colors">
+                  <ImagePlus size={13} /> Zamijeni sliku
+                </button>
+              </div>
+            ) : (
+              <button onClick={() => thumbInputRef.current?.click()}
+                className="flex items-center gap-2 px-4 py-2.5 border border-dashed border-gray-300 rounded-xl text-sm text-gray-500 hover:border-brand hover:text-brand transition-colors">
+                <ImagePlus size={15} /> Dodaj naslovnu sliku
+              </button>
+            )}
+          </div>
           <div className="mb-3">
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">Naslov *</label>
             <input type="text" value={title} onChange={e => setTitle(e.target.value)}

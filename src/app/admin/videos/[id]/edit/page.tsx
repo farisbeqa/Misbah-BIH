@@ -1,9 +1,9 @@
 ﻿'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, Loader2, Save } from 'lucide-react'
+import { ArrowLeft, Loader2, Save, ImagePlus, X } from 'lucide-react'
 
 const CATEGORIES = [
   { key: 'predavanja', label: 'Predavanje' },
@@ -27,11 +27,14 @@ const TOPICS = [
 export default function EditVideoPage() {
   const router = useRouter()
   const { id } = useParams<{ id: string }>()
+  const thumbInputRef = useRef<HTMLInputElement>(null)
 
   const [title, setTitle]             = useState('')
   const [description, setDescription] = useState('')
   const [author, setAuthor]           = useState('')
   const [thumbnailUrl, setThumbnailUrl] = useState('')
+  const [thumbFile, setThumbFile]     = useState<File | null>(null)
+  const [thumbPreview, setThumbPreview] = useState<string | null>(null)
   const [category, setCategory]       = useState('predavanja')
   const [topic, setTopic]             = useState('')
   const [isShortForm, setIsShortForm] = useState(false)
@@ -55,9 +58,30 @@ export default function EditVideoPage() {
       .catch(() => setLoading(false))
   }, [id])
 
+  const handleThumbFile = (file: File) => {
+    setThumbFile(file)
+    setThumbPreview(URL.createObjectURL(file))
+    setThumbnailUrl('')
+  }
+
   const handleSave = async () => {
     if (!title.trim()) { setError('Naslov je obavezan'); return }
     setSaving(true); setError('')
+    let finalThumbnailUrl = thumbnailUrl.trim() || null
+    if (thumbFile) {
+      try {
+        const presignRes = await fetch('/api/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filename: thumbFile.name, contentType: thumbFile.type, folder: 'thumbs' }),
+        })
+        if (presignRes.ok) {
+          const { uploadUrl, publicUrl } = await presignRes.json()
+          const r2Res = await fetch(uploadUrl, { method: 'PUT', body: thumbFile, headers: { 'Content-Type': thumbFile.type } })
+          if (r2Res.ok) finalThumbnailUrl = publicUrl
+        }
+      } catch { /* keep existing URL on upload fail */ }
+    }
     try {
       const res = await fetch(`/api/videos/${id}`, {
         method: 'PUT',
@@ -66,7 +90,7 @@ export default function EditVideoPage() {
           title: title.trim(),
           description: description.trim() || null,
           author: author.trim() || null,
-          thumbnailUrl: thumbnailUrl.trim() || null,
+          thumbnailUrl: finalThumbnailUrl,
           category,
           topic: topic || null,
           isShortForm,
@@ -122,13 +146,29 @@ export default function EditVideoPage() {
             {/* Thumbnail */}
             <div>
               <label className="block text-sm font-semibold text-zinc-700 mb-1.5">
-                URL slike (thumbnail) <span className="text-zinc-400 font-normal">(opciono)</span>
+                Naslovna slika <span className="text-zinc-400 font-normal">(opciono)</span>
               </label>
-              <input type="url" value={thumbnailUrl} onChange={e => setThumbnailUrl(e.target.value)}
-                placeholder="https://..." className="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand text-sm" />
-              {thumbnailUrl && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={thumbnailUrl} alt="Preview" className="mt-2 rounded-lg max-h-32 object-cover" />
+              <input ref={thumbInputRef} type="file" accept="image/jpeg,image/png,image/webp"
+                className="hidden" onChange={e => e.target.files?.[0] && handleThumbFile(e.target.files[0])} />
+              <div className="flex gap-2 mb-2">
+                <input type="url" value={thumbnailUrl}
+                  onChange={e => { setThumbnailUrl(e.target.value); setThumbPreview(null); setThumbFile(null) }}
+                  placeholder="https://..."
+                  className="flex-1 px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand text-sm" />
+                <button onClick={() => thumbInputRef.current?.click()}
+                  className="flex items-center gap-2 px-4 py-2.5 border border-dashed border-zinc-300 rounded-xl text-sm text-zinc-500 hover:border-brand hover:text-brand transition-colors whitespace-nowrap">
+                  <ImagePlus size={15} /> Upload
+                </button>
+              </div>
+              {(thumbPreview || thumbnailUrl) && (
+                <div className="relative inline-block">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={thumbPreview || thumbnailUrl} alt="Thumbnail" className="h-28 rounded-xl object-cover" />
+                  <button onClick={() => { setThumbFile(null); setThumbPreview(null); setThumbnailUrl('') }}
+                    className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors">
+                    <X size={12} />
+                  </button>
+                </div>
               )}
             </div>
 

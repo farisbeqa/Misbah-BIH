@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { prisma } from '@/lib/db'
 import MisaoDana from '@/components/MisaoDana'
 import GlasoviSection from '@/components/GlasoviSection'
+import MisaoDanaPopup from '@/components/MisaoDanaPopup'
 
 export const dynamic = 'force-dynamic'
 
@@ -177,6 +178,7 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen w-full bg-white">
+      <MisaoDanaPopup />
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
       <section className="bg-white w-full">
