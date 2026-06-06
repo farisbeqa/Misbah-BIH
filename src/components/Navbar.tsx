@@ -67,11 +67,8 @@ function useDropdown() {
   return { open, setOpen, ref }
 }
 
-const PLAIN_LINKS_LEFT = [
-  { href: '/kuran',    label: "Kur'an" },
-  { href: '/zikrovi',  label: 'Zikrovi' },
-  { href: '/podcasts', label: 'Podcast' },
-]
+const PLAIN_LINKS_LEFT  = [{ href: '/kuran',    label: "Kur'an"  }]
+const PLAIN_LINKS_MID   = [{ href: '/podcasts', label: 'Podcast' }]
 
 const PLAIN_LINKS_RIGHT = [
   { href: '/blog',   label: 'Blog' },
@@ -79,18 +76,19 @@ const PLAIN_LINKS_RIGHT = [
 ]
 
 const MOBILE_LINKS = [
-  { href: '/',                  label: 'Početna' },
-  { href: '/predavanja/duga',   label: 'Duga predavanja' },
-  { href: '/predavanja/kratka', label: 'Kratka predavanja' },
-  { href: '/kuran',             label: "Kur'an" },
-  { href: '/zikrovi',           label: 'Zikrovi' },
-  { href: '/ilahije/izvedba',   label: 'Ilahije – Izvedba' },
-  { href: '/ilahije/tekstovi',  label: 'Ilahije – Tekstovi' },
-  { href: '/podcasts',          label: 'Podcast' },
-  { href: '/aktivnosti',        label: 'Aktivnosti' },
-  { href: '/galerija',          label: 'Galerija' },
-  { href: '/blog',              label: 'Blog' },
-  { href: '/o-nama',            label: 'O Nama' },
+  { href: '/',                   label: 'Početna' },
+  { href: '/predavanja/duga',    label: 'Duga predavanja' },
+  { href: '/predavanja/kratka',  label: 'Kratka predavanja' },
+  { href: '/kuran',              label: "Kur'an" },
+  { href: '/zikrovi',            label: 'Zikrovi i dove' },
+  { href: '/zikrovi/tekstovi',   label: 'Zikrovi – Tekstovi dova' },
+  { href: '/ilahije/izvedba',    label: 'Ilahije – Izvedba' },
+  { href: '/ilahije/tekstovi',   label: 'Ilahije – Tekstovi' },
+  { href: '/podcasts',           label: 'Podcast' },
+  { href: '/aktivnosti',         label: 'Aktivnosti' },
+  { href: '/galerija',           label: 'Galerija' },
+  { href: '/blog',               label: 'Blog' },
+  { href: '/o-nama',             label: 'O Nama' },
 ]
 
 export default function Navbar() {
@@ -102,6 +100,7 @@ export default function Navbar() {
   const [modalMode, setModalMode]   = useState<'login' | 'register'>('login')
 
   const pred      = useDropdown()
+  const zikrovi   = useDropdown()
   const ilahije   = useDropdown()
   const zajednica = useDropdown()
 
@@ -121,6 +120,7 @@ export default function Navbar() {
   if (pathname.startsWith('/admin')) return null
 
   const isPredavanja = pathname.startsWith('/predavanja') || pathname === '/videos'
+  const isZikrovi    = pathname.startsWith('/zikrovi')
   const isIlahije    = pathname.startsWith('/ilahije')
   const isZajednica  = pathname.startsWith('/aktivnosti') || pathname.startsWith('/galerija')
 
@@ -151,6 +151,21 @@ export default function Navbar() {
             ]}
           />
           {PLAIN_LINKS_LEFT.map(link => (
+            <Link key={link.href} href={link.href}
+              className="px-1.5 py-2 text-base whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
+              style={ls(pathname === link.href)}>
+              {link.label}
+            </Link>
+          ))}
+          <NavDropdown
+            open={zikrovi.open} setOpen={zikrovi.setOpen} dropRef={zikrovi.ref}
+            label="Zikrovi" isActive={isZikrovi} pathname={pathname}
+            items={[
+              { href: '/zikrovi',          label: 'Zikrovi i dove' },
+              { href: '/zikrovi/tekstovi', label: 'Tekstovi dova'  },
+            ]}
+          />
+          {PLAIN_LINKS_MID.map(link => (
             <Link key={link.href} href={link.href}
               className="px-1.5 py-2 text-base whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
               style={ls(pathname === link.href)}>

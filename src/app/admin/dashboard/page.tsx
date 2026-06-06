@@ -118,13 +118,14 @@ export default async function AdminDashboard() {
   const session = await requireAuth()
   if (!session) redirect('/admin')
 
-  const [videos, posts, activities, galleryImages, quotes, ilahijeTekstovi, userCount] = await Promise.all([
+  const [videos, posts, activities, galleryImages, quotes, ilahijeTekstovi, duaTekstovi, userCount] = await Promise.all([
     prisma.video.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.blogPost.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.activity.findMany({ orderBy: { date: 'desc' } }),
     prisma.galleryImage.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.quote.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.ilahijaText.findMany({ orderBy: { createdAt: 'desc' } }).catch(() => []),
+    prisma.duaText.findMany({ orderBy: { createdAt: 'desc' } }).catch(() => []),
     prisma.user.count(),
   ])
 
@@ -277,6 +278,17 @@ export default async function AdminDashboard() {
             <div className="min-w-0">
               <p className="font-bold text-sm leading-tight">Tekst ilahije</p>
               <p className="text-white/60 text-xs mt-0.5">{ilahijeTekstovi.length} tekstova</p>
+            </div>
+          </Link>
+          <Link href="/admin/dua-tekstovi/new"
+            className="flex items-center gap-3 text-white p-4 rounded-2xl transition-opacity hover:opacity-90 shadow-sm"
+            style={{ background: '#1D4ED8' }}>
+            <div className="w-8 h-8 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+              <Plus size={18} />
+            </div>
+            <div className="min-w-0">
+              <p className="font-bold text-sm leading-tight">Tekst dove</p>
+              <p className="text-white/60 text-xs mt-0.5">{duaTekstovi.length} tekstova</p>
             </div>
           </Link>
         </div>
@@ -567,6 +579,65 @@ export default async function AdminDashboard() {
                 <div className="px-4 py-2.5 border-t border-zinc-100 text-center">
                   <Link href="/admin/ilahije-tekstovi/svi" className="text-xs hover:underline font-medium" style={{ color: '#9D174D' }}>
                     Vidi svih {ilahijeTekstovi.length} tekstova →
+                  </Link>
+                </div>
+              )}
+            </div>
+          )}
+        </section>
+
+        {/* Dua tekstovi */}
+        <section className="mb-8">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="font-bold text-zinc-900 flex items-center gap-2">
+              <FileText size={14} style={{ color: '#1D4ED8' }} />
+              Tekstovi dova
+              <span className="text-zinc-400 font-normal text-sm">({duaTekstovi.length})</span>
+            </h2>
+            <div className="flex items-center gap-3">
+              <Link href="/zikrovi/tekstovi" target="_blank"
+                className="text-xs text-zinc-400 hover:text-zinc-600 flex items-center gap-1">
+                <ExternalLink size={11} /> Javna
+              </Link>
+              <Link href="/admin/dua-tekstovi/new"
+                className="text-xs hover:underline flex items-center gap-1 font-medium"
+                style={{ color: '#1D4ED8' }}>
+                <Plus size={12} /> Dodaj
+              </Link>
+            </div>
+          </div>
+          {duaTekstovi.length === 0 ? (
+            <div className="bg-white rounded-2xl p-8 text-center border border-dashed border-zinc-200">
+              <FileText size={28} className="text-zinc-200 mx-auto mb-2" />
+              <p className="text-zinc-400 text-sm">Nema tekstova dova. Dodaj prvi.</p>
+            </div>
+          ) : (
+            <div className="bg-white rounded-2xl border border-zinc-100 shadow-card overflow-hidden">
+              {duaTekstovi.slice(0, 5).map((t, i) => (
+                <div key={t.id}
+                  className={`flex items-center gap-3 px-4 py-3 hover:bg-zinc-50 transition-colors ${i > 0 ? 'border-t border-zinc-100' : ''}`}>
+                  <FileText size={15} style={{ color: '#1D4ED8' }} className="flex-shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-zinc-900 text-sm truncate">{t.title}</p>
+                    {t.author && <p className="text-zinc-400 text-xs mt-0.5">{t.author}</p>}
+                  </div>
+                  <div className="flex items-center gap-1 flex-shrink-0">
+                    <Link href={`/admin/dua-tekstovi/${t.id}/edit`} title="Uredi"
+                      className="p-1.5 text-zinc-300 transition-colors" style={{ color: '#1D4ED8' }}>
+                      <Pencil size={13} />
+                    </Link>
+                    <Link href={`/zikrovi/tekstovi/${t.id}`} target="_blank"
+                      className="p-1.5 text-zinc-300 hover:text-zinc-600 transition-colors">
+                      <ExternalLink size={13} />
+                    </Link>
+                    <DeleteButton id={t.id} type="dua-tekst" />
+                  </div>
+                </div>
+              ))}
+              {duaTekstovi.length > 5 && (
+                <div className="px-4 py-2.5 border-t border-zinc-100 text-center">
+                  <Link href="/admin/dua-tekstovi/svi" className="text-xs hover:underline font-medium" style={{ color: '#1D4ED8' }}>
+                    Vidi svih {duaTekstovi.length} tekstova →
                   </Link>
                 </div>
               )}

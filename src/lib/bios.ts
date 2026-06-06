@@ -137,6 +137,79 @@ export const BIOS: Record<string, Bio> = {
     ],
   },
 
+  'mubina-suljic-solo': {
+    name: 'Mubina Suljić Solo',
+    role: 'Asistent na Katedri za šerijatsko pravo (fikh), FIN UNSA',
+    photo: '/tim/mubina-suljic-solo.jpg',
+    sections: [
+      {
+        title: 'O Mubini',
+        items: [
+          'Asistent na Katedri za šerijatsko pravo (fikh) na Fakultetu islamskih nauka Univerziteta u Sarajevu.',
+          'Diplomirala 2023. godine na FIN UNSA sa prosjekom 10,00 — dobitnica Zlatne značke Univerziteta u Sarajevu.',
+          'Magistrirala 2025. godine radom „Zbrinjavanje medicinskog otpada u šerijatskom pravu i zakonodavstvu Bosne i Hercegovine".',
+          'Studentica I godine doktorskog studija na Fakultetu islamskih nauka.',
+          'Hafiz Kur\'ana — hifz položen pred Komisijom Rijaseta IZ u BiH (juni 2019).',
+          'Oblasti interesovanja: obredoslovlje (ibadat), šerijatsko pravo, historija fikha, savremena fikhska pitanja.',
+        ],
+      },
+      {
+        title: 'Obrazovanje',
+        items: [
+          '2025– Doktorski studij — Fakultet islamskih nauka, Univerzitet u Sarajevu',
+          '2023–2025. Postdiplomski magistarski studij u islamskim naukama (oblast: šerijatsko pravo - fikh) — FIN UNSA · Teza: Zbrinjavanje medicinskog otpada u šerijatskom pravu i zakonodavstvu Bosne i Hercegovine',
+          '2019–2023. Dodiplomski studij islamske teologije — FIN UNSA (prosjek 10,00)',
+          '2015–2019. Gazi Husrev-begova medresa u Sarajevu',
+        ],
+      },
+      {
+        title: 'Radno iskustvo',
+        items: [
+          'Asistent — Katedra za šerijatsko pravo (fikh), FIN UNSA (april 2024 – u toku)',
+          'Demonstrator — FIN UNSA (2021–2024)',
+          'Edukatorica na predmetima ibadat, šerijatsko bračno pravo i kur\'ansko pismo — Medžlis IZ Sarajevo, Napredni edukativni program za žene (2023–2026)',
+        ],
+      },
+      {
+        title: 'Nastava na FIN UNSA',
+        items: [
+          'Ibadat (Islamsko obredoslovlje), Ibadat I i II',
+          'Historija šerijatskog prava, Uvod u šerijatsko pravo',
+          'Savremene fikhske teme, Šerijatsko građansko i vakufsko pravo',
+          'Šerijatsko personalno pravo, Metodologija šerijatskog prava',
+          'Drugi ciklus: Savremene fikhske studije u bh. kontekstu',
+        ],
+      },
+      {
+        title: 'Nagrade i priznanja',
+        items: [
+          'Zlatna značka — Univerzitet u Sarajevu (decembar 2023) · Najbolji student prvog ciklusa FIN UNSA, prosjek 10,00',
+          'Diploma o položenom hifzu — Rijaset IZ u BiH (juni 2019)',
+          'II mjesto — Takmičenje u hifzu „40 Nevevijevih hadisa", Fondacija „Hifz Časnog Kur\'ana" (septembar 2022)',
+          'I mjesto — „Ljetni izazov: Jedan dan, jedan hadis", Fondacija „Hifz Časnog Kur\'ana" (august 2021)',
+          'Certifikat za engleski jezik C1 — Poliglot (13.8.2026.)',
+        ],
+      },
+      {
+        title: 'Publikacije',
+        items: [
+          'Suljić Solo, Mubina, „Zbrinjavanje patološkog otpada u svjetlu šerijatskog prava i zakonodavstva BiH", Zbornik radova FIN, 2025.',
+          'Suljić, Mubina, „Putovanje u sveta mjesta (jedinstvo u razlikama)", Putem svjetlosti iz pera mladosti, Planjax komerc, Tešanj, 2021.',
+        ],
+      },
+      {
+        title: 'Medijski nastupi (izbor)',
+        items: [
+          'Televizija BIR: „Moj ramazan" (april 2024)',
+          'FTV: Dobro jutro BiH!, jutarnji program (januar 2024)',
+          'Islam EDU: „Emocionalna inteligencija Muhammeda, a.s." (april 2023)',
+          'Hayat Media BiH: „Kako post utiče na međuljudske relacije" (april 2022)',
+          'Radio BIR: Gostovanje povodom položenog hifza (2019)',
+        ],
+      },
+    ],
+  },
+
   'muhamed-selimovic': {
     name: 'Muhamed Selimović',
     role: 'Autor edukativnog sadržaja',
