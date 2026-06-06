@@ -193,12 +193,11 @@ export default async function HomePage() {
               <div className="flex flex-col gap-6 mt-2">
                 <h1 className="font-semibold text-[#141110]"
                   style={{ fontSize: 'clamp(32px, 5vw, 52px)', lineHeight: 1.3, letterSpacing: '-1.04px' }}>
-                  Svjetlo znanja za srce i razum.
+                  Svjetlo znanja koje obasjava srce i prosvjetljuje razum.
                 </h1>
                 <p className="font-normal text-[#5a4f49]"
                   style={{ fontSize: 18, lineHeight: 1.5, letterSpacing: '-0.18px' }}>
-                  Pažljivo odabrana predavanja, hutbe i sadržaji koji inspirišu
-                  razum, oplemenjuju srce i približavaju vjeru svakodnevnici.
+                  Omladinski sadržaji ispunjeni porukama i mislima koje unose svjetlo u život, približavaju čovjeka Allahu, smiruju srce, podstiču na dobro i svakodnevno inspirišu.
                 </p>
               </div>
             </div>
