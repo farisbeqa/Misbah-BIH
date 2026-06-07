@@ -268,7 +268,7 @@ export default async function HomePage() {
             <div className="flex flex-col gap-6">
               <h2 className="font-semibold text-[#141110]"
                 style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}>
-                Glasovi koji dijele znanje
+                Glasovi koji inspirišu
               </h2>
               <p className="font-normal text-[#746860]"
                 style={{ fontSize: 18, lineHeight: 1.5, letterSpacing: '-0.18px' }}>
