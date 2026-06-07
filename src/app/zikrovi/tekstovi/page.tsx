@@ -16,9 +16,6 @@ export default async function ZikroviTekstoviPage() {
         <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-2" style={{ color: '#241F1D' }}>
           Tekstovi dova
         </h1>
-        <p className="text-sm" style={{ color: '#978A81' }}>
-          Tekstovi i dove iz zikrova i suplikacija
-        </p>
       </div>
 
       <DuaTekstoviSearch tekstovi={tekstovi} />

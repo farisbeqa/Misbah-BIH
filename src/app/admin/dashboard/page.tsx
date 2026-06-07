@@ -33,7 +33,7 @@ function fmt(d: Date) {
 type Video = Awaited<ReturnType<typeof prisma.video.findMany>>[number]
 
 function VideoSection({
-  title, items, cat, accentColor, publicHref, icon,
+  title, items, cat, accentColor, publicHref, icon, addHref,
 }: {
   title: string
   items: Video[]
@@ -41,7 +41,9 @@ function VideoSection({
   accentColor: string
   publicHref: string
   icon: React.ReactNode
+  addHref?: string
 }) {
+  const newHref = addHref || `/admin/videos/new?category=${cat}`
   return (
     <section className="mb-8">
       <div className="flex items-center justify-between mb-3">
@@ -55,7 +57,7 @@ function VideoSection({
             className="text-xs text-zinc-400 hover:text-zinc-600 flex items-center gap-1">
             <ExternalLink size={11} /> Javna
           </Link>
-          <Link href={`/admin/videos/new?category=${cat}`}
+          <Link href={newHref}
             className="text-xs hover:underline flex items-center gap-1 font-medium"
             style={{ color: accentColor }}>
             <Plus size={12} /> Dodaj
@@ -66,7 +68,7 @@ function VideoSection({
         <div className="bg-white rounded-2xl p-6 text-center border border-dashed border-zinc-200">
           <p className="text-zinc-400 text-sm">
             Nema sadržaja.{' '}
-            <Link href={`/admin/videos/new?category=${cat}`}
+            <Link href={newHref}
               className="hover:underline font-medium" style={{ color: accentColor }}>
               Dodaj prvi.
             </Link>
@@ -118,7 +120,7 @@ export default async function AdminDashboard() {
   const session = await requireAuth()
   if (!session) redirect('/admin')
 
-  const [videos, posts, activities, galleryImages, quotes, ilahijeTekstovi, duaTekstovi, userCount] = await Promise.all([
+  const [videos, posts, activities, galleryImages, quotes, ilahijeTekstovi, duaTekstovi, zikrTekstovi, userCount] = await Promise.all([
     prisma.video.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.blogPost.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.activity.findMany({ orderBy: { date: 'desc' } }),
@@ -126,6 +128,7 @@ export default async function AdminDashboard() {
     prisma.quote.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.ilahijaText.findMany({ orderBy: { createdAt: 'desc' } }).catch(() => []),
     prisma.duaText.findMany({ orderBy: { createdAt: 'desc' } }).catch(() => []),
+    prisma.zikrText.findMany({ orderBy: { createdAt: 'desc' } }).catch(() => []),
     prisma.user.count(),
   ])
 
@@ -140,7 +143,7 @@ export default async function AdminDashboard() {
     { cat: 'predavanja', label: 'Predavanja',      items: predavanja, color: '#8B1E3F', publicHref: '/videos',   icon: <Play size={14} className="text-red-500" /> },
     { cat: 'kuran',      label: "Kur'an / Učanje",  items: kuran,      color: '#059669', publicHref: '/kuran',    icon: <BookMarked size={14} className="text-emerald-600" /> },
     { cat: 'ilahije',    label: 'Ilahije i kaside', items: ilahije,    color: '#7C3AED', publicHref: '/ilahije',  icon: <Music2 size={14} className="text-purple-500" /> },
-    { cat: 'zikrovi',    label: 'Zikrovi i dove',   items: zikrovi,    color: '#2563EB', publicHref: '/zikrovi',  icon: <BookOpen size={14} className="text-blue-500" /> },
+    { cat: 'zikrovi',    label: 'Zikrovi',           items: zikrovi,    color: '#2563EB', publicHref: '/zikrovi',  icon: <BookOpen size={14} className="text-blue-500" />, addHref: '/admin/zikrovi/new' },
     { cat: 'podcast',    label: 'Podcasts',          items: podcasts,   color: '#EA580C', publicHref: '/podcasts', icon: <Mic size={14} className="text-orange-500" /> },
   ]
 
@@ -214,7 +217,7 @@ export default async function AdminDashboard() {
         {/* Quick actions - one button per section */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10">
           {videoSections.map(s => (
-            <Link key={s.cat} href={`/admin/videos/new?category=${s.cat}`}
+            <Link key={s.cat} href={s.addHref || `/admin/videos/new?category=${s.cat}`}
               className="flex items-center gap-3 text-white p-4 rounded-2xl transition-opacity hover:opacity-90 shadow-sm"
               style={{ background: s.color }}>
               <div className="w-8 h-8 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
@@ -302,8 +305,65 @@ export default async function AdminDashboard() {
             accentColor={s.color}
             publicHref={s.publicHref}
             icon={s.icon}
+            addHref={'addHref' in s ? s.addHref : undefined}
           />
         ))}
+
+        {/* Zikrovi – Tekst i Audio */}
+        <section className="mb-8">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="font-bold text-zinc-900 flex items-center gap-2">
+              <FileText size={14} className="text-blue-500" />
+              Zikrovi (Tekst i Audio)
+              <span className="text-zinc-400 font-normal text-sm">({zikrTekstovi.length})</span>
+            </h2>
+            <div className="flex items-center gap-3">
+              <Link href="/zikrovi" target="_blank"
+                className="text-xs text-zinc-400 hover:text-zinc-600 flex items-center gap-1">
+                <ExternalLink size={11} /> Javna
+              </Link>
+              <Link href="/admin/zikrovi/new"
+                className="text-xs hover:underline flex items-center gap-1 font-medium"
+                style={{ color: '#2563EB' }}>
+                <Plus size={12} /> Dodaj
+              </Link>
+            </div>
+          </div>
+          {zikrTekstovi.length === 0 ? (
+            <div className="bg-white rounded-2xl p-6 text-center border border-dashed border-zinc-200">
+              <p className="text-zinc-400 text-sm">Nema zikrova (Tekst i Audio).</p>
+            </div>
+          ) : (
+            <div className="bg-white rounded-2xl border border-zinc-100 shadow-card overflow-hidden">
+              {zikrTekstovi.slice(0, 5).map((t, i) => (
+                <div key={t.id}
+                  className={`flex items-center gap-3 px-4 py-3 hover:bg-zinc-50 transition-colors ${i > 0 ? 'border-t border-zinc-100' : ''}`}>
+                  <FileText size={15} className="text-blue-500 flex-shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-zinc-900 text-sm truncate">{t.title}</p>
+                    {t.author && <p className="text-zinc-400 text-xs mt-0.5">{t.author}</p>}
+                  </div>
+                  <div className="flex items-center gap-1 flex-shrink-0">
+                    <Link href={`/admin/zikrovi/${t.id}/edit`} title="Uredi"
+                      className="p-1.5 transition-colors" style={{ color: '#2563EB' }}>
+                      <Pencil size={13} />
+                    </Link>
+                    <Link href={`/zikrovi/tekst/${t.id}`} target="_blank"
+                      className="p-1.5 text-zinc-300 hover:text-zinc-600 transition-colors">
+                      <ExternalLink size={13} />
+                    </Link>
+                    <DeleteButton id={t.id} type="zikr-tekst" />
+                  </div>
+                </div>
+              ))}
+              {zikrTekstovi.length > 5 && (
+                <div className="px-4 py-2.5 border-t border-zinc-100 text-center">
+                  <span className="text-xs text-zinc-400">Prikazano 5 od {zikrTekstovi.length}</span>
+                </div>
+              )}
+            </div>
+          )}
+        </section>
 
         {/* Blog posts */}
         <section className="mb-8">

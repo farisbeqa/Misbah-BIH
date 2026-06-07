@@ -1,0 +1,55 @@
+import { notFound } from 'next/navigation'
+import Link from 'next/link'
+import { prisma } from '@/lib/db'
+import { ArrowLeft } from 'lucide-react'
+import IlahijaAudioPlayer from '@/components/IlahijaAudioPlayer'
+
+export const dynamic = 'force-dynamic'
+
+export default async function ZikrTextPage({ params }: { params: { id: string } }) {
+  const id = parseInt(params.id)
+  if (isNaN(id)) notFound()
+
+  const tekst = await prisma.zikrText.findUnique({ where: { id } }).catch(() => null)
+  if (!tekst || !tekst.published) notFound()
+
+  return (
+    <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10 sm:py-16" style={{ minHeight: '60vh' }}>
+      <Link href="/zikrovi"
+        className="inline-flex items-center gap-2 text-sm mb-8 hover:text-brand transition-colors"
+        style={{ color: '#978A81' }}>
+        <ArrowLeft size={14} /> Svi zikrovi
+      </Link>
+
+      {tekst.thumbnailUrl && (
+        <div className="mb-6 rounded-xl overflow-hidden max-h-64">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={tekst.thumbnailUrl} alt={tekst.title} className="w-full h-full object-cover" />
+        </div>
+      )}
+
+      <header className="mb-6">
+        <p className="text-xs font-medium uppercase tracking-widest mb-3" style={{ color: '#2563EB' }}>
+          TEKST i AUDIO
+        </p>
+        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-2" style={{ color: '#241F1D' }}>
+          {tekst.title}
+        </h1>
+        {tekst.author && (
+          <p className="text-sm font-medium" style={{ color: '#2563EB' }}>{tekst.author}</p>
+        )}
+      </header>
+
+      {tekst.audioUrl && <IlahijaAudioPlayer audioUrl={tekst.audioUrl} />}
+
+      {tekst.content && (
+        <div
+          className="prose prose-sm sm:prose max-w-none leading-relaxed whitespace-pre-wrap mt-6"
+          style={{ color: '#3F3733', fontFamily: 'Georgia, serif', fontSize: '1rem', lineHeight: 1.9 }}
+        >
+          {tekst.content}
+        </div>
+      )}
+    </div>
+  )
+}

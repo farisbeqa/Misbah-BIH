@@ -80,8 +80,8 @@ const MOBILE_LINKS = [
   { href: '/predavanja/duga',    label: 'Duga predavanja' },
   { href: '/predavanja/kratka',  label: 'Kratka predavanja' },
   { href: '/kuran',              label: "Kur'an" },
-  { href: '/zikrovi',            label: 'Zikrovi i dove' },
-  { href: '/zikrovi/tekstovi',   label: 'Zikrovi – Tekstovi dova' },
+  { href: '/zikrovi',            label: 'Zikrovi (Tekst i Audio)' },
+  { href: '/zikrovi/tekstovi',   label: 'Dove (Tekst i Audio)'    },
   { href: '/ilahije/izvedba',    label: 'Ilahije – Izvedba' },
   { href: '/ilahije/tekstovi',   label: 'Ilahije – Tekstovi' },
   { href: '/podcasts',           label: 'Podcast' },
@@ -159,10 +159,10 @@ export default function Navbar() {
           ))}
           <NavDropdown
             open={zikrovi.open} setOpen={zikrovi.setOpen} dropRef={zikrovi.ref}
-            label="Zikrovi" isActive={isZikrovi} pathname={pathname}
+            label="Zikrovi i Dove" isActive={isZikrovi} pathname={pathname}
             items={[
-              { href: '/zikrovi',          label: 'Zikrovi i dove' },
-              { href: '/zikrovi/tekstovi', label: 'Tekstovi dova'  },
+              { href: '/zikrovi',          label: 'Zikrovi (Tekst i Audio)' },
+              { href: '/zikrovi/tekstovi', label: 'Dove (Tekst i Audio)'    },
             ]}
           />
           {PLAIN_LINKS_MID.map(link => (

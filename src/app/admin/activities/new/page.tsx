@@ -1,9 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, Loader2, Save } from 'lucide-react'
+import { ArrowLeft, Loader2, Save, ImagePlus, X } from 'lucide-react'
 
 const TAGS = [
   { key: 'aktivnosti', label: 'Aktivnosti' },
@@ -13,21 +13,45 @@ const TAGS = [
 
 export default function NewActivityPage() {
   const router = useRouter()
-  const [title, setTitle]     = useState('')
-  const [content, setContent] = useState('')
-  const [imageUrl, setImageUrl] = useState('')
-  const [date, setDate]       = useState(new Date().toISOString().split('T')[0])
-  const [tag, setTag]         = useState('aktivnosti')
-  const [saving, setSaving]   = useState(false)
-  const [error, setError]     = useState('')
+  const thumbInputRef = useRef<HTMLInputElement>(null)
+
+  const [title, setTitle]         = useState('')
+  const [content, setContent]     = useState('')
+  const [imageUrl, setImageUrl]   = useState('')
+  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [date, setDate]           = useState(new Date().toISOString().split('T')[0])
+  const [tag, setTag]             = useState('aktivnosti')
+  const [saving, setSaving]       = useState(false)
+  const [error, setError]         = useState('')
+
+  const handleImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setImageFile(file)
+    setImagePreview(URL.createObjectURL(file))
+    setImageUrl('')
+  }
 
   const handleSave = async () => {
     if (!title.trim() || !content.trim()) { setError('Naslov i sadržaj su obavezni'); return }
     setSaving(true); setError('')
     try {
+      let finalImageUrl = imageUrl.trim() || null
+      if (imageFile) {
+        const presignRes = await fetch('/api/upload', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filename: imageFile.name, contentType: imageFile.type, folder: 'thumbs' }),
+        })
+        if (presignRes.ok) {
+          const { uploadUrl, publicUrl } = await presignRes.json()
+          await fetch(uploadUrl, { method: 'PUT', body: imageFile, headers: { 'Content-Type': imageFile.type } })
+          finalImageUrl = publicUrl
+        }
+      }
       const res = await fetch('/api/activities', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: title.trim(), content: content.trim(), imageUrl: imageUrl.trim() || null, date, tag }),
+        body: JSON.stringify({ title: title.trim(), content: content.trim(), imageUrl: finalImageUrl, date, tag }),
       })
       if (res.ok) { router.push('/admin/dashboard'); router.refresh() }
       else { const d = await res.json(); setError(d.error || 'Greška') }
@@ -63,13 +87,30 @@ export default function NewActivityPage() {
               className="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand text-sm" />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-zinc-700 mb-1.5">Naslovna slika <span className="text-zinc-400 font-normal">(URL, opciono)</span></label>
-            <input type="url" value={imageUrl} onChange={e => setImageUrl(e.target.value)}
-              placeholder="https://..."
-              className="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand text-sm" />
-            {imageUrl && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={imageUrl} alt="Preview" className="mt-2 rounded-lg max-h-40 object-cover" />
+            <label className="block text-sm font-semibold text-zinc-700 mb-1.5">
+              Naslovna slika <span className="text-zinc-400 font-normal">(opciono)</span>
+            </label>
+            <input ref={thumbInputRef} type="file" accept="image/*" className="hidden" onChange={handleImageFile} />
+            <div className="flex gap-2">
+              <input type="url" value={imageUrl}
+                onChange={e => { setImageUrl(e.target.value); setImageFile(null); setImagePreview(null) }}
+                placeholder="https://..."
+                className="flex-1 px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand text-sm" />
+              <button type="button" onClick={() => thumbInputRef.current?.click()}
+                className="flex items-center gap-1.5 px-4 py-2.5 border border-zinc-200 rounded-xl text-sm text-zinc-600 hover:bg-zinc-50 transition-colors whitespace-nowrap">
+                <ImagePlus size={15} /> Upload
+              </button>
+            </div>
+            {(imagePreview || imageUrl) && (
+              <div className="mt-2 relative inline-block">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={imagePreview || imageUrl} alt="Preview" className="rounded-lg max-h-40 object-cover" />
+                <button type="button"
+                  onClick={() => { setImageFile(null); setImagePreview(null); setImageUrl('') }}
+                  className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors">
+                  <X size={12} />
+                </button>
+              </div>
             )}
           </div>
           <div>

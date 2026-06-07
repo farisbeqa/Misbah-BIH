@@ -3,26 +3,44 @@
 import { useState, useEffect } from 'react'
 import { Search } from 'lucide-react'
 import VideoCard from '@/components/VideoCard'
+import ZikrTextCard from '@/components/ZikrTextCard'
 
 interface Video {
   id: number; title: string; description: string | null; author?: string | null
   platform: string; thumbnailUrl: string | null; isShortForm: boolean; createdAt: string
 }
 
+interface ZikrText {
+  id: number; title: string; author: string | null; thumbnailUrl: string | null; createdAt: string
+}
+
+type CombinedItem =
+  | { kind: 'video'; data: Video }
+  | { kind: 'tekst'; data: ZikrText }
+
 export default function ZikroviPage() {
-  const [videos, setVideos] = useState<Video[]>([])
+  const [items, setItems] = useState<CombinedItem[]>([])
   const [loading, setLoading] = useState(true)
   const [query, setQuery] = useState('')
 
   useEffect(() => {
-    fetch('/api/videos?category=zikrovi')
-      .then(r => r.json()).then(d => { setVideos(d); setLoading(false) })
-      .catch(() => setLoading(false))
+    Promise.all([
+      fetch('/api/videos?category=zikrovi').then(r => r.json()).catch(() => []),
+      fetch('/api/zikr-tekstovi').then(r => r.json()).catch(() => []),
+    ]).then(([videos, tekstovi]) => {
+      const combined: CombinedItem[] = [
+        ...(Array.isArray(videos) ? videos.map((v: Video) => ({ kind: 'video' as const, data: v })) : []),
+        ...(Array.isArray(tekstovi) ? tekstovi.map((t: ZikrText) => ({ kind: 'tekst' as const, data: t })) : []),
+      ]
+      combined.sort((a, b) => new Date(b.data.createdAt).getTime() - new Date(a.data.createdAt).getTime())
+      setItems(combined)
+      setLoading(false)
+    })
   }, [])
 
   const filtered = query.trim()
-    ? videos.filter(v => v.title.toLowerCase().includes(query.toLowerCase()))
-    : videos
+    ? items.filter(item => item.data.title.toLowerCase().includes(query.toLowerCase()))
+    : items
 
   return (
     <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-12 sm:py-16" style={{ minHeight: '60vh' }}>
@@ -30,11 +48,8 @@ export default function ZikroviPage() {
         <p className="font-medium text-[#8b1e3f] text-base mb-2">SJEĆANJE NA ALLAHA</p>
         <h1 className="font-semibold text-[#141110] mb-3"
           style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}>
-          Zikrovi i dove
+          Zikrovi
         </h1>
-        <p className="font-normal text-[#746860]" style={{ fontSize: 18 }}>
-          Dove Poslanika ﷺ i zikrovi za svakodnevni život.
-        </p>
       </div>
 
       <div className="relative mb-8">
@@ -59,16 +74,22 @@ export default function ZikroviPage() {
       ) : filtered.length === 0 ? (
         <div className="flex items-center justify-center py-20 bg-[#f5f2ef] border border-black/5">
           <p className="text-sm text-[#a89888]">
-            {query.trim() ? `Nema rezultata za "${query}"` : 'Nema zikrova i dova još uvijek'}
+            {query.trim() ? `Nema rezultata za "${query}"` : 'Nema zikrova još uvijek'}
           </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map(v => (
-            <VideoCard key={v.id} id={v.id} title={v.title} description={v.description}
-              author={v.author} platform={v.platform} thumbnailUrl={v.thumbnailUrl}
-              isShortForm={v.isShortForm} createdAt={v.createdAt} />
-          ))}
+          {filtered.map(item =>
+            item.kind === 'video' ? (
+              <VideoCard key={`v-${item.data.id}`} id={item.data.id} title={item.data.title}
+                description={item.data.description} author={item.data.author}
+                platform={item.data.platform} thumbnailUrl={item.data.thumbnailUrl}
+                isShortForm={item.data.isShortForm} createdAt={item.data.createdAt} />
+            ) : (
+              <ZikrTextCard key={`t-${item.data.id}`} id={item.data.id} title={item.data.title}
+                author={item.data.author} thumbnailUrl={item.data.thumbnailUrl} createdAt={item.data.createdAt} />
+            )
+          )}
         </div>
       )}
     </div>
