@@ -28,12 +28,17 @@ export default async function ActivityPage({ params }: PageProps) {
         <ArrowLeft size={14} /> Nazad na aktivnosti
       </Link>
 
-      {activity.imageUrl && (
+      {activity.videoUrl ? (
+        <div className="mb-8 overflow-hidden" style={{ borderRadius: 8 }}>
+          <video src={activity.videoUrl} controls playsInline
+            className="w-full max-h-[70vh] object-contain bg-black rounded-lg" />
+        </div>
+      ) : activity.imageUrl ? (
         <div className="mb-8 overflow-hidden" style={{ borderRadius: 8, aspectRatio: '16/9' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={activity.imageUrl} alt={activity.title} className="w-full h-full object-cover" />
         </div>
-      )}
+      ) : null}
 
       <div className="flex items-center gap-2 mb-4">
         <Calendar size={13} style={{ color: '#A94A61' }} />

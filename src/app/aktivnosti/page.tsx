@@ -6,7 +6,7 @@ import { Calendar, MapPin } from 'lucide-react'
 
 interface Activity {
   id: number; title: string; content: string; imageUrl: string | null
-  date: string; tag: string
+  videoUrl: string | null; date: string; tag: string
 }
 
 const MONTHS = ['jan','feb','mar','apr','maj','jun','jul','aug','sep','okt','nov','dec']
@@ -88,7 +88,9 @@ export default function AktivnostiPage() {
             <Link key={a.id} href={`/aktivnosti/${a.id}`} className="group block h-full">
               <div className="bg-[#f5f2ef] overflow-hidden border border-black/5 flex flex-col h-full">
                 <div className="relative h-[228px] w-full shrink-0 overflow-hidden">
-                  {a.imageUrl
+                  {a.videoUrl
+                    ? <video src={a.videoUrl} className="absolute inset-0 w-full h-full object-cover" muted playsInline />
+                    : a.imageUrl
                     ? <img src={a.imageUrl} alt={a.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                     : <div className="absolute inset-0 flex items-center justify-center" style={{ background: 'linear-gradient(135deg,#8B1E3F,#5E1028)' }}>
                         <MapPin size={36} className="text-white/40" />

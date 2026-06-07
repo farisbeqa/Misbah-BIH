@@ -68,7 +68,7 @@ function useDropdown() {
 }
 
 const PLAIN_LINKS_LEFT  = [{ href: '/kuran',    label: "Kur'an"  }]
-const PLAIN_LINKS_MID   = [{ href: '/podcasts', label: 'Podcast' }]
+const PLAIN_LINKS_MID   = [{ href: '/podcasts', label: 'Podcast' }, { href: '/mekteb', label: 'Mekteb' }]
 
 const PLAIN_LINKS_RIGHT = [
   { href: '/blog',   label: 'Blog' },
@@ -85,6 +85,7 @@ const MOBILE_LINKS = [
   { href: '/ilahije/izvedba',    label: 'Ilahije – Izvedba' },
   { href: '/ilahije/tekstovi',   label: 'Ilahije – Tekstovi' },
   { href: '/podcasts',           label: 'Podcast' },
+  { href: '/mekteb',             label: 'Mekteb' },
   { href: '/aktivnosti',         label: 'Aktivnosti' },
   { href: '/galerija',           label: 'Galerija' },
   { href: '/blog',               label: 'Blog' },

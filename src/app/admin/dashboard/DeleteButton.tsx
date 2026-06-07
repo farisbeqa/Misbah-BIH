@@ -6,7 +6,7 @@ import { Trash2, Loader2 } from 'lucide-react'
 
 interface DeleteButtonProps {
   id: number
-  type: 'video' | 'blog' | 'activity' | 'gallery' | 'quote' | 'ilahija-tekst' | 'dua-tekst' | 'zikr-tekst'
+  type: 'video' | 'blog' | 'activity' | 'gallery' | 'quote' | 'ilahija-tekst' | 'dua-tekst' | 'zikr-tekst' | 'mekteb'
 }
 
 export default function DeleteButton({ id, type }: DeleteButtonProps) {
@@ -14,7 +14,7 @@ export default function DeleteButton({ id, type }: DeleteButtonProps) {
   const [loading, setLoading] = useState(false)
 
   const handleDelete = async () => {
-    const labels: Record<string, string> = { video: 'predavanje', blog: 'blog post', activity: 'aktivnost', gallery: 'sliku', quote: 'misao', 'ilahija-tekst': 'tekst', 'dua-tekst': 'tekst dove', 'zikr-tekst': 'tekst zikra' }
+    const labels: Record<string, string> = { video: 'predavanje', blog: 'blog post', activity: 'aktivnost', gallery: 'sliku', quote: 'misao', 'ilahija-tekst': 'tekst', 'dua-tekst': 'tekst dove', 'zikr-tekst': 'tekst zikra', mekteb: 'mekteb post' }
     if (!confirm(`Jesi li siguran da želiš obrisati ovo ${labels[type]}?`)) return
 
     setLoading(true)
@@ -22,7 +22,7 @@ export default function DeleteButton({ id, type }: DeleteButtonProps) {
       const endpoints: Record<string, string> = {
         video: `/api/videos/${id}`, blog: `/api/blog/${id}`,
         activity: `/api/activities/${id}`, gallery: `/api/gallery/${id}`,
-        quote: `/api/quotes/${id}`, 'ilahija-tekst': `/api/ilahije-tekstovi/${id}`, 'dua-tekst': `/api/dua-tekstovi/${id}`, 'zikr-tekst': `/api/zikr-tekstovi/${id}`,
+        quote: `/api/quotes/${id}`, 'ilahija-tekst': `/api/ilahije-tekstovi/${id}`, 'dua-tekst': `/api/dua-tekstovi/${id}`, 'zikr-tekst': `/api/zikr-tekstovi/${id}`, mekteb: `/api/mekteb/${id}`,
       }
       const endpoint = endpoints[type]
       const res = await fetch(endpoint, { method: 'DELETE' })

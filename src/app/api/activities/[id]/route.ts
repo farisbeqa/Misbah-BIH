@@ -15,13 +15,14 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   if (!session) return NextResponse.json({ error: 'Nije autorizovano' }, { status: 401 })
 
   try {
-    const { title, content, imageUrl, date, tag, published } = await request.json()
+    const { title, content, imageUrl, videoUrl, date, tag, published } = await request.json()
     const activity = await prisma.activity.update({
       where: { id: parseInt(params.id) },
       data: {
         ...(title !== undefined && { title: title.trim() }),
         ...(content !== undefined && { content: content.trim() }),
         ...(imageUrl !== undefined && { imageUrl: imageUrl?.trim() || null }),
+        ...(videoUrl !== undefined && { videoUrl: videoUrl?.trim() || null }),
         ...(date !== undefined && { date: new Date(date) }),
         ...(tag !== undefined && { tag }),
         ...(published !== undefined && { published }),

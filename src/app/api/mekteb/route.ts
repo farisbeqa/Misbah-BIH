@@ -6,34 +6,31 @@ export const dynamic = 'force-dynamic'
 
 export async function GET() {
   try {
-    const activities = await prisma.activity.findMany({
+    const posts = await prisma.mektebPost.findMany({
       where: { published: true },
-      orderBy: { date: 'desc' },
+      orderBy: { createdAt: 'desc' },
     })
-    return NextResponse.json(activities)
+    return NextResponse.json(posts)
   } catch { return NextResponse.json({ error: 'Greška' }, { status: 500 }) }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   const session = await requireAuth()
   if (!session) return NextResponse.json({ error: 'Nije autorizovano' }, { status: 401 })
-
   try {
-    const { title, content, imageUrl, videoUrl, date, tag } = await request.json()
+    const { title, content, author, imageUrl, category, published } = await req.json()
     if (!title?.trim() || !content?.trim())
       return NextResponse.json({ error: 'Naslov i sadržaj su obavezni' }, { status: 400 })
-
-    const activity = await prisma.activity.create({
+    const post = await prisma.mektebPost.create({
       data: {
         title: title.trim(),
         content: content.trim(),
+        author: author?.trim() || null,
         imageUrl: imageUrl?.trim() || null,
-        videoUrl: videoUrl?.trim() || null,
-        date: date ? new Date(date) : new Date(),
-        tag: tag || 'aktivnosti',
-        published: true,
+        category: category || 'opste',
+        published: published ?? true,
       },
     })
-    return NextResponse.json(activity, { status: 201 })
-  } catch { return NextResponse.json({ error: 'Greška servera' }, { status: 500 }) }
+    return NextResponse.json(post, { status: 201 })
+  } catch { return NextResponse.json({ error: 'Greška pri snimanju' }, { status: 500 }) }
 }

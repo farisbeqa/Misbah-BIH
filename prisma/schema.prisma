@@ -78,6 +78,7 @@ model Activity {
   title     String
   content   String
   imageUrl  String?
+  videoUrl  String?
   date      DateTime @default(now())
   tag       String   @default("aktivnosti") // vijesti | novosti | aktivnosti
   published Boolean  @default(true)
@@ -122,6 +123,18 @@ model DuaText {
   content   String
   author    String?
   audioUrl  String?
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MektebPost {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  author    String?
+  imageUrl  String?
+  category  String   @default("opste") // opste | program | kviz | materijali
   published Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
