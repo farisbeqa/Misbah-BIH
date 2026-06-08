@@ -246,6 +246,46 @@ export const BIOS: Record<string, Bio> = {
     ],
   },
 
+  'adna-kurtanovic': {
+    name: 'Adna Kurtanović',
+    role: 'Videografija i digitalni dizajn',
+    photo: '/tim/adna-kurtanovic.jpg',
+    born: '18. juli 2004., Sarajevo',
+    sections: [
+      {
+        title: 'Obrazovanje',
+        items: [
+          'Osnovna škola „Edhem Mulabdić", Sarajevo — ponos i najistaknutiji učenik škole za 2017. godinu',
+          'Gazi Husrev-begova medresa u Sarajevu',
+          'Filozofski fakultet Univerziteta u Sarajevu — Odsjek za orijentalnu filologiju (u toku)',
+        ],
+      },
+      {
+        title: 'Vjerska angažiranost',
+        items: [
+          'Dugogodišnja aktivistkinja u džematu Carina na Vratniku, s povremenim angažmanom u ulozi mualime na polju mektebske pouke',
+          'Aktivna članica škole hifza pri punktu Sultan Fatihove Careve džamije u Sarajevu',
+          'Učesnica halke hifza i tefsira sure Merjem za studente Univerziteta u Sarajevu — Centar za Kur\'an i sunnet i Udruženje studenata Fakulteta islamskih nauka',
+        ],
+      },
+      {
+        title: 'Iskustvo u Misbahu',
+        items: [
+          'Članica projekta „Misbah" od 2022. — zadužena za kreiranje, editovanje i objavljivanje video i vizuelnog sadržaja na društvenim mrežama',
+          'Videografijom i digitalnim dizajnom aktivno se bavi od 2024. godine',
+          'Angažovana od strane Univerziteta u Sarajevu za snimanje i kreiranje video dokumentacije i medijskog sadržaja na naučnim konferencijama i međunarodnim događajima (mreža EUPeace i dr.)',
+        ],
+      },
+      {
+        title: 'Nagrade i dostignuća',
+        items: [
+          'III mjesto na Smotri naučno-tehničkog stvaralaštva mladih Bosne i Hercegovine — disciplina Spot',
+          'III mjesto na video konkursu „Proljeće u Sarajevu" (2026) za autorski kratki film o Sarajevu — dodijeljeno u sklopu Dani Kantona Sarajevo',
+        ],
+      },
+    ],
+  },
+
   'hamdo-solo': {
     name: 'Hamdo Solo',
     role: 'Urednik / Imam džemata Carina Vratnik',

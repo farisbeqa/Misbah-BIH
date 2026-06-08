@@ -11,13 +11,13 @@ const UREDNICI: { name: string; slug?: string }[] = [
 ]
 
 const DRUSTVENE_MREZE: { name: string; slug?: string; photo?: string }[] = [
-  { name: 'Adna Kurtanović',  photo: '/tim/adna-kurtanovic.jpg' },
-  { name: 'Abdulah Hodžić',   photo: '/tim/abdulah-hodzic.jpg' },
+  { name: 'Abdulah Hodžić', photo: '/tim/abdulah-hodzic.jpg' },
 ]
 
 const AUTORI: { name: string; slug?: string }[] = [
-  { name: 'Esma Klisura',       slug: 'esma-klisura' },
-  { name: 'Muhamed Selimović',  slug: 'muhamed-selimovic' },
+  { name: 'Esma Klisura',      slug: 'esma-klisura' },
+  { name: 'Muhamed Selimović', slug: 'muhamed-selimovic' },
+  { name: 'Adna Kurtanović',   slug: 'adna-kurtanovic' },
 ]
 
 function MemberCard({ name, slug, photo, accent }: { name: string; slug?: string; photo?: string; accent: string }) {

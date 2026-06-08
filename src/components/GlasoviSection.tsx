@@ -19,8 +19,9 @@ const UREDNICI: TeamMember[] = [
 ]
 
 const AUTORI: TeamMember[] = [
-  { image: '/tim/esma-klisura.jpg',       tag: 'Odgoj i obrazovanje',      name: 'Esma Klisura',       bio: 'Odgoj, obrazovanje i savremeni izazovi mladih.',                       slug: 'esma-klisura' },
-  { image: '/tim/muhamed-selimovic.jpg',  tag: "Kur'anske nauke i hifz",   name: 'Muhamed Selimović',  bio: 'Hafiz, pobjednik državnog takmičenja u hifzu. Aktivan u Misbahu od 2022.', slug: 'muhamed-selimovic' },
+  { image: '/tim/esma-klisura.jpg',       tag: 'Odgoj i obrazovanje',         name: 'Esma Klisura',       bio: 'Odgoj, obrazovanje i savremeni izazovi mladih.',                            slug: 'esma-klisura' },
+  { image: '/tim/muhamed-selimovic.jpg',  tag: "Kur'anske nauke i hifz",      name: 'Muhamed Selimović',  bio: 'Hafiz, pobjednik državnog takmičenja u hifzu. Aktivan u Misbahu od 2022.',  slug: 'muhamed-selimovic' },
+  { image: '/tim/adna-kurtanovic.jpg',    tag: 'Videografija i digitalni dizajn', name: 'Adna Kurtanović', bio: 'Kreatorica video i vizuelnog sadržaja Misbah EDU od 2022. Studentica orijentalne filologije, dobitnica III mjesta na Smotri naučno-tehničkog stvaralaštva BiH.', slug: 'adna-kurtanovic' },
 ]
 
 const GROUPS = [
