@@ -4,10 +4,12 @@ import { prisma } from '@/lib/db'
 const BASE = 'https://www.misbah-edu.com'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [videos, posts, ilahijeTekstovi] = await Promise.all([
+  const [videos, posts, ilahijeTekstovi, duaTekstovi, mektebPosts] = await Promise.all([
     prisma.video.findMany({ where: { published: true }, select: { id: true, updatedAt: true }, orderBy: { createdAt: 'desc' } }),
     prisma.blogPost.findMany({ where: { published: true }, select: { id: true, updatedAt: true }, orderBy: { createdAt: 'desc' } }),
     prisma.ilahijaText.findMany({ where: { published: true }, select: { id: true, updatedAt: true } }).catch(() => []),
+    prisma.duaText.findMany({ where: { published: true }, select: { id: true, updatedAt: true } }).catch(() => []),
+    prisma.mektebPost.findMany({ where: { published: true }, select: { id: true, updatedAt: true } }).catch(() => []),
   ])
 
   const now = new Date()
@@ -25,6 +27,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/aktivnosti`,          lastModified: now, changeFrequency: 'weekly',  priority: 0.6 },
     { url: `${BASE}/galerija`,            lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE}/o-nama`,              lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${BASE}/zikrovi/tekstovi`,   lastModified: now, changeFrequency: 'weekly',  priority: 0.6 },
+    { url: `${BASE}/mekteb`,             lastModified: now, changeFrequency: 'weekly',  priority: 0.7 },
   ]
 
   const videoRoutes: MetadataRoute.Sitemap = videos.map(v => ({
@@ -48,5 +52,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.4,
   }))
 
-  return [...staticRoutes, ...videoRoutes, ...postRoutes, ...ilahijeRoutes]
+  const duaRoutes: MetadataRoute.Sitemap = duaTekstovi.map(t => ({
+    url: `${BASE}/zikrovi/tekstovi/${t.id}`,
+    lastModified: t.updatedAt,
+    changeFrequency: 'yearly',
+    priority: 0.5,
+  }))
+
+  const mektebRoutes: MetadataRoute.Sitemap = mektebPosts.map(p => ({
+    url: `${BASE}/mekteb/${p.id}`,
+    lastModified: p.updatedAt,
+    changeFrequency: 'monthly',
+    priority: 0.6,
+  }))
+
+  return [...staticRoutes, ...videoRoutes, ...postRoutes, ...ilahijeRoutes, ...duaRoutes, ...mektebRoutes]
 }
