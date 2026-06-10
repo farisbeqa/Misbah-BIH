@@ -63,7 +63,7 @@ export default function Footer() {
             </span>
           </Link>
           <p className="font-normal text-[#746860] max-w-[320px]" style={{ fontSize: 16, lineHeight: 1.5 }}>
-            Misbah je digitalna platforma posvećena širenju korisnog znanja kroz
+            Misbah EDU je digitalna platforma posvećena širenju korisnog znanja kroz
             predavanja, razgovore i pisane sadržaje koji povezuju vjeru sa
             svakodnevnim životom.
           </p>

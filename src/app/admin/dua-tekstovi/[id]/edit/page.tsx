@@ -13,6 +13,7 @@ export default function EditDuaTextPage() {
   const [title, setTitle]         = useState('')
   const [content, setContent]     = useState('')
   const [author, setAuthor]       = useState('')
+  const [category, setCategory]   = useState('opste')
   const [audioUrl, setAudioUrl]   = useState('')
   const [audioUrlInput, setAudioUrlInput] = useState('')
   const [audioMode, setAudioMode] = useState<'url' | 'upload'>('url')
@@ -31,6 +32,7 @@ export default function EditDuaTextPage() {
         setAuthor(d.author || '')
         setAudioUrl(d.audioUrl || '')
         setAudioUrlInput(d.audioUrl || '')
+        setCategory(d.category || 'opste')
         setPublished(d.published)
         setLoading(false)
       })
@@ -76,7 +78,7 @@ export default function EditDuaTextPage() {
       const res = await fetch(`/api/dua-tekstovi/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, content, author, audioUrl: finalAudioUrl, published }),
+        body: JSON.stringify({ title, content, author, audioUrl: finalAudioUrl, category, published }),
       })
       const data = await res.json()
       if (res.ok) { router.push('/admin/dashboard'); router.refresh() }
@@ -117,6 +119,18 @@ export default function EditDuaTextPage() {
             </label>
             <input type="text" value={author} onChange={e => setAuthor(e.target.value)}
               className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand text-sm" />
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Kategorija</label>
+            <div className="flex gap-2">
+              {[{ value: 'opste', label: 'Opšte' }, { value: 'kuransko', label: "Kur'anska dova" }].map(opt => (
+                <button key={opt.value} type="button" onClick={() => setCategory(opt.value)}
+                  className={`px-4 py-2 rounded-xl text-sm font-medium border transition-colors ${category === opt.value ? 'bg-brand text-white border-brand' : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'}`}>
+                  {opt.label}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Audio section */}

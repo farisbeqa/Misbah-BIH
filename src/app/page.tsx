@@ -329,7 +329,7 @@ export default async function HomePage() {
           <SectionHead
             tag="KUR'ANSKE NAUKE"
             title="Kur'an"
-            description="Učenje, tumačenje i promišljanje kur'anskih ajeta kroz predavanja, tefsire i odabrane sadržaje."
+            description="Odabrani odlomci iz Kur'ana i cjelovite sure."
             cta={{ label: "Istraži kur'anske sadržaje", href: '/kuran' }}
           />
           {kuran.length === 0

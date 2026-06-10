@@ -7,7 +7,7 @@ export default async function ZikroviTekstoviPage() {
   const tekstovi = await prisma.duaText.findMany({
     where: { published: true },
     orderBy: { createdAt: 'desc' },
-    select: { id: true, title: true, author: true },
+    select: { id: true, title: true, author: true, category: true },
   }).catch(() => [])
 
   return (

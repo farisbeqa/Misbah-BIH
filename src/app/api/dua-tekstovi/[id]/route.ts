@@ -15,14 +15,14 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const id = parseInt(params.id)
-  const { title, content, author, audioUrl, published } = await req.json()
+  const { title, content, author, audioUrl, category, published } = await req.json()
   if (!title?.trim() || !content?.trim()) {
     return NextResponse.json({ error: 'Naslov i tekst su obavezni' }, { status: 400 })
   }
 
   const item = await prisma.duaText.update({
     where: { id },
-    data: { title: title.trim(), content: content.trim(), author: author?.trim() || null, audioUrl: audioUrl?.trim() || null, published: published ?? true },
+    data: { title: title.trim(), content: content.trim(), author: author?.trim() || null, audioUrl: audioUrl?.trim() || null, category: category || 'opste', published: published ?? true },
   })
   revalidatePath('/zikrovi/tekstovi')
   return NextResponse.json(item)

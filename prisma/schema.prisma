@@ -123,6 +123,7 @@ model DuaText {
   content   String
   author    String?
   audioUrl  String?
+  category  String   @default("opste") // opste | kuransko
   published Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

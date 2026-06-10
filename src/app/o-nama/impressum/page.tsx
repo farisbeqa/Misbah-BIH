@@ -65,8 +65,7 @@ export default function ImpressumPage() {
         <h2 className="font-bold text-warm-900 mb-4">O platformi</h2>
         <div className="space-y-3 text-sm text-warm-700 leading-relaxed">
           <p>
-            Medijska platforma Misbah EDU pokrenuta je kao projekat omladine džemata na Carini Vratnik.
-            Povezujući vjeru i prave vrijednosti posvećena je pričama koje inspirišu i imaju edukativni karakter.
+            Medijska platforma Misbah EDU predstavlja inicijativu mladih ljudi usmjerenu ka doprinosu Zajednici kroz edukativni i korisni sadržaj.
             Kroz predavanja, podcaste i intervjue nastojimo utkati prave vrijednosti u društvo.
           </p>
           <p>

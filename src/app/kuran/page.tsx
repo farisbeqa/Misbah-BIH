@@ -33,7 +33,7 @@ export default function KuranPage() {
           Kur&apos;an
         </h1>
         <p className="font-normal text-[#746860]" style={{ fontSize: 18 }}>
-          Učenje, tumačenje i promišljanje kur&apos;anskih ajeta.
+          Odabrani odlomci iz Kur&apos;ana i cjelovite sure.
         </p>
       </div>
 

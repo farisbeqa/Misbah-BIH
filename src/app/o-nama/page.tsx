@@ -13,6 +13,24 @@ export default function ONamaPage() {
           Medijska platforma Misbah EDU pokrenuta je kao projekat omladine džemata na Carini Vratnik.
           Povezujući vjeru i prave vrijednosti, posvećena je pričama koje inspirišu i imaju edukativni karakter.
         </p>
+        <br />
+        <p className="text-warm-500 leading-relaxed">
+          Trenutno se u okviru platforme Misbah EDU održavaju tri redovne edukativne halke:
+        </p>
+        <ul className="mt-4 space-y-4 text-warm-500 leading-relaxed list-none">
+          <li>
+            <span className="font-semibold text-warm-900">Halka tefsira</span> održava se svakog četvrtka u džematu Carina, sahat vremena prije akšam-namaza. Predavanja vodi hfz. Hamdo Solo, koji kroz tumačenje kur&apos;anskih ajeta nastoji približiti njihovo značenje i poruke svakodnevnom životu.
+          </li>
+          <li>
+            <span className="font-semibold text-warm-900">Halka sire</span> održava se svakog ponedjeljka nakon akšam-namaza u džematu Bjelave. Ovu halku vodi Hamza ef. Bajraktarević, obrađujući život i praksu Allahovog Poslanika, s posebnim naglaskom na pouke koje se mogu primijeniti danas.
+          </li>
+          <li>
+            <span className="font-semibold text-warm-900">Halka hadisa</span> također se održava svakog ponedjeljka nakon akšam-namaza u džematu Bakareva džamija. Halku vodi Zeko ef. Hasanović, fokusirajući se na razumijevanje i primjenu hadisa u svakodnevnom životu.
+          </li>
+        </ul>
+        <p className="text-warm-500 leading-relaxed mt-4">
+          Sve halke su otvorene za sve zainteresovane, s ciljem jačanja znanja, duhovnosti i zajedništva.
+        </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
