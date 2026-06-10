@@ -10,7 +10,7 @@ export default function ONamaPage() {
         <p className="font-mono text-[11px] text-brand-light uppercase tracking-widest mb-2">Platforma</p>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-warm-900 tracking-tight mb-4">O Nama</h1>
         <p className="text-warm-500 leading-relaxed">
-          Medijska platforma Misbah EDU pokrenuta je kao projekat omladine džemata na Carini Vratnik.
+          Medijska platforma Misbah EDU predstavlja inicijativu mladih ljudi usmjerenu ka doprinosu Zajednici kroz edukativni i korisni sadržaj.
           Povezujući vjeru i prave vrijednosti, posvećena je pričama koje inspirišu i imaju edukativni karakter.
         </p>
         <br />
