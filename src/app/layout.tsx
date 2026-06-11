@@ -23,7 +23,7 @@ const siteUrl = 'https://www.misbah-edu.com'
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Misbah EDU – Islamska predavanja | hfz. Hamdo Solo',
+    default: 'Misbah EDU | Platforma koja okuplja i povezuje mlade',
     template: '%s | Misbah EDU',
   },
   description:
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     locale: 'bs_BA',
     url: siteUrl,
     siteName: 'Misbah EDU',
-    title: 'Misbah EDU – Islamska predavanja | hfz. Hamdo Solo',
+    title: 'Misbah EDU | Platforma koja okuplja i povezuje mlade',
     description:
       'Islamska predavanja, hutbe i sadržaj efendije Hamde Solo, imama džamije Carina, Sarajevo. Predavanja, Kur\'an, ilahije, zikrovi i podcast.',
     images: [
@@ -112,6 +112,30 @@ const jsonLd = {
         target: { '@type': 'EntryPoint', urlTemplate: `${siteUrl}/predavanja/duga?q={search_term_string}` },
         'query-input': 'required name=search_term_string',
       },
+    },
+    {
+      '@type': 'SiteLinksSearchBox',
+      '@id': `${siteUrl}/#searchbox`,
+      url: siteUrl,
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: { '@type': 'EntryPoint', urlTemplate: `${siteUrl}/predavanja/duga?q={search_term_string}` },
+        'query-input': 'required name=search_term_string',
+      },
+    },
+    {
+      '@type': 'ItemList',
+      '@id': `${siteUrl}/#navigation`,
+      name: 'Navigacija',
+      itemListElement: [
+        { '@type': 'SiteNavigationElement', position: 1, name: 'Predavanja', url: `${siteUrl}/predavanja/duga` },
+        { '@type': 'SiteNavigationElement', position: 2, name: "Kur'an", url: `${siteUrl}/kuran` },
+        { '@type': 'SiteNavigationElement', position: 3, name: 'Podcast', url: `${siteUrl}/podcasts` },
+        { '@type': 'SiteNavigationElement', position: 4, name: 'Ilahije', url: `${siteUrl}/ilahije/izvedba` },
+        { '@type': 'SiteNavigationElement', position: 5, name: 'Mekteb EDU', url: `${siteUrl}/mekteb` },
+        { '@type': 'SiteNavigationElement', position: 6, name: 'Blog', url: `${siteUrl}/blog` },
+        { '@type': 'SiteNavigationElement', position: 7, name: 'O Nama', url: `${siteUrl}/o-nama` },
+      ],
     },
     {
       '@type': 'Person',
