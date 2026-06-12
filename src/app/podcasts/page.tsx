@@ -16,11 +16,14 @@ const FILTERS = [
   { key: 'upload',  label: 'Upload' },
 ]
 
+const PAGE = 12
+
 export default function PodcastsPage() {
   const [videos, setVideos] = useState<Video[]>([])
   const [filter, setFilter] = useState('all')
   const [loading, setLoading] = useState(true)
-  const [query, setQuery] = useState('')
+  const [query, setQuery]   = useState('')
+  const [visible, setVisible] = useState(PAGE)
 
   useEffect(() => {
     setLoading(true)
@@ -29,9 +32,12 @@ export default function PodcastsPage() {
     fetch(url).then(r => r.json()).then(d => { setVideos(d); setLoading(false) }).catch(() => setLoading(false))
   }, [filter])
 
+  useEffect(() => { setVisible(PAGE) }, [filter, query])
+
   const filtered = query.trim()
     ? videos.filter(v => v.title.toLowerCase().includes(query.toLowerCase()))
     : videos
+  const shown = filtered.slice(0, visible)
 
   return (
     <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-12 sm:py-16" style={{ minHeight: '60vh' }}>
@@ -86,13 +92,24 @@ export default function PodcastsPage() {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map(v => (
-            <VideoCard key={v.id} id={v.id} title={v.title} description={v.description}
-              author={v.author} platform={v.platform} thumbnailUrl={v.thumbnailUrl}
-              isShortForm={v.isShortForm} createdAt={v.createdAt} />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {shown.map(v => (
+              <VideoCard key={v.id} id={v.id} title={v.title} description={v.description}
+                author={v.author} platform={v.platform} thumbnailUrl={v.thumbnailUrl}
+                isShortForm={v.isShortForm} createdAt={v.createdAt} />
+            ))}
+          </div>
+          {visible < filtered.length && (
+            <div className="flex flex-col items-center gap-2 mt-10">
+              <button onClick={() => setVisible(v => v + PAGE)}
+                className="px-8 py-3 border border-[#D6CCC3] text-[#5a4f49] text-sm font-medium hover:border-[#8b1e3f] hover:text-[#8b1e3f] transition-colors">
+                Učitaj još ({filtered.length - visible} preostalih)
+              </button>
+              <p className="text-xs text-[#a89888]">Prikazano {shown.length} od {filtered.length}</p>
+            </div>
+          )}
+        </>
       )}
     </div>
   )

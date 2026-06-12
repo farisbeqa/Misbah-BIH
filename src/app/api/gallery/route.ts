@@ -4,11 +4,16 @@ import { requireAuth } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    const { searchParams } = new URL(request.url)
+    const limit = parseInt(searchParams.get('limit') || '1000')
+    const skip  = parseInt(searchParams.get('skip')  || '0')
     const images = await prisma.galleryImage.findMany({
       where: { published: true },
       orderBy: { createdAt: 'desc' },
+      take: limit,
+      skip,
     })
     return NextResponse.json(images)
   } catch { return NextResponse.json({ error: 'Greška' }, { status: 500 }) }
