@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
 
@@ -30,6 +31,7 @@ export async function POST(req: NextRequest) {
         published: published ?? true,
       },
     })
+    revalidatePath('/price')
     return NextResponse.json(prica, { status: 201 })
   } catch { return NextResponse.json({ error: 'Greška pri snimanju' }, { status: 500 }) }
 }

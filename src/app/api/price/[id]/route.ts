@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
 
@@ -27,6 +28,8 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
         published: published ?? true,
       },
     })
+    revalidatePath('/price')
+    revalidatePath(`/price/${params.id}`)
     return NextResponse.json(prica)
   } catch { return NextResponse.json({ error: 'Greška pri snimanju' }, { status: 500 }) }
 }
@@ -36,6 +39,7 @@ export async function DELETE(_req: NextRequest, { params }: { params: { id: stri
   if (!session) return NextResponse.json({ error: 'Nije autorizovano' }, { status: 401 })
   try {
     await prisma.prica.delete({ where: { id: parseInt(params.id) } })
+    revalidatePath('/price')
     return NextResponse.json({ success: true })
   } catch { return NextResponse.json({ error: 'Greška' }, { status: 500 }) }
 }

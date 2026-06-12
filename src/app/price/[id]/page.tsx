@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import { prisma } from '@/lib/db'
 import { ArrowLeft, BookOpen } from 'lucide-react'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 3600
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const prica = await prisma.prica.findUnique({ where: { id: parseInt(params.id) } }).catch(() => null)

@@ -2,7 +2,7 @@ import { prisma } from '@/lib/db'
 import { BookOpen } from 'lucide-react'
 import PriceGrid from './PriceGrid'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 export const metadata = { title: 'Poučne priče' }
 
 export default async function PricePage() {
