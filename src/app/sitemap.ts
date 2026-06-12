@@ -4,12 +4,13 @@ import { prisma } from '@/lib/db'
 const BASE = 'https://www.misbah-edu.com'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [videos, posts, ilahijeTekstovi, duaTekstovi, mektebPosts] = await Promise.all([
+  const [videos, posts, ilahijeTekstovi, duaTekstovi, mektebPosts, pricaList] = await Promise.all([
     prisma.video.findMany({ where: { published: true }, select: { id: true, updatedAt: true }, orderBy: { createdAt: 'desc' } }),
     prisma.blogPost.findMany({ where: { published: true }, select: { id: true, updatedAt: true }, orderBy: { createdAt: 'desc' } }),
     prisma.ilahijaText.findMany({ where: { published: true }, select: { id: true, updatedAt: true } }).catch(() => []),
     prisma.duaText.findMany({ where: { published: true }, select: { id: true, updatedAt: true } }).catch(() => []),
     prisma.mektebPost.findMany({ where: { published: true }, select: { id: true, updatedAt: true } }).catch(() => []),
+    prisma.prica.findMany({ where: { published: true }, select: { id: true, updatedAt: true } }).catch(() => []),
   ])
 
   const now = new Date()
@@ -29,6 +30,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/o-nama`,              lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE}/zikrovi/tekstovi`,   lastModified: now, changeFrequency: 'weekly',  priority: 0.6 },
     { url: `${BASE}/mekteb`,             lastModified: now, changeFrequency: 'weekly',  priority: 0.7 },
+    { url: `${BASE}/price`,              lastModified: now, changeFrequency: 'weekly',  priority: 0.7 },
   ]
 
   const videoRoutes: MetadataRoute.Sitemap = videos.map(v => ({
@@ -66,5 +68,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }))
 
-  return [...staticRoutes, ...videoRoutes, ...postRoutes, ...ilahijeRoutes, ...duaRoutes, ...mektebRoutes]
+  const pricaRoutes: MetadataRoute.Sitemap = pricaList.map(p => ({
+    url: `${BASE}/price/${p.id}`,
+    lastModified: p.updatedAt,
+    changeFrequency: 'monthly',
+    priority: 0.6,
+  }))
+
+  return [...staticRoutes, ...videoRoutes, ...postRoutes, ...ilahijeRoutes, ...duaRoutes, ...mektebRoutes, ...pricaRoutes]
 }

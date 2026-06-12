@@ -41,7 +41,7 @@ export default function DugaPredavanjaPage() {
           Duga predavanja
         </h1>
         <p className="font-normal text-[#746860]" style={{ fontSize: 18 }}>
-          Detaljna predavanja o islamskim temama, fikhu, siri i duhovnosti.
+          Pažljivo pripremljena predavanja o različitim islamskim i historijskim temama, uključujući tefsir, fikh, hadis, siru i duhovnost.
         </p>
       </div>
 

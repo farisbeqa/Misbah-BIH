@@ -33,7 +33,7 @@ export default function IlahijeIzvedbaPage() {
           Izvedba
         </h1>
         <p className="font-normal text-[#746860]" style={{ fontSize: 18 }}>
-          Snimci ilahija, kasida i islamskih napjeva.
+          Ilahije, kaside i duhovna muzika.
         </p>
       </div>
 

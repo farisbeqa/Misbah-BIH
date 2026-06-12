@@ -153,6 +153,17 @@ model ZikrText {
   updatedAt    DateTime @updatedAt
 }
 
+model Prica {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  author    String?
+  imageUrl  String?
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model AdminUser {
   id           Int      @id @default(autoincrement())
   username     String   @unique

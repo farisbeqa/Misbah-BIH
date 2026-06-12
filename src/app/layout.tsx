@@ -23,7 +23,7 @@ const siteUrl = 'https://www.misbah-edu.com'
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Misbah EDU | Platforma koja okuplja i povezuje mlade',
+    default: 'Misbah EDU | Edukacija i duhovni razvoj',
     template: '%s | Misbah EDU',
   },
   description:
@@ -37,14 +37,13 @@ export const metadata: Metadata = {
   authors: [{ name: 'Misbah EDU', url: siteUrl }],
   creator: 'Misbah EDU',
   publisher: 'Misbah EDU',
-  alternates: { canonical: siteUrl },
   icons: { icon: '/favicon.svg', apple: '/logo.jpg' },
   openGraph: {
     type: 'website',
     locale: 'bs_BA',
     url: siteUrl,
     siteName: 'Misbah EDU',
-    title: 'Misbah EDU | Platforma koja okuplja i povezuje mlade',
+    title: 'Misbah EDU | Edukacija i duhovni razvoj',
     description:
       'Islamska predavanja, hutbe i sadržaj efendije Hamde Solo, imama džamije Carina, Sarajevo. Predavanja, Kur\'an, ilahije, zikrovi i podcast.',
     images: [
@@ -133,8 +132,9 @@ const jsonLd = {
         { '@type': 'SiteNavigationElement', position: 3, name: 'Podcast', url: `${siteUrl}/podcasts` },
         { '@type': 'SiteNavigationElement', position: 4, name: 'Ilahije', url: `${siteUrl}/ilahije/izvedba` },
         { '@type': 'SiteNavigationElement', position: 5, name: 'Mekteb EDU', url: `${siteUrl}/mekteb` },
-        { '@type': 'SiteNavigationElement', position: 6, name: 'Blog', url: `${siteUrl}/blog` },
-        { '@type': 'SiteNavigationElement', position: 7, name: 'O Nama', url: `${siteUrl}/o-nama` },
+        { '@type': 'SiteNavigationElement', position: 6, name: 'Poučne priče', url: `${siteUrl}/price` },
+        { '@type': 'SiteNavigationElement', position: 7, name: 'Blog', url: `${siteUrl}/blog` },
+        { '@type': 'SiteNavigationElement', position: 8, name: 'O Nama', url: `${siteUrl}/o-nama` },
       ],
     },
     {
