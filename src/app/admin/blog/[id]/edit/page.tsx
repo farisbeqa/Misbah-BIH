@@ -13,6 +13,7 @@ export default function EditBlogPostPage() {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [author, setAuthor] = useState('')
+  const [category, setCategory] = useState('savjeti')
   const [imageUrl, setImageUrl] = useState('')
   const [imageUrlInput, setImageUrlInput] = useState('')
   const [imageMode, setImageMode] = useState<'url' | 'upload'>('url')
@@ -28,6 +29,7 @@ export default function EditBlogPostPage() {
         setTitle(data.title || '')
         setContent(data.content || '')
         setAuthor(data.author || '')
+        setCategory(data.category || 'savjeti')
         setImageUrl(data.imageUrl || '')
         setImageUrlInput(data.imageUrl || '')
         setLoading(false)
@@ -70,7 +72,7 @@ export default function EditBlogPostPage() {
       const res = await fetch(`/api/blog/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: title.trim(), content: content.trim(), author: author.trim() || null, imageUrl: imageUrl || null }),
+        body: JSON.stringify({ title: title.trim(), content: content.trim(), author: author.trim() || null, imageUrl: imageUrl || null, category }),
       })
       if (res.ok) {
         router.push('/admin/dashboard')
@@ -115,6 +117,22 @@ export default function EditBlogPostPage() {
               <input type="text" value={author} onChange={e => setAuthor(e.target.value)}
                 placeholder="npr. hfz. Hamdo Solo"
                 className="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-600 text-sm" />
+            </div>
+
+            {/* Category */}
+            <div className="bg-white rounded-2xl p-6 border border-zinc-100 shadow-sm">
+              <label className="block text-sm font-semibold text-zinc-700 mb-1.5">Kategorija *</label>
+              <select value={category} onChange={e => setCategory(e.target.value)}
+                className="w-full px-4 py-2.5 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-600 text-sm bg-white">
+                <option value="hutbe">Hutbe</option>
+                <option value="aktuelne-teme">Aktuelne teme</option>
+                <option value="duhovnost">Duhovnost</option>
+                <option value="tefsir-kuran">Tefsir i Kur&apos;an</option>
+                <option value="sira">Sira (život Poslanika ﷺ)</option>
+                <option value="fikh">Islamski propisi (Fikh)</option>
+                <option value="savjeti">Savjeti i podsjetnici</option>
+                <option value="odgoj">Odgoj i porodica</option>
+              </select>
             </div>
 
             {/* Image */}

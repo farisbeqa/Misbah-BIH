@@ -31,6 +31,7 @@ model BlogPost {
   content   String
   author    String?
   imageUrl  String?
+  category  String    @default("savjeti") // hutbe | aktuelne-teme | duhovnost | tefsir-kuran | sira | fikh | savjeti | odgoj
   published Boolean   @default(true)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

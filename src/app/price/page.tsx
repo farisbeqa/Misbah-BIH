@@ -20,7 +20,7 @@ export default async function PricePage() {
           Poučne priče
         </h1>
         <p className="font-normal text-[#746860]" style={{ fontSize: 18 }}>
-          Priče iz islamske tradicije koje poučavaju, inspirišu i jačaju iman.
+          Priče iz islamske tradicije koje bude srce, ulijevaju nadu i opominju uz podsjećanje na istinske vrijednosti života.
         </p>
       </div>
 

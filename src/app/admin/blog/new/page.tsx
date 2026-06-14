@@ -11,6 +11,7 @@ export default function AddBlogPostPage() {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [content, setContent] = useState('')
+  const [category, setCategory] = useState('hutbe')
   const [imageUrl, setImageUrl] = useState('')
   const [imageUrlInput, setImageUrlInput] = useState('')
   const [imageMode, setImageMode] = useState<'url' | 'upload'>('url')
@@ -87,6 +88,7 @@ export default function AddBlogPostPage() {
           author: author.trim() || null,
           content: content.trim(),
           imageUrl: imageUrl || null,
+          category,
         }),
       })
 
@@ -143,6 +145,22 @@ export default function AddBlogPostPage() {
           <input type="text" value={author} onChange={e => setAuthor(e.target.value)}
             placeholder="Ime i prezime autora"
             className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1e5f34] text-sm" />
+        </div>
+
+        {/* Category */}
+        <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm mb-4">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Kategorija *</label>
+          <select value={category} onChange={e => setCategory(e.target.value)}
+            className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1e5f34] text-sm bg-white">
+            <option value="hutbe">Hutbe</option>
+            <option value="aktuelne-teme">Aktuelne teme</option>
+            <option value="duhovnost">Duhovnost</option>
+            <option value="tefsir-kuran">Tefsir i Kur&apos;an</option>
+            <option value="sira">Sira (život Poslanika ﷺ)</option>
+            <option value="fikh">Islamski propisi (Fikh)</option>
+            <option value="savjeti">Savjeti i podsjetnici</option>
+            <option value="odgoj">Odgoj i porodica</option>
+          </select>
         </div>
 
         {/* Image */}

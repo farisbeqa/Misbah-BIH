@@ -27,7 +27,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     }
 
     const body = await request.json()
-    const { title, content, author, imageUrl, published } = body
+    const { title, content, author, imageUrl, category, published } = body
 
     const post = await prisma.blogPost.update({
       where: { id: parseInt(params.id) },
@@ -36,6 +36,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         ...(content !== undefined && { content }),
         ...(author !== undefined && { author: author || null }),
         ...(imageUrl !== undefined && { imageUrl }),
+        ...(category !== undefined && { category }),
         ...(published !== undefined && { published }),
       },
     })

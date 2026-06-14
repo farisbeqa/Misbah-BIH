@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { title, content, author, imageUrl } = body
+    const { title, content, author, imageUrl, category } = body
     console.log('[blog POST] title:', title?.slice(0, 60), '| content len:', content?.length)
 
     if (!title || !content) {
@@ -44,6 +44,7 @@ export async function POST(request: NextRequest) {
         content,
         author: author?.trim() || null,
         imageUrl: imageUrl || null,
+        category: category || 'savjeti',
         published: true,
       },
     })

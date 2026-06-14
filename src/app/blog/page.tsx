@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/db'
 import BlogSearch from '@/components/BlogSearch'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 export const metadata = {
   title: 'Blog | Misbah EDU',
   description: 'Islamski tekstovi, razmišljanja i članci',
@@ -25,7 +25,7 @@ export default async function BlogPage() {
           Blog
         </h1>
         <p className="font-normal text-[#746860]" style={{ fontSize: 18 }}>
-          Tekstovi, osvrti i razmišljanja o vjeri, znanju i svakodnevnom životu.
+          Kratki i korisni tekstovi za svakodnevni život vjernika.
         </p>
       </div>
 
