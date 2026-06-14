@@ -3,7 +3,7 @@ import { BookOpen } from 'lucide-react'
 import PriceGrid from './PriceGrid'
 
 export const revalidate = 60
-export const metadata = { title: 'Poučne priče' }
+export const metadata = { title: 'Poučne priče', alternates: { canonical: '/price' } }
 
 export default async function PricePage() {
   const price = await prisma.prica.findMany({

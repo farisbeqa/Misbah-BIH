@@ -1,7 +1,7 @@
 ﻿import Link from 'next/link'
 import { FileText, Mail, Users, ArrowRight } from 'lucide-react'
 
-export const metadata = { title: 'O Nama - Misbah EDU' }
+export const metadata = { title: 'O Nama - Misbah EDU', alternates: { canonical: '/o-nama' } }
 
 export default function ONamaPage() {
   return (

@@ -1,8 +1,10 @@
+import type { Metadata } from 'next'
 import { prisma } from '@/lib/db'
 import { BookOpen } from 'lucide-react'
 import MektebGrid from './MektebGrid'
 
 export const revalidate = 60
+export const metadata: Metadata = { title: 'Mekteb EDU', alternates: { canonical: '/mekteb' } }
 
 export default async function MektebPage() {
   const posts = await prisma.mektebPost.findMany({

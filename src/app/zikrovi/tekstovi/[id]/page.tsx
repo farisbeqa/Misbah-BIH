@@ -6,6 +6,13 @@ import IlahijaAudioPlayer from '@/components/IlahijaAudioPlayer'
 
 export const dynamic = 'force-dynamic'
 
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  try {
+    const t = await prisma.duaText.findUnique({ where: { id: parseInt(params.id) } })
+    return t ? { title: `${t.title} — Dove`, alternates: { canonical: `/zikrovi/tekstovi/${params.id}` } } : { title: 'Misbah EDU' }
+  } catch { return { title: 'Misbah EDU' } }
+}
+
 export default async function DuaTextPage({ params }: { params: { id: string } }) {
   const id = parseInt(params.id)
   if (isNaN(id)) notFound()

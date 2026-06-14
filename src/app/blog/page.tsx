@@ -5,6 +5,7 @@ export const revalidate = 60
 export const metadata = {
   title: 'Blog | Misbah EDU',
   description: 'Islamski tekstovi, razmišljanja i članci',
+  alternates: { canonical: '/blog' },
 }
 
 async function getPosts() {

@@ -17,7 +17,7 @@ interface PageProps { params: { id: string } }
 export async function generateMetadata({ params }: PageProps) {
   try {
     const p = await prisma.mektebPost.findUnique({ where: { id: parseInt(params.id) } })
-    return p ? { title: `${p.title} — Mekteb EDU` } : { title: 'Misbah EDU' }
+    return p ? { title: `${p.title} — Mekteb EDU`, alternates: { canonical: `/mekteb/${params.id}` } } : { title: 'Misbah EDU' }
   } catch { return { title: 'Misbah EDU' } }
 }
 

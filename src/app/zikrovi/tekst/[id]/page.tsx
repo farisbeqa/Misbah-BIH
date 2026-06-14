@@ -6,6 +6,13 @@ import IlahijaAudioPlayer from '@/components/IlahijaAudioPlayer'
 
 export const dynamic = 'force-dynamic'
 
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  try {
+    const t = await prisma.zikrText.findUnique({ where: { id: parseInt(params.id) } })
+    return t ? { title: `${t.title} — Zikrovi`, alternates: { canonical: `/zikrovi/tekst/${params.id}` } } : { title: 'Misbah EDU' }
+  } catch { return { title: 'Misbah EDU' } }
+}
+
 export default async function ZikrTextPage({ params }: { params: { id: string } }) {
   const id = parseInt(params.id)
   if (isNaN(id)) notFound()

@@ -1,7 +1,9 @@
+import type { Metadata } from 'next'
 import { prisma } from '@/lib/db'
 import IlahijaTekstoviSearch from '@/components/IlahijaTekstoviSearch'
 
 export const dynamic = 'force-dynamic'
+export const metadata: Metadata = { title: 'Ilahije – Tekstovi', alternates: { canonical: '/ilahije/tekstovi' } }
 
 export default async function IlahijeTekstoviPage() {
   const tekstovi = await prisma.ilahijaText.findMany({

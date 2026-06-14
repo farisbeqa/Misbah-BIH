@@ -3,8 +3,10 @@ import { prisma } from '@/lib/db'
 import MisaoDana from '@/components/MisaoDana'
 import GlasoviSection from '@/components/GlasoviSection'
 import MisaoDanaPopup from '@/components/MisaoDanaPopup'
+import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
+export const metadata: Metadata = { alternates: { canonical: '/' } }
 
 const MONTHS = ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec']
 function fmtDate(d: string | Date) {

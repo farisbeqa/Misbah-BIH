@@ -11,6 +11,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   return {
     title: prica.title,
     description: prica.content.slice(0, 160).replace(/\n/g, ' '),
+    alternates: { canonical: `/price/${params.id}` },
   }
 }
 

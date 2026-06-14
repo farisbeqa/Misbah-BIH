@@ -14,7 +14,7 @@ interface PageProps { params: { id: string } }
 export async function generateMetadata({ params }: PageProps) {
   try {
     const v = await prisma.video.findUnique({ where: { id: parseInt(params.id) } })
-    return v ? { title: `${v.title} - Misbah EDU` } : { title: 'Misbah EDU' }
+    return v ? { title: `${v.title} - Misbah EDU`, alternates: { canonical: `/videos/${params.id}` } } : { title: 'Misbah EDU' }
   } catch { return { title: 'Misbah EDU' } }
 }
 
