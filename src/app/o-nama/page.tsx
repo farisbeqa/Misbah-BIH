@@ -1,7 +1,11 @@
 ﻿import Link from 'next/link'
 import { FileText, Mail, Users, ArrowRight } from 'lucide-react'
 
-export const metadata = { title: 'O Nama - Misbah EDU', alternates: { canonical: '/o-nama' } }
+export const metadata = {
+  title: 'O Nama - Misbah EDU',
+  description: 'Saznajte više o Misbah EDU — islamskoj obrazovnoj platformi posvećenoj širenju korisnog znanja i duhovnom razvoju.',
+  alternates: { canonical: '/o-nama' },
+}
 
 export default function ONamaPage() {
   return (

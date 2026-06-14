@@ -4,7 +4,11 @@ import { BookOpen } from 'lucide-react'
 import MektebGrid from './MektebGrid'
 
 export const revalidate = 60
-export const metadata: Metadata = { title: 'Mekteb EDU', alternates: { canonical: '/mekteb' } }
+export const metadata: Metadata = {
+  title: 'Mekteb EDU',
+  description: 'Mektebski planovi i programi, kvizovi i nastavni materijali za islamsku vjeronauku — pomoć nastavnicima i učenicima.',
+  alternates: { canonical: '/mekteb' },
+}
 
 export default async function MektebPage() {
   const posts = await prisma.mektebPost.findMany({

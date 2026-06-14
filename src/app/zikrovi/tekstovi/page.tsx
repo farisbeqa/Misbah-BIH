@@ -3,7 +3,11 @@ import { prisma } from '@/lib/db'
 import DuaTekstoviSearch from '@/components/DuaTekstoviSearch'
 
 export const dynamic = 'force-dynamic'
-export const metadata: Metadata = { title: 'Dove – Tekstovi', alternates: { canonical: '/zikrovi/tekstovi' } }
+export const metadata: Metadata = {
+  title: 'Dove – Tekstovi',
+  description: 'Tekstovi dova iz Kur\'ana i Sunneta — dove za svaki dan, svaku situaciju i svaku potrebu.',
+  alternates: { canonical: '/zikrovi/tekstovi' },
+}
 
 export default async function ZikroviTekstoviPage() {
   const tekstovi = await prisma.duaText.findMany({

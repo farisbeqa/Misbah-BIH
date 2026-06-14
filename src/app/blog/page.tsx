@@ -4,7 +4,7 @@ import BlogSearch from '@/components/BlogSearch'
 export const revalidate = 60
 export const metadata = {
   title: 'Blog | Misbah EDU',
-  description: 'Islamski tekstovi, razmišljanja i članci',
+  description: 'Islamski tekstovi, hutbe i savjeti za svakodnevni muslimanski život — kratki i korisni tekstovi za vjernike.',
   alternates: { canonical: '/blog' },
 }
 
