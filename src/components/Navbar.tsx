@@ -67,13 +67,8 @@ function useDropdown() {
   return { open, setOpen, ref }
 }
 
-const PLAIN_LINKS_LEFT  = [{ href: '/kuran',    label: "Kur'an"  }]
-const PLAIN_LINKS_MID   = [{ href: '/podcasts', label: 'Podcast' }, { href: '/mekteb', label: 'Mekteb' }, { href: '/price', label: 'Priče' }]
-
-const PLAIN_LINKS_RIGHT = [
-  { href: '/blog',   label: 'Blog' },
-  { href: '/o-nama', label: 'O Nama' },
-]
+const PLAIN_LINKS_LEFT = [{ href: '/kuran', label: "Kur'an" }]
+const PLAIN_LINKS_MID  = [{ href: '/podcasts', label: 'Podcast' }, { href: '/mekteb', label: 'Mekteb' }]
 
 const MOBILE_LINKS = [
   { href: '/',                   label: 'Početna' },
@@ -86,11 +81,11 @@ const MOBILE_LINKS = [
   { href: '/ilahije/tekstovi',   label: 'Ilahije – Tekstovi' },
   { href: '/podcasts',           label: 'Podcast' },
   { href: '/mekteb',             label: 'Mekteb' },
-  { href: '/price',              label: 'Poučne priče' },
   { href: '/aktivnosti',         label: 'Aktivnosti' },
   { href: '/galerija',           label: 'Galerija' },
-  { href: '/blog',               label: 'Blog' },
   { href: '/o-nama',             label: 'O Nama' },
+  { href: '/blog',               label: 'Promišljanja' },
+  { href: '/price',              label: 'Poučne priče' },
 ]
 
 export default function Navbar() {
@@ -105,6 +100,7 @@ export default function Navbar() {
   const zikrovi   = useDropdown()
   const ilahije   = useDropdown()
   const zajednica = useDropdown()
+  const blog      = useDropdown()
 
   useEffect(() => {
     fetch('/api/auth/me').then(r => r.json()).then(d => { setUser(d.user); setAuthChecked(true) })
@@ -124,7 +120,8 @@ export default function Navbar() {
   const isPredavanja = pathname.startsWith('/predavanja') || pathname === '/videos'
   const isZikrovi    = pathname.startsWith('/zikrovi')
   const isIlahije    = pathname.startsWith('/ilahije')
-  const isZajednica  = pathname.startsWith('/aktivnosti') || pathname.startsWith('/galerija')
+  const isZajednica  = pathname.startsWith('/aktivnosti') || pathname.startsWith('/galerija') || pathname.startsWith('/o-nama')
+  const isBlog       = pathname.startsWith('/blog') || pathname.startsWith('/price')
 
   const ls = (active: boolean) => ({
     color:      active ? '#8b1e3f' : '#5a4f49',
@@ -187,16 +184,18 @@ export default function Navbar() {
             label="Zajednica" isActive={isZajednica} pathname={pathname}
             items={[
               { href: '/aktivnosti', label: 'Aktivnosti' },
-              { href: '/galerija',   label: 'Galerija' },
+              { href: '/galerija',   label: 'Galerija'   },
+              { href: '/o-nama',     label: 'O Nama'     },
             ]}
           />
-          {PLAIN_LINKS_RIGHT.map(link => (
-            <Link key={link.href} href={link.href}
-              className="px-1.5 py-2 text-base whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
-              style={ls(pathname === link.href)}>
-              {link.label}
-            </Link>
-          ))}
+          <NavDropdown
+            open={blog.open} setOpen={blog.setOpen} dropRef={blog.ref}
+            label="Blog" isActive={isBlog} pathname={pathname}
+            items={[
+              { href: '/blog',  label: 'Promišljanja'  },
+              { href: '/price', label: 'Poučne priče' },
+            ]}
+          />
         </div>
 
         <div className="flex items-center gap-4 shrink-0">
