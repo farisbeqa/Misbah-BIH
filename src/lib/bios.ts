@@ -286,6 +286,78 @@ export const BIOS: Record<string, Bio> = {
     ],
   },
 
+  'muhamed-tutnic': {
+    name: 'Muhamed Tutnić',
+    role: 'Autor edukativnog sadržaja',
+    photo: '/tim/muhamed-tutnic.jpg',
+    born: '4. oktobar 2002., Zenica',
+    sections: [
+      {
+        title: 'Obrazovanje',
+        items: [
+          'Osnovna škola „Žepče", Žepče',
+          'Gazi Husrev-begova medresa, Sarajevo',
+          'Fakultet islamskih nauka, Univerzitet u Sarajevu',
+        ],
+      },
+      {
+        title: 'Edukacije',
+        items: [
+          'Projekat „Imamsko mentorstvo"',
+          'Edukacija „Mostovi mira: budućnost bez nasilja"',
+          'Edukacija „Govorništvo i javni nastup"',
+        ],
+      },
+    ],
+  },
+
+  'abdullah-hodzic': {
+    name: 'Abdullah Hodžić',
+    role: 'Društvene mreže i multimedija',
+    photo: '/tim/abdullah-hodzic.jpg',
+    sections: [
+      {
+        title: 'Edukacija i međunarodni programi',
+        items: [
+          '2021–2025. Bachelor grafičkog dizajna i multimedije — International Burch University, Sarajevo',
+          '2024–2025. Erasmus+ studijska mobilnost — IDarte School of Art and Higher School of Design, Vitoria-Gasteiz, Španija',
+          '2018. AFS program razmjene učenika — America Field Service (AFS), Bari, Italija · međunarodni program interkulturalnog učenja i razmjene',
+          '2017–2021. Tehničar reklamne grafike — Srednja škola primijenjenih umjetnosti, Sarajevo',
+          '2021–2022. Multimedijalna praksa — Centar za promociju civilnog društva (CPCD), Sarajevo · asistencija u kreiranju sadržaja, grafičkom dizajnu te video predprodukciji, produkciji i postprodukciji',
+          '2023. Učesnik programa Schweizer Jugendfilmtag i Talent Campa — Švajcarski festival filma za mlade',
+        ],
+      },
+      {
+        title: 'Omladinski i društveni projekti',
+        items: [
+          'Erasmus+ omladinska razmjena „RESOLVE: Equity" — London, Ujedinjeno Kraljevstvo (juli 2022) · međunarodna razmjena posvećena jednakosti i društvenim temama',
+          'Evropski korpus solidarnosti (ESC) — Zavod Manipura, Slovenija (juni–august 2021) · projekat „Vještine, osnaživanje i usmjeravanje mladih kroz volonterske aktivnosti u međunarodnim grupama"',
+          'Trener za omladinske aktivnosti — Centar za izgradnju mira (CIM), Sanski Most (2020) · dijalog, debata, identitet, diskriminacija i izgradnja mira',
+        ],
+      },
+      {
+        title: 'Profesionalno multimedijalno iskustvo',
+        items: [
+          'Freelance novinar i kreator digitalnog sadržaja — Deutsche Welle (DW), Programi za Evropu (2022 – u toku) · kreiranje multimedijalnog sadržaja za društvene mreže i digitalne platforme',
+          'Snimanje fotografija i videa, grafički dizajn, animacija, video montaža te video predprodukcija, produkcija i postprodukcija za sadržaje DW-a',
+          'Učestvovanje u planiranju snimanja, komunikaciji sa sagovornicima i terenskoj realizaciji video-priča u Bosni i Hercegovini',
+          'Objavljivanje, uređivanje i prilagođavanje sadržaja za Instagram profil DW Fokus, uz distribuciju sadržaja i na regionalnim DW Facebook i YouTube kanalima',
+          'Učestvovanje na događajima Deutsche Wellea u Njemačkoj i zemljama zapadnog Balkana',
+          'Samostalni freelance kreator sadržaja (2019 – u toku) · grafički dizajn, video i animacija, od razvoja ideje do finalne postprodukcije',
+        ],
+      },
+      {
+        title: 'Multimedijalna ostvarenja',
+        items: [
+          'Prvo mjesto za video „Prevencija rodno zasnovanog nasilja" — BH novinari i Medicus Mundi Mediterrània (2021)',
+          'Prvo mjesto za kratki film „Moja porodica u izolaciji" — Omladinski filmski festival Zenica (2020)',
+          'Prvo mjesto za kratki film „Moja porodica u izolaciji" — Centar kulture i mladih Sarajevo (2020)',
+          'Pobjednik foto-konkursa „Most za budućnost" — Ambasada Švajcarske (2017)',
+        ],
+      },
+    ],
+  },
+
   'hamdo-solo': {
     name: 'Hamdo Solo',
     role: 'Urednik / Imam džemata Carina Vratnik',

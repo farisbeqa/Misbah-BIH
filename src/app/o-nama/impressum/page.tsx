@@ -5,19 +5,21 @@ import { BIOS } from '@/lib/bios'
 export const metadata = { title: 'Impressum - Misbah EDU' }
 
 const UREDNICI: { name: string; slug?: string }[] = [
-  { name: 'Hamdo Solo',          slug: 'hamdo-solo' },
-  { name: 'Mubina Suljić Solo', slug: 'mubina-suljic-solo' },
-  { name: 'Hamza Bajraktarević', slug: 'hamza-bajraktarevic' },
+  { name: 'Hamdo Solo', slug: 'hamdo-solo' },
 ]
 
 const DRUSTVENE_MREZE: { name: string; slug?: string; photo?: string }[] = [
-  { name: 'Abdulah Hodžić', photo: '/tim/abdulah-hodzic.jpg' },
+  { name: 'Abdullah Hodžić', slug: 'abdullah-hodzic' },
 ]
 
-const AUTORI: { name: string; slug?: string }[] = [
-  { name: 'Esma Klisura',      slug: 'esma-klisura' },
-  { name: 'Muhamed Selimović', slug: 'muhamed-selimovic' },
-  { name: 'Adna Kurtanović',   slug: 'adna-kurtanovic' },
+const AUTORI: { name: string; slug?: string; photo?: string }[] = [
+  { name: 'Mubina Suljić Solo', slug: 'mubina-suljic-solo' },
+  { name: 'Hamza Bajraktarević', slug: 'hamza-bajraktarevic' },
+  { name: 'Esma Klisura',       slug: 'esma-klisura' },
+  { name: 'Muhamed Selimović',  slug: 'muhamed-selimovic' },
+  { name: 'Muhamed Tutnić',     slug: 'muhamed-tutnic' },
+  { name: 'Ervin Sorlija',      photo: '/tim/ervin-sorlija.jpg' },
+  { name: 'Adna Kurtanović',    slug: 'adna-kurtanovic' },
 ]
 
 function MemberCard({ name, slug, photo, accent }: { name: string; slug?: string; photo?: string; accent: string }) {
@@ -98,7 +100,7 @@ export default function ImpressumPage() {
             <p className="font-mono text-[11px] uppercase tracking-widest mb-3" style={{ color: '#A94A61' }}>Autori edukativnog sadržaja</p>
             <ul className="divide-y divide-[#EDE5DB]">
               {AUTORI.map(m => (
-                <MemberCard key={m.name} name={m.name} slug={m.slug} accent="#8B1E3F" />
+                <MemberCard key={m.name} name={m.name} slug={m.slug} photo={m.photo} accent="#8B1E3F" />
               ))}
             </ul>
           </div>

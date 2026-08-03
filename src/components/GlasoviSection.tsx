@@ -1,8 +1,4 @@
-'use client'
-
-import { useState } from 'react'
 import Link from 'next/link'
-import { ChevronRight, ChevronLeft } from 'lucide-react'
 
 interface TeamMember {
   image: string
@@ -12,21 +8,16 @@ interface TeamMember {
   slug?: string
 }
 
-const UREDNICI: TeamMember[] = [
+const AUTORI: TeamMember[] = [
   { image: '/tim/hamdo-solo.jpg',          tag: "Kur'anske nauke i kiraeti", name: 'Hamdo Solo',          bio: "Kur'an, kiraeti i duhovni razvoj.",                      slug: 'hamdo-solo' },
   { image: '/tim/mubina-suljic-solo.jpg',  tag: 'Fikh i savremena pitanja', name: 'Mubina Suljić Solo',  bio: 'Ibadet, šerijatsko pravo i savremena pitanja muslimana.', slug: 'mubina-suljic-solo' },
   { image: '/tim/hamza-bajraktarevic.jpg', tag: 'Sira i islamska etika',    name: 'Hamza Bajraktarević', bio: 'Sira Poslanika ﷺ, islamska etika i životne lekcije.',    slug: 'hamza-bajraktarevic' },
-]
-
-const AUTORI: TeamMember[] = [
   { image: '/tim/esma-klisura.jpg',       tag: 'Odgoj i obrazovanje',         name: 'Esma Klisura',       bio: 'Odgoj, obrazovanje i savremeni izazovi mladih.',                            slug: 'esma-klisura' },
   { image: '/tim/muhamed-selimovic.jpg',  tag: "Kur'anske nauke i hifz",      name: 'Muhamed Selimović',  bio: 'Hafiz, pobjednik državnog takmičenja u hifzu. Aktivan u Misbahu od 2022.',  slug: 'muhamed-selimovic' },
+  { image: '/tim/muhamed-tutnic.jpg',     tag: 'Islamske nauke',              name: 'Muhamed Tutnić',     bio: 'Student Fakulteta islamskih nauka u Sarajevu. Govorništvo, javni nastup i izgradnja mira.', slug: 'muhamed-tutnic' },
+  { image: '/tim/ervin-sorlija.jpg',      tag: 'Edukativni sadržaj',          name: 'Ervin Sorlija',      bio: 'Autor edukativnog sadržaja na platformi Misbah EDU.' },
   { image: '/tim/adna-kurtanovic.jpg',    tag: 'Videografija i digitalni dizajn', name: 'Adna Kurtanović', bio: 'Kreatorica video i vizuelnog sadržaja Misbah EDU od 2022. Studentica orijentalne filologije, dobitnica III mjesta na Smotri naučno-tehničkog stvaralaštva BiH.', slug: 'adna-kurtanovic' },
-]
-
-const GROUPS = [
-  { key: 'urednici', label: 'Urednici',                    members: UREDNICI },
-  { key: 'autori',   label: 'Autori edukativnog sadržaja', members: AUTORI   },
+  { image: '/tim/abdullah-hodzic.jpg',    tag: 'Društvene mreže i multimedija', name: 'Abdullah Hodžić',  bio: 'Grafički dizajn, video i animacija. Freelance novinar i kreator digitalnog sadržaja Deutsche Wellea.', slug: 'abdullah-hodzic' },
 ]
 
 function MemberCard({ m }: { m: TeamMember }) {
@@ -62,53 +53,15 @@ function MemberCard({ m }: { m: TeamMember }) {
 }
 
 export default function GlasoviSection() {
-  const [groupIdx, setGroupIdx] = useState(0)
-  const group = GROUPS[groupIdx]
-  const hasPrev = groupIdx > 0
-  const hasNext = groupIdx < GROUPS.length - 1
-
   return (
     <div>
-      {/* Group navigation */}
-      <div className="flex items-center gap-3 mb-6">
-        <button
-          onClick={() => setGroupIdx(i => i - 1)}
-          disabled={!hasPrev}
-          className="p-1.5 rounded-lg transition-colors disabled:opacity-20"
-          style={{ color: '#8b1e3f' }}
-          aria-label="Prethodna grupa"
-        >
-          <ChevronLeft size={18} />
-        </button>
-        <span className="font-semibold text-sm" style={{ color: '#8b1e3f' }}>
-          {group.label}
-        </span>
-        <button
-          onClick={() => setGroupIdx(i => i + 1)}
-          disabled={!hasNext}
-          className="p-1.5 rounded-lg transition-colors disabled:opacity-20"
-          style={{ color: '#8b1e3f' }}
-          aria-label="Sljedeća grupa"
-        >
-          <ChevronRight size={18} />
-        </button>
-        {/* Dot indicators */}
-        <div className="flex items-center gap-1.5 ml-auto">
-          {GROUPS.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setGroupIdx(i)}
-              className="w-2 h-2 rounded-full transition-colors"
-              style={{ background: i === groupIdx ? '#8b1e3f' : '#d6c9bf' }}
-              aria-label={GROUPS[i].label}
-            />
-          ))}
-        </div>
-      </div>
+      <p className="font-semibold text-sm mb-6" style={{ color: '#8b1e3f' }}>
+        Autori edukativnog sadržaja
+      </p>
 
       {/* Cards grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-        {group.members.map(m => (
+        {AUTORI.map(m => (
           <MemberCard key={m.name} m={m} />
         ))}
       </div>
