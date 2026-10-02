@@ -311,6 +311,30 @@ export const BIOS: Record<string, Bio> = {
     ],
   },
 
+  'elmir-honsic': {
+    name: 'Elmir Honsić',
+    role: 'Autor edukativnog sadržaja',
+    photo: '/tim/elmir-honsic.jpg',
+    born: '28. januar 2006., Rožaje, Crna Gora',
+    sections: [
+      {
+        title: 'Obrazovanje',
+        items: [
+          'Osnovna škola u Rožajama',
+          'Medresa „Mehmed Fatih", Podgorica (završio 2025.)',
+          'Fakultet islamskih nauka, Univerzitet u Sarajevu (od 2025.)',
+        ],
+      },
+      {
+        title: 'Aktivnosti',
+        items: [
+          "Učestvovao na nekoliko takmičenja iz učenja Kur'ana",
+          'Predvodio teraviju i učio mukabelu u Ferhadiji za Ramazan 2026. godine',
+        ],
+      },
+    ],
+  },
+
   'abdullah-hodzic': {
     name: 'Abdullah Hodžić',
     role: 'Društvene mreže i multimedija',

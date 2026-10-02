@@ -19,6 +19,7 @@ const AUTORI: { name: string; slug?: string; photo?: string }[] = [
   { name: 'Muhamed Selimović',  slug: 'muhamed-selimovic' },
   { name: 'Muhamed Tutnić',     slug: 'muhamed-tutnic' },
   { name: 'Ervin Sorlija',      photo: '/tim/ervin-sorlija.jpg' },
+  { name: 'Elmir Honsić',       slug: 'elmir-honsic' },
   { name: 'Adna Kurtanović',    slug: 'adna-kurtanovic' },
 ]
 

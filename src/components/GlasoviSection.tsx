@@ -16,6 +16,7 @@ const AUTORI: TeamMember[] = [
   { image: '/tim/muhamed-selimovic.jpg',  tag: "Kur'anske nauke i hifz",      name: 'Muhamed Selimović',  bio: 'Hafiz, pobjednik državnog takmičenja u hifzu. Aktivan u Misbahu od 2022.',  slug: 'muhamed-selimovic' },
   { image: '/tim/muhamed-tutnic.jpg',     tag: 'Islamske nauke',              name: 'Muhamed Tutnić',     bio: 'Student Fakulteta islamskih nauka u Sarajevu. Govorništvo, javni nastup i izgradnja mira.', slug: 'muhamed-tutnic' },
   { image: '/tim/ervin-sorlija.jpg',      tag: 'Edukativni sadržaj',          name: 'Ervin Sorlija',      bio: 'Autor edukativnog sadržaja na platformi Misbah EDU.' },
+  { image: '/tim/elmir-honsic.jpg',       tag: "Kur'an i islamske nauke",     name: 'Elmir Honsić',       bio: 'Student Fakulteta islamskih nauka u Sarajevu. Predvodio teraviju i učio mukabelu u Ferhadiji za Ramazan 2026.', slug: 'elmir-honsic' },
   { image: '/tim/adna-kurtanovic.jpg',    tag: 'Videografija i digitalni dizajn', name: 'Adna Kurtanović', bio: 'Kreatorica video i vizuelnog sadržaja Misbah EDU od 2022. Studentica orijentalne filologije, dobitnica III mjesta na Smotri naučno-tehničkog stvaralaštva BiH.', slug: 'adna-kurtanovic' },
   { image: '/tim/abdullah-hodzic.jpg',    tag: 'Društvene mreže i multimedija', name: 'Abdullah Hodžić',  bio: 'Grafički dizajn, video i animacija. Freelance novinar i kreator digitalnog sadržaja Deutsche Wellea.', slug: 'abdullah-hodzic' },
 ]
