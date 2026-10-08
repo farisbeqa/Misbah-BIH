@@ -209,9 +209,9 @@ export default async function HomePage() {
                 Istraži sadržaj
                 <ArrowUpRight />
               </Link>
-              <Link href="/podcasts"
+              <Link href="/autori"
                 className="border border-[#8b1e3f] text-[#8b1e3f] px-6 py-3 text-base font-normal hover:bg-[#faf5f5] transition-colors">
-                Podcasti
+                Autori
               </Link>
             </div>
           </div>

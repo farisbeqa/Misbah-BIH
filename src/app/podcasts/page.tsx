@@ -9,30 +9,19 @@ interface Video {
   platform: string; thumbnailUrl: string | null; isShortForm: boolean; createdAt: string
 }
 
-const FILTERS = [
-  { key: 'all',     label: 'Sve' },
-  { key: 'youtube', label: 'YouTube' },
-  { key: 'tiktok',  label: 'TikTok' },
-  { key: 'upload',  label: 'Upload' },
-]
-
 const PAGE = 12
 
 export default function PodcastsPage() {
   const [videos, setVideos] = useState<Video[]>([])
-  const [filter, setFilter] = useState('all')
   const [loading, setLoading] = useState(true)
   const [query, setQuery]   = useState('')
   const [visible, setVisible] = useState(PAGE)
 
   useEffect(() => {
-    setLoading(true)
-    const base = '/api/videos?category=podcast'
-    const url  = filter === 'all' ? base : `${base}&platform=${filter}`
-    fetch(url).then(r => r.json()).then(d => { setVideos(d); setLoading(false) }).catch(() => setLoading(false))
-  }, [filter])
+    fetch('/api/videos?category=podcast').then(r => r.json()).then(d => { setVideos(d); setLoading(false) }).catch(() => setLoading(false))
+  }, [])
 
-  useEffect(() => { setVisible(PAGE) }, [filter, query])
+  useEffect(() => { setVisible(PAGE) }, [query])
 
   const filtered = query.trim()
     ? videos.filter(v => v.title.toLowerCase().includes(query.toLowerCase()))
@@ -52,25 +41,11 @@ export default function PodcastsPage() {
         </p>
       </div>
 
-      <div className="relative mb-6">
+      <div className="relative mb-10">
         <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#a89888] pointer-events-none" />
         <input value={query} onChange={e => setQuery(e.target.value)}
           placeholder="Pretraži po naslovu..."
           className="w-full pl-9 pr-4 py-2.5 border border-[#D6CCC3] bg-white focus:outline-none focus:border-[#8b1e3f] text-sm transition-colors" />
-      </div>
-
-      <div className="flex flex-wrap gap-2 mb-10">
-        {FILTERS.map(f => (
-          <button key={f.key} onClick={() => setFilter(f.key)}
-            className="text-sm font-medium px-4 py-2 transition-all"
-            style={{
-              border: filter === f.key ? 'none' : '1px solid #D6CCC3',
-              background: filter === f.key ? '#8B1E3F' : 'white',
-              color: filter === f.key ? '#fff' : '#5A4F49',
-            }}>
-            {f.label}
-          </button>
-        ))}
       </div>
 
       {loading ? (
