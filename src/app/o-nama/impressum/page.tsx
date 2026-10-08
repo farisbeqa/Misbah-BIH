@@ -15,10 +15,10 @@ const DRUSTVENE_MREZE: { name: string; slug?: string; photo?: string }[] = [
 const AUTORI: { name: string; slug?: string; photo?: string }[] = [
   { name: 'Mubina Suljić Solo', slug: 'mubina-suljic-solo' },
   { name: 'Hamza Bajraktarević', slug: 'hamza-bajraktarevic' },
-  { name: 'Esma Klisura',       slug: 'esma-klisura' },
+  // { name: 'Esma Klisura',    slug: 'esma-klisura' }, // privremeno uklonjena
   { name: 'Muhamed Selimović',  slug: 'muhamed-selimovic' },
   { name: 'Muhamed Tutnić',     slug: 'muhamed-tutnic' },
-  { name: 'Ervin Sorlija',      photo: '/tim/ervin-sorlija.jpg' },
+  { name: 'hfz. Ervin Šorlija', slug: 'ervin-sorlija' },
   { name: 'Elmir Honsić',       slug: 'elmir-honsic' },
   { name: 'Adna Kurtanović',    slug: 'adna-kurtanovic' },
 ]

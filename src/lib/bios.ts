@@ -12,6 +12,8 @@ export interface Bio {
 }
 
 export const BIOS: Record<string, Bio> = {
+  // Esma Klisura privremeno uklonjena sa stranice (oktobar 2026) — odkomentarisati ako se vrati
+  /*
   'esma-klisura': {
     name: 'Esma Klisura',
     role: 'Urednica',
@@ -86,6 +88,7 @@ export const BIOS: Record<string, Bio> = {
       },
     ],
   },
+  */
 
   'hamza-bajraktarevic': {
     name: 'Hamza Bajraktarević',
@@ -282,6 +285,56 @@ export const BIOS: Record<string, Bio> = {
           'III mjesto na Smotri naučno-tehničkog stvaralaštva mladih Bosne i Hercegovine — disciplina Spot',
           'III mjesto na video konkursu „Proljeće u Sarajevu" (2026) za autorski kratki film o Sarajevu — dodijeljeno u sklopu Dani Kantona Sarajevo',
         ],
+      },
+    ],
+  },
+
+  'ervin-sorlija': {
+    name: 'hfz. Ervin Šorlija',
+    role: 'Autor edukativnog sadržaja',
+    photo: '/tim/ervin-sorlija.jpg',
+    born: '27. august 2001., Sarajevo',
+    sections: [
+      {
+        title: 'Obrazovanje',
+        items: [
+          'Osnovna škola „Umihana Čuvidina", Sarajevo — završio 2016. godine s odličnim uspjehom',
+          'Gazi Husrev-begova medresa, Sarajevo — završio s odličnim uspjehom',
+          'Access Microscholarship Program (dvogodišnji)',
+          'Fakultet islamskih nauka, Univerzitet u Sarajevu (2020–2024) — najbolji student generacije s prosječnom ocjenom 9,54; dobitnik Zlatne značke Univerziteta u Sarajevu',
+          'Master studij na Fakultetu islamskih nauka, Univerzitet u Sarajevu — priprema magistarsku tezu iz oblasti hadisa',
+          'Mjesec dana stručnog usavršavanja arapskog jezika u Istanbulu pod pokroviteljstvom Hayrat fondacije, uz stečenu diplomu',
+        ],
+      },
+      {
+        title: "Hifz i učenje Kur'ana",
+        items: [
+          '2024. položio hifz pred Komisijom za hifz Rijaseta Islamske zajednice u BiH, pod mentorstvom hfz. prof. dr. Kenana Musića',
+          'Drugo mjesto u kategoriji pet džuzeva na Prvom međunarodnom takmičenju u hifzu za studente i studentice — Islamski pedagoški fakultet u Zenici (2022)',
+          'Drugo i treće mjesto na takmičenjima iz kiraeta tokom školovanja u Medresi',
+        ],
+      },
+      {
+        title: 'Akademski i stručni angažman',
+        items: [
+          'Demonstrator na Katedri za hadis i poslaničku tradiciju — tri puta tokom dodiplomskog studija, te tokom master studija',
+          "Učesnik internog projekta kompilacije različitih prijevoda Kur'ana na bosanski jezik",
+          'Član projekta „Digitalizacija hadisa u Bosni i Hercegovini", koji predvodi prof. dr. Zuhdija Hasanović',
+          'Tokom studija memorirao i izučavao tedžvidska pravila kroz spjev „Džezerijja" te pohađao sekcije posvećene memoriranju i komentiranju hadisa',
+        ],
+      },
+      {
+        title: 'Radno iskustvo',
+        items: [
+          'Imam, hatib i muallim u džematu Vöcklabruck, Austrija (trenutno)',
+          'Voditelj i predavač kursa „Arapski jezik kroz islam" — obrazovna institucija „SystemDuo" (2024)',
+          'Nastavnik islamske vjeronauke za učenike osnovnog i srednjeg obrazovanja — školski centar „Mehmed Handžić"',
+          'Gost u više televizijskih kuća u BiH povodom značajnih vjerskih datuma i događaja',
+        ],
+      },
+      {
+        title: 'Lično',
+        items: ['Oženjen.'],
       },
     ],
   },

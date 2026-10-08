@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { prisma } from '@/lib/db'
 import { ArrowLeft, BookOpen } from 'lucide-react'
+import MoreFromAuthor from '@/components/MoreFromAuthor'
 
 export const revalidate = 3600
 
@@ -66,6 +67,8 @@ export default async function PricaDetailPage({ params }: { params: { id: string
           </p>
         ))}
       </div>
+
+      <MoreFromAuthor author={prica.author} title={prica.title} className="mt-10" />
 
       <div className="mt-12 pt-8 border-t border-[#e8e1db]">
         <Link href="/price"

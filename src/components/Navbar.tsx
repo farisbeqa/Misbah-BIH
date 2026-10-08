@@ -70,27 +70,48 @@ function useDropdown() {
 const PLAIN_LINKS_LEFT = [{ href: '/kuran', label: "Kur'an" }]
 const PLAIN_LINKS_MID  = [{ href: '/podcasts', label: 'Podcast' }, { href: '/mekteb', label: 'Mekteb' }]
 
-const MOBILE_LINKS = [
-  { href: '/',                   label: 'Početna' },
-  { href: '/predavanja/duga',    label: 'Duga predavanja' },
-  { href: '/predavanja/kratka',  label: 'Kratka predavanja' },
-  { href: '/kuran',              label: "Kur'an" },
-  { href: '/zikrovi',            label: 'Zikrovi (Tekst i Audio)' },
-  { href: '/zikrovi/tekstovi',   label: 'Dove (Tekst i Audio)'    },
-  { href: '/ilahije/izvedba',    label: 'Ilahije – Izvedba' },
-  { href: '/ilahije/tekstovi',   label: 'Ilahije – Tekstovi' },
-  { href: '/podcasts',           label: 'Podcast' },
-  { href: '/mekteb',             label: 'Mekteb' },
-  { href: '/aktivnosti',         label: 'Aktivnosti' },
-  { href: '/galerija',           label: 'Galerija' },
-  { href: '/o-nama',             label: 'O Nama' },
-  { href: '/blog',               label: 'Promišljanja' },
-  { href: '/price',              label: 'Poučne priče' },
+type MobileEntry =
+  | { href: string; label: string }
+  | { label: string; items: DropdownItem[] }
+
+// Mirrors the desktop navigation: same order, same dropdown groups
+const MOBILE_NAV: MobileEntry[] = [
+  { href: '/', label: 'Početna' },
+  { label: 'Predavanja', items: [
+    { href: '/predavanja/duga',   label: 'Duga predavanja' },
+    { href: '/predavanja/kratka', label: 'Kratka predavanja' },
+  ] },
+  { href: '/kuran', label: "Kur'an" },
+  { label: 'Zikrovi i Dove', items: [
+    { href: '/zikrovi',          label: 'Zikrovi (Tekst i Audio)' },
+    { href: '/zikrovi/tekstovi', label: 'Dove (Tekst i Audio)' },
+  ] },
+  { href: '/podcasts', label: 'Podcast' },
+  { href: '/mekteb',   label: 'Mekteb' },
+  { label: 'Ilahije', items: [
+    { href: '/ilahije/izvedba',  label: 'Izvedba' },
+    { href: '/ilahije/tekstovi', label: 'Tekstovi' },
+  ] },
+  { label: 'Zajednica', items: [
+    { href: '/aktivnosti', label: 'Aktivnosti' },
+    { href: '/galerija',   label: 'Galerija' },
+    { href: '/o-nama',     label: 'O Nama' },
+    { href: '/autori',     label: 'Autori' },
+  ] },
+  { label: 'Blog', items: [
+    { href: '/blog',  label: 'Promišljanja' },
+    { href: '/price', label: 'Poučne priče' },
+  ] },
 ]
+
+function isGroupActive(items: DropdownItem[], pathname: string) {
+  return items.some(i => pathname === i.href || (i.href !== '/' && pathname.startsWith(i.href + '/')))
+}
 
 export default function Navbar() {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [mobileGroup, setMobileGroup] = useState<string | null>(null)
   const [user, setUser]             = useState<AuthUser | null>(null)
   const [authChecked, setAuthChecked] = useState(false)
   const [modalOpen, setModalOpen]   = useState(false)
@@ -106,6 +127,12 @@ export default function Navbar() {
     fetch('/api/auth/me').then(r => r.json()).then(d => { setUser(d.user); setAuthChecked(true) })
   }, [])
 
+  useEffect(() => {
+    if (!mobileOpen) return
+    const current = MOBILE_NAV.find(e => 'items' in e && isGroupActive(e.items, pathname))
+    setMobileGroup(current ? current.label : null)
+  }, [mobileOpen, pathname])
+
   const handleLogout = async () => {
     await fetch('/api/auth/user-logout', { method: 'POST' })
     setUser(null); setMobileOpen(false)
@@ -120,7 +147,7 @@ export default function Navbar() {
   const isPredavanja = pathname.startsWith('/predavanja') || pathname === '/videos'
   const isZikrovi    = pathname.startsWith('/zikrovi')
   const isIlahije    = pathname.startsWith('/ilahije')
-  const isZajednica  = pathname.startsWith('/aktivnosti') || pathname.startsWith('/galerija') || pathname.startsWith('/o-nama')
+  const isZajednica  = pathname.startsWith('/aktivnosti') || pathname.startsWith('/galerija') || pathname.startsWith('/o-nama') || pathname.startsWith('/autori')
   const isBlog       = pathname.startsWith('/blog') || pathname.startsWith('/price')
 
   const ls = (active: boolean) => ({
@@ -186,6 +213,7 @@ export default function Navbar() {
               { href: '/aktivnosti', label: 'Aktivnosti' },
               { href: '/galerija',   label: 'Galerija'   },
               { href: '/o-nama',     label: 'O Nama'     },
+              { href: '/autori',     label: 'Autori'     },
             ]}
           />
           <NavDropdown
@@ -250,14 +278,42 @@ export default function Navbar() {
 
       {mobileOpen && (
         <div className="lg:hidden fixed top-[65px] left-0 right-0 bg-white border-b border-gray-100 px-5 pb-5 flex flex-col gap-0.5 z-30 shadow-md overflow-y-auto max-h-[calc(100vh-65px)]">
-          <div className="flex flex-col gap-1 pt-2">
-            {MOBILE_LINKS.map(link => (
-              <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)}
-                className="py-2.5 text-base border-b border-[#f5f0eb] last:border-0 transition-colors hover:text-[#8b1e3f]"
-                style={ls(pathname === link.href)}>
-                {link.label}
-              </Link>
-            ))}
+          <div className="flex flex-col pt-2">
+            {MOBILE_NAV.map(entry => {
+              if (!('items' in entry)) {
+                return (
+                  <Link key={entry.href} href={entry.href} onClick={() => setMobileOpen(false)}
+                    className="py-3 text-base border-b border-[#f5f0eb] transition-colors hover:text-[#8b1e3f]"
+                    style={ls(pathname === entry.href)}>
+                    {entry.label}
+                  </Link>
+                )
+              }
+              const expanded = mobileGroup === entry.label
+              return (
+                <div key={entry.label} className="border-b border-[#f5f0eb]">
+                  <button
+                    onClick={() => setMobileGroup(expanded ? null : entry.label)}
+                    className="w-full flex items-center justify-between py-3 text-base text-left"
+                    style={ls(isGroupActive(entry.items, pathname))}
+                    aria-expanded={expanded}>
+                    {entry.label}
+                    <ChevronDown size={16} className={`transition-transform ${expanded ? 'rotate-180' : ''}`} />
+                  </button>
+                  {expanded && (
+                    <div className="flex flex-col pb-2 pl-4 ml-1 border-l-2 border-[#ede5dc]">
+                      {entry.items.map(item => (
+                        <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)}
+                          className="py-2.5 text-[15px] transition-colors hover:text-[#8b1e3f]"
+                          style={ls(pathname === item.href)}>
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
           </div>
           <div className="flex items-center gap-3 mt-4">
             {user ? (

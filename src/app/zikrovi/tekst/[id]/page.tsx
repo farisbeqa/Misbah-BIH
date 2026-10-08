@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { prisma } from '@/lib/db'
 import { ArrowLeft } from 'lucide-react'
 import IlahijaAudioPlayer from '@/components/IlahijaAudioPlayer'
+import MoreFromAuthor from '@/components/MoreFromAuthor'
 
 export const dynamic = 'force-dynamic'
 
@@ -57,6 +58,8 @@ export default async function ZikrTextPage({ params }: { params: { id: string } 
           {tekst.content}
         </div>
       )}
+
+      <MoreFromAuthor author={tekst.author} title={tekst.title} className="mt-10" />
     </div>
   )
 }

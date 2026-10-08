@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Calendar } from 'lucide-react'
 import { prisma } from '@/lib/db'
+import MoreFromAuthor from '@/components/MoreFromAuthor'
 
 export const dynamic = 'force-dynamic'
 
@@ -65,6 +66,8 @@ export default async function MektebPostPage({ params }: PageProps) {
           line.trim() ? <p key={i}>{line}</p> : <div key={i} className="h-2" />
         )}
       </div>
+
+      <MoreFromAuthor author={post.author} title={post.title} className="mt-10" />
 
       <div className="mt-10 pt-6 flex justify-center" style={{ borderTop: '1px solid #E8E1DB' }}>
         <Link href="/mekteb"

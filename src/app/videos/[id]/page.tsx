@@ -8,6 +8,7 @@ import VideoEmbed from '@/components/VideoEmbed'
 import LikeButton from '@/components/LikeButton'
 import CommentsSection from '@/components/CommentsSection'
 import { getPlatformLabel } from '@/lib/videoUtils'
+import MoreFromAuthor from '@/components/MoreFromAuthor'
 
 interface PageProps { params: { id: string } }
 
@@ -79,6 +80,8 @@ export default async function VideoDetailPage({ params }: PageProps) {
           <p className="text-warm-600 text-sm leading-relaxed whitespace-pre-line break-words">{video.description}</p>
         </div>
       )}
+
+      <MoreFromAuthor author={video.author} title={video.title} className="mb-8" />
 
       {/* Likes + Comments */}
       <div style={{ borderTop: '1px solid #E8E1DB', paddingTop: 32 }} className="space-y-8">

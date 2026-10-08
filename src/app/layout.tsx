@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     template: '%s | Misbah EDU',
   },
   description:
-    'Misbah EDU – platforma s islamskim predavanjima, hutbama, učenjem Kur\'ana, ilahijama i podcast sadržajima. Hfz. Hamdo Solo, imam džamije Carina, Sarajevo.',
+    'Misbah EDU – platforma s islamskim predavanjima, hutbama, učenjem Kur\'ana, ilahijama i podcast sadržajima.',
   keywords: [
     'Misbah EDU', 'Misbah', 'islamska predavanja', 'hutba', 'Hamdo Solo',
     'hfz Hamdo Solo', 'hafiz Hamdo Solo', 'džamija Carina', 'Sarajevo',
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     siteName: 'Misbah EDU',
     title: 'Misbah EDU | Edukacija i duhovni razvoj',
     description:
-      'Islamska predavanja, hutbe i sadržaj efendije Hamde Solo, imama džamije Carina, Sarajevo. Predavanja, Kur\'an, ilahije, zikrovi i podcast.',
+      "Misbah EDU – platforma s islamskim predavanjima, hutbama, učenjem Kur'ana, ilahijama i podcast sadržajima.",
     images: [
       {
         url: `${siteUrl}/logo.jpg`,
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@misbah_ba',
     title: 'Misbah EDU – Islamska predavanja',
-    description: 'Islamska predavanja, hutbe i sadržaj efendije Hamde Solo, imama džamije Carina, Sarajevo.',
+    description: "Misbah EDU – platforma s islamskim predavanjima, hutbama, učenjem Kur'ana, ilahijama i podcast sadržajima.",
     images: [`${siteUrl}/logo.jpg`],
   },
   robots: {

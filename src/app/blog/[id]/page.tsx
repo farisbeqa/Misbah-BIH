@@ -7,6 +7,7 @@ export const dynamic = 'force-dynamic'
 import LikeButton from '@/components/LikeButton'
 import CommentsSection from '@/components/CommentsSection'
 import BlogImage from '@/components/BlogImage'
+import MoreFromAuthor from '@/components/MoreFromAuthor'
 
 interface PageProps { params: { id: string } }
 
@@ -110,6 +111,8 @@ export default async function BlogPostPage({ params }: PageProps) {
           </Link>
         </footer>
       </article>
+
+      <MoreFromAuthor author={post.author} title={post.title} className="mt-10" />
 
       {/* Likes + Comments */}
       <div className="mt-12 space-y-8" style={{ borderTop: '1px solid #E8E1DB', paddingTop: 32 }}>
