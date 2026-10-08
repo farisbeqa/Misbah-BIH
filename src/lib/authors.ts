@@ -24,7 +24,7 @@ const KNOWN_AUTHORS: KnownAuthor[] = [
   { slug: 'mubina-suljic-solo',  name: 'Mubina Suljić Solo',         bioSlug: 'mubina-suljic-solo',  authorMatch: ['mubina'],                                    titleMatch: ['mubina suljic'] },
   { slug: 'muhamed-tutnic',      name: 'Muhamed ef. Tutnić',         bioSlug: 'muhamed-tutnic',      authorMatch: ['tutnic'],                                    titleMatch: ['muhamed tutnic'] },
   { slug: 'elmir-honsic',        name: 'Elmir ef. Honsić',           bioSlug: 'elmir-honsic',        authorMatch: ['honsic'],                                    titleMatch: ['elmir honsic'] },
-  { slug: 'ervin-sorlija',       name: 'hfz. Ervin Šorlija',         bioSlug: 'ervin-sorlija',       authorMatch: ['sorlija'],                                   titleMatch: ['ervin sorlija'] },
+  { slug: 'ervin-sorlija',       name: 'Ervin Šorlija',         bioSlug: 'ervin-sorlija',       authorMatch: ['sorlija'],                                   titleMatch: ['ervin sorlija'] },
   { slug: 'zeko-hasanovic',      name: 'Zeko ef. Hasanović',                                         authorMatch: ['zeko hasanovic'],                            titleMatch: ['zeko hasanovic'] },
 ]
 

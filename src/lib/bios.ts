@@ -290,7 +290,7 @@ export const BIOS: Record<string, Bio> = {
   },
 
   'ervin-sorlija': {
-    name: 'hfz. Ervin Šorlija',
+    name: 'Ervin Šorlija',
     role: 'Autor edukativnog sadržaja',
     photo: '/tim/ervin-sorlija.jpg',
     born: '27. august 2001., Sarajevo',

@@ -18,7 +18,7 @@ const AUTORI: { name: string; slug?: string; photo?: string }[] = [
   // { name: 'Esma Klisura',    slug: 'esma-klisura' }, // privremeno uklonjena
   { name: 'Muhamed Selimović',  slug: 'muhamed-selimovic' },
   { name: 'Muhamed Tutnić',     slug: 'muhamed-tutnic' },
-  { name: 'hfz. Ervin Šorlija', slug: 'ervin-sorlija' },
+  { name: 'Ervin Šorlija', slug: 'ervin-sorlija' },
   { name: 'Elmir Honsić',       slug: 'elmir-honsic' },
   { name: 'Adna Kurtanović',    slug: 'adna-kurtanovic' },
 ]
