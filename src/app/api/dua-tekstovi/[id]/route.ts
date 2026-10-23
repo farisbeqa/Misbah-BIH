@@ -6,7 +6,7 @@ import { requireAuth } from '@/lib/auth'
 export async function GET(_: Request, { params }: { params: { id: string } }) {
   const id = parseInt(params.id)
   const item = await prisma.duaText.findUnique({ where: { id } })
-  if (!item) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  if (!item || (!item.published && !(await requireAuth()))) return NextResponse.json({ error: 'Not found' }, { status: 404 })
   return NextResponse.json(item)
 }
 

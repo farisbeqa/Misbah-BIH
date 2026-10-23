@@ -6,7 +6,9 @@ import { requireAuth } from '@/lib/auth'
 export const dynamic = 'force-dynamic'
 
 export async function GET() {
-  const items = await prisma.duaText.findMany({ orderBy: { createdAt: 'desc' } })
+  // Unpublished drafts are visible only to a logged-in admin
+  const admin = await requireAuth()
+  const items = await prisma.duaText.findMany({ where: admin ? {} : { published: true }, orderBy: { createdAt: 'desc' } })
   return NextResponse.json(items)
 }
 

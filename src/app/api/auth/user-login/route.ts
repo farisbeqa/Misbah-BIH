@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getIronSession } from 'iron-session'
 import { prisma } from '@/lib/db'
-import { verifyPassword, userSessionOptions, UserSessionData } from '@/lib/userAuth'
+import { verifyPassword, userSessionOptions, UserSessionData, isMobileClient, createMobileToken } from '@/lib/userAuth'
 
 export async function POST(request: NextRequest) {
   try {
@@ -16,7 +16,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Pogrešno korisničko ime ili lozinka' }, { status: 401 })
     }
 
-    const response = NextResponse.json({ success: true, username: user.username })
+    const response = NextResponse.json({
+      success: true,
+      username: user.username,
+      user: { id: user.id, username: user.username },
+      ...(isMobileClient(request) ? { token: await createMobileToken(user) } : {}),
+    })
     const session = await getIronSession<UserSessionData>(request, response, userSessionOptions)
     session.isLoggedIn = true
     session.userId = user.id

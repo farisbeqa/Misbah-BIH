@@ -1,16 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getIronSession } from 'iron-session'
 import { prisma } from '@/lib/db'
-import { userSessionOptions, UserSessionData } from '@/lib/userAuth'
+import { getRequestUser } from '@/lib/userAuth'
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   const blogPostId = parseInt(params.id)
-  const res = NextResponse.next()
-  const session = await getIronSession<UserSessionData>(request, res, userSessionOptions)
+  const user = await getRequestUser(request)
 
   const count = await prisma.like.count({ where: { blogPostId } })
-  const liked = session.userId
-    ? !!(await prisma.like.findUnique({ where: { userId_blogPostId: { userId: session.userId, blogPostId } } }))
+  const liked = user
+    ? !!(await prisma.like.findUnique({ where: { userId_blogPostId: { userId: user.userId, blogPostId } } }))
     : false
 
   return NextResponse.json({ count, liked })
@@ -18,14 +16,13 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   const blogPostId = parseInt(params.id)
-  const res = NextResponse.next()
-  const session = await getIronSession<UserSessionData>(request, res, userSessionOptions)
+  const user = await getRequestUser(request)
 
-  if (!session.isLoggedIn || !session.userId) {
+  if (!user) {
     return NextResponse.json({ error: 'Morate biti prijavljeni' }, { status: 401 })
   }
 
-  const userId = session.userId
+  const userId = user.userId
   const existing = await prisma.like.findUnique({
     where: { userId_blogPostId: { userId, blogPostId } },
   })

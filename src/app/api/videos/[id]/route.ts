@@ -10,7 +10,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       where: { id: parseInt(params.id) },
     })
 
-    if (!video) {
+    if (!video || (!video.published && !(await requireAuth()))) {
       return NextResponse.json({ error: 'Video nije pronađen' }, { status: 404 })
     }
 

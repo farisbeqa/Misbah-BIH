@@ -9,7 +9,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       where: { id: parseInt(params.id) },
     })
 
-    if (!post || !post.published) {
+    if (!post || (!post.published && !(await requireAuth()))) {
       return NextResponse.json({ error: 'Post nije pronađen' }, { status: 404 })
     }
 

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getIronSession } from 'iron-session'
 import { prisma } from '@/lib/db'
-import { hashPassword, userSessionOptions, UserSessionData } from '@/lib/userAuth'
+import { hashPassword, userSessionOptions, UserSessionData, isMobileClient, createMobileToken } from '@/lib/userAuth'
 
 export async function POST(request: NextRequest) {
   try {
@@ -29,7 +29,12 @@ export async function POST(request: NextRequest) {
       data: { username, passwordHash: hashPassword(password) },
     })
 
-    const response = NextResponse.json({ success: true, username: user.username })
+    const response = NextResponse.json({
+      success: true,
+      username: user.username,
+      user: { id: user.id, username: user.username },
+      ...(isMobileClient(request) ? { token: await createMobileToken(user) } : {}),
+    })
     const session = await getIronSession<UserSessionData>(request, response, userSessionOptions)
     session.isLoggedIn = true
     session.userId = user.id

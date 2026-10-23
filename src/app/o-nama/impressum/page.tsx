@@ -1,27 +1,9 @@
 import Link from 'next/link'
 import { ArrowLeft, ExternalLink } from 'lucide-react'
 import { BIOS } from '@/lib/bios'
+import { UREDNICI, DRUSTVENE_MREZE, AUTORI } from '@/lib/team'
 
 export const metadata = { title: 'Impressum - Misbah EDU' }
-
-const UREDNICI: { name: string; slug?: string }[] = [
-  { name: 'Hamdo Solo', slug: 'hamdo-solo' },
-]
-
-const DRUSTVENE_MREZE: { name: string; slug?: string; photo?: string }[] = [
-  { name: 'Abdullah Hodžić', slug: 'abdullah-hodzic' },
-]
-
-const AUTORI: { name: string; slug?: string; photo?: string }[] = [
-  { name: 'Mubina Suljić Solo', slug: 'mubina-suljic-solo' },
-  { name: 'Hamza Bajraktarević', slug: 'hamza-bajraktarevic' },
-  // { name: 'Esma Klisura',    slug: 'esma-klisura' }, // privremeno uklonjena
-  { name: 'Muhamed Selimović',  slug: 'muhamed-selimovic' },
-  { name: 'Muhamed Tutnić',     slug: 'muhamed-tutnic' },
-  { name: 'Ervin Šorlija', slug: 'ervin-sorlija' },
-  { name: 'Elmir Honsić',       slug: 'elmir-honsic' },
-  { name: 'Adna Kurtanović',    slug: 'adna-kurtanovic' },
-]
 
 function MemberCard({ name, slug, photo, accent }: { name: string; slug?: string; photo?: string; accent: string }) {
   const bio = slug ? BIOS[slug] : undefined

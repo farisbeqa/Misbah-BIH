@@ -6,7 +6,7 @@ import { requireAuth } from '@/lib/auth'
 export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const prica = await prisma.prica.findUnique({ where: { id: parseInt(params.id) } })
-    if (!prica) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+    if (!prica || (!prica.published && !(await requireAuth()))) return NextResponse.json({ error: 'Not found' }, { status: 404 })
     return NextResponse.json(prica)
   } catch { return NextResponse.json({ error: 'Greška' }, { status: 500 }) }
 }

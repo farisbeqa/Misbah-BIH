@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getIronSession } from 'iron-session'
 import { prisma } from '@/lib/db'
-import { userSessionOptions, UserSessionData } from '@/lib/userAuth'
+import { getRequestUser } from '@/lib/userAuth'
 
 export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
   const videoId = parseInt(params.id)
@@ -15,10 +14,9 @@ export async function GET(_: NextRequest, { params }: { params: { id: string } }
 
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   const videoId = parseInt(params.id)
-  const res = NextResponse.next()
-  const session = await getIronSession<UserSessionData>(request, res, userSessionOptions)
+  const user = await getRequestUser(request)
 
-  if (!session.isLoggedIn || !session.userId) {
+  if (!user) {
     return NextResponse.json({ error: 'Morate biti prijavljeni' }, { status: 401 })
   }
 
@@ -31,7 +29,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
   }
 
   const comment = await prisma.comment.create({
-    data: { userId: session.userId, videoId, content: content.trim() },
+    data: { userId: user.userId, videoId, content: content.trim() },
     include: { user: { select: { username: true } } },
   })
 
@@ -40,13 +38,12 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   const videoId = parseInt(params.id)
-  const res = NextResponse.next()
-  const session = await getIronSession<UserSessionData>(request, res, userSessionOptions)
-  if (!session.userId) return NextResponse.json({ error: 'Nije autorizovano' }, { status: 401 })
+  const user = await getRequestUser(request)
+  if (!user) return NextResponse.json({ error: 'Nije autorizovano' }, { status: 401 })
 
   const { commentId } = await request.json()
   const comment = await prisma.comment.findUnique({ where: { id: commentId } })
-  if (!comment || comment.userId !== session.userId || comment.videoId !== videoId) {
+  if (!comment || comment.userId !== user.userId || comment.videoId !== videoId) {
     return NextResponse.json({ error: 'Nije pronađeno' }, { status: 404 })
   }
 

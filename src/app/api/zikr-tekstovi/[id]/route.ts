@@ -5,7 +5,7 @@ import { requireAuth } from '@/lib/auth'
 export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const tekst = await prisma.zikrText.findUnique({ where: { id: parseInt(params.id) } })
-    if (!tekst) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+    if (!tekst || (!tekst.published && !(await requireAuth()))) return NextResponse.json({ error: 'Not found' }, { status: 404 })
     return NextResponse.json(tekst)
   } catch { return NextResponse.json({ error: 'Greška' }, { status: 500 }) }
 }

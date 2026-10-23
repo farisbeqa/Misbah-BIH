@@ -5,7 +5,7 @@ import { requireAuth } from '@/lib/auth'
 export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const image = await prisma.galleryImage.findUnique({ where: { id: parseInt(params.id) } })
-    if (!image) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+    if (!image || (!image.published && !(await requireAuth()))) return NextResponse.json({ error: 'Not found' }, { status: 404 })
     return NextResponse.json(image)
   } catch { return NextResponse.json({ error: 'Greška' }, { status: 500 }) }
 }
