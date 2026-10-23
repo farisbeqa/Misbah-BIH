@@ -18,6 +18,19 @@ const nextConfig = {
       { protocol: 'https', hostname: '**' },
     ],
   },
+
+  // /app — web build of the mobile app (Misbah-EDU-App repo) used as a review
+  // preview. It is a single-page app: every /app/* URL without a matching file
+  // in public/app is served index.html. Kept out of search results.
+  async rewrites() {
+    return [
+      { source: '/app', destination: '/app/index.html' },
+      { source: '/app/:path*', destination: '/app/index.html' },
+    ];
+  },
+  async headers() {
+    return [{ source: '/app/:path*', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] }];
+  },
 };
 
 export default nextConfig;
