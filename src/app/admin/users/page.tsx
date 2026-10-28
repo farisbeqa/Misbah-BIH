@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { ArrowLeft, Calendar, MessageSquare, Heart, Users } from 'lucide-react'
 import { requireAuth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
+import ModerationDeleteButton from '../dashboard/ModerationDeleteButton'
 
 const MONTHS = ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec']
 function fmt(d: Date) {
@@ -57,9 +58,10 @@ export default async function AdminUsersPage() {
             <div className="hidden sm:grid sm:grid-cols-12 gap-3 px-4 py-2.5 bg-zinc-50 border-b border-zinc-100 text-xs font-semibold text-zinc-400 uppercase tracking-wider">
               <div className="col-span-1">#</div>
               <div className="col-span-4">Korisnik</div>
-              <div className="col-span-4">Registrovan</div>
+              <div className="col-span-3">Registrovan</div>
               <div className="col-span-1 text-center">❤</div>
-              <div className="col-span-2 text-center">💬</div>
+              <div className="col-span-1 text-center">💬</div>
+              <div className="col-span-2" />
             </div>
 
             {users.map((user, i) => (
@@ -74,16 +76,23 @@ export default async function AdminUsersPage() {
                     </div>
                     <span className="font-medium text-zinc-900 text-sm truncate">{user.username}</span>
                   </div>
-                  <div className="col-span-4 flex items-center gap-1.5 text-zinc-400 text-xs">
+                  <div className="col-span-3 flex items-center gap-1.5 text-zinc-400 text-xs">
                     <Calendar size={10} /> {fmt(user.createdAt)}
                   </div>
                   <div className="col-span-1 flex items-center justify-center gap-1 text-zinc-500 text-sm">
                     <Heart size={12} className="text-rose-400" />
                     <span className="font-medium text-xs">{user._count.likes}</span>
                   </div>
-                  <div className="col-span-2 flex items-center justify-center gap-1 text-zinc-500 text-sm">
+                  <div className="col-span-1 flex items-center justify-center gap-1 text-zinc-500 text-sm">
                     <MessageSquare size={12} className="text-blue-400" />
                     <span className="font-medium text-xs">{user._count.comments}</span>
+                  </div>
+                  <div className="col-span-2 flex justify-end">
+                    <ModerationDeleteButton
+                      kind="user"
+                      endpoint={`/api/admin/users/${user.id}`}
+                      confirmText={`Obrisati korisnika "${user.username}" i sve njegove komentare i lajkove?`}
+                    />
                   </div>
                 </div>
 
@@ -105,6 +114,11 @@ export default async function AdminUsersPage() {
                     <span className="flex items-center gap-1 text-zinc-500">
                       <MessageSquare size={11} className="text-blue-400" /> {user._count.comments}
                     </span>
+                    <ModerationDeleteButton
+                      kind="user"
+                      endpoint={`/api/admin/users/${user.id}`}
+                      confirmText={`Obrisati korisnika "${user.username}" i sve njegove komentare i lajkove?`}
+                    />
                   </div>
                 </div>
               </div>

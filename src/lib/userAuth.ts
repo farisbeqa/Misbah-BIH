@@ -2,6 +2,7 @@ import { getIronSession, sealData, unsealData, SessionOptions } from 'iron-sessi
 import { cookies } from 'next/headers'
 import { NextResponse, type NextRequest } from 'next/server'
 import { randomBytes, pbkdf2Sync } from 'crypto'
+import { prisma } from '@/lib/db'
 
 export interface UserSessionData {
   isLoggedIn: boolean
@@ -45,8 +46,13 @@ export function createMobileToken(user: { id: number; username: string }) {
   )
 }
 
-/** The logged-in user: Bearer token from the mobile app, otherwise the web session cookie. */
+/**
+ * The logged-in user: Bearer token from the mobile app, otherwise the web
+ * session cookie. Tokens and cookies outlive deleted accounts, so the user is
+ * always looked up — a deleted or banned user is treated as logged out.
+ */
 export async function getRequestUser(request: NextRequest): Promise<RequestUser | null> {
+  let userId: number | undefined
   const auth = request.headers.get('authorization')
   if (auth?.startsWith('Bearer ')) {
     try {
@@ -54,16 +60,18 @@ export async function getRequestUser(request: NextRequest): Promise<RequestUser 
         password: userSessionOptions.password,
         ttl: MOBILE_TOKEN_TTL,
       })
-      return data.userId && data.username ? { userId: data.userId, username: data.username } : null
+      userId = data.userId
     } catch {
       return null
     }
+  } else {
+    const session = await getIronSession<UserSessionData>(request, NextResponse.next(), userSessionOptions)
+    if (session.isLoggedIn) userId = session.userId
   }
+  if (!userId) return null
 
-  const session = await getIronSession<UserSessionData>(request, NextResponse.next(), userSessionOptions)
-  return session.isLoggedIn && session.userId
-    ? { userId: session.userId, username: session.username ?? '' }
-    : null
+  const user = await prisma.user.findUnique({ where: { id: userId }, select: { id: true, username: true } })
+  return user ? { userId: user.id, username: user.username } : null
 }
 
 export function hashPassword(password: string): string {
@@ -77,4 +85,18 @@ export function verifyPassword(password: string, hashedPassword: string): boolea
   if (!salt || !hash) return false
   const verify = pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex')
   return verify === hash
+}
+
+/**
+ * Deletes a user with their likes and comments. Done explicitly in one
+ * transaction instead of relying on SQLite foreign-key cascades.
+ */
+export async function deleteUserCompletely(userId: number) {
+  const comments = await prisma.comment.findMany({ where: { userId }, select: { id: true } })
+  await prisma.$transaction([
+    prisma.commentReport.deleteMany({ where: { commentId: { in: comments.map(c => c.id) } } }),
+    prisma.like.deleteMany({ where: { userId } }),
+    prisma.comment.deleteMany({ where: { userId } }),
+    prisma.user.deleteMany({ where: { id: userId } }),
+  ])
 }

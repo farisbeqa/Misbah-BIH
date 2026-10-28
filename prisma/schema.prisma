@@ -17,7 +17,7 @@ model Video {
   thumbnailUrl String?
   isShortForm  Boolean   @default(false)
   category     String    @default("predavanja") // predavanja | kuran | podcast | ilahije | zikrovi
-  topic        String?   // tefsir | hadis | sira | opste | akaid | fikh | duhovnost | historija
+  topic        String? // tefsir | hadis | sira | opste | akaid | fikh | duhovnost | historija
   published    Boolean   @default(true)
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
@@ -172,4 +172,14 @@ model AdminUser {
   fullName     String?
   isSuperAdmin Boolean  @default(false)
   createdAt    DateTime @default(now())
+}
+
+// Reports of objectionable comments (app "Prijavi" button), handled at /admin/komentari.
+// Created on Turso with scripts/add-comment-report-table.js
+model CommentReport {
+  id        Int      @id @default(autoincrement())
+  commentId Int
+  reason    String?
+  reporter  String?
+  createdAt DateTime @default(now())
 }

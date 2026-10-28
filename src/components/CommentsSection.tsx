@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { MessageCircle, Loader2, Trash2, Send } from 'lucide-react'
+import { MessageCircle, Loader2, Trash2, Send, Flag } from 'lucide-react'
 import AuthModal from './AuthModal'
 
 interface Comment { id: number; content: string; createdAt: string; user: { username: string }; userId: number }
@@ -19,6 +19,7 @@ export default function CommentsSection({ targetType, targetId }: Props) {
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [deletingId, setDeletingId] = useState<number | null>(null)
+  const [reported, setReported] = useState<number[]>([])
   const [error, setError] = useState('')
   const [modalOpen, setModalOpen] = useState(false)
   const [modalMode, setModalMode] = useState<'login' | 'register'>('login')
@@ -41,6 +42,15 @@ export default function CommentsSection({ targetType, targetId }: Props) {
       else setError(data.error || 'Greška')
     } catch { setError('Greška') }
     finally { setSubmitting(false) }
+  }
+
+  const handleReport = async (commentId: number) => {
+    if (!confirm('Prijaviti ovaj komentar kao neprimjeren? Redakcija će ga pregledati.')) return
+    try {
+      await fetch('/api/comments/report', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ commentId }) })
+    } finally {
+      setReported(p => [...p, commentId])
+    }
   }
 
   const handleDelete = async (commentId: number) => {
@@ -120,6 +130,16 @@ export default function CommentsSection({ targetType, targetId }: Props) {
                   </div>
                   <p className="text-warm-600 text-sm leading-relaxed break-words">{c.content}</p>
                 </div>
+                {user?.id !== c.userId && (
+                  reported.includes(c.id) ? (
+                    <span className="font-mono text-[10px] text-warm-400 flex-shrink-0 p-2">Prijavljeno</span>
+                  ) : (
+                    <button onClick={() => handleReport(c.id)} title="Prijavi komentar"
+                      className="sm:opacity-0 sm:group-hover:opacity-100 text-warm-300 hover:text-red-400 transition-all flex-shrink-0 p-2">
+                      <Flag size={12} />
+                    </button>
+                  )
+                )}
                 {user?.id === c.userId && (
                   <button onClick={() => handleDelete(c.id)} disabled={deletingId === c.id}
                     className="sm:opacity-0 sm:group-hover:opacity-100 text-warm-300 hover:text-red-400 transition-all flex-shrink-0 p-2">

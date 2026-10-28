@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { getRequestUser } from '@/lib/userAuth'
+import { containsProfanity, PROFANITY_ERROR } from '@/lib/moderation'
 
 export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
   const blogPostId = parseInt(params.id)
@@ -26,6 +27,9 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
   }
   if (content.length > 1000) {
     return NextResponse.json({ error: 'Komentar je predugačak (maks. 1000 karaktera)' }, { status: 400 })
+  }
+  if (containsProfanity(content)) {
+    return NextResponse.json({ error: PROFANITY_ERROR }, { status: 400 })
   }
 
   const comment = await prisma.comment.create({

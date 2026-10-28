@@ -126,7 +126,7 @@ export default function Footer() {
 
       {/* Legal bar */}
       <div className="bg-[#f5f2ef]">
-        <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-3 flex items-center justify-between">
+        <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-3 flex items-center justify-between gap-3 flex-wrap">
           <a
             href="https://strossa.com/"
             target="_blank"
@@ -136,9 +136,17 @@ export default function Footer() {
           >
             © STROSSA, 2026
           </a>
-          <p className="font-normal text-[#746860] uppercase" style={{ fontSize: 13, letterSpacing: '0.42px' }}>
-            © 2026 Misbah EDU. Sva prava zadržana.
-          </p>
+          <div className="flex items-center gap-4 flex-wrap justify-end">
+            <Link href="/privatnost" className="underline font-normal text-[#746860] uppercase hover:text-[#141110] transition-colors" style={{ fontSize: 13, letterSpacing: '0.42px' }}>
+              Privatnost
+            </Link>
+            <Link href="/pravila-koristenja" className="underline font-normal text-[#746860] uppercase hover:text-[#141110] transition-colors" style={{ fontSize: 13, letterSpacing: '0.42px' }}>
+              Pravila korištenja
+            </Link>
+            <p className="font-normal text-[#746860] uppercase" style={{ fontSize: 13, letterSpacing: '0.42px' }}>
+              © 2026 Misbah EDU. Sva prava zadržana.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

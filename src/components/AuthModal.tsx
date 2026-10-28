@@ -117,6 +117,14 @@ export default function AuthModal({ open, mode, onClose, onSuccess, onSwitchMode
             {loading && <Loader2 size={14} className="animate-spin" />}
             {loading ? 'Molimo sačekajte...' : isReg ? 'Kreiraj nalog' : 'Prijavite se'}
           </button>
+          {isReg && (
+            <p className="text-[11px] text-warm-400 text-center leading-relaxed">
+              Registracijom prihvataš{' '}
+              <a href="/pravila-koristenja" target="_blank" className="text-brand hover:underline">Pravila korištenja</a>{' '}
+              i{' '}
+              <a href="/privatnost" target="_blank" className="text-brand hover:underline">Politiku privatnosti</a>.
+            </p>
+          )}
         </form>
 
         <div className="px-6 pb-5 text-center text-sm text-warm-500">

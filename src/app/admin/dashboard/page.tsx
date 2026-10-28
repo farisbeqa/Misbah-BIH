@@ -2,7 +2,7 @@
 import { redirect } from 'next/navigation'
 import {
   Plus, Play, BookOpen, ExternalLink, Youtube, Instagram, Facebook,
-  Calendar, Pencil, Users, ShieldCheck, Music2, BookMarked, Mic, FileText, GraduationCap, ScrollText,
+  Calendar, Pencil, Users, ShieldCheck, Music2, BookMarked, Mic, FileText, GraduationCap, ScrollText, MessageSquare,
 } from 'lucide-react'
 import { requireAuth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
@@ -120,7 +120,7 @@ export default async function AdminDashboard() {
   const session = await requireAuth()
   if (!session) redirect('/admin')
 
-  const [videos, posts, activities, galleryImages, quotes, ilahijeTekstovi, duaTekstovi, zikrTekstovi, mektebPosts, price, userCount] = await Promise.all([
+  const [videos, posts, activities, galleryImages, quotes, ilahijeTekstovi, duaTekstovi, zikrTekstovi, mektebPosts, price, userCount, commentCount] = await Promise.all([
     prisma.video.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.blogPost.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.activity.findMany({ orderBy: { date: 'desc' } }),
@@ -132,6 +132,7 @@ export default async function AdminDashboard() {
     prisma.mektebPost.findMany({ orderBy: { createdAt: 'desc' } }).catch(() => []),
     prisma.prica.findMany({ orderBy: { createdAt: 'desc' } }).catch(() => []),
     prisma.user.count(),
+    prisma.comment.count(),
   ])
 
   const byCat = (cat: string) => videos.filter(v => v.category === cat)
@@ -192,12 +193,13 @@ export default async function AdminDashboard() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-8">
           {[
             { label: 'Video sadržaj', value: videos.length,     icon: <Play size={16} className="text-red-500" />,      bg: 'bg-red-50' },
             { label: 'Blog postovi',  value: posts.length,      icon: <BookOpen size={16} className="text-amber-500" />, bg: 'bg-amber-50' },
             { label: 'Aktivnosti',    value: activities.length, icon: <span className="text-base">🏔️</span>,            bg: 'bg-green-50' },
             { label: 'Korisnici',     value: userCount,         icon: <Users size={16} className="text-brand" />,       bg: 'bg-brand-dim', href: '/admin/users' },
+            { label: 'Komentari · moderacija', value: commentCount, icon: <MessageSquare size={16} className="text-blue-500" />, bg: 'bg-blue-50', href: '/admin/komentari' },
           ].map(s => (
             s.href ? (
               <Link key={s.label} href={s.href}
