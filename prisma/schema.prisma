@@ -183,3 +183,24 @@ model CommentReport {
   reporter  String?
   createdAt DateTime @default(now())
 }
+
+// "Dnevne poruke" for the mobile app's daily notifications: seven rubrics,
+// one per weekday by default (see src/lib/daily.ts). Edited at /admin/dnevno.
+// Created on Turso with scripts/add-daily-post-table.js
+model DailyPost {
+  id        Int      @id @default(autoincrement())
+  rubric    String // hadis | kuran | izazov | fikh | preporuka | kviz | enciklopedija
+  date      String // YYYY-MM-DD, the day the notification goes out
+  title     String
+  teaser    String? // notification text (title is used when empty)
+  body      String   @default("")
+  source    String?
+  videoUrl  String?
+  link      String? // "Misbah preporučuje": the recommended page
+  quiz      String? // JSON: [{ q, options, answer, explanation }]
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([date])
+}

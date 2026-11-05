@@ -2,9 +2,10 @@
 import { redirect } from 'next/navigation'
 import {
   Plus, Play, BookOpen, ExternalLink, Youtube, Instagram, Facebook,
-  Calendar, Pencil, Users, ShieldCheck, Music2, BookMarked, Mic, FileText, GraduationCap, ScrollText, MessageSquare,
+  Calendar, Pencil, Users, ShieldCheck, Music2, BookMarked, Mic, FileText, GraduationCap, ScrollText, MessageSquare, BellRing,
 } from 'lucide-react'
 import { requireAuth } from '@/lib/auth'
+import { todayKey } from '@/lib/daily'
 import { prisma } from '@/lib/db'
 import { getPlatformLabel } from '@/lib/videoUtils'
 import DeleteButton from './DeleteButton'
@@ -120,7 +121,7 @@ export default async function AdminDashboard() {
   const session = await requireAuth()
   if (!session) redirect('/admin')
 
-  const [videos, posts, activities, galleryImages, quotes, ilahijeTekstovi, duaTekstovi, zikrTekstovi, mektebPosts, price, userCount, commentCount] = await Promise.all([
+  const [videos, posts, activities, galleryImages, quotes, ilahijeTekstovi, duaTekstovi, zikrTekstovi, mektebPosts, price, userCount, commentCount, dailyUpcoming] = await Promise.all([
     prisma.video.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.blogPost.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.activity.findMany({ orderBy: { date: 'desc' } }),
@@ -133,6 +134,7 @@ export default async function AdminDashboard() {
     prisma.prica.findMany({ orderBy: { createdAt: 'desc' } }).catch(() => []),
     prisma.user.count(),
     prisma.comment.count(),
+    prisma.dailyPost.count({ where: { date: { gte: todayKey() } } }).catch(() => 0),
   ])
 
   const byCat = (cat: string) => videos.filter(v => v.category === cat)
@@ -220,6 +222,17 @@ export default async function AdminDashboard() {
 
         {/* Quick actions - one button per section */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10">
+          <Link href="/admin/dnevno"
+            className="flex items-center gap-3 text-white p-4 rounded-2xl transition-opacity hover:opacity-90 shadow-sm"
+            style={{ background: '#8B1E3F' }}>
+            <div className="w-8 h-8 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+              <BellRing size={18} />
+            </div>
+            <div className="min-w-0">
+              <p className="font-bold text-sm leading-tight">Dnevne poruke</p>
+              <p className="text-white/60 text-xs mt-0.5">{dailyUpcoming} zakazano · aplikacija</p>
+            </div>
+          </Link>
           {videoSections.map(s => (
             <Link key={s.cat} href={s.addHref || `/admin/videos/new?category=${s.cat}`}
               className="flex items-center gap-3 text-white p-4 rounded-2xl transition-opacity hover:opacity-90 shadow-sm"
