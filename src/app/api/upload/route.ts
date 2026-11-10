@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { PutObjectCommand } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
-import { r2, R2_BUCKET, R2_PUBLIC_URL } from '@/lib/r2'
+import { MEDIA_BUCKET, MEDIA_PUBLIC_URL, s3 } from '@/lib/media'
 import { requireAuth } from '@/lib/auth'
 import { writeFile, mkdir } from 'fs/promises'
 import path from 'path'
@@ -15,8 +15,8 @@ export async function POST(request: NextRequest) {
   if (!session) return NextResponse.json({ error: 'Nije autorizovano' }, { status: 401 })
 
   try {
-    // Production: use R2 presigned URL
-    if (process.env.R2_ACCOUNT_ID) {
+    // Presigned upload straight from the browser to the S3 media bucket
+    if (MEDIA_BUCKET) {
       const { filename, contentType, folder = 'videos' } = await request.json()
       const allowed = folder === 'thumbs' ? ALLOWED_IMAGE : folder === 'audio' ? ALLOWED_AUDIO : [...ALLOWED_VIDEO, ...ALLOWED_IMAGE]
       if (!allowed.includes(contentType))
@@ -24,10 +24,10 @@ export async function POST(request: NextRequest) {
 
       const ext = filename.split('.').pop()?.toLowerCase() ?? 'bin'
       const key = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
-      const command = new PutObjectCommand({ Bucket: R2_BUCKET, Key: key, ContentType: contentType })
-      const uploadUrl = await getSignedUrl(r2, command, { expiresIn: 900 })
+      const command = new PutObjectCommand({ Bucket: MEDIA_BUCKET, Key: key, ContentType: contentType })
+      const uploadUrl = await getSignedUrl(s3, command, { expiresIn: 900 })
 
-      return NextResponse.json({ uploadUrl, publicUrl: `${R2_PUBLIC_URL}/${key}`, key })
+      return NextResponse.json({ uploadUrl, publicUrl: `${MEDIA_PUBLIC_URL}/${key}`, key })
     }
 
     // Development: save to local public/uploads/

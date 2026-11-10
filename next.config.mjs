@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Prisma + libsql must run in Node.js runtime, not bundled by webpack
-  serverExternalPackages: ['@prisma/client', '@prisma/adapter-libsql', '@libsql/client'],
+  // Prisma and the Postgres driver run in Node.js, not bundled by webpack
+  experimental: {
+    serverComponentsExternalPackages: ['@prisma/client', '@prisma/adapter-pg', 'pg'],
+  },
 
   images: {
     remotePatterns: [

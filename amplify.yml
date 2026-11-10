@@ -1,0 +1,23 @@
+# AWS Amplify Hosting (Next.js SSR). The build and the server both run with the
+# misbah-amplify-compute IAM role, which may connect to Aurora DSQL and write to
+# the media bucket. Server-side environment variables have to be written to
+# .env.production during the build to reach the SSR runtime.
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - nvm use 20
+        - npm ci
+    build:
+      commands:
+        - env | grep -E '^(SESSION_SECRET|DSQL_|MEDIA_|NEXT_PUBLIC_)' >> .env.production || true
+        - npm run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - .next/cache/**/*
+      - node_modules/**/*

@@ -2,8 +2,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// Aurora DSQL (PostgreSQL-compatible) on AWS. DSQL has no foreign keys, so
+// Prisma enforces the relations (and the cascading deletes) itself.
 datasource db {
-  provider = "sqlite"
+  provider     = "postgresql"
+  relationMode = "prisma"
 }
 
 model Video {
@@ -60,6 +63,8 @@ model Like {
 
   @@unique([userId, videoId])
   @@unique([userId, blogPostId])
+  @@index([videoId])
+  @@index([blogPostId])
 }
 
 model Comment {
@@ -72,6 +77,10 @@ model Comment {
   user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   video      Video?    @relation(fields: [videoId], references: [id], onDelete: Cascade)
   blogPost   BlogPost? @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([videoId])
+  @@index([blogPostId])
 }
 
 model Activity {
@@ -182,6 +191,8 @@ model CommentReport {
   reason    String?
   reporter  String?
   createdAt DateTime @default(now())
+
+  @@index([commentId])
 }
 
 // "Dnevne poruke" for the mobile app's daily notifications: seven rubrics,
