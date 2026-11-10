@@ -4,7 +4,8 @@ import { prisma } from '@/lib/db'
 import { ArrowLeft, BookOpen } from 'lucide-react'
 import MoreFromAuthor from '@/components/MoreFromAuthor'
 
-export const revalidate = 3600
+// Rendered per request: the database is reachable at runtime, not during the build
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const prica = await prisma.prica.findUnique({ where: { id: parseInt(params.id) } }).catch(() => null)

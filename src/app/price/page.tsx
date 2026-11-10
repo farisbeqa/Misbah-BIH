@@ -2,7 +2,8 @@ import { prisma } from '@/lib/db'
 import { BookOpen } from 'lucide-react'
 import PriceGrid from './PriceGrid'
 
-export const revalidate = 60
+// Rendered per request: the database is reachable at runtime, not during the build
+export const dynamic = 'force-dynamic'
 export const metadata = {
   title: 'Poučne priče',
   description: 'Poučne priče iz islamske tradicije koje bude srce, ulijevaju nadu i podsjećaju na istinske vrijednosti.',

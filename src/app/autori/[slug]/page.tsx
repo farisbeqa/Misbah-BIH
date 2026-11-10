@@ -5,7 +5,8 @@ import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { getAuthorPage } from '@/lib/authorContent'
 import { BIOS } from '@/lib/bios'
 
-export const revalidate = 60
+// Rendered per request: the database is reachable at runtime, not during the build
+export const dynamic = 'force-dynamic'
 
 const MONTHS = ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec']
 function formatDate(d: Date) {

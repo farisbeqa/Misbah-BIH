@@ -2,6 +2,10 @@ import { MetadataRoute } from 'next'
 import { prisma } from '@/lib/db'
 import { allPaths } from '@/lib/pozovite'
 
+// Built per request so it always lists the current content (the database is
+// reachable at runtime, not during the build)
+export const dynamic = 'force-dynamic'
+
 const BASE = 'https://www.misbah-edu.com'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

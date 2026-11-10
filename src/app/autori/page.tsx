@@ -2,7 +2,8 @@ import Link from 'next/link'
 import { getAllAuthors } from '@/lib/authorContent'
 import { BIOS } from '@/lib/bios'
 
-export const revalidate = 60
+// Rendered per request: the database is reachable at runtime, not during the build
+export const dynamic = 'force-dynamic'
 export const metadata = {
   title: 'Autori',
   description: 'Svi autori predavanja, hutbi i tekstova na platformi Misbah EDU.',

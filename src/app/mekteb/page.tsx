@@ -3,7 +3,8 @@ import { prisma } from '@/lib/db'
 import { BookOpen } from 'lucide-react'
 import MektebGrid from './MektebGrid'
 
-export const revalidate = 60
+// Rendered per request: the database is reachable at runtime, not during the build
+export const dynamic = 'force-dynamic'
 export const metadata: Metadata = {
   title: 'Mekteb EDU',
   description: 'Mektebski planovi i programi, kvizovi i nastavni materijali za islamsku vjeronauku — pomoć nastavnicima i učenicima.',

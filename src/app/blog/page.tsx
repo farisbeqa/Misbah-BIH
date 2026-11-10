@@ -1,7 +1,8 @@
 import { prisma } from '@/lib/db'
 import BlogSearch from '@/components/BlogSearch'
 
-export const revalidate = 60
+// Rendered per request: the database is reachable at runtime, not during the build
+export const dynamic = 'force-dynamic'
 export const metadata = {
   title: 'Blog | Misbah EDU',
   description: 'Islamski tekstovi, hutbe i savjeti za svakodnevni muslimanski život — kratki i korisni tekstovi za vjernike.',
