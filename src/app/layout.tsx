@@ -3,6 +3,7 @@ import { Manrope, IBM_Plex_Mono } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import ConditionalFooter from '@/components/ConditionalFooter'
+import PozoviteNasButton from '@/components/PozoviteNasButton'
 
 const manrope = Manrope({
   subsets: ['latin'],
@@ -161,6 +162,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Navbar />
         <main className="flex-1">{children}</main>
         <ConditionalFooter />
+        <PozoviteNasButton />
       </body>
     </html>
   )

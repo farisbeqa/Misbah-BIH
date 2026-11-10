@@ -224,22 +224,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Pozovite nas ─────────────────────────────────────────────────── */}
-      <section className="w-full bg-[#8b1e3f] text-white">
-        <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-8 lg:py-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
-          <div className="flex flex-col gap-1.5">
-            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[#dfc89a]">Pozovite nas</p>
-            <p className="font-semibold" style={{ fontSize: 'clamp(20px, 2.2vw, 28px)', lineHeight: 1.3 }}>
-              Predavanja, hor i omladinska druženja — uživo u vašem džematu, školi ili zajednici.
-            </p>
-          </div>
-          <Link href="/pozovite-nas"
-            className="self-start md:self-auto shrink-0 bg-[#c8a96b] text-[#2a1410] font-semibold px-7 py-3 hover:bg-[#dfc89a] transition-colors">
-            Pogledajte ponudu
-          </Link>
-        </div>
-      </section>
-
       {/* ── Benefits ─────────────────────────────────────────────────────── */}
       <section className="bg-white w-full">
         <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">

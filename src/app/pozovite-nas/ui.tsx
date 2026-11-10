@@ -53,15 +53,9 @@ async function copyText(text: string) {
   }
 }
 
-// ── Home hero: showreel in the background, sound on request ────────────────
+// ── Home hero: the showreel in the image panel, sound on request ───────────
 
-export function HeroShowreel({ src, poster, className, children, cta }: {
-  src: string
-  poster: string
-  className: string
-  children: React.ReactNode
-  cta: React.ReactNode
-}) {
+export function HeroVideo({ src, poster }: { src: string; poster: string }) {
   const ref = useRef<HTMLVideoElement>(null)
   const [sound, setSound] = useState(false)
 
@@ -84,23 +78,15 @@ export function HeroShowreel({ src, poster, className, children, cta }: {
   }
 
   return (
-    <section className="relative isolate overflow-hidden bg-[#2a0814]">
+    <>
       <video ref={ref} src={src} poster={poster} muted loop playsInline preload="metadata" aria-hidden="true"
-        className="absolute inset-0 -z-20 w-full h-full object-cover" />
-      <span className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(42,8,20,0.94)_0%,rgba(94,16,40,0.78)_45%,rgba(94,16,40,0.25)_100%)]" />
-      <span className="absolute inset-0 -z-10 bg-gradient-to-t from-[#2a0814]/90 to-transparent to-60%" />
-      <div className={className}>
-        {children}
-        <div className="flex flex-wrap items-center gap-3">
-          {cta}
-          <button type="button" onClick={toggle} aria-pressed={sound}
-            className="inline-flex items-center gap-2 border border-white/40 bg-black/25 text-white text-sm font-medium px-4 py-3 hover:bg-black/40 transition-colors">
-            {sound ? <Volume2 size={16} /> : <VolumeX size={16} />}
-            {sound ? 'Isključi zvuk' : 'Uključi zvuk'}
-          </button>
-        </div>
-      </div>
-    </section>
+        className="absolute inset-0 w-full h-full object-cover" />
+      <button type="button" onClick={toggle} aria-pressed={sound}
+        className="absolute left-4 bottom-4 flex items-center gap-2 bg-[#faf5f5] text-[#8b1e3f] px-3 py-2 text-sm hover:bg-white transition-colors">
+        {sound ? <Volume2 size={16} /> : <VolumeX size={16} />}
+        {sound ? 'Isključi zvuk' : 'Uključi zvuk'}
+      </button>
+    </>
   )
 }
 
@@ -108,43 +94,49 @@ export function HeroShowreel({ src, poster, className, children, cta }: {
 export function TileVideo({ src, poster }: { src: string; poster: string }) {
   return (
     <video src={src} poster={poster} muted loop autoPlay playsInline preload="metadata" aria-hidden="true"
-      className="absolute inset-0 w-full h-full object-cover -z-20 transition-transform duration-500 group-hover:scale-[1.04]" />
+      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
   )
 }
 
 // ── Videos with a player overlay ────────────────────────────────────────────
 
-const BADGE: Record<string, string> = {
-  YouTube: 'bg-[#c4302b] text-white',
-  Kratko: 'bg-[#c8a96b] text-[#2a1410]',
-  Isječak: 'bg-[#8b1e3f] text-white',
-}
+const ArrowUpRight = () => (
+  <svg className="block shrink-0" width="16" height="16" fill="none" viewBox="0 0 11.5 11.5" aria-hidden="true">
+    <path d="M0.75 10.75L10.75 0.75M10.75 10.75V0.75H0.75" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+  </svg>
+)
 
+/** Video cards (same look as the site's VideoCard) that open a player */
 export function VideoGrid({ vids, label, portrait = false }: { vids: Vid[]; label: string; portrait?: boolean }) {
   const [open, setOpen] = useState<Vid | null>(null)
   return (
     <>
       <div className={portrait
-        ? 'flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2 -mx-5 px-5 md:mx-0 md:px-0 md:grid md:grid-cols-4 lg:grid-cols-6 md:overflow-visible'
-        : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 gap-y-7'}>
+        ? 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-5'
+        : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'}>
         {vids.map(v => {
           const m = vidMedia(v)
-          const meta = [v.kind === 'yt' ? v.src : null, v.v && `${v.v} pregleda`].filter(Boolean).join(' · ')
+          const meta = [v.kind === 'yt' ? v.src : null, v.d, v.v && `${v.v} pregleda`].filter(Boolean).join(' · ')
           return (
-            <button key={`${v.kind}-${v.id}`} type="button" onClick={() => setOpen(v)}
-              className={`group text-left flex flex-col gap-2.5 ${portrait ? 'shrink-0 w-[44%] sm:w-[30%] md:w-auto snap-start' : ''}`}>
-              <span className={`relative block overflow-hidden bg-[#ede6db] ${portrait ? 'aspect-[9/16]' : 'aspect-video'}`}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={m.thumb} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
-                <span className="absolute inset-0 m-auto size-12 rounded-full bg-black/45 border border-white/60 grid place-items-center text-white group-hover:bg-[#8b1e3f]/90 transition-colors">
-                  <Play size={18} className="ml-0.5" fill="currentColor" />
+            <button key={`${v.kind}-${v.id}`} type="button" onClick={() => setOpen(v)} className="group block h-full text-left">
+              <span className="bg-[#f5f2ef] overflow-hidden border border-black/5 flex flex-col h-full">
+                <span className={`relative block w-full shrink-0 overflow-hidden bg-[#e0d8d0] ${portrait ? 'aspect-[9/16]' : 'h-[228px]'}`}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={m.thumb} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <span className="absolute top-4 left-4 bg-[#faf5f5] px-2.5 py-1.5">
+                    <span className="text-[#8b1e3f] uppercase" style={{ fontSize: 10, letterSpacing: '0.3px' }}>{m.badge}</span>
+                  </span>
+                  <span className="absolute inset-0 m-auto size-12 rounded-full bg-black/40 grid place-items-center text-white opacity-90 group-hover:bg-[#8b1e3f] transition-colors">
+                    <Play size={18} className="ml-0.5" fill="currentColor" />
+                  </span>
                 </span>
-                <span className={`absolute left-2 top-2 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${BADGE[m.badge]}`}>{m.badge}</span>
-                {v.d ? <span className="absolute right-2 bottom-2 px-1.5 py-0.5 text-[11px] font-mono bg-black/75 text-white">{v.d}</span> : null}
-              </span>
-              <span className="flex flex-col gap-0.5">
-                <span className="font-semibold text-[#241f1d] text-[15px] leading-snug group-hover:text-[#8b1e3f] transition-colors">{v.t}</span>
-                {meta ? <span className="text-xs text-[#978a81]">{meta}</span> : null}
+                <span className={`flex flex-col gap-2.5 flex-1 ${portrait ? 'px-4 py-4' : 'px-6 py-6'}`}>
+                  {meta ? <span className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{meta}</span> : null}
+                  <span className="font-medium text-[#241f1d] leading-[1.15] line-clamp-3 group-hover:text-[#8b1e3f] transition-colors"
+                    style={{ fontSize: portrait ? 16 : 20, letterSpacing: portrait ? '-0.3px' : '-0.6px' }}>
+                    {v.t}
+                  </span>
+                </span>
               </span>
             </button>
           )
@@ -177,7 +169,7 @@ function Player({ vid, label, onClose }: { vid: Vid; label: string; onClose: () 
       <div onClick={e => e.stopPropagation()} className={`w-full flex flex-col gap-3 ${m.tall ? 'max-w-[420px]' : 'max-w-[1016px]'}`}>
         <div className="flex items-start gap-3">
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-medium uppercase tracking-[0.14em] text-[#c8a96b]">{label}</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-[#e0d8d0]">{label}</p>
             <h3 className="text-white font-semibold text-lg sm:text-xl leading-snug">{vid.t}</h3>
           </div>
           <button ref={closeRef} type="button" onClick={onClose} aria-label="Zatvori"
@@ -211,8 +203,8 @@ export function ProfileInvite({ name, audience, path }: { name: string; audience
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
-        <p className="font-medium text-[#8b1e3f] text-sm tracking-[0.12em] uppercase">Vrsta programa</p>
-        <h3 className="font-semibold text-[#141110] text-2xl">Šta želite organizovati?</h3>
+        <p className="font-medium text-[#8b1e3f] text-base uppercase">Vrsta programa</p>
+        <h2 className="font-semibold text-[#141110]" style={{ fontSize: 28, lineHeight: 1.3, letterSpacing: '-0.3px' }}>Šta želite organizovati?</h2>
       </div>
       <div role="radiogroup" aria-label="Vrsta programa" className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {FORMATS.map(f => {
@@ -230,8 +222,9 @@ export function ProfileInvite({ name, audience, path }: { name: string; audience
         })}
       </div>
       <button type="button" onClick={invite}
-        className="self-start bg-[#8b1e3f] text-white px-7 py-3 text-base hover:bg-[#7a1a37] transition-colors">
+        className="self-start bg-[#8b1e3f] text-white flex items-center gap-2 pl-8 pr-6 py-3 text-base font-normal hover:bg-[#7a1a37] transition-colors">
         Pozovite: {name}
+        <ArrowUpRight />
       </button>
     </div>
   )
@@ -296,7 +289,7 @@ export function InquiryForm() {
     <form onSubmit={submit} noValidate className="flex flex-col gap-4 p-5 sm:p-7 bg-[#faf7f2] border border-[#ede5dc]">
       <h3 className="font-semibold text-[#141110] text-2xl">Upit za nastup</h3>
       {izbor ? (
-        <div className="flex flex-wrap items-center gap-2 px-3.5 py-2.5 border border-[#c8a96b]/60 bg-[#fbf7ee] text-sm">
+        <div className="flex flex-wrap items-center gap-2 px-3.5 py-2.5 border border-[#ede5dc] bg-[#faf5f5] text-sm">
           <span className="text-[#5a4f49]">Vaš izbor: <b className="text-[#8b1e3f] font-semibold">{izbor}</b></span>
           {nazad.startsWith(BASE) ? <Link href={nazad} className="ml-auto underline text-[#746860] hover:text-[#8b1e3f]">promijeni</Link> : null}
         </div>
@@ -320,13 +313,14 @@ export function InquiryForm() {
       <label className="flex flex-col gap-1.5 text-sm text-[#746860]">Napomena
         <textarea name="note" rows={3} placeholder="Prilika, trajanje, broj ljudi, kontakt telefon…" className={`${field} resize-y`} />
       </label>
-      <button type="submit" className="self-start bg-[#8b1e3f] text-white px-7 py-3 text-base hover:bg-[#7a1a37] transition-colors">
+      <button type="submit" className="self-start bg-[#8b1e3f] text-white flex items-center gap-2 pl-8 pr-6 py-3 text-base font-normal hover:bg-[#7a1a37] transition-colors">
         Pripremi poruku
+        <ArrowUpRight />
       </button>
 
       {msg ? (
         <div className="flex flex-col gap-3">
-          <pre className="whitespace-pre-wrap font-sans text-sm text-[#5a4f49] bg-white border border-dashed border-[#c8a96b] p-3.5 max-h-48 overflow-auto">{msg}</pre>
+          <pre className="whitespace-pre-wrap font-sans text-sm text-[#5a4f49] bg-white border border-[#ede5dc] p-3.5 max-h-48 overflow-auto">{msg}</pre>
           <div className="flex flex-wrap gap-2.5">
             <a href={waHref(msg)} target="_blank" rel="noopener"
               className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#25d366] text-[#06301a] font-semibold hover:bg-[#45e283]">

@@ -2,12 +2,15 @@ import { Suspense, type ReactNode } from 'react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import {
   allPaths, AUD, BASE, CONTACT, DRUZENJA_OFFER, DRUZENJA_PHOTOS, DRUZENJA_VIDS, HOR, IMG, MEN, PEOPLE, STATS, VIDEO,
   type Audience, type HorKey,
 } from '@/lib/pozovite'
-import { ContactQuick, HeroShowreel, InquiryForm, ProfileInvite, TileVideo, VideoGrid } from '../ui'
+import { ContactQuick, HeroVideo, InquiryForm, ProfileInvite, TileVideo, VideoGrid } from '../ui'
+
+// Built from the "Pozovite nas" mini-site, laid out with the same pieces as the
+// rest of misbah-edu.com (home hero, section heads, cards, buttons).
 
 export const dynamicParams = false
 
@@ -65,27 +68,75 @@ export default function PozoviteNasPage({ params }: { params: { slug?: string[] 
   const isHome = r.crumbs.length === 1
   const isInquiry = params.slug?.[0] === 'kontakt'
   return (
-    <div className="w-full bg-white">
+    <div className="min-h-screen w-full bg-white">
       {isHome ? null : <Crumbs crumbs={r.crumbs} />}
       {r.body}
-      {isInquiry ? null : <InviteBand />}
+      {isInquiry ? null : <InviteSection />}
     </div>
   )
 }
 
-// ── Layout pieces ───────────────────────────────────────────────────────────
+// ── Site building blocks (as on the home page) ──────────────────────────────
 
 const WRAP = 'max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20'
 
-// Mihrab arch for the lecturer portraits
-const ARCH = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 400' preserveAspectRatio='none'%3E%3Cpath d='M0 400V120C0 70 70 52 110 30C130 19 143 8 150 0C157 8 170 19 190 30C230 52 300 70 300 120V400Z'/%3E%3C/svg%3E") center/100% 100% no-repeat`
-
-function Arch({ src, alt = '', className = '' }: { src: string; alt?: string; className?: string }) {
+function ArrowUpRight() {
   return (
-    <span className={`block aspect-[3/4] overflow-hidden bg-[#ede6db] ${className}`} style={{ WebkitMask: ARCH, mask: ARCH }}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={IMG(src)} alt={alt} loading="lazy" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.05]" />
-    </span>
+    <svg className="block shrink-0" width="16" height="16" fill="none" viewBox="0 0 11.5 11.5" aria-hidden="true">
+      <path d="M0.75 10.75L10.75 0.75M10.75 10.75V0.75H0.75" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+    </svg>
+  )
+}
+
+function PrimaryLink({ href, children }: { href: string; children: ReactNode }) {
+  return (
+    <Link href={href}
+      className="bg-[#8b1e3f] text-white flex items-center gap-2 pl-8 pr-6 py-3 text-base font-normal shrink-0 hover:bg-[#7a1a37] transition-colors self-start">
+      {children}
+      <ArrowUpRight />
+    </Link>
+  )
+}
+
+function OutlineLink({ href, children }: { href: string; children: ReactNode }) {
+  return (
+    <Link href={href} className="border border-[#8b1e3f] text-[#8b1e3f] px-6 py-3 text-base font-normal hover:bg-[#faf5f5] transition-colors">
+      {children}
+    </Link>
+  )
+}
+
+function Section({ children, bg = 'bg-white' }: { children: ReactNode; bg?: string }) {
+  return (
+    <section className={`${bg} w-full`}>
+      <div className={`${WRAP} py-16 lg:py-20 flex flex-col gap-14`}>{children}</div>
+    </section>
+  )
+}
+
+function SectionHead({ back, tag, title, description, cta }: {
+  back?: Crumb; tag: string; title: string; description?: string; cta?: ReactNode
+}) {
+  return (
+    <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+      <div className="flex flex-col gap-4 max-w-[705px]">
+        {back ? (
+          <Link href={back.href} className="inline-flex items-center gap-1 self-start text-sm text-[#746860] hover:text-[#8b1e3f]">
+            <ChevronLeft size={16} /> {back.label}
+          </Link>
+        ) : null}
+        <p className="font-medium text-[#8b1e3f] text-base uppercase">{tag}</p>
+        <div className="flex flex-col gap-6">
+          <h1 className="font-semibold text-[#141110]" style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}>
+            {title}
+          </h1>
+          {description ? (
+            <p className="font-normal text-[#746860]" style={{ fontSize: 18, lineHeight: 1.5, letterSpacing: '-0.18px' }}>{description}</p>
+          ) : null}
+        </div>
+      </div>
+      {cta}
+    </div>
   )
 }
 
@@ -95,9 +146,9 @@ function Crumbs({ crumbs }: { crumbs: Crumb[] }) {
       <ol className={`${WRAP} flex items-center gap-1.5 py-3 text-sm overflow-x-auto whitespace-nowrap`}>
         {crumbs.map((c, i) => (
           <li key={c.href} className="flex items-center gap-1.5 shrink-0">
-            {i > 0 ? <ChevronRight size={14} className="text-[#c8a96b]" aria-hidden="true" /> : null}
+            {i > 0 ? <ChevronRight size={14} className="text-[#a89888]" aria-hidden="true" /> : null}
             {i === crumbs.length - 1
-              ? <span aria-current="page" className="text-[#8b1e3f] font-semibold">{c.label}</span>
+              ? <span aria-current="page" className="text-[#8b1e3f] font-medium">{c.label}</span>
               : <Link href={c.href} className="text-[#746860] hover:text-[#8b1e3f]">{c.label}</Link>}
           </li>
         ))}
@@ -106,71 +157,45 @@ function Crumbs({ crumbs }: { crumbs: Crumb[] }) {
   )
 }
 
-function Head({ back, tag, title, accent, description, children }: {
-  back?: Crumb; tag: string; title: string; accent?: string; description?: string; children?: ReactNode
+/** Card with a picture on top and text below (like the site's video and team cards) */
+function Card({ href, tag, title, description, img, video, footer, tall = false }: {
+  href: string; tag: string; title: string; description: string; img: string; video?: string; footer?: string; tall?: boolean
 }) {
   return (
-    <div className="flex flex-col gap-4 max-w-[760px]">
-      {back ? (
-        <Link href={back.href} className="inline-flex items-center gap-1 self-start text-sm font-medium text-[#8b1e3f] hover:underline">
-          <ChevronLeft size={16} /> {back.label}
-        </Link>
-      ) : null}
-      <p className="font-medium text-[#8b1e3f] text-base uppercase">{tag}</p>
-      <h1 className="font-semibold text-[#141110]" style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.25, letterSpacing: '-0.44px' }}>
-        {title}{accent ? <> <span className="text-[#8b1e3f]">{accent}</span></> : null}
-      </h1>
-      {description ? <p className="text-[#746860]" style={{ fontSize: 18, lineHeight: 1.5 }}>{description}</p> : null}
-      {children}
-    </div>
-  )
-}
-
-function Section({ children, tint = false }: { children: ReactNode; tint?: boolean }) {
-  return (
-    <section className={tint ? 'bg-[#fcfbfa]' : 'bg-white'}>
-      <div className={`${WRAP} py-12 lg:py-16 flex flex-col gap-10`}>{children}</div>
-    </section>
-  )
-}
-
-function Tile({ href, eyebrow, title, description, img, video, count }: {
-  href: string; eyebrow: string; title: string; description: string; img: string; video?: string; count?: string
-}) {
-  return (
-    <Link href={href} className="group relative isolate flex flex-col justify-end gap-2 min-h-[240px] lg:min-h-[300px] p-6 overflow-hidden bg-[#2a0814] text-white">
-      {video ? <TileVideo src={VIDEO(video)} poster={IMG(img)} /> : (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={IMG(img)} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover -z-20 transition-transform duration-500 group-hover:scale-[1.04]" />
-      )}
-      <span className="absolute inset-0 -z-10 bg-gradient-to-t from-[#2a0814]/95 via-[#2a0814]/55 to-[#2a0814]/10" />
-      <span className="absolute top-4 right-4 size-10 grid place-items-center bg-[#c8a96b] text-[#2a1410] group-hover:bg-white transition-colors">
-        <ArrowRight size={18} />
-      </span>
-      <span className="text-xs font-semibold uppercase tracking-[0.14em] text-[#dfc89a] pr-12">{eyebrow}</span>
-      <span className="font-semibold leading-tight" style={{ fontSize: 'clamp(24px, 2.4vw, 32px)' }}>{title}</span>
-      <span className="text-[15px] text-white/85 leading-snug max-w-[46ch]">{description}</span>
-      {count ? <span className="text-sm font-semibold text-[#dfc89a]">{count}</span> : null}
+    <Link href={href} className="group flex flex-col overflow-hidden h-full">
+      <div className="relative w-full overflow-hidden shrink-0 bg-[#e0d8d0]" style={{ height: tall ? 340 : 240 }}>
+        {video ? <TileVideo src={VIDEO(video)} poster={IMG(img)} /> : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={IMG(img)} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" />
+        )}
+      </div>
+      <div className="bg-[#f5f2ef] flex flex-col gap-3 p-6 flex-1">
+        <p className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{tag}</p>
+        <p className="font-medium text-[#241f1d] group-hover:text-[#8b1e3f] transition-colors" style={{ fontSize: 24, lineHeight: 1.12, letterSpacing: '-0.72px' }}>
+          {title}
+        </p>
+        <p className="font-normal text-[#5a4f49] text-base leading-normal">{description}</p>
+        {footer ? <p className="font-medium text-[#8b1e3f] text-sm mt-auto pt-1">{footer} →</p> : null}
+      </div>
     </Link>
   )
 }
 
-/** Closing call to action on every page except the inquiry itself */
-function InviteBand() {
+/** Closing call to action */
+function InviteSection() {
   return (
-    <section className="bg-[#8b1e3f] text-white">
-      <div className={`${WRAP} py-12 flex flex-col md:flex-row md:items-center gap-6 justify-between`}>
-        <div className="flex flex-col gap-2 max-w-[640px]">
-          <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[#dfc89a]">Pozovite nas</p>
-          <p className="font-semibold" style={{ fontSize: 'clamp(22px, 2.6vw, 30px)', lineHeight: 1.25 }}>Dovedite Misbah u svoju zajednicu</p>
-          <p className="text-white/80">Pišite nam s datumom, mjestom i vrstom programa — zajedno ćemo dogovoriti detalje.</p>
-        </div>
-        <div className="flex flex-wrap items-center gap-3">
-          <Link href={`${BASE}/kontakt`} className="bg-[#c8a96b] text-[#2a1410] font-semibold px-7 py-3 hover:bg-[#dfc89a] transition-colors">Pošaljite upit</Link>
-          <a href={`mailto:${CONTACT.email}`} className="border border-white/50 px-6 py-3 hover:bg-white/10 transition-colors">{CONTACT.email}</a>
-        </div>
-      </div>
-    </section>
+    <Section bg="bg-[#fcfbfa]">
+      <SectionHead tag="POZOVITE NAS" title="Dovedite Misbah u svoju zajednicu"
+        description="Pišite nam s datumom, mjestom i vrstom programa, pa ćemo zajedno dogovoriti detalje."
+        cta={
+          <div className="flex flex-wrap gap-4 self-start lg:self-auto">
+            <PrimaryLink href={`${BASE}/kontakt`}>Pošaljite upit</PrimaryLink>
+            <a href={`mailto:${CONTACT.email}`} className="border border-[#8b1e3f] text-[#8b1e3f] px-6 py-3 text-base font-normal hover:bg-[#faf5f5] transition-colors">
+              {CONTACT.email}
+            </a>
+          </div>
+        } />
+    </Section>
   )
 }
 
@@ -184,35 +209,52 @@ const count = (n: number, one: string, few: string, many: string) => {
 function Home() {
   return (
     <>
-      <HeroShowreel src={VIDEO('v/showreel.mp4')} poster={IMG('p/showreel.jpg')}
-        className={`${WRAP} py-16 lg:py-24 min-h-[560px] lg:min-h-[640px] flex flex-col justify-end gap-6`}
-        cta={<Link href={`${BASE}/kontakt`} className="bg-[#c8a96b] text-[#2a1410] font-semibold px-7 py-3 hover:bg-[#dfc89a] transition-colors">Pozovite nas</Link>}>
-          <p className="text-[#dfc89a] text-lg" dir="rtl" lang="ar" style={{ fontFamily: "'Noto Sans Arabic', Manrope, sans-serif", textAlign: 'left' }}>
-            بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
-          </p>
-          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#c8a96b]">Omladinska inicijativa · Sarajevo · od 2022.</p>
-          <h1 className="font-semibold text-white max-w-[14ch]" style={{ fontSize: 'clamp(36px, 6vw, 72px)', lineHeight: 1.08, letterSpacing: '-1.5px' }}>
-            Svjetlo znanja, <span className="text-[#c8a96b]">uživo</span> u vašoj zajednici
-          </h1>
-          <p className="text-white/85 max-w-[56ch]" style={{ fontSize: 'clamp(16px, 1.4vw, 19px)', lineHeight: 1.55 }}>
-            Mladi hafizi, imami i predavači. Izaberite šta želite ugostiti, a mi dolazimo u vaš džemat, školu ili na vašu manifestaciju.
-          </p>
-      </HeroShowreel>
+      {/* Hero, as on the home page: text panel left, showreel right */}
+      <section className="bg-white w-full">
+        <div className="max-w-[1440px] mx-auto w-full flex flex-col lg:flex-row items-stretch min-h-[520px] lg:min-h-[640px]">
+          <div className="bg-[#faf7f2] flex flex-col justify-end gap-16 lg:gap-20 px-6 sm:px-10 lg:px-[60px] py-16 lg:py-[104px] w-full lg:w-[55%] xl:w-[798px] shrink-0">
+            <div className="flex flex-col gap-2">
+              <p className="text-base font-medium text-[#141110] text-center lg:text-left" dir="rtl"
+                style={{ fontFamily: "'Noto Sans Arabic', Manrope, sans-serif" }}>
+                بسم الله الرحمن الرحيم
+              </p>
+              <div className="flex flex-col gap-6 mt-2">
+                <p className="font-medium text-[#8b1e3f] text-base uppercase">Pozovite nas · Omladinska inicijativa · Sarajevo · od 2022.</p>
+                <h1 className="font-semibold text-[#141110]" style={{ fontSize: 'clamp(32px, 5vw, 52px)', lineHeight: 1.3, letterSpacing: '-1.04px' }}>
+                  Svjetlo znanja, uživo u vašoj zajednici
+                </h1>
+                <p className="font-normal text-[#5a4f49]" style={{ fontSize: 18, lineHeight: 1.5, letterSpacing: '-0.18px' }}>
+                  Mladi hafizi, imami i predavači. Izaberite šta želite ugostiti, a mi dolazimo u vaš džemat, školu ili na vašu manifestaciju.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-4">
+              <PrimaryLink href={`${BASE}/kontakt`}>Pošaljite upit</PrimaryLink>
+              <OutlineLink href={`${BASE}/predavanja`}>Predavanja</OutlineLink>
+            </div>
+          </div>
+          <div className="relative flex-1 min-w-0 min-h-[300px] lg:min-h-0 overflow-hidden bg-[#ede6db]">
+            <HeroVideo src={VIDEO('v/showreel.mp4')} poster={IMG('p/showreel.jpg')} />
+          </div>
+        </div>
+      </section>
 
       <Section>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Tile href={`${BASE}/predavanja`} eyebrow="Za muškarce · za žene · za džemat" title="Predavanja" img="p/hamdo-tin.jpg"
-            description="Izaberite publiku, predavača i vrstu programa: predavanje, edukaciju, radionicu ili višednevnu edukaciju." />
-          <Tile href={`${BASE}/hor`} eyebrow="Muški · ženski · miješani" title="Hor" img="p/hor-maljevac.jpg"
-            description="Ilahije i kaside uz defove za otvorenja džamija, mevlude, iftare i svečanosti." />
-          <Tile href={`${BASE}/druzenja`} eyebrow="Predavanja · radionice · kvizovi" title="Omladinska druženja" img="p/zagreb.jpg"
-            description="Edukativna predavanja, interaktivne radionice i kvizovi znanja za mlade." />
+        <SectionHead tag="ŠTA NUDIMO" title="Izaberite šta želite ugostiti"
+          description="Predavanja za muškarce, žene i cijeli džemat, Hor Misbah i omladinska druženja s predavanjima, radionicama i kvizovima." />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <Card href={`${BASE}/predavanja`} tag="Za muškarce · za žene · za džemat" title="Predavanja" img="p/hamdo-tin.jpg"
+            description="Izaberite publiku, predavača i vrstu programa: predavanje, edukaciju, radionicu ili višednevnu edukaciju." footer="Izaberite predavanje" />
+          <Card href={`${BASE}/hor`} tag="Muški · ženski · miješani" title="Hor" img="p/hor-maljevac.jpg"
+            description="Ilahije i kaside uz defove za otvorenja džamija, mevlude, iftare i svečanosti." footer="Izaberite hor" />
+          <Card href={`${BASE}/druzenja`} tag="Predavanja · radionice · kvizovi" title="Omladinska druženja" img="p/zagreb.jpg"
+            description="Edukativna predavanja, interaktivne radionice i kvizovi znanja za mlade." footer="Saznajte više" />
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-[#ede5dc] border border-[#ede5dc]">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {STATS.map(s => (
-            <div key={s.t} className="bg-white px-5 py-6 flex flex-col gap-1">
+            <div key={s.t} className="bg-[#faf5f5] px-6 py-6 flex flex-col gap-1">
               <span className="font-semibold text-[#8b1e3f]" style={{ fontSize: 'clamp(26px, 3vw, 36px)', letterSpacing: '-0.5px' }}>{s.n}</span>
-              <span className="text-[#746860]">{s.t}</span>
+              <span className="text-[#5a4f49]">{s.t}</span>
             </div>
           ))}
         </div>
@@ -224,12 +266,12 @@ function Home() {
 function Predavanja() {
   return (
     <Section>
-      <Head back={{ href: BASE, label: 'Pozovite nas' }} tag="Predavanja" title="Za koga" accent="pripremamo program?"
+      <SectionHead back={{ href: BASE, label: 'Pozovite nas' }} tag="PREDAVANJA" title="Za koga pripremamo program?"
         description="Izaberite publiku. Zatim birate predavača i vrstu programa." />
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {(Object.keys(AUD) as Audience[]).map(k => (
-          <Tile key={k} href={`${BASE}/predavanja/${k}`} eyebrow="Predavanja" title={AUD[k].t} description={AUD[k].d} img={AUD[k].img}
-            count={k === 'zene' ? '1 predavačica' : count(MEN.length, 'predavač', 'predavača', 'predavača')} />
+          <Card key={k} href={`${BASE}/predavanja/${k}`} tag="Predavanja" title={AUD[k].t} description={AUD[k].d} img={AUD[k].img}
+            footer={k === 'zene' ? '1 predavačica' : count(MEN.length, 'predavač', 'predavača', 'predavača')} />
         ))}
       </div>
     </Section>
@@ -240,18 +282,14 @@ function Lecturers({ aud }: { aud: 'muskarci' | 'dzemat' }) {
   const a = AUD[aud]
   return (
     <Section>
-      <Head back={{ href: `${BASE}/predavanja`, label: 'Predavanja' }} tag={`Predavanja · ${a.t}`} title="Izaberite" accent="predavača"
+      <SectionHead back={{ href: `${BASE}/predavanja`, label: 'Predavanja' }} tag={`PREDAVANJA · ${a.t.toUpperCase()}`} title="Izaberite predavača"
         description={`${a.d} Na profilu predavača birate vrstu programa i šaljete upit.`} />
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-5 gap-y-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
         {MEN.map(id => {
           const p = PEOPLE[id]
           return (
-            <Link key={id} href={`${BASE}/predavanja/${aud}/${id}`} className="group flex flex-col gap-1.5">
-              <Arch src={p.img} className="mb-2" />
-              <span className="text-xs font-semibold uppercase tracking-[0.1em] text-[#8b1e3f]">{p.r}</span>
-              <span className="font-semibold text-[#241f1d] text-lg leading-tight group-hover:text-[#8b1e3f]">{p.n}</span>
-              <span className="text-sm text-[#978a81]">{p.vids.length ? count(p.vids.length, 'video', 'videa', 'videa') : 'Snimci uskoro'}</span>
-            </Link>
+            <Card key={id} href={`${BASE}/predavanja/${aud}/${id}`} tag={p.r} title={p.n} description={p.bio} img={p.img} tall
+              footer={p.vids.length ? count(p.vids.length, 'video', 'videa', 'videa') : 'Snimci uskoro'} />
           )
         })}
       </div>
@@ -267,22 +305,25 @@ function Profile({ aud, id, back }: { aud: Audience; id: string; back: Crumb }) 
   return (
     <>
       <Section>
-        <Link href={back.href} className="inline-flex items-center gap-1 self-start text-sm font-medium text-[#8b1e3f] hover:underline -mb-4">
+        <Link href={back.href} className="inline-flex items-center gap-1 self-start text-sm text-[#746860] hover:text-[#8b1e3f] -mb-8">
           <ChevronLeft size={16} /> {back.label}
         </Link>
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-8 lg:gap-12 items-start">
-          <div className="grid grid-cols-[110px_minmax(0,1fr)] sm:grid-cols-[170px_minmax(0,1fr)] gap-5 sm:gap-7 items-center p-5 sm:p-7 bg-[#faf7f2] border border-[#ede5dc]">
-            <Arch src={p.img} alt={p.n} />
-            <div className="flex flex-col gap-3 min-w-0">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#8b1e3f]">{p.r}</p>
-              <h1 className="font-semibold text-[#141110] leading-tight" style={{ fontSize: 'clamp(24px, 3vw, 36px)', letterSpacing: '-0.4px' }}>{p.n}</h1>
-              <p className="text-[#5a4f49] text-[15px] leading-relaxed">{p.bio}</p>
-              <div className="flex flex-wrap gap-1.5">
-                {p.topics.map(t => <span key={t} className="text-xs px-2.5 py-1 border border-[#ede5dc] bg-white text-[#5a4f49]">{t}</span>)}
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-10 lg:gap-14 items-start">
+          <div className="flex flex-col sm:flex-row overflow-hidden">
+            <div className="relative w-full sm:w-[240px] shrink-0 overflow-hidden bg-[#e0d8d0]" style={{ minHeight: 300 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={IMG(p.img)} alt={p.n} className="absolute inset-0 w-full h-full object-cover object-top" />
+            </div>
+            <div className="bg-[#f5f2ef] flex flex-col gap-3 p-6 flex-1">
+              <p className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{p.r}</p>
+              <h1 className="font-medium text-[#241f1d]" style={{ fontSize: 'clamp(24px, 2.6vw, 32px)', lineHeight: 1.12, letterSpacing: '-0.72px' }}>{p.n}</h1>
+              <p className="font-normal text-[#5a4f49] text-base leading-normal">{p.bio}</p>
+              <div className="flex flex-wrap gap-2">
+                {p.topics.map(t => <span key={t} className="bg-[#faf5f5] px-2.5 py-1.5 text-[#8b1e3f] uppercase" style={{ fontSize: 10, letterSpacing: '0.3px' }}>{t}</span>)}
               </div>
               {p.author ? (
-                <Link href={`/autori/${p.author}`} className="inline-flex items-center gap-1 self-start text-sm font-medium text-[#8b1e3f] hover:underline">
-                  Svi sadržaji na Misbahu <ArrowRight size={14} />
+                <Link href={`/autori/${p.author}`} className="self-start text-sm font-medium text-[#8b1e3f] hover:underline mt-auto pt-1">
+                  Svi sadržaji na Misbahu →
                 </Link>
               ) : null}
             </div>
@@ -290,8 +331,8 @@ function Profile({ aud, id, back }: { aud: Audience; id: string; back: Crumb }) 
           <ProfileInvite name={p.n} audience={AUD[aud].t} path={path} />
         </div>
       </Section>
-      <Section tint>
-        <h2 className="font-semibold text-[#141110] text-2xl lg:text-3xl -mb-2">Pogledajte predavanja</h2>
+      <Section bg="bg-[#fcfbfa]">
+        <SectionHead tag="SNIMCI" title="Pogledajte predavanja" />
         {short.length ? <VideoGrid vids={short} label={p.n} portrait /> : null}
         {long.length ? <VideoGrid vids={long} label={p.n} /> : null}
         {!p.vids.length ? <Soon /> : null}
@@ -302,10 +343,10 @@ function Profile({ aud, id, back }: { aud: Audience; id: string; back: Crumb }) 
 
 function Soon() {
   return (
-    <div className="border border-dashed border-[#c8a96b] p-6 flex flex-col gap-2 items-start max-w-[620px] bg-white">
-      <p className="font-semibold text-[#241f1d] text-lg">Snimci uskoro</p>
-      <p className="text-[#746860]">Snimke ćemo uskoro dodati. Do tada nam se javite i poslat ćemo vam primjere nastupa.</p>
-      <Link href={`${BASE}/kontakt`} className="border border-[#8b1e3f] text-[#8b1e3f] px-5 py-2 mt-1 hover:bg-[#faf5f5]">Pitajte nas</Link>
+    <div className="bg-[#f5f2ef] p-8 flex flex-col gap-3 items-start max-w-[620px]">
+      <p className="font-medium text-[#241f1d]" style={{ fontSize: 20 }}>Snimci uskoro</p>
+      <p className="text-[#5a4f49]">Snimke ćemo uskoro dodati. Do tada nam se javite i poslat ćemo vam primjere nastupa.</p>
+      <OutlineLink href={`${BASE}/kontakt`}>Pitajte nas</OutlineLink>
     </div>
   )
 }
@@ -313,14 +354,14 @@ function Soon() {
 function Hor() {
   return (
     <Section>
-      <Head back={{ href: BASE, label: 'Pozovite nas' }} tag="Hor Misbah" title="Izaberite" accent="hor"
+      <SectionHead back={{ href: BASE, label: 'Pozovite nas' }} tag="HOR MISBAH" title="Izaberite hor"
         description="Nastupamo na otvorenjima džamija, mevludima, iftarima i svečanostima." />
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
         {(Object.keys(HOR) as HorKey[]).map(k => {
           const h = HOR[k]
           return (
-            <Tile key={k} href={`${BASE}/hor/${k}`} eyebrow="Hor" title={h.t} description={h.d} img={h.img} video={h.vid}
-              count={h.vids.length ? count(h.vids.length, 'snimak', 'snimka', 'snimaka') : 'Snimci uskoro'} />
+            <Card key={k} href={`${BASE}/hor/${k}`} tag="Hor" title={h.t} description={h.d} img={h.img} video={h.vid}
+              footer={h.vids.length ? count(h.vids.length, 'snimak', 'snimka', 'snimaka') : 'Snimci uskoro'} />
           )
         })}
       </div>
@@ -335,11 +376,8 @@ function HorOne({ k }: { k: HorKey }) {
   const q = new URLSearchParams({ rubrika: 'Hor', izbor: h.t, nazad: `${BASE}/hor/${k}` })
   return (
     <Section>
-      <Head back={{ href: `${BASE}/hor`, label: 'Hor' }} tag="Hor Misbah" title={h.t} description={h.d}>
-        <Link href={`${BASE}/kontakt?${q}`} className="self-start bg-[#8b1e3f] text-white px-7 py-3 hover:bg-[#7a1a37] transition-colors">
-          Pozovite: {h.t}
-        </Link>
-      </Head>
+      <SectionHead back={{ href: `${BASE}/hor`, label: 'Hor' }} tag="HOR MISBAH" title={h.t} description={h.d}
+        cta={<PrimaryLink href={`${BASE}/kontakt?${q}`}>Pozovite: {h.t}</PrimaryLink>} />
       {wide.length ? <VideoGrid vids={wide} label={h.t} /> : null}
       {tall.length ? <VideoGrid vids={tall} label={h.t} portrait /> : null}
       {!h.vids.length ? <Soon /> : null}
@@ -352,33 +390,28 @@ function Druzenja() {
   return (
     <>
       <Section>
-        <Head back={{ href: BASE, label: 'Pozovite nas' }} tag="Omladinska druženja" title="Družite se" accent="sa nama">
-          <Link href={`${BASE}/kontakt?${q}`} className="self-start bg-[#8b1e3f] text-white px-7 py-3 hover:bg-[#7a1a37] transition-colors">
-            Organizujte druženje s nama
-          </Link>
-        </Head>
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] gap-8 lg:gap-12 items-center">
-          <div className="flex flex-col gap-4">
-            <h2 className="font-semibold text-[#141110] text-2xl lg:text-3xl">Šta Misbah nudi mladima?</h2>
-            <ul className="flex flex-col gap-3">
-              {DRUZENJA_OFFER.map(o => (
-                <li key={o.t} className="flex flex-col gap-1 p-4 border border-[#ede5dc] bg-[#faf7f2]">
-                  <b className="font-semibold text-[#8b1e3f] text-lg">{o.t}</b>
-                  <span className="text-[#5a4f49] leading-relaxed">{o.d}</span>
-                </li>
-              ))}
-            </ul>
+        <SectionHead back={{ href: BASE, label: 'Pozovite nas' }} tag="OMLADINSKA DRUŽENJA" title="Družite se sa nama"
+          description="Šta Misbah nudi mladima?"
+          cta={<PrimaryLink href={`${BASE}/kontakt?${q}`}>Organizujte druženje s nama</PrimaryLink>} />
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] gap-10 lg:gap-14 items-start">
+          <div className="grid grid-cols-1 gap-4">
+            {DRUZENJA_OFFER.map(o => (
+              <div key={o.t} className="bg-[#faf5f5] flex flex-col gap-3 p-8">
+                <h3 className="font-medium text-[#241f1d]" style={{ fontSize: 24, lineHeight: 1.12, letterSpacing: '-0.72px' }}>{o.t}</h3>
+                <p className="font-normal text-[#5a4f49] text-base leading-normal">{o.d}</p>
+              </div>
+            ))}
           </div>
           <div className="grid grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] gap-2.5">
             {DRUZENJA_PHOTOS.map(ph => (
               // eslint-disable-next-line @next/next/no-img-element
-              <img key={ph.src} src={IMG(ph.src)} alt={ph.alt} loading="lazy" className="w-full h-[150px] sm:h-[220px] object-cover" style={{ objectPosition: 'center 45%' }} />
+              <img key={ph.src} src={IMG(ph.src)} alt={ph.alt} loading="lazy" className="w-full h-[150px] sm:h-[230px] object-cover" style={{ objectPosition: 'center 45%' }} />
             ))}
           </div>
         </div>
       </Section>
-      <Section tint>
-        <h2 className="font-semibold text-[#141110] text-2xl lg:text-3xl -mb-2">Sa naših druženja</h2>
+      <Section bg="bg-[#fcfbfa]">
+        <SectionHead tag="SNIMCI" title="Sa naših druženja" />
         <VideoGrid vids={DRUZENJA_VIDS} label="Omladinska druženja" />
       </Section>
     </>
@@ -396,19 +429,22 @@ function Kontakt() {
   return (
     <Section>
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-10 lg:gap-14 items-start">
-        <div className="flex flex-col gap-6">
-          <Head tag="Pozovite nas" title="Dovedite Misbah" accent="u svoju zajednicu"
+        <div className="flex flex-col gap-8">
+          <SectionHead tag="POZOVITE NAS" title="Dovedite Misbah u svoju zajednicu"
             description="Pišite nam s datumom, mjestom i vrstom programa, pa ćemo zajedno dogovoriti detalje." />
           <ContactQuick />
-          <div className="flex flex-wrap gap-2">
-            {SOCIALS.map(s => (
-              <a key={s.href} href={s.href} target="_blank" rel="noopener"
-                className="px-4 py-2 border border-[#ede5dc] text-sm text-[#5a4f49] hover:border-[#8b1e3f] hover:text-[#8b1e3f] transition-colors">
-                {s.label} ↗
-              </a>
-            ))}
+          <div className="flex flex-col gap-3">
+            <p className="font-normal text-[#746860] uppercase" style={{ fontSize: 13, letterSpacing: '0.42px' }}>Ostanimo povezani</p>
+            <div className="flex flex-wrap gap-2">
+              {SOCIALS.map(s => (
+                <a key={s.href} href={s.href} target="_blank" rel="noopener"
+                  className="border border-[#ede5dc] px-4 py-2 text-sm text-[#5a4f49] hover:border-[#8b1e3f] hover:text-[#8b1e3f] transition-colors">
+                  {s.label} ↗
+                </a>
+              ))}
+            </div>
+            <p className="text-sm text-[#978a81]">Sarajevo, Bosna i Hercegovina</p>
           </div>
-          <p className="text-sm text-[#978a81]">Sarajevo, Bosna i Hercegovina</p>
         </div>
         <Suspense>
           <InquiryForm />
