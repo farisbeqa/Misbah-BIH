@@ -26,3 +26,6 @@ public/uploads/*
 .DS_Store
 *.log
 .vercel
+
+# "Pozovite nas" videos are served from S3/CloudFront, not the repo
+/public/pozovite-nas/**/*.mp4

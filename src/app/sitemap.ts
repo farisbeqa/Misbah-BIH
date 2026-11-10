@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { prisma } from '@/lib/db'
+import { allPaths } from '@/lib/pozovite'
 
 const BASE = 'https://www.misbah-edu.com'
 
@@ -21,6 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/galerija`,          lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE}/o-nama`,            lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE}/autori`,            lastModified: now, changeFrequency: 'weekly',  priority: 0.6 },
+    ...allPaths().map(p => ({ url: `${BASE}/pozovite-nas${p.length ? '/' + p.join('/') : ''}`, lastModified: now, changeFrequency: 'monthly' as const, priority: p.length ? 0.5 : 0.8 })),
     { url: `${BASE}/privatnost`,        lastModified: now, changeFrequency: 'yearly',  priority: 0.2 },
     { url: `${BASE}/pravila-koristenja`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
     { url: `${BASE}/mekteb`,            lastModified: now, changeFrequency: 'weekly',  priority: 0.7 },

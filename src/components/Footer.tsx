@@ -47,6 +47,7 @@ const NAV_LINKS = [
   { href: '/podcasts',          label: 'Podcast' },
   { href: '/blog',              label: 'Blog' },
   { href: '/o-nama',            label: 'O nama' },
+  { href: '/pozovite-nas',      label: 'Pozovite nas' },
 ]
 
 export default function Footer() {

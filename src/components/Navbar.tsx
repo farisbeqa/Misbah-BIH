@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { Menu, X, ChevronDown, LogOut } from 'lucide-react'
+import { Menu, X, ChevronDown, LogOut, CalendarHeart } from 'lucide-react'
 import AuthModal from './AuthModal'
 
 interface AuthUser { id: number; username: string }
@@ -158,8 +158,8 @@ export default function Navbar() {
   return (
     <>
       {/* Desktop nav */}
-      <nav className="bg-white w-full sticky top-0 z-40 border-b border-gray-100 hidden lg:block">
-      <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-5 flex items-center justify-between">
+      <nav className="bg-white w-full sticky top-0 z-40 border-b border-gray-100 hidden xl:block">
+      <div className="max-w-[1440px] mx-auto px-10 py-5 flex items-center justify-between gap-4">
         <Link href="/" className="flex items-center gap-2.5 shrink-0">
           <Image src="/logo.jpg" alt="Misbah EDU" width={56} height={56} className="object-cover mix-blend-multiply" />
           <span className="font-bold text-[26px] leading-none" style={{ color: '#8b1e3f' }}>
@@ -227,6 +227,11 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-4 shrink-0">
+          <Link href="/pozovite-nas" title="Pozovite Misbah u svoju zajednicu" aria-label="Pozovite nas"
+            className="flex items-center gap-2 bg-[#c8a96b] text-[#2a1410] px-3.5 min-[1440px]:px-5 py-3 text-base font-semibold hover:bg-[#dfc89a] transition-colors">
+            <CalendarHeart size={19} />
+            <span className="hidden min-[1440px]:inline">Pozovite nas</span>
+          </Link>
           {authChecked && (
             user ? (
               <div className="flex items-center gap-3">
@@ -246,11 +251,11 @@ export default function Navbar() {
             ) : (
               <>
                 <button onClick={() => openModal('register')}
-                  className="bg-[#8b1e3f] text-white px-8 py-3 text-base font-normal hover:bg-[#7a1a37] transition-colors">
+                  className="bg-[#8b1e3f] text-white px-5 min-[1440px]:px-8 py-3 text-base font-normal hover:bg-[#7a1a37] transition-colors">
                   Registruj se
                 </button>
                 <button onClick={() => openModal('login')}
-                  className="border border-[#8b1e3f] text-[#8b1e3f] px-6 py-3 text-base font-normal hover:bg-[#faf5f5] transition-colors">
+                  className="border border-[#8b1e3f] text-[#8b1e3f] px-4 min-[1440px]:px-6 py-3 text-base font-normal hover:bg-[#faf5f5] transition-colors">
                   Prijava
                 </button>
               </>
@@ -261,23 +266,31 @@ export default function Navbar() {
       </nav>
 
       {/* Mobile nav bar */}
-      <nav className="bg-white w-full sticky top-0 z-40 border-b border-gray-100 lg:hidden flex items-center justify-between px-5 py-4">
+      <nav className="bg-white w-full sticky top-0 z-40 border-b border-gray-100 xl:hidden flex items-center justify-between px-5 md:px-10 py-4">
         <Link href="/" className="flex items-center gap-2 shrink-0">
           <Image src="/logo.jpg" alt="Misbah EDU" width={44} height={44} className="object-cover mix-blend-multiply" />
           <span className="font-bold text-[20px] leading-none" style={{ color: '#8b1e3f' }}>
             Misbah <span style={{ color: '#c8a96b' }}>EDU</span>
           </span>
         </Link>
-        <button onClick={() => setMobileOpen(v => !v)} className="p-1" aria-label="Toggle menu">
-          {mobileOpen
-            ? <X size={24} style={{ color: '#8b1e3f' }} />
-            : <Menu size={24} style={{ color: '#141110' }} />
-          }
-        </button>
+        <div className="flex items-center gap-2.5">
+          <Link href="/pozovite-nas" onClick={() => setMobileOpen(false)}
+            aria-label="Pozovite nas"
+            className="flex items-center gap-1.5 bg-[#c8a96b] text-[#2a1410] px-2.5 min-[380px]:pr-3 py-2 text-[13px] font-semibold whitespace-nowrap">
+            <CalendarHeart size={16} />
+            <span className="max-[379px]:hidden">Pozovite nas</span>
+          </Link>
+          <button onClick={() => setMobileOpen(v => !v)} className="p-1" aria-label="Toggle menu">
+            {mobileOpen
+              ? <X size={24} style={{ color: '#8b1e3f' }} />
+              : <Menu size={24} style={{ color: '#141110' }} />
+            }
+          </button>
+        </div>
       </nav>
 
       {mobileOpen && (
-        <div className="lg:hidden fixed top-[65px] left-0 right-0 bg-white border-b border-gray-100 px-5 pb-5 flex flex-col gap-0.5 z-30 shadow-md overflow-y-auto max-h-[calc(100vh-65px)]">
+        <div className="xl:hidden fixed top-[65px] left-0 right-0 bg-white border-b border-gray-100 px-5 pb-5 flex flex-col gap-0.5 z-30 shadow-md overflow-y-auto max-h-[calc(100vh-65px)]">
           <div className="flex flex-col pt-2">
             {MOBILE_NAV.map(entry => {
               if (!('items' in entry)) {
