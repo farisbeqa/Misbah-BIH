@@ -2,8 +2,8 @@
 // džemat, school or community. Content from the original mini-site made for
 // Hamdo; the page lives at /pozovite-nas.
 
-/** Videos are served from the media CDN, images from /public/pozovite-nas */
-export const VIDEO_BASE = process.env.NEXT_PUBLIC_POZOVITE_VIDEO_BASE ?? ''
+/** Videos are served from the media CDN (S3 + CloudFront on AWS), images from /public/pozovite-nas */
+export const VIDEO_BASE = process.env.NEXT_PUBLIC_POZOVITE_VIDEO_BASE ?? 'https://d39iz2jyquc1uh.cloudfront.net'
 export const IMG = (path: string) => `/pozovite-nas/${path}`
 export const VIDEO = (path: string) => `${VIDEO_BASE}/pozovite-nas/${path}`
 
