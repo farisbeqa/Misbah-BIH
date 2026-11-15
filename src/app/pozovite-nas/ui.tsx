@@ -1,10 +1,15 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { Check, Copy, Play, Volume2, VolumeX, X } from 'lucide-react'
-import { BASE, CONTACT, FORMATS, INVITE_TEMPLATE, RUBRIKE, vidMedia, type Vid } from '@/lib/pozovite'
+import Link, { useCurrentLocale, useRouter } from '@/i18n/navigation'
+import { LOCALE_INFO } from '@/i18n/config'
+import {
+  BASE, CONTACT, FORMATS, INQUIRY_BS, INVITE_TEMPLATE, RUBRIKE, vidMedia,
+  type Audience, type Format, type Rubrika, type Vid,
+} from '@/lib/pozovite'
 
 // ── Shared bits ─────────────────────────────────────────────────────────────
 
@@ -56,6 +61,7 @@ async function copyText(text: string) {
 // ── Home hero: the showreel in the image panel, sound on request ───────────
 
 export function HeroVideo({ src, poster }: { src: string; poster: string }) {
+  const t = useTranslations('pozovite')
   const ref = useRef<HTMLVideoElement>(null)
   const [sound, setSound] = useState(false)
 
@@ -82,9 +88,9 @@ export function HeroVideo({ src, poster }: { src: string; poster: string }) {
       <video ref={ref} src={src} poster={poster} muted loop playsInline preload="metadata" aria-hidden="true"
         className="absolute inset-0 w-full h-full object-cover" />
       <button type="button" onClick={toggle} aria-pressed={sound}
-        className="absolute left-4 bottom-4 flex items-center gap-2 bg-[#faf5f5] text-[#8b1e3f] px-3 py-2 text-sm hover:bg-white transition-colors">
+        className="absolute start-4 bottom-4 flex items-center gap-2 bg-[#faf5f5] text-[#8b1e3f] px-3 py-2 text-sm hover:bg-white transition-colors">
         {sound ? <Volume2 size={16} /> : <VolumeX size={16} />}
-        {sound ? 'Isključi zvuk' : 'Uključi zvuk'}
+        {sound ? t('heroVideo.mute') : t('heroVideo.unmute')}
       </button>
     </>
   )
@@ -101,13 +107,14 @@ export function TileVideo({ src, poster }: { src: string; poster: string }) {
 // ── Videos with a player overlay ────────────────────────────────────────────
 
 const ArrowUpRight = () => (
-  <svg className="block shrink-0" width="16" height="16" fill="none" viewBox="0 0 11.5 11.5" aria-hidden="true">
+  <svg className="block shrink-0 flip-rtl" width="16" height="16" fill="none" viewBox="0 0 11.5 11.5" aria-hidden="true">
     <path d="M0.75 10.75L10.75 0.75M10.75 10.75V0.75H0.75" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
   </svg>
 )
 
 /** Video cards (same look as the site's VideoCard) that open a player */
 export function VideoGrid({ vids, label, portrait = false }: { vids: Vid[]; label: string; portrait?: boolean }) {
+  const t = useTranslations('pozovite')
   const [open, setOpen] = useState<Vid | null>(null)
   return (
     <>
@@ -116,17 +123,18 @@ export function VideoGrid({ vids, label, portrait = false }: { vids: Vid[]; labe
         : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'}>
         {vids.map(v => {
           const m = vidMedia(v)
-          const meta = [v.kind === 'yt' ? v.src : null, v.d, v.v && `${v.v} pregleda`].filter(Boolean).join(' · ')
+          const meta = [v.kind === 'yt' ? v.src : null, v.d, v.v != null ? t('videoGrid.views', { count: v.v }) : null].filter(Boolean).join(' · ')
           return (
-            <button key={`${v.kind}-${v.id}`} type="button" onClick={() => setOpen(v)} className="group block h-full text-left">
+            <button key={`${v.kind}-${v.id}`} type="button" onClick={() => setOpen(v)} className="group block h-full text-start">
               <span className="bg-[#f5f2ef] overflow-hidden border border-black/5 flex flex-col h-full">
                 <span className={`relative block w-full shrink-0 overflow-hidden bg-[#e0d8d0] ${portrait ? 'aspect-[9/16]' : 'h-[228px]'}`}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={m.thumb} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                  <span className="absolute top-4 left-4 bg-[#faf5f5] px-2.5 py-1.5">
-                    <span className="text-[#8b1e3f] uppercase" style={{ fontSize: 10, letterSpacing: '0.3px' }}>{m.badge}</span>
+                  <span className="absolute top-4 start-4 bg-[#faf5f5] px-2.5 py-1.5">
+                    <span className="text-[#8b1e3f] uppercase" style={{ fontSize: 10, letterSpacing: '0.3px' }}>{m.badge === 'youtube' ? 'YouTube' : t(`videoGrid.badges.${m.badge}`)}</span>
                   </span>
                   <span className="absolute inset-0 m-auto size-12 rounded-full bg-black/40 grid place-items-center text-white opacity-90 group-hover:bg-[#8b1e3f] transition-colors">
+                    {/* Play icons are not mirrored in right-to-left languages, so this optical nudge stays physical */}
                     <Play size={18} className="ml-0.5" fill="currentColor" />
                   </span>
                 </span>
@@ -134,7 +142,7 @@ export function VideoGrid({ vids, label, portrait = false }: { vids: Vid[]; labe
                   {meta ? <span className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{meta}</span> : null}
                   <span className="font-medium text-[#241f1d] leading-[1.15] line-clamp-3 group-hover:text-[#8b1e3f] transition-colors"
                     style={{ fontSize: portrait ? 16 : 20, letterSpacing: portrait ? '-0.3px' : '-0.6px' }}>
-                    {v.t}
+                    {t(`videoTitles.${v.key}`)}
                   </span>
                 </span>
               </span>
@@ -148,7 +156,9 @@ export function VideoGrid({ vids, label, portrait = false }: { vids: Vid[]; labe
 }
 
 function Player({ vid, label, onClose }: { vid: Vid; label: string; onClose: () => void }) {
+  const t = useTranslations('pozovite')
   const m = vidMedia(vid)
+  const title = t(`videoTitles.${vid.key}`)
   const closeRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
@@ -164,21 +174,21 @@ function Player({ vid, label, onClose }: { vid: Vid; label: string; onClose: () 
   }, [onClose])
 
   return (
-    <div role="dialog" aria-modal="true" aria-label={vid.t} onClick={onClose}
+    <div role="dialog" aria-modal="true" aria-label={title} onClick={onClose}
       className="fixed inset-0 z-[70] bg-[#141110]/90 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6">
       <div onClick={e => e.stopPropagation()} className={`w-full flex flex-col gap-3 ${m.tall ? 'max-w-[420px]' : 'max-w-[1016px]'}`}>
         <div className="flex items-start gap-3">
           <div className="flex-1 min-w-0">
             <p className="text-xs font-medium uppercase tracking-wide text-[#e0d8d0]">{label}</p>
-            <h3 className="text-white font-semibold text-lg sm:text-xl leading-snug">{vid.t}</h3>
+            <h3 className="text-white font-semibold text-lg sm:text-xl leading-snug">{title}</h3>
           </div>
-          <button ref={closeRef} type="button" onClick={onClose} aria-label="Zatvori"
+          <button ref={closeRef} type="button" onClick={onClose} aria-label={t('player.close')}
             className="shrink-0 size-10 grid place-items-center border border-white/30 text-white hover:bg-white/10">
             <X size={18} />
           </button>
         </div>
         {vid.kind === 'yt' ? (
-          <iframe src={`https://www.youtube-nocookie.com/embed/${vid.id}?autoplay=1&rel=0&playsinline=1`} title={vid.t}
+          <iframe src={`https://www.youtube-nocookie.com/embed/${vid.id}?autoplay=1&rel=0&playsinline=1`} title={title}
             allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen
             className="w-full aspect-video bg-black border border-white/10" />
         ) : (
@@ -192,29 +202,30 @@ function Player({ vid, label, onClose }: { vid: Vid; label: string; onClose: () 
 
 // ── Lecturer profile: choose the kind of program, then invite ──────────────
 
-export function ProfileInvite({ name, audience, path }: { name: string; audience: string; path: string }) {
+export function ProfileInvite({ name, aud, path }: { name: string; aud: Audience; path: string }) {
+  const t = useTranslations('pozovite')
   const router = useRouter()
-  const [format, setFormat] = useState(FORMATS[0].id)
+  const [format, setFormat] = useState<Format>(FORMATS[0])
   const invite = () => {
-    const f = FORMATS.find(x => x.id === format)!
-    const q = new URLSearchParams({ rubrika: 'Predavanja', izbor: `${audience} · ${name} · ${f.t}`, nazad: path })
+    // Bosnian names: the choice goes into the message for the Misbah team (see InquiryForm)
+    const q = new URLSearchParams({ rubrika: INQUIRY_BS.rubrike.predavanja, izbor: `${INQUIRY_BS.audiences[aud]} · ${name} · ${INQUIRY_BS.formats[format]}`, nazad: path })
     router.push(`${BASE}/kontakt?${q}`)
   }
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
-        <p className="font-medium text-[#8b1e3f] text-base uppercase">Vrsta programa</p>
-        <h2 className="font-semibold text-[#141110]" style={{ fontSize: 28, lineHeight: 1.3, letterSpacing: '-0.3px' }}>Šta želite organizovati?</h2>
+        <p className="font-medium text-[#8b1e3f] text-base uppercase">{t('programPicker.label')}</p>
+        <h2 className="font-semibold text-[#141110]" style={{ fontSize: 28, lineHeight: 1.3, letterSpacing: '-0.3px' }}>{t('programPicker.title')}</h2>
       </div>
-      <div role="radiogroup" aria-label="Vrsta programa" className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div role="radiogroup" aria-label={t('programPicker.label')} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {FORMATS.map(f => {
-          const on = f.id === format
+          const on = f === format
           return (
-            <button key={f.id} type="button" role="radio" aria-checked={on} onClick={() => setFormat(f.id)}
-              className={`relative text-left flex flex-col gap-1 p-4 pr-10 border transition-colors ${on ? 'border-[#8b1e3f] bg-[#faf5f5]' : 'border-[#ede5dc] bg-white hover:border-[#d6ccc3]'}`}>
-              <span className="font-semibold text-[#241f1d]">{f.t}</span>
-              <span className="text-sm text-[#746860] leading-snug">{f.d}</span>
-              <span className={`absolute top-4 right-4 size-5 rounded-full border-2 grid place-items-center ${on ? 'border-[#8b1e3f] bg-[#8b1e3f]' : 'border-[#d6ccc3]'}`}>
+            <button key={f} type="button" role="radio" aria-checked={on} onClick={() => setFormat(f)}
+              className={`relative text-start flex flex-col gap-1 p-4 pe-10 border transition-colors ${on ? 'border-[#8b1e3f] bg-[#faf5f5]' : 'border-[#ede5dc] bg-white hover:border-[#d6ccc3]'}`}>
+              <span className="font-semibold text-[#241f1d]">{t(`formats.${f}.title`)}</span>
+              <span className="text-sm text-[#746860] leading-snug">{t(`formats.${f}.description`)}</span>
+              <span className={`absolute top-4 end-4 size-5 rounded-full border-2 grid place-items-center ${on ? 'border-[#8b1e3f] bg-[#8b1e3f]' : 'border-[#d6ccc3]'}`}>
                 {on ? <Check size={12} className="text-white" strokeWidth={3} /> : null}
               </span>
             </button>
@@ -222,8 +233,8 @@ export function ProfileInvite({ name, audience, path }: { name: string; audience
         })}
       </div>
       <button type="button" onClick={invite}
-        className="self-start bg-[#8b1e3f] text-white flex items-center gap-2 pl-8 pr-6 py-3 text-base font-normal hover:bg-[#7a1a37] transition-colors">
-        Pozovite: {name}
+        className="self-start bg-[#8b1e3f] text-white flex items-center gap-2 ps-8 pe-6 py-3 text-base font-normal hover:bg-[#7a1a37] transition-colors">
+        {t('actions.invite', { name })}
         <ArrowUpRight />
       </button>
     </div>
@@ -233,27 +244,30 @@ export function ProfileInvite({ name, audience, path }: { name: string; audience
 // ── Contact ─────────────────────────────────────────────────────────────────
 
 export function ContactQuick() {
+  const t = useTranslations('pozovite')
   const toast = useToast()
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-wrap items-center gap-3 p-3 pl-4 border border-[#ede5dc] bg-[#faf7f2]">
+      <div className="flex flex-wrap items-center gap-3 p-3 ps-4 border border-[#ede5dc] bg-[#faf7f2]">
         <span className="font-semibold text-[#241f1d] break-all select-all">{CONTACT.email}</span>
-        <button type="button" className="ml-auto inline-flex items-center gap-1.5 border border-[#d6ccc3] px-3 py-1.5 text-sm text-[#5a4f49] hover:border-[#8b1e3f] hover:text-[#8b1e3f]"
-          onClick={async () => toast.show((await copyText(CONTACT.email)) ? 'Adresa je kopirana' : 'Kopirajte adresu ručno')}>
-          <Copy size={14} /> Kopiraj
+        <button type="button" className="ms-auto inline-flex items-center gap-1.5 border border-[#d6ccc3] px-3 py-1.5 text-sm text-[#5a4f49] hover:border-[#8b1e3f] hover:text-[#8b1e3f]"
+          onClick={async () => toast.show((await copyText(CONTACT.email)) ? t('quickContact.addressCopied') : t('quickContact.copyAddressManually'))}>
+          <Copy size={14} /> {t('quickContact.copy')}
         </button>
       </div>
       <div className="flex flex-wrap items-center gap-3">
+        {/* INVITE_TEMPLATE is the Bosnian message for the Misbah team, in every language */}
         <a href={waHref(INVITE_TEMPLATE)} target="_blank" rel="noopener"
           className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#25d366] text-[#06301a] font-semibold hover:bg-[#45e283] transition-colors">
           <WhatsAppIcon /> WhatsApp
         </a>
         <a href={vbHref(INVITE_TEMPLATE)}
-          onClick={async () => (await copyText(INVITE_TEMPLATE)) && toast.show('Poruka je kopirana, ako se ne pojavi u Viberu, zalijepite je')}
+          onClick={async () => (await copyText(INVITE_TEMPLATE)) && toast.show(t('quickContact.viberCopied'))}
           className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#7360f2] text-white font-semibold hover:bg-[#8a7bf5] transition-colors">
           <ViberIcon /> Viber
         </a>
-        <span className="text-[#746860] text-sm font-mono">{CONTACT.phone}</span>
+        {/* dir="ltr": the digit groups of the number would be reversed in right-to-left text */}
+        <span className="text-[#746860] text-sm font-mono" dir="ltr">{CONTACT.phone}</span>
       </div>
       {toast.node}
     </div>
@@ -262,85 +276,119 @@ export function ContactQuick() {
 
 const field = 'w-full border border-[#ede5dc] bg-white px-3.5 py-2.5 text-[15px] text-[#241f1d] placeholder:text-[#a89888] focus:outline-none focus:border-[#8b1e3f]'
 
-/** Builds the inquiry and opens it in WhatsApp / Viber / e-mail (no data is stored) */
+/** Unicode "left-to-right isolate" and "pop directional isolate" (invisible) */
+const LRI = String.fromCharCode(0x2066)
+const PDI = String.fromCharCode(0x2069)
+
+/** Message key for a Bosnian name from INQUIRY_BS (as it arrives in ?izbor=…), to show it translated */
+function choiceKey(bs: string): string | null {
+  const find = <K extends string>(names: Record<K, string>) => (Object.keys(names) as K[]).find(k => names[k] === bs)
+  const aud = find(INQUIRY_BS.audiences)
+  if (aud) return `audiences.${aud}.title`
+  const format = find(INQUIRY_BS.formats)
+  if (format) return `formats.${format}.title`
+  const hor = find(INQUIRY_BS.hor)
+  if (hor) return `choir.groups.${hor}.title`
+  return bs === INQUIRY_BS.druzenje ? 'gatherings.choice' : null
+}
+
+/**
+ * Builds the inquiry and opens it in WhatsApp / Viber / e-mail (no data is stored).
+ *
+ * The form is shown in the visitor's language, but the message it prepares
+ * goes to the Misbah team, so the message (and the e-mail subject) is always
+ * written in Bosnian: fixed texts here and the Bosnian names from INQUIRY_BS,
+ * never translations.
+ */
 export function InquiryForm() {
+  const t = useTranslations('pozovite')
+  const rtl = LOCALE_INFO[useCurrentLocale()].dir === 'rtl'
   const params = useSearchParams()
   const izbor = params.get('izbor') ?? ''
   const nazad = params.get('nazad') ?? ''
-  const initialRub = RUBRIKE.find(r => r === params.get('rubrika')) ?? 'Predavanja'
-  const [rub, setRub] = useState<string>(initialRub)
+  const initialRub = RUBRIKE.find(r => INQUIRY_BS.rubrike[r] === params.get('rubrika')) ?? 'predavanja'
+  const [rub, setRub] = useState<Rubrika>(initialRub)
   const [msg, setMsg] = useState('')
   const toast = useToast()
+
+  // Bosnian, for the message: the choice from the link (Bosnian names) or the category
+  const program = izbor && rub === initialRub ? izbor : INQUIRY_BS.rubrike[rub]
+  // The same choice in the visitor's language, for the form (names of people stay as they are)
+  const choice = izbor.split(' · ').map(part => {
+    const key = choiceKey(part)
+    return key ? t(key) : part
+  }).join(' · ')
+  // Keeps the phone number and e-mail in one piece inside right-to-left text
+  const ltr = (s: string) => (rtl ? LRI + s + PDI : s)
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const f = new FormData(e.currentTarget)
     const val = (k: string) => String(f.get(k) ?? '').trim()
-    const program = izbor && rub === initialRub ? izbor : rub
     const note = val('note')
+    // Always Bosnian (see above)
     setMsg(
-      `Selam alejkum,\n\nželjeli bismo ugostiti Misbah EDU.\n\nOrganizator: ${val('org') || '–'}\nMjesto: ${val('place') || '–'}\nDatum: ${val('date') || 'po dogovoru'}\nRubrika: ${rub}\nProgram: ${program}\n${note ? `\nNapomena: ${note}\n` : ''}\nHvala i selam!`,
+      `Selam alejkum,\n\nželjeli bismo ugostiti Misbah EDU.\n\nOrganizator: ${val('org') || '–'}\nMjesto: ${val('place') || '–'}\nDatum: ${val('date') || 'po dogovoru'}\nRubrika: ${INQUIRY_BS.rubrike[rub]}\nProgram: ${program}\n${note ? `\nNapomena: ${note}\n` : ''}\nHvala i selam!`,
     )
   }
 
-  const program = izbor && rub === initialRub ? izbor : rub
-
   return (
     <form onSubmit={submit} noValidate className="flex flex-col gap-4 p-5 sm:p-7 bg-[#faf7f2] border border-[#ede5dc]">
-      <h3 className="font-semibold text-[#141110] text-2xl">Upit za nastup</h3>
+      <h3 className="font-semibold text-[#141110] text-2xl">{t('form.title')}</h3>
       {izbor ? (
         <div className="flex flex-wrap items-center gap-2 px-3.5 py-2.5 border border-[#ede5dc] bg-[#faf5f5] text-sm">
-          <span className="text-[#5a4f49]">Vaš izbor: <b className="text-[#8b1e3f] font-semibold">{izbor}</b></span>
-          {nazad.startsWith(BASE) ? <Link href={nazad} className="ml-auto underline text-[#746860] hover:text-[#8b1e3f]">promijeni</Link> : null}
+          <span className="text-[#5a4f49]">{t.rich('form.yourChoice', { choice, b: chunks => <b className="text-[#8b1e3f] font-semibold">{chunks}</b> })}</span>
+          {nazad.startsWith(BASE) ? <Link href={nazad} className="ms-auto underline text-[#746860] hover:text-[#8b1e3f]">{t('form.change')}</Link> : null}
         </div>
       ) : null}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <label className="flex flex-col gap-1.5 text-sm text-[#746860]">Organizator
-          <input name="org" placeholder="npr. Džemat Bjelave" autoComplete="organization" className={field} />
+        <label className="flex flex-col gap-1.5 text-sm text-[#746860]">{t('form.organizer')}
+          <input name="org" placeholder={t('form.organizerPlaceholder')} autoComplete="organization" className={field} />
         </label>
-        <label className="flex flex-col gap-1.5 text-sm text-[#746860]">Mjesto
-          <input name="place" placeholder="Grad, objekat" className={field} />
+        <label className="flex flex-col gap-1.5 text-sm text-[#746860]">{t('form.place')}
+          <input name="place" placeholder={t('form.placePlaceholder')} className={field} />
         </label>
-        <label className="flex flex-col gap-1.5 text-sm text-[#746860]">Datum
-          <input name="date" placeholder="npr. 20. decembar ili po dogovoru" className={field} />
+        <label className="flex flex-col gap-1.5 text-sm text-[#746860]">{t('form.date')}
+          <input name="date" placeholder={t('form.datePlaceholder')} className={field} />
         </label>
-        <label className="flex flex-col gap-1.5 text-sm text-[#746860]">Rubrika
-          <select name="rub" value={rub} onChange={e => setRub(e.target.value)} className={field}>
-            {RUBRIKE.map(r => <option key={r}>{r}</option>)}
+        <label className="flex flex-col gap-1.5 text-sm text-[#746860]">{t('form.category')}
+          <select name="rub" value={rub} onChange={e => setRub(e.target.value as Rubrika)} className={field}>
+            {RUBRIKE.map(r => <option key={r} value={r}>{t(`form.categories.${r}`)}</option>)}
           </select>
         </label>
       </div>
-      <label className="flex flex-col gap-1.5 text-sm text-[#746860]">Napomena
-        <textarea name="note" rows={3} placeholder="Prilika, trajanje, broj ljudi, kontakt telefon…" className={`${field} resize-y`} />
+      <label className="flex flex-col gap-1.5 text-sm text-[#746860]">{t('form.note')}
+        <textarea name="note" rows={3} placeholder={t('form.notePlaceholder')} className={`${field} resize-y`} />
       </label>
-      <button type="submit" className="self-start bg-[#8b1e3f] text-white flex items-center gap-2 pl-8 pr-6 py-3 text-base font-normal hover:bg-[#7a1a37] transition-colors">
-        Pripremi poruku
+      <button type="submit" className="self-start bg-[#8b1e3f] text-white flex items-center gap-2 ps-8 pe-6 py-3 text-base font-normal hover:bg-[#7a1a37] transition-colors">
+        {t('form.prepare')}
         <ArrowUpRight />
       </button>
 
       {msg ? (
         <div className="flex flex-col gap-3">
-          <pre className="whitespace-pre-wrap font-sans text-sm text-[#5a4f49] bg-white border border-[#ede5dc] p-3.5 max-h-48 overflow-auto">{msg}</pre>
+          {/* The Bosnian message: left-to-right and marked as Bosnian on every language's page */}
+          <pre lang="bs" dir="ltr" className="whitespace-pre-wrap font-sans text-sm text-[#5a4f49] bg-white border border-[#ede5dc] p-3.5 max-h-48 overflow-auto">{msg}</pre>
           <div className="flex flex-wrap gap-2.5">
             <a href={waHref(msg)} target="_blank" rel="noopener"
               className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#25d366] text-[#06301a] font-semibold hover:bg-[#45e283]">
-              <WhatsAppIcon /> Pošalji na WhatsApp
+              <WhatsAppIcon /> {t('form.sendWhatsApp')}
             </a>
-            <a href={vbHref(msg)} onClick={async () => (await copyText(msg)) && toast.show('Poruka je kopirana, zalijepite je u Viber')}
+            <a href={vbHref(msg)} onClick={async () => (await copyText(msg)) && toast.show(t('form.viberCopied'))}
               className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#7360f2] text-white font-semibold hover:bg-[#8a7bf5]">
               <ViberIcon /> Viber
             </a>
-            <button type="button" onClick={async () => toast.show((await copyText(msg)) ? 'Poruka je kopirana' : 'Označite poruku i kopirajte je')}
+            <button type="button" onClick={async () => toast.show((await copyText(msg)) ? t('form.messageCopied') : t('form.copyManually'))}
               className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#d6ccc3] bg-white text-[#5a4f49] hover:border-[#8b1e3f] hover:text-[#8b1e3f]">
-              <Copy size={15} /> Kopiraj poruku
+              <Copy size={15} /> {t('form.copyMessage')}
             </button>
             <a href={`mailto:${CONTACT.email}?subject=${encodeURIComponent(`Poziv – ${program}`)}&body=${encodeURIComponent(msg)}`}
               className="inline-flex items-center px-4 py-2.5 border border-[#d6ccc3] bg-white text-[#5a4f49] hover:border-[#8b1e3f] hover:text-[#8b1e3f]">
-              Otvori u e-mailu
+              {t('form.openEmail')}
             </a>
           </div>
           <p className="text-xs text-[#978a81] leading-relaxed">
-            WhatsApp otvara poruku spremnu za slanje. Viber također upisuje poruku, a za svaki slučaj je i kopiramo. Broj: {CONTACT.phone}, e-mail: {CONTACT.email}.
+            {t('form.hint', { phone: ltr(CONTACT.phone), email: ltr(CONTACT.email) })}
           </p>
         </div>
       ) : null}

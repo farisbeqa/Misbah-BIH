@@ -3,6 +3,7 @@ import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
 import { parseVideoUrl } from '@/lib/videoUtils'
+import { deleteTranslations, queueTranslation } from '@/lib/translations'
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
@@ -54,6 +55,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       where: { id: parseInt(params.id) },
       data: updateData,
     })
+    await queueTranslation('video', video.id)
 
     revalidatePath('/')
     return NextResponse.json(video)
@@ -72,6 +74,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     await prisma.video.delete({
       where: { id: parseInt(params.id) },
     })
+    await deleteTranslations('video', parseInt(params.id))
 
     revalidatePath('/')
     return NextResponse.json({ success: true })

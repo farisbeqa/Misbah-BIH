@@ -1,0 +1,66 @@
+{
+  "hero": {
+    "title": "Svjetlo znanja koje obasjava srce i prosvjetljuje razum.",
+    "text": "Omladinski sadržaji ispunjeni porukama i mislima koje unose svjetlo u život, približavaju čovjeka Allahu, smiruju srce, podstiču na dobro i svakodnevno inspirišu.",
+    "explore": "Istraži sadržaj",
+    "authors": "Autori"
+  },
+  "benefits": {
+    "tag": "TEME KOJE ISTRAŽUJEMO",
+    "title": "Znanje koje ostavlja trag",
+    "text": "Od duhovnosti i ibadeta, preko porodice i odgoja, do izazova savremenog društva — Misbah okuplja mlade ljude kroz sadržaje koji pomažu razumjeti vjeru i živjeti njene vrijednosti u svakodnevici.",
+    "spirituality": {
+      "title": "Duhovnost",
+      "description": "Jačanje veze sa Allahom kroz znanje, ibadet i iskreno preispitivanje sebe."
+    },
+    "family": {
+      "title": "Porodica",
+      "description": "Teme o zdravijim odnosima, snažnijim brakovima i odgoju djece."
+    },
+    "society": {
+      "title": "Društvo",
+      "description": "Promišljanja o pitanjima koja oblikuju našu zajednicu i svakodnevni život."
+    },
+    "character": {
+      "title": "Karakter",
+      "description": "Razvijajte vrijednosti i navike koje oblikuju snažan, odgovoran i ispunjen život."
+    }
+  },
+  "team": {
+    "tag": "LJUDI IZA SADRŽAJA",
+    "title": "Glasovi koji inspirišu",
+    "text": "Sadržaj na Misbahu nastaje kroz saradnju predavača, profesora, hafiza i stručnjaka koji svojim znanjem i iskustvom doprinose zajedničkoj misiji širenja korisnog znanja."
+  },
+  "verse": {
+    "text": "I reci: Gospodaru moj, povećaj mi znanje.",
+    "source": "Kur'an 20:114"
+  },
+  "lectures": {
+    "tag": "NAJNOVIJI SADRŽAJI",
+    "title": "Predavanja",
+    "text": "Sadržaji koji povezuju islamsko znanje sa pitanjima i izazovima svakodnevnog života.",
+    "cta": "Pogledaj sva predavanja",
+    "empty": "Nema predavanja još uvijek"
+  },
+  "quran": {
+    "tag": "KUR'ANSKE NAUKE",
+    "title": "Kur'an",
+    "text": "Odabrani odlomci iz Kur'ana i cjelovite sure.",
+    "cta": "Istraži kur'anske sadržaje",
+    "empty": "Nema Kur'an sadržaja još uvijek"
+  },
+  "podcast": {
+    "tag": "RAZGOVORI",
+    "title": "Podcast",
+    "text": "Razgovori sa predavačima, stručnjacima i gostima o vjeri, društvu, odgoju i temama koje oblikuju naš svakodnevni život.",
+    "cta": "Poslušaj epizode",
+    "empty": "Nema podcast epizoda još uvijek"
+  },
+  "blog": {
+    "tag": "PROMIŠLJANJA",
+    "title": "Blog",
+    "text": "Tekstovi, osvrti i razmišljanja o vjeri, znanju, porodici i izazovima savremenog čovjeka.",
+    "cta": "Čitaj sve tekstove",
+    "empty": "Nema blog postova još uvijek"
+  }
+}

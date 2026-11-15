@@ -1,7 +1,10 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
 import { Images, Loader2, ChevronLeft, ChevronRight } from 'lucide-react'
+import { useCurrentLocale } from '@/i18n/navigation'
+import { LOCALE_INFO } from '@/i18n/config'
 
 interface GalleryImage {
   id: number; title: string | null; imageUrl: string; description: string | null; createdAt: string
@@ -10,6 +13,9 @@ interface GalleryImage {
 const PAGE = 12
 
 export default function GalerijaPage() {
+  const t = useTranslations('community.gallery')
+  const locale = useCurrentLocale()
+  const rtl = LOCALE_INFO[locale].dir === 'rtl'
   const [images, setImages]         = useState<GalleryImage[]>([])
   const [initialLoad, setInitialLoad] = useState(true)
   const [loadingMore, setLoadingMore] = useState(false)
@@ -19,13 +25,13 @@ export default function GalerijaPage() {
 
   const fetchBatch = useCallback(async (currentSkip: number, append: boolean) => {
     try {
-      const data: GalleryImage[] = await fetch(`/api/gallery?limit=${PAGE}&skip=${currentSkip}`).then(r => r.json())
+      const data: GalleryImage[] = await fetch(`/api/gallery?limit=${PAGE}&skip=${currentSkip}&lang=${locale}`).then(r => r.json())
       if (append) setImages(prev => [...prev, ...data])
       else setImages(data)
       setHasMore(data.length === PAGE)
       setSkip(currentSkip + data.length)
     } catch { /* ignore */ }
-  }, [])
+  }, [locale])
 
   useEffect(() => {
     fetchBatch(0, false).finally(() => setInitialLoad(false))
@@ -48,8 +54,9 @@ export default function GalerijaPage() {
     const onKey = (e: KeyboardEvent) => {
       if (!lightbox) return
       if (e.key === 'Escape') setLightbox(null)
-      if (e.key === 'ArrowRight') moveLightbox(1)
-      if (e.key === 'ArrowLeft') moveLightbox(-1)
+      // Right-to-left: the next image is on the left
+      if (e.key === 'ArrowRight') moveLightbox(rtl ? -1 : 1)
+      if (e.key === 'ArrowLeft') moveLightbox(rtl ? 1 : -1)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
@@ -58,8 +65,8 @@ export default function GalerijaPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16" style={{ minHeight: '60vh' }}>
       <div className="mb-12">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-warm-900 tracking-tight mb-2">Galerija</h1>
-        <p className="text-warm-500 text-sm">Fotografije s naših aktivnosti i događaja</p>
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-warm-900 tracking-tight mb-2">{t('title')}</h1>
+        <p className="text-warm-500 text-sm">{t('intro')}</p>
       </div>
 
       {initialLoad ? (
@@ -72,7 +79,7 @@ export default function GalerijaPage() {
         <div className="flex flex-col items-center justify-center py-24"
           style={{ background: '#FAF7F2', border: '1px dashed #E8E1DB', borderRadius: 8 }}>
           <Images size={40} className="mb-3" style={{ color: '#D6CCC3' }} />
-          <p className="font-mono text-sm text-warm-400">Galerija je prazna</p>
+          <p className="font-mono text-sm text-warm-400">{t('empty')}</p>
         </div>
       ) : (
         <>
@@ -101,15 +108,15 @@ export default function GalerijaPage() {
               <button onClick={loadMore} disabled={loadingMore}
                 className="flex items-center gap-2 px-8 py-3 border border-[#D6CCC3] text-[#5a4f49] text-sm font-medium hover:border-[#8b1e3f] hover:text-[#8b1e3f] transition-colors disabled:opacity-50">
                 {loadingMore
-                  ? <><Loader2 size={15} className="animate-spin" /> Učitavam...</>
-                  : 'Učitaj još slika'
+                  ? <><Loader2 size={15} className="animate-spin" /> {t('loading')}</>
+                  : t('loadMore')
                 }
               </button>
-              <p className="text-xs text-[#a89888]">Prikazano {images.length} slika</p>
+              <p className="text-xs text-[#a89888]">{t('shownCount', { count: images.length })}</p>
             </div>
           )}
           {!hasMore && images.length > PAGE && (
-            <p className="text-center text-xs text-[#a89888] mt-8">Sve slike su učitane ({images.length})</p>
+            <p className="text-center text-xs text-[#a89888] mt-8">{t('allLoaded', { count: images.length })}</p>
           )}
         </>
       )}
@@ -124,30 +131,31 @@ export default function GalerijaPage() {
               <img src={lightbox.img.imageUrl} alt={lightbox.img.title || ''}
                 className="w-full max-h-[80vh] object-contain rounded-xl" />
               {lightbox.img.title && (
-                <div className="absolute bottom-3 left-3">
+                <div className="absolute bottom-3 start-3">
                   <span className="inline-block bg-black/60 backdrop-blur-sm text-white text-sm font-medium px-3 py-1.5 rounded-lg">
                     {lightbox.img.title}
                   </span>
                 </div>
               )}
-              <span className="absolute bottom-3 right-3 text-xs text-white/60 bg-black/40 px-2 py-1 rounded">
+              <span className="absolute bottom-3 end-3 text-xs text-white/60 bg-black/40 px-2 py-1 rounded">
                 {lightbox.index + 1} / {images.length}
               </span>
             </div>
+            {/* Previous / next sit outside the image, on the reading-direction start / end side */}
             {lightbox.index > 0 && (
               <button onClick={() => moveLightbox(-1)}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors">
-                <ChevronLeft size={20} />
+                className="absolute start-0 top-1/2 -translate-y-1/2 -translate-x-12 rtl:translate-x-12 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors">
+                <ChevronLeft size={20} className="flip-rtl" />
               </button>
             )}
             {lightbox.index < images.length - 1 && (
               <button onClick={() => moveLightbox(1)}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors">
-                <ChevronRight size={20} />
+                className="absolute end-0 top-1/2 -translate-y-1/2 translate-x-12 rtl:-translate-x-12 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors">
+                <ChevronRight size={20} className="flip-rtl" />
               </button>
             )}
             <button onClick={() => setLightbox(null)}
-              className="absolute -top-3 -right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center text-zinc-900 hover:bg-zinc-100 transition-colors text-lg font-bold">
+              className="absolute -top-3 -end-3 w-8 h-8 bg-white rounded-full flex items-center justify-center text-zinc-900 hover:bg-zinc-100 transition-colors text-lg font-bold">
               ×
             </button>
           </div>

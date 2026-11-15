@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
+import { useCurrentLocale } from '@/i18n/navigation'
 import VideoCard from '@/components/VideoCard'
 
 interface Video {
@@ -8,21 +10,14 @@ interface Video {
   platform: string; thumbnailUrl: string | null; isShortForm: boolean; createdAt: string
 }
 
-const TOPICS = [
-  { key: 'all',       label: 'Sve' },
-  { key: 'tefsir',    label: 'Tefsir' },
-  { key: 'hadis',     label: 'Hadis' },
-  { key: 'sira',      label: 'Sira' },
-  { key: 'opste',     label: 'Opšte teme' },
-  { key: 'akaid',     label: 'Akaid' },
-  { key: 'fikh',      label: 'Fikh' },
-  { key: 'duhovnost', label: 'Duhovnost' },
-  { key: 'historija', label: 'Historija' },
-]
+// Labels: videos.topics.<key>
+const TOPICS = ['all', 'tefsir', 'hadis', 'sira', 'opste', 'akaid', 'fikh', 'duhovnost', 'historija']
 
 const PAGE = 12
 
 export default function DugaPredavanjaPage() {
+  const t = useTranslations('videos')
+  const locale = useCurrentLocale()
   const [videos, setVideos]   = useState<Video[]>([])
   const [topic, setTopic]     = useState('all')
   const [loading, setLoading] = useState(true)
@@ -30,10 +25,10 @@ export default function DugaPredavanjaPage() {
 
   useEffect(() => {
     setLoading(true)
-    const base = '/api/videos?category=predavanja&isShortForm=false'
+    const base = `/api/videos?category=predavanja&isShortForm=false&lang=${locale}`
     const url  = topic === 'all' ? base : `${base}&topic=${topic}`
     fetch(url).then(r => r.json()).then(d => { setVideos(d); setLoading(false) }).catch(() => setLoading(false))
-  }, [topic])
+  }, [topic, locale])
 
   useEffect(() => { setVisible(PAGE) }, [topic])
 
@@ -42,26 +37,26 @@ export default function DugaPredavanjaPage() {
   return (
     <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-12 sm:py-16" style={{ minHeight: '60vh' }}>
       <div className="mb-10">
-        <p className="font-medium text-[#8b1e3f] text-base mb-2">PREDAVANJA</p>
+        <p className="font-medium text-[#8b1e3f] text-base mb-2">{t('longLectures.tag')}</p>
         <h1 className="font-semibold text-[#141110] mb-3"
           style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}>
-          Duga predavanja
+          {t('longLectures.title')}
         </h1>
         <p className="font-normal text-[#746860]" style={{ fontSize: 18 }}>
-          Pažljivo pripremljena predavanja o različitim islamskim i historijskim temama, uključujući tefsir, fikh, hadis, siru i duhovnost.
+          {t('longLectures.text')}
         </p>
       </div>
 
       <div className="flex flex-wrap gap-2 mb-10">
-        {TOPICS.map(t => (
-          <button key={t.key} onClick={() => setTopic(t.key)}
+        {TOPICS.map(key => (
+          <button key={key} onClick={() => setTopic(key)}
             className="text-sm font-medium px-4 py-2 transition-all"
             style={{
-              border: topic === t.key ? 'none' : '1px solid #D6CCC3',
-              background: topic === t.key ? '#8B1E3F' : 'white',
-              color: topic === t.key ? '#fff' : '#5A4F49',
+              border: topic === key ? 'none' : '1px solid #D6CCC3',
+              background: topic === key ? '#8B1E3F' : 'white',
+              color: topic === key ? '#fff' : '#5A4F49',
             }}>
-            {t.label}
+            {t(`topics.${key}`)}
           </button>
         ))}
       </div>
@@ -80,7 +75,7 @@ export default function DugaPredavanjaPage() {
         </div>
       ) : videos.length === 0 ? (
         <div className="flex items-center justify-center py-20 bg-[#f5f2ef] border border-black/5">
-          <p className="text-sm text-[#a89888]">Nema predavanja u ovoj kategoriji</p>
+          <p className="text-sm text-[#a89888]">{t('longLectures.empty')}</p>
         </div>
       ) : (
         <>
@@ -95,9 +90,9 @@ export default function DugaPredavanjaPage() {
             <div className="flex flex-col items-center gap-2 mt-10">
               <button onClick={() => setVisible(v => v + PAGE)}
                 className="px-8 py-3 border border-[#D6CCC3] text-[#5a4f49] text-sm font-medium hover:border-[#8b1e3f] hover:text-[#8b1e3f] transition-colors">
-                Učitaj još ({videos.length - visible} preostalih)
+                {t('list.loadMore', { remaining: videos.length - visible })}
               </button>
-              <p className="text-xs text-[#a89888]">Prikazano {shown.length} od {videos.length}</p>
+              <p className="text-xs text-[#a89888]">{t('list.shownOf', { shown: shown.length, total: videos.length })}</p>
             </div>
           )}
         </>

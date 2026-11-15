@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "longLectures": {
+      "title": "Uzun dersler",
+      "description": "İman, ahlak, tarih ve manevi gelişim konularında kapsamlı İslami dersler — İslam'ı daha derinlemesine anlamak için."
+    },
+    "shortLectures": {
+      "title": "Kısa dersler",
+      "description": "Günlük öğrenme, hatırlama ve imanı güçlendirme için ideal, kısa ve öz İslami dersler."
+    },
+    "quran": {
+      "title": "Kur'an",
+      "description": "Özenle seçilmiş tilavetler, kıraatler ve Kur'an ayetlerinin tefsiriyle Kur'an'ı öğrenin ve dinleyin."
+    },
+    "podcast": {
+      "title": "Podcast",
+      "description": "İslami podcast — din, ilim ve Müslümanın günlük hayatı üzerine sohbetler. Nerede olursanız olun dinleyin."
+    },
+    "ilahije": {
+      "title": "İlahiler – İcra",
+      "description": "İlahiler, kasideler ve manevi müzik — Allah'a ve Peygamber Efendimiz ﷺ'e olan sevgiyi uyandıran video ve ses icraları."
+    },
+    "zikrovi": {
+      "title": "Zikirler ve Dualar",
+      "description": "Günlük öğrenme için metinli ve sesli zikirler — sabah ve akşam zikirleri, dualar ve Allah'ın isimleri."
+    }
+  },
+  "list": {
+    "searchPlaceholder": "Başlığa göre ara...",
+    "noResults": "\"{query}\" için sonuç yok",
+    "loadMore": "{remaining, plural, one {Daha fazla yükle (# kalan)} other {Daha fazla yükle (# kalan)}}",
+    "shownOf": "{total} içinden {shown} gösteriliyor"
+  },
+  "topics": {
+    "all": "Tümü",
+    "tefsir": "Tefsir",
+    "hadis": "Hadis",
+    "sira": "Siyer",
+    "opste": "Genel konular",
+    "akaid": "Akaid",
+    "fikh": "Fıkıh",
+    "duhovnost": "Maneviyat",
+    "historija": "Tarih"
+  },
+  "longLectures": {
+    "tag": "DERSLER",
+    "title": "Uzun dersler",
+    "text": "Tefsir, fıkıh, hadis, siyer ve maneviyat dahil olmak üzere çeşitli İslami ve tarihi konularda özenle hazırlanmış dersler.",
+    "empty": "Bu kategoride ders yok"
+  },
+  "shortLectures": {
+    "tag": "DERSLER",
+    "title": "Kısa dersler",
+    "text": "Hızlı İslami manevi hatırlatma için kısa içerikler ve kesitler.",
+    "empty": "Bu kategoride kısa ders yok"
+  },
+  "lectures": {
+    "tag": "DERSLER",
+    "title": "Dersler",
+    "text": "İman, ibadet ve günlük hayat üzerine İslami dersler ve öğütler.",
+    "empty": "Henüz ders yok"
+  },
+  "quran": {
+    "tag": "KUR'AN İLİMLERİ",
+    "title": "Kur'an",
+    "text": "Kur'an-ı Kerim'den seçilmiş bölümler ve sûrelerin tamamı.",
+    "empty": "Henüz Kur'an içeriği yok"
+  },
+  "podcast": {
+    "tag": "SOHBETLER",
+    "title": "Podcast",
+    "text": "İman ve günlük hayat üzerine sohbetler, röportajlar ve podcast bölümleri.",
+    "empty": "Henüz podcast bölümü yok"
+  },
+  "ilahije": {
+    "tag": "İLAHİLER VE KASİDELER",
+    "title": "İcra",
+    "text": "İlahiler, kasideler ve manevi müzik.",
+    "empty": "Henüz ilahi yok"
+  },
+  "zikrovi": {
+    "tag": "ALLAH'I ANMAK",
+    "title": "Zikirler",
+    "empty": "Henüz zikir yok"
+  },
+  "card": {
+    "short": "Kısa",
+    "textAndAudio": "METİN ve SES"
+  },
+  "detail": {
+    "back": "Derslere geri dön",
+    "shortContent": "Kısa özet",
+    "description": "Açıklama"
+  },
+  "platforms": {
+    "upload": "Yükleme",
+    "unknown": "Bilinmiyor"
+  },
+  "embed": {
+    "unavailable": "Video görüntülenemiyor",
+    "openSource": "Kaynağında aç",
+    "openOn": "{platform} üzerinde aç",
+    "instagramFallbackTitle": "Bu gönderiyi Instagram'da görüntüle",
+    "openInstagram": "Instagram'da aç",
+    "noVideoSupport": "Tarayıcınız video oynatmayı desteklemiyor.",
+    "watchFacebook": "Facebook'ta izle",
+    "facebookHint": "Video burada görüntülenemiyorsa, doğrudan Facebook'ta izlemek için yukarıdaki düğmeye tıkla."
+  }
+}

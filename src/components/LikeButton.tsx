@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 import { Heart, Loader2 } from 'lucide-react'
 import AuthModal from './AuthModal'
 
@@ -8,6 +9,7 @@ interface AuthUser { id: number; username: string }
 interface Props { targetType: 'video' | 'blog'; targetId: number; initialCount: number }
 
 export default function LikeButton({ targetType, targetId, initialCount }: Props) {
+  const t = useTranslations('auth')
   const [count, setCount] = useState(initialCount)
   const [liked, setLiked] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -52,14 +54,17 @@ export default function LikeButton({ targetType, targetId, initialCount }: Props
             : <Heart size={15} fill={liked ? 'currentColor' : 'none'} />
           }
           <span className="font-mono text-xs">{count}</span>
-          <span className="text-xs opacity-60">{count === 1 ? 'lajk' : 'lajkova'}</span>
+          <span className="text-xs opacity-60">{t('likes.label', { count })}</span>
         </button>
 
         {!user && !loading && (
           <p className="text-warm-400 text-xs font-mono">
-            <button onClick={() => { setModalMode('login'); setModalOpen(true) }}
-              className="text-brand hover:text-brand-light transition-colors">Prijavi se</button>
-            {' '}da lajkaš
+            {t.rich('likes.loginPrompt', {
+              login: chunks => (
+                <button onClick={() => { setModalMode('login'); setModalOpen(true) }}
+                  className="text-brand hover:text-brand-light transition-colors">{chunks}</button>
+              ),
+            })}
           </p>
         )}
       </div>

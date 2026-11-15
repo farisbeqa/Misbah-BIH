@@ -1,0 +1,127 @@
+{
+  "aboutUs": {
+    "meta": {
+      "title": "O Nama - Misbah EDU",
+      "description": "Saznajte više o Misbah EDU — islamskoj obrazovnoj platformi posvećenoj širenju korisnog znanja i duhovnom razvoju."
+    },
+    "tag": "Platforma",
+    "title": "O Nama",
+    "intro": "Medijska platforma Misbah EDU predstavlja inicijativu mladih ljudi usmjerenu ka doprinosu Zajednici kroz edukativni i korisni sadržaj. Povezujući vjeru i prave vrijednosti, posvećena je pričama koje inspirišu i imaju edukativni karakter.",
+    "studyCircles": {
+      "intro": "Trenutno se u okviru platforme Misbah EDU održavaju tri redovne edukativne halke:",
+      "tafsir": "<b>Halka tefsira</b> održava se svakog četvrtka u džematu Carina, sahat vremena prije akšam-namaza. Predavanja vodi {name}, koji kroz tumačenje kur'anskih ajeta nastoji približiti njihovo značenje i poruke svakodnevnom životu.",
+      "sira": "<b>Halka sire</b> održava se svakog ponedjeljka nakon akšam-namaza u džematu Bjelave. Ovu halku vodi {name}, obrađujući život i praksu Allahovog Poslanika, s posebnim naglaskom na pouke koje se mogu primijeniti danas.",
+      "hadith": "<b>Halka hadisa</b> također se održava svakog ponedjeljka nakon akšam-namaza u džematu Bakareva džamija. Halku vodi {name}, fokusirajući se na razumijevanje i primjenu hadisa u svakodnevnom životu.",
+      "outro": "Sve halke su otvorene za sve zainteresovane, s ciljem jačanja znanja, duhovnosti i zajedništva."
+    },
+    "cards": {
+      "impressum": {
+        "title": "Impressum",
+        "description": "Urednici, autori i pravne napomene"
+      },
+      "contact": {
+        "title": "Kontakt",
+        "description": "Email i kontakt informacije"
+      }
+    }
+  },
+  "contact": {
+    "meta": {
+      "title": "Kontakt - Misbah EDU"
+    },
+    "back": "O Nama",
+    "title": "Kontakt",
+    "text": "Slobodno nas kontaktirajte za sve upite, sugestije i saradnju.",
+    "email": "Email",
+    "phone": "Telefon",
+    "collaboration": {
+      "title": "Saradnja i autorski tekstovi",
+      "text": "Misbah EDU je otvoren prostor za sve autore koji žele objaviti tekstove s islamskim ili edukativnim sadržajem. Javite nam se putem emaila i rado ćemo vam odgovoriti."
+    }
+  },
+  "impressum": {
+    "meta": {
+      "title": "Impressum - Misbah EDU"
+    },
+    "back": "O Nama",
+    "title": "Impressum",
+    "platform": {
+      "title": "O platformi",
+      "text1": "Medijska platforma Misbah EDU predstavlja inicijativu mladih ljudi usmjerenu ka doprinosu Zajednici kroz edukativni i korisni sadržaj. Kroz predavanja, podcaste i intervjue nastojimo utkati prave vrijednosti u društvo.",
+      "text2": "Platformu otvaramo i nudimo kao prostor za objavljivanje tekstova svim zainteresovanim autorima."
+    },
+    "editorial": {
+      "title": "Uredništvo",
+      "editors": "Urednici",
+      "socialMedia": "Društvene mreže",
+      "authors": "Autori edukativnog sadržaja"
+    },
+    "biography": "Biografija",
+    "copyright": {
+      "title": "Autorska prava",
+      "text1": "Svi tekstovi, fotografije, audio i video sadržaji objavljeni na platformi Misbah EDU zaštićeni su autorskim pravima. Preuzimanje, umnožavanje ili korištenje sadržaja dozvoljeno je isključivo uz prethodnu saglasnost redakcije i navođenje izvora.",
+      "text2": "Redakcija zadržava pravo uređivanja i uklanjanja sadržaja koji nije u skladu s misijom i vrijednostima platforme.",
+      "text3": "Stavovi gostiju izneseni u emisijama predstavljaju njihove lične stavove i ne moraju nužno odražavati stavove redakcije Misbah EDU."
+    }
+  },
+  "teamMember": {
+    "back": "Impressum",
+    "born": "Datum i mjesto rođenja:"
+  },
+  "authors": {
+    "meta": {
+      "title": "Autori",
+      "description": "Svi autori predavanja, hutbi i tekstova na platformi Misbah EDU."
+    },
+    "tag": "AUTORI",
+    "title": "Autori sadržaja",
+    "text": "Odaberite autora i pogledajte sva njegova predavanja, hutbe i tekstove na jednom mjestu.",
+    "posts": "{count, plural, one {# objava} few {# objave} other {# objava}}"
+  },
+  "author": {
+    "meta": {
+      "fallbackTitle": "Autor",
+      "title": "{name} – sav sadržaj",
+      "description": "Predavanja, hutbe, tekstovi i ostali sadržaj autora {name} na platformi Misbah EDU."
+    },
+    "back": "Svi autori",
+    "tag": "Autor",
+    "posts": "{count, plural, one {# objava} few {# objave} other {# objava}}",
+    "biography": "Biografija"
+  },
+  "contentTypes": {
+    "sections": {
+      "predavanja": "Predavanja",
+      "kratka": "Kratka predavanja",
+      "blog": "Promišljanja i hutbe",
+      "kuran": "Kur'an",
+      "podcast": "Podcast",
+      "price": "Poučne priče",
+      "zikrovi": "Zikrovi",
+      "dove": "Dove",
+      "ilahije": "Ilahije",
+      "mekteb": "Mekteb"
+    },
+    "blogCategories": {
+      "hutbe": "Hutba",
+      "aktuelneTeme": "Aktuelne teme",
+      "duhovnost": "Duhovnost",
+      "tefsirKuran": "Tefsir i Kur'an",
+      "sira": "Sira",
+      "fikh": "Fikh",
+      "savjeti": "Savjeti",
+      "odgoj": "Odgoj i porodica"
+    },
+    "items": {
+      "reflection": "Promišljanje",
+      "story": "Poučna priča",
+      "zikr": "Zikr",
+      "dua": "Dova",
+      "ilahija": "Ilahija",
+      "mekteb": "Mekteb"
+    }
+  },
+  "voices": {
+    "title": "Autori edukativnog sadržaja"
+  }
+}

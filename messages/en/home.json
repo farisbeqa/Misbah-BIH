@@ -1,0 +1,66 @@
+{
+  "hero": {
+    "title": "The light of knowledge that illuminates the heart and enlightens the mind.",
+    "text": "Youth content filled with messages and thoughts that bring light into life, bring a person closer to Allah, calm the heart, encourage good and inspire every day.",
+    "explore": "Explore content",
+    "authors": "Authors"
+  },
+  "benefits": {
+    "tag": "TOPICS WE EXPLORE",
+    "title": "Knowledge that leaves a mark",
+    "text": "From spirituality and worship, through family and upbringing, to the challenges of modern society — Misbah gathers young people through content that helps them understand the faith and live its values in everyday life.",
+    "spirituality": {
+      "title": "Spirituality",
+      "description": "Strengthening the bond with Allah through knowledge, worship and sincere self-reflection."
+    },
+    "family": {
+      "title": "Family",
+      "description": "Topics on healthier relationships, stronger marriages and raising children."
+    },
+    "society": {
+      "title": "Society",
+      "description": "Reflections on issues that shape our community and everyday life."
+    },
+    "character": {
+      "title": "Character",
+      "description": "Develop the values and habits that shape a strong, responsible and fulfilled life."
+    }
+  },
+  "team": {
+    "tag": "THE PEOPLE BEHIND THE CONTENT",
+    "title": "Voices that inspire",
+    "text": "Content on Misbah is created through the collaboration of lecturers, professors, hafizes and experts who contribute with their knowledge and experience to the shared mission of spreading beneficial knowledge."
+  },
+  "verse": {
+    "text": "And say: My Lord, increase me in knowledge.",
+    "source": "Qur'an 20:114"
+  },
+  "lectures": {
+    "tag": "LATEST CONTENT",
+    "title": "Lectures",
+    "text": "Content that connects Islamic knowledge with the questions and challenges of everyday life.",
+    "cta": "See all lectures",
+    "empty": "No lectures yet"
+  },
+  "quran": {
+    "tag": "QUR'ANIC SCIENCES",
+    "title": "Qur'an",
+    "text": "Selected passages from the Qur'an and complete surahs.",
+    "cta": "Explore Qur'anic content",
+    "empty": "No Qur'an content yet"
+  },
+  "podcast": {
+    "tag": "CONVERSATIONS",
+    "title": "Podcast",
+    "text": "Conversations with lecturers, experts and guests about faith, society, upbringing and the topics that shape our everyday life.",
+    "cta": "Listen to episodes",
+    "empty": "No podcast episodes yet"
+  },
+  "blog": {
+    "tag": "REFLECTIONS",
+    "title": "Blog",
+    "text": "Texts, reviews and reflections on faith, knowledge, family and the challenges of modern man.",
+    "cta": "Read all texts",
+    "empty": "No blog posts yet"
+  }
+}

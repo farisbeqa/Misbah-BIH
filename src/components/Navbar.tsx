@@ -1,11 +1,12 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
+import { useTranslations } from 'next-intl'
+import Link, { usePathname, useCurrentLocale } from '@/i18n/navigation'
 import { Menu, X, ChevronDown, LogOut } from 'lucide-react'
 import AuthModal from './AuthModal'
+import LanguageSwitcher from './LanguageSwitcher'
 
 interface AuthUser { id: number; username: string }
 
@@ -26,14 +27,14 @@ function NavDropdown({ open, setOpen, dropRef, label, isActive, items, pathname 
     <div ref={dropRef} className="relative">
       <button
         onClick={() => setOpen(v => !v)}
-        className="flex items-center gap-0.5 px-1.5 py-2 text-base whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
+        className="flex items-center gap-0.5 px-1 min-[1440px]:px-1.5 py-2 text-base whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
         style={{ color: isActive ? '#8b1e3f' : '#5a4f49', fontWeight: isActive ? 600 : 400 }}
       >
         {label}
         <ChevronDown size={13} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       {open && (
-        <div className="absolute top-full left-0 mt-1 bg-white shadow-lg border border-[#ede5dc] overflow-hidden z-50"
+        <div className="absolute top-full start-0 mt-1 bg-white shadow-lg border border-[#ede5dc] overflow-hidden z-50"
           style={{ minWidth: 190 }}>
           {items.map((item, i) => (
             <div key={item.href}>
@@ -67,42 +68,51 @@ function useDropdown() {
   return { open, setOpen, ref }
 }
 
-const PLAIN_LINKS_LEFT = [{ href: '/kuran', label: "Kur'an" }]
-const PLAIN_LINKS_MID  = [{ href: '/podcasts', label: 'Podcast' }, { href: '/mekteb', label: 'Mekteb' }]
+type T = ReturnType<typeof useTranslations<'nav'>>
+
+const plainLinksLeft = (t: T) => [{ href: '/kuran', label: t('quran') }]
+const plainLinksMid  = (t: T) => [{ href: '/podcasts', label: t('podcast') }, { href: '/mekteb', label: t('mekteb') }]
+
+// Dropdown groups, shared by the desktop and mobile navigation
+const lecturesItems  = (t: T) => [
+  { href: '/predavanja/duga',   label: t('longLectures') },
+  { href: '/predavanja/kratka', label: t('shortLectures') },
+]
+const zikrItems      = (t: T) => [
+  { href: '/zikrovi',          label: t('zikrs') },
+  { href: '/zikrovi/tekstovi', label: t('duas') },
+]
+const ilahijeItems   = (t: T) => [
+  { href: '/ilahije/izvedba',  label: t('performances') },
+  { href: '/ilahije/tekstovi', label: t('lyrics') },
+]
+const communityItems = (t: T) => [
+  { href: '/aktivnosti',   label: t('activities') },
+  { href: '/galerija',     label: t('gallery') },
+  { href: '/o-nama',       label: t('aboutUs') },
+  { href: '/autori',       label: t('authors') },
+  { href: '/pozovite-nas', label: t('inviteUs') },
+]
+const blogItems      = (t: T) => [
+  { href: '/blog',  label: t('reflections') },
+  { href: '/price', label: t('stories') },
+]
 
 type MobileEntry =
   | { href: string; label: string }
   | { label: string; items: DropdownItem[] }
 
 // Mirrors the desktop navigation: same order, same dropdown groups
-const MOBILE_NAV: MobileEntry[] = [
-  { href: '/', label: 'Početna' },
-  { label: 'Predavanja', items: [
-    { href: '/predavanja/duga',   label: 'Duga predavanja' },
-    { href: '/predavanja/kratka', label: 'Kratka predavanja' },
-  ] },
-  { href: '/kuran', label: "Kur'an" },
-  { label: 'Zikrovi i Dove', items: [
-    { href: '/zikrovi',          label: 'Zikrovi (Tekst i Audio)' },
-    { href: '/zikrovi/tekstovi', label: 'Dove (Tekst i Audio)' },
-  ] },
-  { href: '/podcasts', label: 'Podcast' },
-  { href: '/mekteb',   label: 'Mekteb' },
-  { label: 'Ilahije', items: [
-    { href: '/ilahije/izvedba',  label: 'Izvedba' },
-    { href: '/ilahije/tekstovi', label: 'Tekstovi' },
-  ] },
-  { label: 'Zajednica', items: [
-    { href: '/aktivnosti', label: 'Aktivnosti' },
-    { href: '/galerija',   label: 'Galerija' },
-    { href: '/o-nama',     label: 'O Nama' },
-    { href: '/autori',     label: 'Autori' },
-    { href: '/pozovite-nas', label: 'Pozovite nas' },
-  ] },
-  { label: 'Blog', items: [
-    { href: '/blog',  label: 'Promišljanja' },
-    { href: '/price', label: 'Poučne priče' },
-  ] },
+const mobileNav = (t: T): MobileEntry[] => [
+  { href: '/', label: t('home') },
+  { label: t('lectures'), items: lecturesItems(t) },
+  { href: '/kuran', label: t('quran') },
+  { label: t('zikrAndDua'), items: zikrItems(t) },
+  { href: '/podcasts', label: t('podcast') },
+  { href: '/mekteb',   label: t('mekteb') },
+  { label: t('ilahije'), items: ilahijeItems(t) },
+  { label: t('community'), items: communityItems(t) },
+  { label: t('blog'), items: blogItems(t) },
 ]
 
 function isGroupActive(items: DropdownItem[], pathname: string) {
@@ -110,7 +120,15 @@ function isGroupActive(items: DropdownItem[], pathname: string) {
 }
 
 export default function Navbar() {
+  const t = useTranslations('nav')
   const pathname = usePathname()
+  const locale = useCurrentLocale()
+  const MOBILE_NAV = mobileNav(t)
+  // German and Arabic menu labels are longer and do not fit from 1280px:
+  // in those languages the desktop menu starts at 1440px (mobile menu below)
+  const lateDesktop = locale === 'de' || locale === 'ar'
+  const desktopOnly = lateDesktop ? 'hidden min-[1440px]:block' : 'hidden xl:block'
+  const mobileOnly = lateDesktop ? 'min-[1440px]:hidden' : 'xl:hidden'
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileGroup, setMobileGroup] = useState<string | null>(null)
   const [user, setUser]             = useState<AuthUser | null>(null)
@@ -132,6 +150,7 @@ export default function Navbar() {
     if (!mobileOpen) return
     const current = MOBILE_NAV.find(e => 'items' in e && isGroupActive(e.items, pathname))
     setMobileGroup(current ? current.label : null)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mobileOpen, pathname])
 
   const handleLogout = async () => {
@@ -159,7 +178,7 @@ export default function Navbar() {
   return (
     <>
       {/* Desktop nav */}
-      <nav className="bg-white w-full sticky top-0 z-40 border-b border-gray-100 hidden lg:block">
+      <nav className={`bg-white w-full sticky top-0 z-40 border-b border-gray-100 ${desktopOnly}`}>
       <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-5 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5 shrink-0">
           <Image src="/logo.jpg" alt="Misbah EDU" width={56} height={56} className="object-cover mix-blend-multiply" />
@@ -171,64 +190,47 @@ export default function Navbar() {
         <div className="flex items-center gap-1">
           <NavDropdown
             open={pred.open} setOpen={pred.setOpen} dropRef={pred.ref}
-            label="Predavanja" isActive={isPredavanja} pathname={pathname}
-            items={[
-              { href: '/predavanja/duga',   label: 'Duga predavanja' },
-              { href: '/predavanja/kratka', label: 'Kratka predavanja' },
-            ]}
+            label={t('lectures')} isActive={isPredavanja} pathname={pathname}
+            items={lecturesItems(t)}
           />
-          {PLAIN_LINKS_LEFT.map(link => (
+          {plainLinksLeft(t).map(link => (
             <Link key={link.href} href={link.href}
-              className="px-1.5 py-2 text-base whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
+              className="px-1 min-[1440px]:px-1.5 py-2 text-base whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
               style={ls(pathname === link.href)}>
               {link.label}
             </Link>
           ))}
           <NavDropdown
             open={zikrovi.open} setOpen={zikrovi.setOpen} dropRef={zikrovi.ref}
-            label="Zikrovi i Dove" isActive={isZikrovi} pathname={pathname}
-            items={[
-              { href: '/zikrovi',          label: 'Zikrovi (Tekst i Audio)' },
-              { href: '/zikrovi/tekstovi', label: 'Dove (Tekst i Audio)'    },
-            ]}
+            label={t('zikrAndDua')} isActive={isZikrovi} pathname={pathname}
+            items={zikrItems(t)}
           />
-          {PLAIN_LINKS_MID.map(link => (
+          {plainLinksMid(t).map(link => (
             <Link key={link.href} href={link.href}
-              className="px-1.5 py-2 text-base whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
+              className="px-1 min-[1440px]:px-1.5 py-2 text-base whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
               style={ls(pathname === link.href)}>
               {link.label}
             </Link>
           ))}
           <NavDropdown
             open={ilahije.open} setOpen={ilahije.setOpen} dropRef={ilahije.ref}
-            label="Ilahije" isActive={isIlahije} pathname={pathname}
-            items={[
-              { href: '/ilahije/izvedba',  label: 'Izvedba' },
-              { href: '/ilahije/tekstovi', label: 'Tekstovi' },
-            ]}
+            label={t('ilahije')} isActive={isIlahije} pathname={pathname}
+            items={ilahijeItems(t)}
           />
           <NavDropdown
             open={zajednica.open} setOpen={zajednica.setOpen} dropRef={zajednica.ref}
-            label="Zajednica" isActive={isZajednica} pathname={pathname}
-            items={[
-              { href: '/aktivnosti', label: 'Aktivnosti' },
-              { href: '/galerija',   label: 'Galerija'   },
-              { href: '/o-nama',     label: 'O Nama'     },
-              { href: '/autori',     label: 'Autori'     },
-              { href: '/pozovite-nas', label: 'Pozovite nas' },
-            ]}
+            label={t('community')} isActive={isZajednica} pathname={pathname}
+            items={communityItems(t)}
           />
           <NavDropdown
             open={blog.open} setOpen={blog.setOpen} dropRef={blog.ref}
-            label="Blog" isActive={isBlog} pathname={pathname}
-            items={[
-              { href: '/blog',  label: 'Promišljanja'  },
-              { href: '/price', label: 'Poučne priče' },
-            ]}
+            label={t('blog')} isActive={isBlog} pathname={pathname}
+            items={blogItems(t)}
           />
         </div>
 
-        <div className="flex items-center gap-4 shrink-0">
+        <div className="flex items-center gap-3 min-[1440px]:gap-4 shrink-0">
+          <LanguageSwitcher />
           {authChecked && (
             user ? (
               <div className="flex items-center gap-3">
@@ -242,18 +244,18 @@ export default function Navbar() {
                 <button onClick={handleLogout}
                   className="flex items-center gap-1 text-sm transition-colors hover:text-[#8b1e3f]"
                   style={{ color: '#978a81' }}>
-                  <LogOut size={13} /> Odjava
+                  <LogOut size={13} /> {t('logout')}
                 </button>
               </div>
             ) : (
               <>
                 <button onClick={() => openModal('register')}
-                  className="bg-[#8b1e3f] text-white px-8 py-3 text-base font-normal hover:bg-[#7a1a37] transition-colors">
-                  Registruj se
+                  className="bg-[#8b1e3f] text-white px-6 min-[1440px]:px-8 py-3 text-base font-normal hover:bg-[#7a1a37] transition-colors whitespace-nowrap">
+                  {t('register')}
                 </button>
                 <button onClick={() => openModal('login')}
-                  className="border border-[#8b1e3f] text-[#8b1e3f] px-6 py-3 text-base font-normal hover:bg-[#faf5f5] transition-colors">
-                  Prijava
+                  className="border border-[#8b1e3f] text-[#8b1e3f] px-5 min-[1440px]:px-6 py-3 text-base font-normal hover:bg-[#faf5f5] transition-colors whitespace-nowrap">
+                  {t('login')}
                 </button>
               </>
             )
@@ -263,23 +265,26 @@ export default function Navbar() {
       </nav>
 
       {/* Mobile nav bar */}
-      <nav className="bg-white w-full sticky top-0 z-40 border-b border-gray-100 lg:hidden flex items-center justify-between px-5 py-4">
+      <nav className={`bg-white w-full sticky top-0 z-40 border-b border-gray-100 ${mobileOnly} flex items-center justify-between px-5 py-4`}>
         <Link href="/" className="flex items-center gap-2 shrink-0">
           <Image src="/logo.jpg" alt="Misbah EDU" width={44} height={44} className="object-cover mix-blend-multiply" />
           <span className="font-bold text-[20px] leading-none" style={{ color: '#8b1e3f' }}>
             Misbah <span style={{ color: '#c8a96b' }}>EDU</span>
           </span>
         </Link>
-        <button onClick={() => setMobileOpen(v => !v)} className="p-1" aria-label="Toggle menu">
-          {mobileOpen
-            ? <X size={24} style={{ color: '#8b1e3f' }} />
-            : <Menu size={24} style={{ color: '#141110' }} />
-          }
-        </button>
+        <div className="flex items-center gap-3">
+          <LanguageSwitcher variant="mobile" />
+          <button onClick={() => setMobileOpen(v => !v)} className="p-1" aria-label={t('toggleMenu')}>
+            {mobileOpen
+              ? <X size={24} style={{ color: '#8b1e3f' }} />
+              : <Menu size={24} style={{ color: '#141110' }} />
+            }
+          </button>
+        </div>
       </nav>
 
       {mobileOpen && (
-        <div className="lg:hidden fixed top-[65px] left-0 right-0 bg-white border-b border-gray-100 px-5 pb-5 flex flex-col gap-0.5 z-30 shadow-md overflow-y-auto max-h-[calc(100vh-65px)]">
+        <div className={`${mobileOnly} fixed top-[65px] left-0 right-0 bg-white border-b border-gray-100 px-5 pb-5 flex flex-col gap-0.5 z-30 shadow-md overflow-y-auto max-h-[calc(100vh-65px)]`}>
           <div className="flex flex-col pt-2">
             {MOBILE_NAV.map(entry => {
               if (!('items' in entry)) {
@@ -296,14 +301,14 @@ export default function Navbar() {
                 <div key={entry.label} className="border-b border-[#f5f0eb]">
                   <button
                     onClick={() => setMobileGroup(expanded ? null : entry.label)}
-                    className="w-full flex items-center justify-between py-3 text-base text-left"
+                    className="w-full flex items-center justify-between py-3 text-base text-start"
                     style={ls(isGroupActive(entry.items, pathname))}
                     aria-expanded={expanded}>
                     {entry.label}
                     <ChevronDown size={16} className={`transition-transform ${expanded ? 'rotate-180' : ''}`} />
                   </button>
                   {expanded && (
-                    <div className="flex flex-col pb-2 pl-4 ml-1 border-l-2 border-[#ede5dc]">
+                    <div className="flex flex-col pb-2 ps-4 ms-1 border-s-2 border-[#ede5dc]">
                       {entry.items.map(item => (
                         <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)}
                           className="py-2.5 text-[15px] transition-colors hover:text-[#8b1e3f]"
@@ -328,18 +333,18 @@ export default function Navbar() {
                   {user.username}
                 </div>
                 <button onClick={handleLogout} className="text-sm flex items-center gap-1" style={{ color: '#978a81' }}>
-                  <LogOut size={13} /> Odjava
+                  <LogOut size={13} /> {t('logout')}
                 </button>
               </div>
             ) : (
               <>
                 <button onClick={() => openModal('register')}
                   className="flex-1 bg-[#8b1e3f] text-white py-3 text-base font-normal">
-                  Registruj se
+                  {t('register')}
                 </button>
                 <button onClick={() => openModal('login')}
                   className="flex-1 border border-[#8b1e3f] text-[#8b1e3f] py-3 text-base font-normal">
-                  Prijava
+                  {t('login')}
                 </button>
               </>
             )}

@@ -1,24 +1,25 @@
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 import { ArrowLeft, Calendar } from 'lucide-react'
+import Link from '@/i18n/navigation'
+import { getLocale, formatDate } from '@/i18n/server'
+import { LOCALE_INFO } from '@/i18n/config'
 import { prisma } from '@/lib/db'
+import { localizeRow, localizeRows } from '@/lib/translations'
 import MoreFromAuthor from '@/components/MoreFromAuthor'
+import MachineTranslationNote from '@/components/MachineTranslationNote'
 
 export const dynamic = 'force-dynamic'
 
-const MONTHS = ['januar','februar','mart','april','maj','juni','juli','august','septembar','oktobar','novembar','decembar']
-function fmt(d: Date) { return `${d.getDate()}. ${MONTHS[d.getMonth()]} ${d.getFullYear()}.` }
-
-const CAT_LABELS: Record<string, string> = {
-  opste: 'Opšte', program: 'Plan i program', kviz: 'Kviz', materijali: 'Materijali',
-}
+/** Categories with a label in blog.mektebCategories; any other value is shown as is */
+const CATEGORIES: readonly string[] = ['opste', 'program', 'kviz', 'materijali']
 
 interface PageProps { params: { id: string } }
 
 export async function generateMetadata({ params }: PageProps) {
   try {
-    const p = await prisma.mektebPost.findUnique({ where: { id: parseInt(params.id) } })
-    return p ? { title: `${p.title} — Mekteb EDU`, alternates: { canonical: `/mekteb/${params.id}` } } : { title: 'Misbah EDU' }
+    const p = await localizeRow('mekteb', await prisma.mektebPost.findUnique({ where: { id: parseInt(params.id) } }), getLocale())
+    return p ? { title: `${p.title} — Mekteb EDU` } : { title: 'Misbah EDU' }
   } catch { return { title: 'Misbah EDU' } }
 }
 
@@ -26,15 +27,20 @@ export default async function MektebPostPage({ params }: PageProps) {
   const id = parseInt(params.id)
   if (isNaN(id)) notFound()
 
-  const post = await prisma.mektebPost.findUnique({ where: { id, published: true } }).catch(() => null)
-  if (!post) notFound()
+  const found = await prisma.mektebPost.findUnique({ where: { id, published: true } }).catch(() => null)
+  if (!found) notFound()
+
+  const locale = getLocale()
+  const t = await getTranslations('blog')
+  const [post] = await localizeRows('mekteb', [found], locale)
+  const rtl = LOCALE_INFO[locale].dir === 'rtl'
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12" style={{ minHeight: '60vh' }}>
       <Link href="/mekteb"
         className="inline-flex items-center gap-2 text-sm mb-8 hover:text-brand transition-colors"
         style={{ color: '#978A81' }}>
-        <ArrowLeft size={14} /> Mekteb EDU
+        <ArrowLeft size={14} className="flip-rtl" /> Mekteb EDU
       </Link>
 
       {post.imageUrl && (
@@ -46,11 +52,11 @@ export default async function MektebPostPage({ params }: PageProps) {
 
       <div className="flex items-center gap-2 mb-4 flex-wrap">
         <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-100 text-blue-700">
-          {CAT_LABELS[post.category] ?? post.category}
+          {CATEGORIES.includes(post.category) ? t(`mektebCategories.${post.category}`) : post.category}
         </span>
         <div className="flex items-center gap-1.5">
           <Calendar size={12} style={{ color: '#A94A61' }} />
-          <time className="text-xs font-mono tracking-wide" style={{ color: '#A94A61' }}>{fmt(post.createdAt)}</time>
+          <time className="text-xs font-mono tracking-wide" style={{ color: '#A94A61' }}>{formatDate(post.createdAt)}</time>
         </div>
       </div>
 
@@ -61,19 +67,23 @@ export default async function MektebPostPage({ params }: PageProps) {
         <p className="text-sm font-medium mb-8" style={{ color: '#1D4ED8' }}>{post.author}</p>
       )}
 
+      <MachineTranslationNote show={post.translated} className="mb-6" />
+
       <div className="prose-blog">
         {post.content.split('\n').map((line, i) =>
-          line.trim() ? <p key={i}>{line}</p> : <div key={i} className="h-2" />
+          // Right-to-left pages: a paragraph left untranslated keeps its own direction
+          line.trim() ? <p key={i} dir={rtl ? 'auto' : undefined}>{line}</p> : <div key={i} className="h-2" />
         )}
       </div>
 
-      <MoreFromAuthor author={post.author} title={post.title} className="mt-10" />
+      {/* Author lookup uses the original (Bosnian) title */}
+      <MoreFromAuthor author={post.author} title={found.title} className="mt-10" />
 
       <div className="mt-10 pt-6 flex justify-center" style={{ borderTop: '1px solid #E8E1DB' }}>
         <Link href="/mekteb"
           className="inline-flex items-center gap-2 font-mono text-xs text-warm-400 hover:text-warm-700 transition-colors px-4 py-2"
           style={{ border: '1px solid #E8E1DB', borderRadius: 6 }}>
-          ← Svi sadržaji
+          {`${rtl ? '→' : '←'} ${t('mektebPost.allPosts')}`}
         </Link>
       </div>
     </div>

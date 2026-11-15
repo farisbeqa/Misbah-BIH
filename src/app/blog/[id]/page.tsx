@@ -1,35 +1,39 @@
 ﻿import { notFound } from 'next/navigation'
-import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 import { ArrowLeft } from 'lucide-react'
+import Link from '@/i18n/navigation'
+import { getLocale, formatDate } from '@/i18n/server'
+import { LOCALE_INFO } from '@/i18n/config'
 import { prisma } from '@/lib/db'
+import { localizeRow, localizeRows } from '@/lib/translations'
 
 export const dynamic = 'force-dynamic'
 import LikeButton from '@/components/LikeButton'
 import CommentsSection from '@/components/CommentsSection'
 import BlogImage from '@/components/BlogImage'
 import MoreFromAuthor from '@/components/MoreFromAuthor'
+import MachineTranslationNote from '@/components/MachineTranslationNote'
 
 interface PageProps { params: { id: string } }
 
 export async function generateMetadata({ params }: PageProps) {
   try {
-    const post = await prisma.blogPost.findUnique({ where: { id: parseInt(params.id) } })
-    if (!post) return { title: 'Post nije pronađen' }
-    return { title: `${post.title} - Misbah EDU`, description: post.content.slice(0, 160), alternates: { canonical: `/blog/${params.id}` } }
+    const post = await localizeRow('blog', await prisma.blogPost.findUnique({ where: { id: parseInt(params.id) } }), getLocale())
+    if (!post) {
+      const t = await getTranslations('blog')
+      return { title: t('blogPost.notFound') }
+    }
+    return { title: `${post.title} - Misbah EDU`, description: post.content.slice(0, 160) }
   } catch { return { title: 'Misbah EDU' } }
-}
-
-function formatDate(d: Date) {
-  return d.toLocaleDateString('bs-BA', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
   const id = parseInt(params.id)
   if (isNaN(id)) notFound()
 
-  let post
+  let found
   try {
-    post = await prisma.blogPost.findUnique({
+    found = await prisma.blogPost.findUnique({
       where: { id, published: true },
       include: { _count: { select: { likes: true, comments: true } } },
     })
@@ -37,13 +41,18 @@ export default async function BlogPostPage({ params }: PageProps) {
     console.error('[blog detail] Prisma error for id', id, error)
     notFound()
   }
-  if (!post) notFound()
+  if (!found) notFound()
+
+  const locale = getLocale()
+  const t = await getTranslations('blog')
+  const [post] = await localizeRows('blog', [found], locale)
+  const rtl = LOCALE_INFO[locale].dir === 'rtl'
 
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <Link href="/blog"
         className="inline-flex items-center gap-2 text-warm-400 hover:text-warm-700 text-sm mb-10 transition-colors font-mono tracking-wide">
-        <ArrowLeft size={14} /> Nazad na blog
+        <ArrowLeft size={14} className="flip-rtl" /> {t('blogPost.back')}
       </Link>
 
       <article>
@@ -81,23 +90,26 @@ export default async function BlogPostPage({ params }: PageProps) {
                 <div>
                   <p className="font-semibold text-warm-800 text-sm">{post.author}</p>
                   {isHamdo && (
-                    <p className="font-mono text-warm-400 text-[11px]">Imam džamije Carina · Sarajevo</p>
+                    <p className="font-mono text-warm-400 text-[11px]">{t('blogPost.hamdoRole')}</p>
                   )}
                 </div>
               </div>
             )
           })()}
 
+          <MachineTranslationNote show={post.translated} className="mt-4" />
+
           {/* Rule */}
           <div className="mt-8 h-px"
-            style={{ background: 'linear-gradient(to right, #8B1E3F, #C8A96B40, transparent)' }} />
+            style={{ background: `linear-gradient(to ${rtl ? 'left' : 'right'}, #8B1E3F, #C8A96B40, transparent)` }} />
         </header>
 
         {/* Body - premium reading experience */}
         <div className="prose-blog">
           {post.content.split('\n').map((line, i) =>
             line.trim()
-              ? <p key={i}>{line}</p>
+              // Right-to-left pages: a paragraph left untranslated keeps its own direction
+              ? <p key={i} dir={rtl ? 'auto' : undefined}>{line}</p>
               : <div key={i} className="h-2" />
           )}
         </div>
@@ -107,12 +119,13 @@ export default async function BlogPostPage({ params }: PageProps) {
           style={{ borderTop: '1px solid #E8E1DB' }}>
           <time className="font-mono text-[11px] text-warm-400">{formatDate(post.createdAt)}</time>
           <Link href="/blog" className="font-mono text-xs text-brand hover:text-brand-light transition-colors tracking-wide">
-            ← Sve objave
+            {`${rtl ? '→' : '←'} ${t('blogPost.allPosts')}`}
           </Link>
         </footer>
       </article>
 
-      <MoreFromAuthor author={post.author} title={post.title} className="mt-10" />
+      {/* Author lookup uses the original (Bosnian) title */}
+      <MoreFromAuthor author={post.author} title={found.title} className="mt-10" />
 
       {/* Likes + Comments */}
       <div className="mt-12 space-y-8" style={{ borderTop: '1px solid #E8E1DB', paddingTop: 32 }}>

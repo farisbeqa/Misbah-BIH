@@ -1,7 +1,11 @@
 ﻿import { notFound } from 'next/navigation'
-import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
+import Link from '@/i18n/navigation'
 import { ArrowLeft, Calendar, MapPin } from 'lucide-react'
 import { prisma } from '@/lib/db'
+import { localizeRow } from '@/lib/translations'
+import { getLocale, formatDate } from '@/i18n/server'
+import MachineTranslationNote from '@/components/MachineTranslationNote'
 
 export const dynamic = 'force-dynamic'
 
@@ -9,23 +13,24 @@ interface PageProps { params: { id: string } }
 
 export async function generateMetadata({ params }: PageProps) {
   try {
-    const a = await prisma.activity.findUnique({ where: { id: parseInt(params.id) } })
-    return a ? { title: `${a.title} - Misbah EDU`, alternates: { canonical: `/aktivnosti/${params.id}` } } : { title: 'Misbah EDU' }
+    const row = await prisma.activity.findUnique({ where: { id: parseInt(params.id) } })
+    const a = await localizeRow('activity', row, getLocale())
+    return a ? { title: `${a.title} - Misbah EDU` } : { title: 'Misbah EDU' }
   } catch { return { title: 'Misbah EDU' } }
 }
 
-const MONTHS = ['januar','februar','mart','april','maj','juni','juli','august','septembar','oktobar','novembar','decembar']
-function fmt(d: Date) { return `${d.getDate()}. ${MONTHS[d.getMonth()]} ${d.getFullYear()}.` }
-
 export default async function ActivityPage({ params }: PageProps) {
-  const activity = await prisma.activity.findUnique({ where: { id: parseInt(params.id), published: true } })
+  const locale = getLocale()
+  const t = await getTranslations('community.activities')
+  const row = await prisma.activity.findUnique({ where: { id: parseInt(params.id), published: true } })
+  const activity = await localizeRow('activity', row, locale)
   if (!activity) notFound()
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <Link href="/aktivnosti"
         className="inline-flex items-center gap-2 text-warm-400 hover:text-warm-700 text-sm mb-8 transition-colors font-mono tracking-wide">
-        <ArrowLeft size={14} /> Nazad na aktivnosti
+        <ArrowLeft size={14} className="flip-rtl" /> {t('backToList')}
       </Link>
 
       {activity.videoUrl ? (
@@ -42,12 +47,14 @@ export default async function ActivityPage({ params }: PageProps) {
 
       <div className="flex items-center gap-2 mb-4">
         <Calendar size={13} style={{ color: '#A94A61' }} />
-        <time className="font-mono text-xs tracking-wider" style={{ color: '#A94A61' }}>{fmt(activity.date)}</time>
+        <time className="font-mono text-xs tracking-wider" style={{ color: '#A94A61' }}>{formatDate(activity.date)}</time>
       </div>
 
       <h1 className="text-2xl sm:text-3xl font-extrabold text-warm-900 leading-tight tracking-tight mb-8 break-words">
         {activity.title}
       </h1>
+
+      <MachineTranslationNote show={activity.translated} className="mb-6" />
 
       <div className="prose-blog">
         {activity.content.split('\n').map((line, i) =>
@@ -59,7 +66,7 @@ export default async function ActivityPage({ params }: PageProps) {
         <Link href="/aktivnosti"
           className="inline-flex items-center gap-2 font-mono text-xs text-warm-400 hover:text-warm-700 transition-colors px-4 py-2"
           style={{ border: '1px solid #E8E1DB', borderRadius: 6 }}>
-          <MapPin size={11} /> Sve aktivnosti
+          <MapPin size={11} /> {t('allActivities')}
         </Link>
       </div>
     </div>

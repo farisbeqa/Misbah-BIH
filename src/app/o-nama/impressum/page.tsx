@@ -1,11 +1,16 @@
-import Link from 'next/link'
+import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
+import Link from '@/i18n/navigation'
 import { ArrowLeft, ExternalLink } from 'lucide-react'
 import { BIOS } from '@/lib/bios'
 import { UREDNICI, DRUSTVENE_MREZE, AUTORI } from '@/lib/team'
 
-export const metadata = { title: 'Impressum - Misbah EDU' }
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('about.impressum.meta')
+  return { title: t('title') }
+}
 
-function MemberCard({ name, slug, photo, accent }: { name: string; slug?: string; photo?: string; accent: string }) {
+function MemberCard({ name, slug, photo, accent, bioLabel }: { name: string; slug?: string; photo?: string; accent: string; bioLabel: string }) {
   const bio = slug ? BIOS[slug] : undefined
   const photoSrc = bio?.photo ?? photo
   return (
@@ -28,62 +33,64 @@ function MemberCard({ name, slug, photo, accent }: { name: string; slug?: string
         <Link href={`/o-nama/tim/${slug}`}
           className="flex items-center gap-1 text-xs font-medium px-3 py-1.5 rounded-lg transition-colors hover:opacity-80 flex-shrink-0"
           style={{ background: '#F5EDE8', color: '#8B1E3F' }}>
-          Biografija <ExternalLink size={10} />
+          {bioLabel} <ExternalLink size={10} className="flip-rtl" />
         </Link>
       )}
     </li>
   )
 }
 
-export default function ImpressumPage() {
+export default async function ImpressumPage() {
+  const t = await getTranslations('about.impressum')
+  const bioLabel = t('biography')
+
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <Link href="/o-nama"
         className="inline-flex items-center gap-2 text-warm-400 hover:text-warm-700 text-sm mb-8 transition-colors font-mono">
-        <ArrowLeft size={14} /> O Nama
+        <ArrowLeft size={14} className="flip-rtl" /> {t('back')}
       </Link>
 
-      <h1 className="text-2xl sm:text-3xl font-extrabold text-warm-900 tracking-tight mb-10">Impressum</h1>
+      <h1 className="text-2xl sm:text-3xl font-extrabold text-warm-900 tracking-tight mb-10">{t('title')}</h1>
 
       {/* About */}
       <section className="mb-10 p-6 rounded-2xl" style={{ background: '#FAF7F2', border: '1px solid #E8E1DB' }}>
-        <h2 className="font-bold text-warm-900 mb-4">O platformi</h2>
+        <h2 className="font-bold text-warm-900 mb-4">{t('platform.title')}</h2>
         <div className="space-y-3 text-sm text-warm-700 leading-relaxed">
           <p>
-            Medijska platforma Misbah EDU predstavlja inicijativu mladih ljudi usmjerenu ka doprinosu Zajednici kroz edukativni i korisni sadržaj.
-            Kroz predavanja, podcaste i intervjue nastojimo utkati prave vrijednosti u društvo.
+            {t('platform.text1')}
           </p>
           <p>
-            Platformu otvaramo i nudimo kao prostor za objavljivanje tekstova svim zainteresovanim autorima.
+            {t('platform.text2')}
           </p>
         </div>
       </section>
 
       {/* Team */}
       <section className="mb-10">
-        <h2 className="font-bold text-warm-900 mb-5 text-lg">Uredništvo</h2>
+        <h2 className="font-bold text-warm-900 mb-5 text-lg">{t('editorial.title')}</h2>
         <div className="grid sm:grid-cols-2 gap-4">
           <div className="p-5 rounded-2xl" style={{ background: '#FAF7F2', border: '1px solid #E8E1DB' }}>
-            <p className="font-mono text-[11px] uppercase tracking-widest mb-3" style={{ color: '#A94A61' }}>Urednici</p>
+            <p className="font-mono text-[11px] uppercase tracking-widest mb-3" style={{ color: '#A94A61' }}>{t('editorial.editors')}</p>
             <ul className="divide-y divide-[#EDE5DB]">
               {UREDNICI.map(m => (
-                <MemberCard key={m.name} name={m.name} slug={m.slug} accent="#8B1E3F" />
+                <MemberCard key={m.name} name={m.name} slug={m.slug} accent="#8B1E3F" bioLabel={bioLabel} />
               ))}
             </ul>
           </div>
           <div className="p-5 rounded-2xl" style={{ background: '#FAF7F2', border: '1px solid #E8E1DB' }}>
-            <p className="font-mono text-[11px] uppercase tracking-widest mb-3" style={{ color: '#A94A61' }}>Društvene mreže</p>
+            <p className="font-mono text-[11px] uppercase tracking-widest mb-3" style={{ color: '#A94A61' }}>{t('editorial.socialMedia')}</p>
             <ul className="divide-y divide-[#EDE5DB]">
               {DRUSTVENE_MREZE.map(m => (
-                <MemberCard key={m.name} name={m.name} slug={m.slug} photo={m.photo} accent="#C8A96B" />
+                <MemberCard key={m.name} name={m.name} slug={m.slug} photo={m.photo} accent="#C8A96B" bioLabel={bioLabel} />
               ))}
             </ul>
           </div>
           <div className="p-5 rounded-2xl sm:col-span-2" style={{ background: '#FAF7F2', border: '1px solid #E8E1DB' }}>
-            <p className="font-mono text-[11px] uppercase tracking-widest mb-3" style={{ color: '#A94A61' }}>Autori edukativnog sadržaja</p>
+            <p className="font-mono text-[11px] uppercase tracking-widest mb-3" style={{ color: '#A94A61' }}>{t('editorial.authors')}</p>
             <ul className="divide-y divide-[#EDE5DB]">
               {AUTORI.map(m => (
-                <MemberCard key={m.name} name={m.name} slug={m.slug} photo={m.photo} accent="#8B1E3F" />
+                <MemberCard key={m.name} name={m.name} slug={m.slug} photo={m.photo} accent="#8B1E3F" bioLabel={bioLabel} />
               ))}
             </ul>
           </div>
@@ -92,20 +99,16 @@ export default function ImpressumPage() {
 
       {/* Copyright */}
       <section className="p-6 rounded-2xl" style={{ background: '#FAF7F2', border: '1px solid #E8E1DB' }}>
-        <h2 className="font-bold text-warm-900 mb-4">Autorska prava</h2>
+        <h2 className="font-bold text-warm-900 mb-4">{t('copyright.title')}</h2>
         <div className="space-y-3 text-sm text-warm-600 leading-relaxed">
           <p>
-            Svi tekstovi, fotografije, audio i video sadržaji objavljeni na platformi Misbah EDU zaštićeni su
-            autorskim pravima. Preuzimanje, umnožavanje ili korištenje sadržaja dozvoljeno je isključivo uz
-            prethodnu saglasnost redakcije i navođenje izvora.
+            {t('copyright.text1')}
           </p>
           <p>
-            Redakcija zadržava pravo uređivanja i uklanjanja sadržaja koji nije u skladu s misijom i
-            vrijednostima platforme.
+            {t('copyright.text2')}
           </p>
           <p>
-            Stavovi gostiju izneseni u emisijama predstavljaju njihove lične stavove i ne moraju nužno
-            odražavati stavove redakcije Misbah EDU.
+            {t('copyright.text3')}
           </p>
         </div>
       </section>

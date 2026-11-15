@@ -1,26 +1,30 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { X } from 'lucide-react'
+import { useCurrentLocale } from '@/i18n/navigation'
+import { DEFAULT_LOCALE } from '@/i18n/config'
 
 interface StoredQuote {
+  id?: number
   text: string
   source: string | null
   type: string
   selectedAt: number
+  /** Language of text/source; quotes stored before the site had languages are Bosnian */
+  locale?: string
 }
 
 const STORE_KEY   = 'misao_dana_v1'
 const SESSION_KEY = 'misao_dana_shown'
 const INTERVAL_MS = 12 * 60 * 60 * 1000
 
-const TYPE_LABEL: Record<string, string> = {
-  ajet:   "Kur'anski ajet",
-  hadis:  'Hadis',
-  izreka: 'Misao dana',
-}
+const QUOTE_TYPES = ['ajet', 'hadis', 'izreka']
 
 export default function MisaoDanaPopup() {
+  const t = useTranslations('quotes')
+  const locale = useCurrentLocale()
   const [quote, setQuote] = useState<StoredQuote | null>(null)
   const [open,  setOpen]  = useState(false)
 
@@ -37,13 +41,21 @@ export default function MisaoDanaPopup() {
         } catch { /* ignore malformed */ }
 
         const now = Date.now()
-        if (!stored || now - stored.selectedAt > INTERVAL_MS) {
-          const res = await fetch('/api/quotes')
+        const expired = !stored || now - stored.selectedAt > INTERVAL_MS
+        const otherLanguage = !!stored && (stored.locale ?? DEFAULT_LOCALE) !== locale
+        if (expired || otherLanguage) {
+          const res = await fetch(`/api/quotes?lang=${locale}`)
           if (!res.ok) return
-          const all: Array<{ text: string; source: string | null; type: string }> = await res.json()
+          const all: Array<{ id: number; text: string; source: string | null; type: string }> = await res.json()
           if (!all.length) return
-          const picked = all[Math.floor(Math.random() * all.length)]
-          stored = { text: picked.text, source: picked.source, type: picked.type, selectedAt: now }
+          // Only the language changed: keep today's quote, in the new language
+          const same = !expired && stored?.id != null ? all.find(q => q.id === stored?.id) : undefined
+          const picked = same ?? all[Math.floor(Math.random() * all.length)]
+          stored = {
+            id: picked.id, text: picked.text, source: picked.source, type: picked.type,
+            selectedAt: same && stored ? stored.selectedAt : now,
+            locale,
+          }
           localStorage.setItem(STORE_KEY, JSON.stringify(stored))
         }
 
@@ -54,7 +66,7 @@ export default function MisaoDanaPopup() {
     }
 
     load()
-  }, [])
+  }, [locale])
 
   if (!open || !quote) return null
 
@@ -78,12 +90,12 @@ export default function MisaoDanaPopup() {
             className="text-xs font-bold uppercase tracking-widest"
             style={{ color: '#8B1E3F', letterSpacing: '0.1em' }}
           >
-            {TYPE_LABEL[quote.type] ?? 'Misao dana'}
+            {QUOTE_TYPES.includes(quote.type) ? t(`types.${quote.type}`) : t('popup.defaultLabel')}
           </span>
           <button
             onClick={() => setOpen(false)}
             className="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
-            aria-label="Zatvori"
+            aria-label={t('popup.close')}
           >
             <X size={18} />
           </button>
@@ -123,7 +135,7 @@ export default function MisaoDanaPopup() {
             onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#7a1a37')}
             onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#8B1E3F')}
           >
-            Zatvori
+            {t('popup.close')}
           </button>
         </div>
       </div>

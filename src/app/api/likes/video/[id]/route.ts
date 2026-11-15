@@ -19,7 +19,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
   const user = await getRequestUser(request)
 
   if (!user) {
-    return NextResponse.json({ error: 'Morate biti prijavljeni' }, { status: 401 })
+    return NextResponse.json({ error: 'Morate biti prijavljeni', code: 'loginRequired' }, { status: 401 })
   }
 
   const userId = user.userId

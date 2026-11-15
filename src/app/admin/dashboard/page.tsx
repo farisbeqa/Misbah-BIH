@@ -2,7 +2,7 @@
 import { redirect } from 'next/navigation'
 import {
   Plus, Play, BookOpen, ExternalLink, Youtube, Instagram, Facebook,
-  Calendar, Pencil, Users, ShieldCheck, Music2, BookMarked, Mic, FileText, GraduationCap, ScrollText, MessageSquare, BellRing,
+  Calendar, Pencil, Users, ShieldCheck, Music2, BookMarked, Mic, FileText, GraduationCap, ScrollText, MessageSquare, BellRing, Languages,
 } from 'lucide-react'
 import { requireAuth } from '@/lib/auth'
 import { todayKey } from '@/lib/daily'
@@ -231,6 +231,16 @@ export default async function AdminDashboard() {
             <div className="min-w-0">
               <p className="font-bold text-sm leading-tight">Dnevne poruke</p>
               <p className="text-white/60 text-xs mt-0.5">{dailyUpcoming} zakazano · aplikacija</p>
+            </div>
+          </Link>
+          <Link href="/admin/prijevodi"
+            className="flex items-center gap-3 text-white p-4 rounded-2xl transition-opacity hover:opacity-90 shadow-sm bg-zinc-900">
+            <div className="w-8 h-8 bg-white/15 rounded-xl flex items-center justify-center flex-shrink-0">
+              <Languages size={18} />
+            </div>
+            <div className="min-w-0">
+              <p className="font-bold text-sm leading-tight">Prijevodi</p>
+              <p className="text-white/60 text-xs mt-0.5">EN · AR · DE · TR · automatski</p>
             </div>
           </Link>
           {videoSections.map(s => (

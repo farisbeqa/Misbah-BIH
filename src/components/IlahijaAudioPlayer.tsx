@@ -1,9 +1,15 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useTranslations } from 'next-intl'
+import { useCurrentLocale } from '@/i18n/navigation'
+import { LOCALE_INFO } from '@/i18n/config'
 import { Play, Pause, Music } from 'lucide-react'
 
 export default function IlahijaAudioPlayer({ audioUrl }: { audioUrl: string }) {
+  const t = useTranslations('texts')
+  // The range input runs right-to-left in Arabic; the filled part follows it
+  const rtl = LOCALE_INFO[useCurrentLocale()].dir === 'rtl'
   const audioRef = useRef<HTMLAudioElement>(null)
   const [playing, setPlaying] = useState(false)
   const [progress, setProgress] = useState(0)
@@ -66,7 +72,7 @@ export default function IlahijaAudioPlayer({ audioUrl }: { audioUrl: string }) {
         onClick={togglePlay}
         className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white transition-colors"
         style={{ backgroundColor: '#8B1E3F' }}
-        aria-label={playing ? 'Pauza' : 'Reproduciraj'}
+        aria-label={playing ? t('audio.pause') : t('audio.play')}
       >
         {playing ? <Pause size={16} fill="white" /> : <Play size={16} fill="white" />}
       </button>
@@ -85,7 +91,7 @@ export default function IlahijaAudioPlayer({ audioUrl }: { audioUrl: string }) {
           value={progress}
           onChange={handleSeek}
           className="flex-1 h-1.5 rounded-full accent-[#8B1E3F] cursor-pointer"
-          style={{ background: `linear-gradient(to right, #8B1E3F ${duration ? (progress / duration) * 100 : 0}%, #e5e7eb ${duration ? (progress / duration) * 100 : 0}%)` }}
+          style={{ background: `linear-gradient(to ${rtl ? 'left' : 'right'}, #8B1E3F ${duration ? (progress / duration) * 100 : 0}%, #e5e7eb ${duration ? (progress / duration) * 100 : 0}%)` }}
         />
         <span className="text-xs tabular-nums flex-shrink-0" style={{ color: '#978A81' }}>
           {fmt(duration)}

@@ -1,37 +1,47 @@
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
+import Link from '@/i18n/navigation'
+import { getLocale, formatDate } from '@/i18n/server'
+import { LOCALE_INFO } from '@/i18n/config'
 import { prisma } from '@/lib/db'
+import { localizeRow, localizeRows } from '@/lib/translations'
 import { ArrowLeft, BookOpen } from 'lucide-react'
 import MoreFromAuthor from '@/components/MoreFromAuthor'
+import MachineTranslationNote from '@/components/MachineTranslationNote'
 
 // Rendered per request: the database is reachable at runtime, not during the build
 export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  const prica = await prisma.prica.findUnique({ where: { id: parseInt(params.id) } }).catch(() => null)
-  if (!prica) return { title: 'Priča nije pronađena' }
+  const found = await prisma.prica.findUnique({ where: { id: parseInt(params.id) } }).catch(() => null)
+  const prica = await localizeRow('prica', found, getLocale())
+  if (!prica) {
+    const t = await getTranslations('blog')
+    return { title: t('story.notFound') }
+  }
   return {
     title: prica.title,
     description: prica.content.slice(0, 160).replace(/\n/g, ' '),
-    alternates: { canonical: `/price/${params.id}` },
   }
 }
 
-const MONTHS = ['januar','februar','mart','april','maj','juni','juli','august','septembar','oktobar','novembar','decembar']
-function fmt(d: Date) { return `${d.getDate()}. ${MONTHS[d.getMonth()]} ${d.getFullYear()}.` }
-
 export default async function PricaDetailPage({ params }: { params: { id: string } }) {
-  const prica = await prisma.prica.findUnique({
+  const found = await prisma.prica.findUnique({
     where: { id: parseInt(params.id), published: true },
   }).catch(() => null)
 
-  if (!prica) notFound()
+  if (!found) notFound()
+
+  const locale = getLocale()
+  const t = await getTranslations('blog')
+  const [prica] = await localizeRows('prica', [found], locale)
+  const rtl = LOCALE_INFO[locale].dir === 'rtl'
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
       <Link href="/price"
         className="inline-flex items-center gap-2 text-[#978a81] hover:text-[#8b1e3f] mb-8 text-sm transition-colors">
-        <ArrowLeft size={15} /> Poučne priče
+        <ArrowLeft size={15} className="flip-rtl" /> {t('story.back')}
       </Link>
 
       {prica.imageUrl && (
@@ -49,7 +59,7 @@ export default async function PricaDetailPage({ params }: { params: { id: string
       )}
 
       <p className="font-medium text-[#8b1e3f] text-xs uppercase tracking-widest mb-3">
-        Poučna priča · {fmt(prica.createdAt)}
+        {t('story.kicker', { date: formatDate(prica.createdAt) })}
       </p>
 
       <h1 className="font-semibold text-[#141110] mb-4"
@@ -61,20 +71,24 @@ export default async function PricaDetailPage({ params }: { params: { id: string
         <p className="text-[#8b1e3f] font-medium text-base mb-8">— {prica.author}</p>
       )}
 
+      <MachineTranslationNote show={prica.translated} className="mb-6" />
+
       <div className="prose prose-stone max-w-none">
         {prica.content.split('\n').filter(Boolean).map((para, i) => (
-          <p key={i} className="text-[#5a4f49] leading-relaxed mb-4" style={{ fontSize: 17 }}>
+          // Right-to-left pages: a paragraph left untranslated keeps its own direction
+          <p key={i} dir={rtl ? 'auto' : undefined} className="text-[#5a4f49] leading-relaxed mb-4" style={{ fontSize: 17 }}>
             {para}
           </p>
         ))}
       </div>
 
-      <MoreFromAuthor author={prica.author} title={prica.title} className="mt-10" />
+      {/* Author lookup uses the original (Bosnian) title */}
+      <MoreFromAuthor author={prica.author} title={found.title} className="mt-10" />
 
       <div className="mt-12 pt-8 border-t border-[#e8e1db]">
         <Link href="/price"
           className="inline-flex items-center gap-2 text-[#8b1e3f] hover:underline font-medium text-sm">
-          <ArrowLeft size={14} /> Sve priče
+          <ArrowLeft size={14} className="flip-rtl" /> {t('story.allStories')}
         </Link>
       </div>
     </div>

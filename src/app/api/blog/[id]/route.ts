@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
+import { deleteTranslations, queueTranslation } from '@/lib/translations'
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
@@ -40,6 +41,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         ...(published !== undefined && { published }),
       },
     })
+    await queueTranslation('blog', post.id)
 
     revalidatePath('/blog')
     revalidatePath('/')
@@ -60,6 +62,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     await prisma.blogPost.delete({
       where: { id: parseInt(params.id) },
     })
+    await deleteTranslations('blog', parseInt(params.id))
 
     revalidatePath('/blog')
     revalidatePath('/')

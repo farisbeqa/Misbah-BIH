@@ -1,6 +1,7 @@
 ﻿'use client'
 
 import { useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 import { ExternalLink, Facebook, Instagram } from 'lucide-react'
 
 interface VideoEmbedProps {
@@ -12,6 +13,7 @@ interface VideoEmbedProps {
 }
 
 export default function VideoEmbed({ platform, embedUrl, isShortForm, originalUrl, title }: VideoEmbedProps) {
+  const t = useTranslations('videos')
   useEffect(() => {
     if (platform === 'instagram') {
       const existing = document.getElementById('ig-embed-script')
@@ -30,11 +32,11 @@ export default function VideoEmbed({ platform, embedUrl, isShortForm, originalUr
   if (!embedUrl) {
     return (
       <div className="flex flex-col items-center justify-center py-16 gap-4 bg-zinc-50 rounded-2xl">
-        <p className="text-zinc-500 text-sm">Video nije dostupan za prikaz</p>
+        <p className="text-zinc-500 text-sm">{t('embed.unavailable')}</p>
         <a href={originalUrl} target="_blank" rel="noopener noreferrer"
           className="flex items-center gap-2 bg-zinc-900 text-white px-5 py-2.5 rounded-full text-sm hover:bg-zinc-700 transition-colors">
-          <ExternalLink size={14} />
-          Otvori na izvoru
+          <ExternalLink size={14} className="flip-rtl" />
+          {t('embed.openSource')}
         </a>
       </div>
     )
@@ -108,7 +110,7 @@ export default function VideoEmbed({ platform, embedUrl, isShortForm, originalUr
               <a href={postUrl} target="_blank" rel="noopener noreferrer"
                 style={{ display: 'block', textDecoration: 'none', color: '#3d3d4e' }}>
                 <p style={{ color: '#c9c8cd', fontFamily: 'Arial,sans-serif', fontSize: 14, margin: 0, padding: '8px 0 7px' }}>
-                  {title || 'Pogledaj ovu objavu na Instagramu'}
+                  {title || t('embed.instagramFallbackTitle')}
                 </p>
               </a>
             </div>
@@ -118,7 +120,7 @@ export default function VideoEmbed({ platform, embedUrl, isShortForm, originalUr
           className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white rounded-xl transition-opacity hover:opacity-85"
           style={{ background: 'linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)' }}>
           <Instagram size={15} />
-          Otvori na Instagramu
+          {t('embed.openInstagram')}
         </a>
       </div>
     )
@@ -136,7 +138,7 @@ export default function VideoEmbed({ platform, embedUrl, isShortForm, originalUr
             preload="metadata"
           >
             <source src={embedUrl} />
-            <p className="text-zinc-400 text-sm p-4">Vaš pretraživač ne podržava video prikaz.</p>
+            <p className="text-zinc-400 text-sm p-4">{t('embed.noVideoSupport')}</p>
           </video>
         </div>
       </div>
@@ -184,10 +186,10 @@ export default function VideoEmbed({ platform, embedUrl, isShortForm, originalUr
           className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white rounded-xl transition-opacity hover:opacity-85"
           style={{ background: '#1877f2' }}>
           <Facebook size={16} />
-          Gledaj na Facebooku
+          {t('embed.watchFacebook')}
         </a>
         <p className="text-xs text-zinc-400 text-center max-w-sm px-4">
-          Ako video nije dostupan ovdje, klikni dugme iznad da ga gledaš direktno na Facebooku.
+          {t('embed.facebookHint')}
         </p>
       </div>
     )
@@ -197,12 +199,13 @@ export default function VideoEmbed({ platform, embedUrl, isShortForm, originalUr
 }
 
 function OriginalLink({ href, platform }: { href: string; platform: string }) {
+  const t = useTranslations('videos')
   return (
     <div className="flex justify-center">
       <a href={href} target="_blank" rel="noopener noreferrer"
         className="inline-flex items-center gap-1.5 text-zinc-400 hover:text-zinc-700 text-xs transition-colors">
-        <ExternalLink size={12} />
-        Otvori na {platform}
+        <ExternalLink size={12} className="flip-rtl" />
+        {t('embed.openOn', { platform })}
       </a>
     </div>
   )

@@ -1,0 +1,35 @@
+{
+  "activities": {
+    "meta": {
+      "title": "Aktivitäten",
+      "description": "Aktuelle Nachrichten, Aktivitäten und Veranstaltungen der islamischen Gemeinschaft — bleiben Sie informiert und beteiligt."
+    },
+    "tag": "GEMEINSCHAFT",
+    "title": "Aktivitäten",
+    "intro": "Nachrichten, Neuigkeiten und Aktivitäten der Gemeinschaft — Quizze, Workshops, Besuche und Zusammenkünfte.",
+    "filterAll": "Alle",
+    "tags": {
+      "vijesti": "Nachrichten",
+      "novosti": "Neuigkeiten",
+      "aktivnosti": "Aktivitäten"
+    },
+    "empty": "Keine Einträge in dieser Kategorie",
+    "loadMore": "Mehr laden ({count, plural, one {# verbleibend} other {# verbleibend}})",
+    "shownOf": "{shown} von {total} angezeigt",
+    "backToList": "Zurück zu den Aktivitäten",
+    "allActivities": "Alle Aktivitäten"
+  },
+  "gallery": {
+    "meta": {
+      "title": "Galerie",
+      "description": "Fotoarchiv islamischer Vorträge, Bittgebete und gemeinsamer Veranstaltungen."
+    },
+    "title": "Galerie",
+    "intro": "Fotos von unseren Aktivitäten und Veranstaltungen",
+    "empty": "Die Galerie ist leer",
+    "loading": "Wird geladen...",
+    "loadMore": "Weitere Bilder laden",
+    "shownCount": "{count, plural, one {# Bild angezeigt} other {# Bilder angezeigt}}",
+    "allLoaded": "Alle Bilder sind geladen ({count})"
+  }
+}

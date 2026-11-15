@@ -1,13 +1,23 @@
-import Link from 'next/link'
+import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
+import { getTranslations } from 'next-intl/server'
+import Link from '@/i18n/navigation'
+import { formatDate, href } from '@/i18n/server'
 
-export const metadata = {
-  title: 'Pravila korištenja',
-  description: 'Pravila korištenja web stranice i mobilne aplikacije Misbah EDU, uključujući pravila za komentare.',
-  alternates: { canonical: '/pravila-koristenja' },
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('legal.terms.meta')
+  return {
+    title: t('title'),
+    description: t('description'),
+  }
 }
 
-const UPDATED = '28. oktobar 2026.'
+const UPDATED = '2026-10-28'
+const EMAIL = 'misbah.bosna@gmail.com'
+const SITE = 'misbah-edu.com'
+
+/** Kinds of forbidden comments, in the order they are listed */
+const FORBIDDEN = ['insults', 'hate', 'explicit', 'spam', 'personalData'] as const
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -18,81 +28,60 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   )
 }
 
-export default function PravilaPage() {
+export default async function PravilaPage() {
+  const t = await getTranslations('legal')
+  // Markup and fixed values (e-mail and web addresses) used inside the texts
+  const rich = {
+    b: (chunks: ReactNode) => <b>{chunks}</b>,
+    mail: (chunks: ReactNode) => <a href={`mailto:${EMAIL}`} className="text-brand hover:underline">{chunks}</a>,
+    deleteLink: (chunks: ReactNode) => <Link href="/obrisi-nalog" className="text-brand hover:underline">{chunks}</Link>,
+    privacyLink: (chunks: ReactNode) => <Link href="/privatnost" className="text-brand hover:underline">{chunks}</Link>,
+    email: EMAIL,
+    site: SITE,
+    deleteUrl: `${SITE}${href('/obrisi-nalog')}`,
+    prayerTimesSite: 'vaktija.ba',
+  }
+
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
-      <p className="font-mono text-[11px] text-brand-light uppercase tracking-widest mb-2">Pravne informacije</p>
-      <h1 className="text-3xl sm:text-4xl font-extrabold text-warm-900 tracking-tight mb-3">Pravila korištenja</h1>
-      <p className="text-warm-500 text-sm mb-10">Posljednja izmjena: {UPDATED}</p>
+      <p className="font-mono text-[11px] text-brand-light uppercase tracking-widest mb-2">{t('tag')}</p>
+      <h1 className="text-3xl sm:text-4xl font-extrabold text-warm-900 tracking-tight mb-3">{t('terms.title')}</h1>
+      <p className="text-warm-500 text-sm mb-10">{t('updated', { date: formatDate(UPDATED) })}</p>
 
-      <Section title="Prihvatanje pravila">
-        <p>
-          Korištenjem web stranice misbah-edu.com i mobilne aplikacije Misbah EDU prihvatate ova pravila. Registracijom naloga potvrđujete
-          da ste ih pročitali i da ih prihvatate.
-        </p>
+      <Section title={t('terms.acceptance.title')}>
+        <p>{t.rich('terms.acceptance.text', rich)}</p>
       </Section>
 
-      <Section title="Korisnički nalog">
-        <p>
-          Nalog je potreban samo za lajkove i komentare. Odgovorni ste za čuvanje svoje lozinke i za sav sadržaj objavljen s vašeg naloga.
-          Nije dozvoljeno lažno se predstavljati kao druga osoba.
-        </p>
+      <Section title={t('terms.account.title')}>
+        <p>{t('terms.account.text')}</p>
       </Section>
 
-      <Section title="Komentari — nulta tolerancija za neprimjeren sadržaj">
-        <p>
-          Misbah EDU je prostor za korisno znanje i lijepu riječ. <b>Ne tolerišemo neprimjeren sadržaj ni uvredljivo ponašanje.</b> Zabranjeno
-          je objavljivati:
-        </p>
-        <ul className="list-disc pl-5 space-y-1">
-          <li>psovke, uvrede, ponižavanje i vrijeđanje drugih korisnika, autora ili gostiju;</li>
-          <li>govor mržnje, prijetnje, uznemiravanje ili pozivanje na nasilje;</li>
-          <li>pornografski, nasilan ili na drugi način neprimjeren sadržaj;</li>
-          <li>reklame, spam i lažne informacije;</li>
-          <li>tuđe lične podatke i sadržaj koji krši autorska prava.</li>
+      <Section title={t('terms.comments.title')}>
+        <p>{t.rich('terms.comments.intro', rich)}</p>
+        <ul className="list-disc ps-5 space-y-1">
+          {FORBIDDEN.map(key => <li key={key}>{t(`terms.comments.forbidden.${key}`)}</li>)}
         </ul>
-        <p>
-          Komentari prolaze automatski filter, a redakcija ih dodatno pregleda. Sadržaj koji krši pravila uklanjamo bez najave, a nalog
-          korisnika koji ih krši trajno brišemo.
-        </p>
+        <p>{t('terms.comments.moderation')}</p>
       </Section>
 
-      <Section title="Prijava i blokiranje">
-        <p>
-          Svaki komentar u aplikaciji možete prijaviti (dugme „Prijavi“ uz komentar) ili nam pisati na{' '}
-          <a href="mailto:misbah.bosna@gmail.com" className="text-brand hover:underline">misbah.bosna@gmail.com</a>. Prijave pregledamo i
-          neprimjeren sadržaj uklanjamo u roku od 24 sata. Korisnika čije komentare ne želite vidjeti možete blokirati — njegovi komentari se
-          tada više ne prikazuju na vašem uređaju.
-        </p>
+      <Section title={t('terms.reporting.title')}>
+        <p>{t.rich('terms.reporting.text', rich)}</p>
       </Section>
 
-      <Section title="Autorska prava">
-        <p>
-          Svi tekstovi, fotografije, audio i video sadržaji objavljeni na platformi Misbah EDU zaštićeni su autorskim pravima. Preuzimanje,
-          umnožavanje ili korištenje sadržaja dozvoljeno je isključivo uz prethodnu saglasnost redakcije i navođenje izvora.
-        </p>
+      <Section title={t('terms.copyright.title')}>
+        <p>{t('terms.copyright.text')}</p>
       </Section>
 
-      <Section title="Odricanje odgovornosti">
-        <p>
-          Stavovi gostiju izneseni u emisijama predstavljaju njihove lične stavove i ne moraju nužno odražavati stavove redakcije. Vremena
-          namaza preuzimaju se sa servisa vaktija.ba i služe kao informacija.
-        </p>
+      <Section title={t('terms.disclaimer.title')}>
+        <p>{t.rich('terms.disclaimer.text', rich)}</p>
       </Section>
 
-      <Section title="Brisanje naloga">
-        <p>
-          Nalog možete u svakom trenutku obrisati u aplikaciji (Više → Obriši nalog) ili na stranici{' '}
-          <Link href="/obrisi-nalog" className="text-brand hover:underline">misbah-edu.com/obrisi-nalog</Link>. Detalji o podacima su u{' '}
-          <Link href="/privatnost" className="text-brand hover:underline">Politici privatnosti</Link>.
-        </p>
+      <Section title={t('terms.deletion.title')}>
+        <p>{t.rich('terms.deletion.text', rich)}</p>
       </Section>
 
-      <Section title="Kontakt i izmjene">
-        <p>
-          Pravila možemo povremeno izmijeniti; datum posljednje izmjene naveden je na vrhu stranice. Za pitanja pišite na{' '}
-          <a href="mailto:misbah.bosna@gmail.com" className="text-brand hover:underline">misbah.bosna@gmail.com</a>.
-        </p>
+      <Section title={t('terms.contact.title')}>
+        <p>{t.rich('terms.contact.text', rich)}</p>
       </Section>
     </div>
   )

@@ -8,12 +8,12 @@ export async function POST(request: NextRequest) {
     const { username, password } = await request.json()
 
     if (!username || !password) {
-      return NextResponse.json({ error: 'Korisničko ime i lozinka su obavezni' }, { status: 400 })
+      return NextResponse.json({ error: 'Korisničko ime i lozinka su obavezni', code: 'credentialsRequired' }, { status: 400 })
     }
 
     const user = await prisma.user.findUnique({ where: { username } })
     if (!user || !verifyPassword(password, user.passwordHash)) {
-      return NextResponse.json({ error: 'Pogrešno korisničko ime ili lozinka' }, { status: 401 })
+      return NextResponse.json({ error: 'Pogrešno korisničko ime ili lozinka', code: 'invalidCredentials' }, { status: 401 })
     }
 
     const response = NextResponse.json({
@@ -30,6 +30,6 @@ export async function POST(request: NextRequest) {
 
     return response
   } catch {
-    return NextResponse.json({ error: 'Greška servera' }, { status: 500 })
+    return NextResponse.json({ error: 'Greška servera', code: 'serverError' }, { status: 500 })
   }
 }

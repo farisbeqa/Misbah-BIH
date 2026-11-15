@@ -3,6 +3,7 @@ import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
 import { parseVideoUrl } from '@/lib/videoUtils'
+import { apiLocale, localizeRows, queueTranslation } from '@/lib/translations'
 
 export async function GET(request: NextRequest) {
   try {
@@ -25,7 +26,7 @@ export async function GET(request: NextRequest) {
       take: limit,
     })
 
-    return NextResponse.json(videos)
+    return NextResponse.json(await localizeRows('video', videos, apiLocale(request)))
   } catch (error) {
     console.error(error)
     return NextResponse.json({ error: 'Greška pri učitavanju videa' }, { status: 500 })
@@ -64,6 +65,7 @@ export async function POST(request: NextRequest) {
         published: true,
       },
     })
+    await queueTranslation('video', video.id)
 
     revalidatePath('/')
     return NextResponse.json(video, { status: 201 })

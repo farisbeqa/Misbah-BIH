@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "longLectures": {
+      "title": "Long lectures",
+      "description": "Comprehensive Islamic lectures on topics of faith, ethics, history and spiritual growth — for a deeper understanding of Islam."
+    },
+    "shortLectures": {
+      "title": "Short lectures",
+      "description": "Short and concise Islamic lectures ideal for daily learning, reminders and strengthening iman."
+    },
+    "quran": {
+      "title": "Qur'an",
+      "description": "Learn and listen to the Qur'an through carefully selected tilawah, qira'at and interpretations of Qur'anic verses."
+    },
+    "podcast": {
+      "title": "Podcast",
+      "description": "Islamic podcast — conversations about faith, knowledge and the everyday life of Muslims. Listen wherever you are."
+    },
+    "ilahije": {
+      "title": "Ilahis – Performances",
+      "description": "Ilahis, qasidas and spiritual music — video and audio performances that awaken love for Allah and the Prophet ﷺ."
+    },
+    "zikrovi": {
+      "title": "Dhikrs and Duas",
+      "description": "Dhikrs with text and audio for daily recitation — morning and evening dhikrs, duas and the names of Allah."
+    }
+  },
+  "list": {
+    "searchPlaceholder": "Search by title...",
+    "noResults": "No results for \"{query}\"",
+    "loadMore": "{remaining, plural, one {Load more (# remaining)} other {Load more (# remaining)}}",
+    "shownOf": "Showing {shown} of {total}"
+  },
+  "topics": {
+    "all": "All",
+    "tefsir": "Tafsir",
+    "hadis": "Hadith",
+    "sira": "Seerah",
+    "opste": "General topics",
+    "akaid": "Aqidah",
+    "fikh": "Fiqh",
+    "duhovnost": "Spirituality",
+    "historija": "History"
+  },
+  "longLectures": {
+    "tag": "LECTURES",
+    "title": "Long lectures",
+    "text": "Carefully prepared lectures on various Islamic and historical topics, including tafsir, fiqh, hadith, seerah and spirituality.",
+    "empty": "No lectures in this category"
+  },
+  "shortLectures": {
+    "tag": "LECTURES",
+    "title": "Short lectures",
+    "text": "Short content and clips for a quick Islamic spiritual reminder.",
+    "empty": "No short lectures in this category"
+  },
+  "lectures": {
+    "tag": "LECTURES",
+    "title": "Lectures",
+    "text": "Islamic lectures and lessons on faith, worship and everyday life.",
+    "empty": "No lectures yet"
+  },
+  "quran": {
+    "tag": "QUR'ANIC SCIENCES",
+    "title": "Qur'an",
+    "text": "Selected passages from the Qur'an and complete surahs.",
+    "empty": "No Qur'an content yet"
+  },
+  "podcast": {
+    "tag": "CONVERSATIONS",
+    "title": "Podcast",
+    "text": "Conversations, interviews and podcast episodes about faith and everyday life.",
+    "empty": "No podcast episodes yet"
+  },
+  "ilahije": {
+    "tag": "ILAHIS AND QASIDAS",
+    "title": "Performances",
+    "text": "Ilahis, qasidas and spiritual music.",
+    "empty": "No ilahis yet"
+  },
+  "zikrovi": {
+    "tag": "REMEMBRANCE OF ALLAH",
+    "title": "Dhikrs",
+    "empty": "No dhikrs yet"
+  },
+  "card": {
+    "short": "Short",
+    "textAndAudio": "TEXT and AUDIO"
+  },
+  "detail": {
+    "back": "Back to lectures",
+    "shortContent": "Short content",
+    "description": "Description"
+  },
+  "platforms": {
+    "upload": "Upload",
+    "unknown": "Unknown"
+  },
+  "embed": {
+    "unavailable": "Video is not available for display",
+    "openSource": "Open at source",
+    "openOn": "Open on {platform}",
+    "instagramFallbackTitle": "Watch this post on Instagram",
+    "openInstagram": "Open on Instagram",
+    "noVideoSupport": "Your browser does not support video playback.",
+    "watchFacebook": "Watch on Facebook",
+    "facebookHint": "If the video is not available here, click the button above to watch it directly on Facebook."
+  }
+}

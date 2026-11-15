@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 interface Quote { id: number; type: string; text: string; source: string | null }
 
@@ -23,6 +24,7 @@ function ArrowDown() {
 }
 
 export default function MisaoDana({ quotes }: { quotes: Quote[] }) {
+  const t = useTranslations('quotes.section')
   const [active, setActive] = useState(0)
 
   if (quotes.length === 0) return null
@@ -33,7 +35,7 @@ export default function MisaoDana({ quotes }: { quotes: Quote[] }) {
   return (
     <section className="bg-[#f5f2ef] w-full">
       <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-20 lg:py-[100px] flex flex-col gap-3">
-        <p className="font-medium text-[#8b1e3f] text-base leading-normal">PODSJETNIK</p>
+        <p className="font-medium text-[#8b1e3f] text-base leading-normal">{t('tag')}</p>
 
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-20 items-start pt-4">
           {/* Left: heading + desc + arrows */}
@@ -43,27 +45,26 @@ export default function MisaoDana({ quotes }: { quotes: Quote[] }) {
                 className="font-semibold text-[#141110]"
                 style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}
               >
-                Misao dana
+                {t('title')}
               </h2>
               <p
                 className="font-normal text-[#746860]"
                 style={{ fontSize: '18px', lineHeight: 1.5, letterSpacing: '-0.18px' }}
               >
-                Misli iz Kur&apos;ana, hadisa i islamske tradicije koje podstiču na
-                razmišljanje i djelovanje.
+                {t('text')}
               </p>
             </div>
             <div className="flex gap-3">
               <button
                 onClick={prev}
-                aria-label="Prethodna misao"
+                aria-label={t('previous')}
                 className="bg-[#8b1e3f] p-3 hover:bg-[#7a1a37] transition-colors"
               >
                 <ArrowUp />
               </button>
               <button
                 onClick={next}
-                aria-label="Sljedeća misao"
+                aria-label={t('next')}
                 className="bg-[#8b1e3f] p-3 hover:bg-[#7a1a37] transition-colors"
               >
                 <ArrowDown />

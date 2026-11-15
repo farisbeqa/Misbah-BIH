@@ -1,0 +1,127 @@
+{
+  "aboutUs": {
+    "meta": {
+      "title": "Hakkımızda - Misbah EDU",
+      "description": "Faydalı ilmin yayılmasına ve manevi gelişime adanmış İslami eğitim platformu Misbah EDU hakkında daha fazla bilgi edinin."
+    },
+    "tag": "Platform",
+    "title": "Hakkımızda",
+    "intro": "Misbah EDU medya platformu, gençlerin eğitici ve faydalı içerik aracılığıyla topluma katkı sunmayı amaçlayan bir girişimidir. İnancı ve gerçek değerleri bir araya getirerek, ilham veren ve eğitici nitelik taşıyan hikâyelere adanmıştır.",
+    "studyCircles": {
+      "intro": "Şu anda Misbah EDU platformu çerçevesinde üç düzenli eğitim halkası yapılmaktadır:",
+      "tafsir": "<b>Tefsir halkası</b> her perşembe Carina cemaatinde, akşam namazından bir saat önce yapılır. Dersleri {name} yürütmektedir; Kur'an ayetlerinin tefsiri yoluyla onların anlamını ve mesajlarını gündelik hayata yaklaştırmaya çalışır.",
+      "sira": "<b>Siyer halkası</b> her pazartesi akşam namazından sonra Bjelave cemaatinde yapılır. Bu halkayı {name} yürütmekte, Allah'ın Resulü'nün hayatını ve uygulamalarını, bugün hayata geçirilebilecek derslere özel vurgu yaparak ele almaktadır.",
+      "hadith": "<b>Hadis halkası</b> da her pazartesi akşam namazından sonra Bakareva Camii cemaatinde yapılır. Halkayı {name} yürütmekte, hadislerin anlaşılmasına ve gündelik hayatta uygulanmasına odaklanmaktadır.",
+      "outro": "Tüm halkalar, ilmi, maneviyatı ve birlikteliği güçlendirmek amacıyla ilgilenen herkese açıktır."
+    },
+    "cards": {
+      "impressum": {
+        "title": "Künye",
+        "description": "Editörler, yazarlar ve hukuki notlar"
+      },
+      "contact": {
+        "title": "İletişim",
+        "description": "E-posta ve iletişim bilgileri"
+      }
+    }
+  },
+  "contact": {
+    "meta": {
+      "title": "İletişim - Misbah EDU"
+    },
+    "back": "Hakkımızda",
+    "title": "İletişim",
+    "text": "Her türlü soru, öneri ve iş birliği için bizimle çekinmeden iletişime geçin.",
+    "email": "E-posta",
+    "phone": "Telefon",
+    "collaboration": {
+      "title": "İş birliği ve yazar metinleri",
+      "text": "Misbah EDU, İslami veya eğitici içerikli yazılar yayımlamak isteyen tüm yazarlara açık bir alandır. E-posta yoluyla bize ulaşın, size memnuniyetle cevap vereceğiz."
+    }
+  },
+  "impressum": {
+    "meta": {
+      "title": "Künye - Misbah EDU"
+    },
+    "back": "Hakkımızda",
+    "title": "Künye",
+    "platform": {
+      "title": "Platform hakkında",
+      "text1": "Misbah EDU medya platformu, gençlerin eğitici ve faydalı içerik aracılığıyla topluma katkı sunmayı amaçlayan bir girişimidir. Dersler, podcastler ve röportajlar aracılığıyla gerçek değerleri topluma işlemeye çalışıyoruz.",
+      "text2": "Platformu, ilgilenen tüm yazarlara yazı yayımlamaları için bir alan olarak açıyor ve sunuyoruz."
+    },
+    "editorial": {
+      "title": "Yayın kurulu",
+      "editors": "Editörler",
+      "socialMedia": "Sosyal medya",
+      "authors": "Eğitici içeriklerin yazarları"
+    },
+    "biography": "Biyografi",
+    "copyright": {
+      "title": "Telif hakları",
+      "text1": "Misbah EDU platformunda yayımlanan tüm yazılar, fotoğraflar, ses ve video içerikleri telif hakkı ile korunmaktadır. İçeriğin alınması, çoğaltılması veya kullanılması yalnızca yayın kurulunun önceden onayı ve kaynağın belirtilmesi şartıyla mümkündür.",
+      "text2": "Yayın kurulu, platformun misyonu ve değerleriyle uyumlu olmayan içerikleri düzenleme ve kaldırma hakkını saklı tutar.",
+      "text3": "Konukların programlarda dile getirdiği görüşler kendi kişisel görüşleridir ve Misbah EDU yayın kurulunun görüşlerini mutlaka yansıtmak zorunda değildir."
+    }
+  },
+  "teamMember": {
+    "back": "Künye",
+    "born": "Doğum tarihi ve yeri:"
+  },
+  "authors": {
+    "meta": {
+      "title": "Yazarlar",
+      "description": "Misbah EDU platformundaki tüm ders, hutbe ve yazıların yazarları."
+    },
+    "tag": "YAZARLAR",
+    "title": "İçerik yazarları",
+    "text": "Bir yazar seçin ve onun tüm ders, hutbe ve yazılarını tek bir yerde görün.",
+    "posts": "{count, plural, one {# yayın} other {# yayın}}"
+  },
+  "author": {
+    "meta": {
+      "fallbackTitle": "Yazar",
+      "title": "{name} – tüm içerikler",
+      "description": "Misbah EDU platformunda {name} adlı yazarın dersleri, hutbeleri, yazıları ve diğer içerikleri."
+    },
+    "back": "Tüm yazarlar",
+    "tag": "Yazar",
+    "posts": "{count, plural, one {# yayın} other {# yayın}}",
+    "biography": "Biyografi"
+  },
+  "contentTypes": {
+    "sections": {
+      "predavanja": "Dersler",
+      "kratka": "Kısa dersler",
+      "blog": "Tefekkürler ve hutbeler",
+      "kuran": "Kur'an",
+      "podcast": "Podcast",
+      "price": "Öğretici hikâyeler",
+      "zikrovi": "Zikirler",
+      "dove": "Dualar",
+      "ilahije": "İlahiler",
+      "mekteb": "Mektep"
+    },
+    "blogCategories": {
+      "hutbe": "Hutbe",
+      "aktuelneTeme": "Güncel konular",
+      "duhovnost": "Maneviyat",
+      "tefsirKuran": "Tefsir ve Kur'an",
+      "sira": "Siyer",
+      "fikh": "Fıkıh",
+      "savjeti": "Tavsiyeler",
+      "odgoj": "Eğitim ve aile"
+    },
+    "items": {
+      "reflection": "Tefekkür",
+      "story": "Öğretici hikâye",
+      "zikr": "Zikir",
+      "dua": "Dua",
+      "ilahija": "İlahi",
+      "mekteb": "Mektep"
+    }
+  },
+  "voices": {
+    "title": "Eğitici içeriklerin yazarları"
+  }
+}

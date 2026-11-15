@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
+import { queueTranslation } from '@/lib/translations'
 
 export async function GET(request: NextRequest) {
   try {
@@ -48,6 +49,7 @@ export async function POST(request: NextRequest) {
         published: true,
       },
     })
+    await queueTranslation('blog', post.id)
     console.log('[blog POST] created post id:', post.id)
 
     revalidatePath('/blog')

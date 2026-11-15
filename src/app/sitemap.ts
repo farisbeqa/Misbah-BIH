@@ -1,12 +1,25 @@
 import { MetadataRoute } from 'next'
 import { prisma } from '@/lib/db'
 import { allPaths } from '@/lib/pozovite'
+import { LOCALES } from '@/i18n/config'
+import { localizeHref } from '@/i18n/href'
 
 // Built per request so it always lists the current content (the database is
 // reachable at runtime, not during the build)
 export const dynamic = 'force-dynamic'
 
 const BASE = 'https://www.misbah-edu.com'
+
+// Every page exists in all website languages: /blog, /en/blog, /ar/blog, ...
+function withLanguages(entries: MetadataRoute.Sitemap): MetadataRoute.Sitemap {
+  return entries.map(e => {
+    const path = e.url.slice(BASE.length) || '/'
+    const languages: Record<string, string> = {}
+    for (const l of LOCALES) languages[l] = BASE + localizeHref(path, l)
+    languages['x-default'] = BASE + localizeHref(path, 'bs')
+    return { ...e, alternates: { languages } }
+  })
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date()
@@ -60,5 +73,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error('[sitemap] DB fetch failed, returning static routes only:', err)
   }
 
-  return [...staticRoutes, ...videoRoutes, ...postRoutes, ...ilahijeRoutes, ...duaRoutes, ...mektebRoutes, ...pricaRoutes]
+  return withLanguages([...staticRoutes, ...videoRoutes, ...postRoutes, ...ilahijeRoutes, ...duaRoutes, ...mektebRoutes, ...pricaRoutes])
 }

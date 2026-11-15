@@ -1,0 +1,74 @@
+{
+  "list": {
+    "searchByTitle": "Search by title...",
+    "searchByTitleOrAuthor": "Search by title or author...",
+    "noResults": "No results for \"{query}\"",
+    "loadMore": "Load more ({count, plural, one {# remaining} other {# remaining}})",
+    "shown": "Showing {shown} of {total}"
+  },
+  "categories": {
+    "all": "All",
+    "hutbe": "Khutbahs",
+    "aktuelneTeme": "Current topics",
+    "duhovnost": "Spirituality",
+    "tefsirKuran": "Tafsir and Qur'an",
+    "sira": "Seerah",
+    "fikh": "Fiqh",
+    "savjeti": "Advice",
+    "odgoj": "Upbringing and family"
+  },
+  "blogPage": {
+    "meta": {
+      "title": "Blog",
+      "description": "Islamic texts, khutbahs and advice for everyday Muslim life — short and useful texts for believers."
+    },
+    "tag": "REFLECTIONS",
+    "title": "Blog",
+    "subtitle": "Short and useful texts for the everyday life of believers.",
+    "empty": "No blog posts yet"
+  },
+  "blogPost": {
+    "notFound": "Post not found",
+    "back": "Back to blog",
+    "hamdoRole": "Imam of the Carina Mosque · Sarajevo",
+    "allPosts": "All posts"
+  },
+  "storiesPage": {
+    "meta": {
+      "title": "Instructive stories",
+      "description": "Instructive stories from the Islamic tradition that awaken the heart, instill hope and remind us of true values."
+    },
+    "tag": "ISLAMIC STORIES",
+    "title": "Instructive stories",
+    "subtitle": "Stories from the Islamic tradition that awaken the heart, instill hope and admonish, reminding us of the true values of life.",
+    "empty": "No stories yet"
+  },
+  "story": {
+    "notFound": "Story not found",
+    "back": "Instructive stories",
+    "kicker": "Instructive story · {date}",
+    "allStories": "All stories"
+  },
+  "mektebPage": {
+    "meta": {
+      "description": "Mekteb plans and programs, quizzes and teaching materials for Islamic religious education — support for teachers and students."
+    },
+    "tag": "ISLAMIC EDUCATION",
+    "subtitle": "Plans, programs, quizzes and materials for mekteb instruction.",
+    "empty": "No content yet"
+  },
+  "mektebCategories": {
+    "opste": "General",
+    "program": "Plan and program",
+    "kviz": "Quiz",
+    "materijali": "Materials"
+  },
+  "mektebPost": {
+    "allPosts": "All content"
+  },
+  "moreFromAuthor": {
+    "label": "Author",
+    "seeMore": "See more from this author",
+    "seeMoreShort": "See more"
+  }
+}

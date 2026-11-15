@@ -1,9 +1,12 @@
 import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 
-export const metadata: Metadata = {
-  title: 'Galerija',
-  description: 'Fotografski arhiv islamskih predavanja, dova i zajedničkih događaja.',
-  alternates: { canonical: '/galerija' },
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('community.gallery.meta')
+  return {
+    title: t('title'),
+    description: t('description'),
+  }
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {

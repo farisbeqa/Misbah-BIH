@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
+import { deleteTranslations, queueTranslation } from '@/lib/translations'
 
 export async function GET(_: Request, { params }: { params: { id: string } }) {
   const id = parseInt(params.id)
@@ -24,6 +25,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
     where: { id },
     data: { title: title.trim(), content: content.trim(), author: author?.trim() || null, audioUrl: audioUrl?.trim() || null, category: category || 'opste', published: published ?? true },
   })
+  await queueTranslation('dua', item.id)
   revalidatePath('/zikrovi/tekstovi')
   return NextResponse.json(item)
 }
@@ -34,6 +36,7 @@ export async function DELETE(_: Request, { params }: { params: { id: string } })
 
   const id = parseInt(params.id)
   await prisma.duaText.delete({ where: { id } })
+  await deleteTranslations('dua', id)
   revalidatePath('/zikrovi/tekstovi')
   return NextResponse.json({ ok: true })
 }

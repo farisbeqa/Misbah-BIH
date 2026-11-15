@@ -1,9 +1,14 @@
 import type { Metadata } from 'next'
-import { Manrope, IBM_Plex_Mono } from 'next/font/google'
+import { Manrope, IBM_Plex_Mono, Noto_Sans_Arabic } from 'next/font/google'
+import { NextIntlClientProvider } from 'next-intl'
+import { getMessages, getTranslations } from 'next-intl/server'
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import ConditionalFooter from '@/components/ConditionalFooter'
 import PozoviteNasButton from '@/components/PozoviteNasButton'
+import { LOCALES, LOCALE_INFO } from '@/i18n/config'
+import { clientMessages } from '@/i18n/messages'
+import { alternates, getLocale, href, requestPath } from '@/i18n/server'
 
 const manrope = Manrope({
   subsets: ['latin'],
@@ -19,150 +24,171 @@ const ibmMono = IBM_Plex_Mono({
   weight: ['400', '500'],
 })
 
+// Used by the Arabic version of the site (Manrope has no Arabic letters)
+const notoArabic = Noto_Sans_Arabic({
+  subsets: ['arabic'],
+  variable: '--font-arabic',
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
+  preload: false,
+})
+
 const siteUrl = 'https://www.misbah-edu.com'
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: {
-    default: 'Misbah EDU | Edukacija i duhovni razvoj',
-    template: '%s | Misbah EDU',
-  },
-  description:
-    'Misbah EDU – platforma s islamskim predavanjima, hutbama, učenjem Kur\'ana, ilahijama i podcast sadržajima.',
-  keywords: [
-    'Misbah EDU', 'Misbah', 'islamska predavanja', 'hutba', 'Hamdo Solo',
-    'hfz Hamdo Solo', 'hafiz Hamdo Solo', 'džamija Carina', 'Sarajevo',
-    'islamski sadržaj', "učenje Kur'ana", 'ilahije', 'zikrovi', 'podcast',
-    'islamska edukacija', 'Bosna', 'BIH', 'islamske nauke',
-  ],
-  authors: [{ name: 'Misbah EDU', url: siteUrl }],
-  creator: 'Misbah EDU',
-  publisher: 'Misbah EDU',
-  icons: { icon: '/favicon.svg', apple: '/logo.jpg' },
-  openGraph: {
-    type: 'website',
-    locale: 'bs_BA',
-    url: siteUrl,
-    siteName: 'Misbah EDU',
-    title: 'Misbah EDU | Edukacija i duhovni razvoj',
-    description:
-      "Misbah EDU – platforma s islamskim predavanjima, hutbama, učenjem Kur'ana, ilahijama i podcast sadržajima.",
-    images: [
-      {
-        url: `${siteUrl}/logo.jpg`,
-        width: 1000,
-        height: 1000,
-        alt: 'Misbah EDU logo',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    site: '@misbah_ba',
-    title: 'Misbah EDU – Islamska predavanja',
-    description: "Misbah EDU – platforma s islamskim predavanjima, hutbama, učenjem Kur'ana, ilahijama i podcast sadržajima.",
-    images: [`${siteUrl}/logo.jpg`],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1 },
-  },
-  verification: {
-    // Add your Google Search Console verification code here when you have it:
-    // google: 'YOUR_VERIFICATION_CODE',
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = getLocale()
+  const t = await getTranslations({ locale, namespace: 'common.meta' })
+  return {
+    metadataBase: new URL(siteUrl),
+    title: {
+      default: t('title'),
+      template: '%s | Misbah EDU',
+    },
+    description: t('description'),
+    keywords: t.raw('keywords') as string[],
+    authors: [{ name: 'Misbah EDU', url: siteUrl }],
+    creator: 'Misbah EDU',
+    publisher: 'Misbah EDU',
+    icons: { icon: '/favicon.svg', apple: '/logo.jpg' },
+    // canonical + hreflang links for whichever page is being rendered
+    alternates: alternates(requestPath(), locale),
+    openGraph: {
+      type: 'website',
+      locale: LOCALE_INFO[locale].og,
+      alternateLocale: LOCALES.filter(l => l !== locale).map(l => LOCALE_INFO[l].og),
+      url: siteUrl,
+      siteName: 'Misbah EDU',
+      title: t('title'),
+      description: t('description'),
+      images: [
+        {
+          url: `${siteUrl}/logo.jpg`,
+          width: 1000,
+          height: 1000,
+          alt: t('logoAlt'),
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      site: '@misbah_ba',
+      title: t('twitterTitle'),
+      description: t('description'),
+      images: [`${siteUrl}/logo.jpg`],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1 },
+    },
+    verification: {
+      // Add your Google Search Console verification code here when you have it:
+      // google: 'YOUR_VERIFICATION_CODE',
+    },
+  }
 }
 
 // JSON-LD structured data — helps Google understand the organisation
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'Organization',
-      '@id': `${siteUrl}/#organization`,
-      name: 'Misbah EDU',
-      url: siteUrl,
-      logo: {
-        '@type': 'ImageObject',
-        url: `${siteUrl}/logo.jpg`,
-        width: 1000,
-        height: 1000,
+async function jsonLd() {
+  const locale = getLocale()
+  const t = await getTranslations({ locale, namespace: 'common.meta' })
+  const nav = await getTranslations({ locale, namespace: 'nav' })
+  const url = (path: string) => `${siteUrl}${href(path)}`
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': `${siteUrl}/#organization`,
+        name: 'Misbah EDU',
+        url: siteUrl,
+        logo: {
+          '@type': 'ImageObject',
+          url: `${siteUrl}/logo.jpg`,
+          width: 1000,
+          height: 1000,
+        },
+        description: t('orgDescription'),
+        foundingLocation: { '@type': 'Place', name: t('foundingLocation') },
+        sameAs: [
+          'https://www.youtube.com/@misbah_ba',
+          'https://www.instagram.com/misbah_edu',
+          'https://www.tiktok.com/@misbah_ba',
+          'https://www.facebook.com/MisbahBIH/',
+        ],
       },
-      description:
-        'Misbah EDU je islamska digitalna platforma posvećena širenju korisnog znanja kroz predavanja, hutbe, učenje Kur\'ana i druge sadržaje.',
-      foundingLocation: { '@type': 'Place', name: 'Sarajevo, Bosna i Hercegovina' },
-      sameAs: [
-        'https://www.youtube.com/@misbah_ba',
-        'https://www.instagram.com/misbah_edu',
-        'https://www.tiktok.com/@misbah_ba',
-        'https://www.facebook.com/MisbahBIH/',
-      ],
-    },
-    {
-      '@type': 'WebSite',
-      '@id': `${siteUrl}/#website`,
-      url: siteUrl,
-      name: 'Misbah EDU',
-      description: 'Islamska predavanja, hutbe, Kur\'an i sadržaji za muslimane u Bosni i Hercegovini.',
-      publisher: { '@id': `${siteUrl}/#organization` },
-      inLanguage: 'bs',
-      potentialAction: {
-        '@type': 'SearchAction',
-        target: { '@type': 'EntryPoint', urlTemplate: `${siteUrl}/predavanja/duga?q={search_term_string}` },
-        'query-input': 'required name=search_term_string',
+      {
+        '@type': 'WebSite',
+        '@id': `${siteUrl}/#website`,
+        url: siteUrl,
+        name: 'Misbah EDU',
+        description: t('siteDescription'),
+        publisher: { '@id': `${siteUrl}/#organization` },
+        inLanguage: locale,
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: { '@type': 'EntryPoint', urlTemplate: `${url('/predavanja/duga')}?q={search_term_string}` },
+          'query-input': 'required name=search_term_string',
+        },
       },
-    },
-    {
-      '@type': 'SiteLinksSearchBox',
-      '@id': `${siteUrl}/#searchbox`,
-      url: siteUrl,
-      potentialAction: {
-        '@type': 'SearchAction',
-        target: { '@type': 'EntryPoint', urlTemplate: `${siteUrl}/predavanja/duga?q={search_term_string}` },
-        'query-input': 'required name=search_term_string',
+      {
+        '@type': 'SiteLinksSearchBox',
+        '@id': `${siteUrl}/#searchbox`,
+        url: siteUrl,
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: { '@type': 'EntryPoint', urlTemplate: `${url('/predavanja/duga')}?q={search_term_string}` },
+          'query-input': 'required name=search_term_string',
+        },
       },
-    },
-    {
-      '@type': 'ItemList',
-      '@id': `${siteUrl}/#navigation`,
-      name: 'Navigacija',
-      itemListElement: [
-        { '@type': 'SiteNavigationElement', position: 1, name: 'Predavanja', url: `${siteUrl}/predavanja/duga` },
-        { '@type': 'SiteNavigationElement', position: 2, name: "Kur'an", url: `${siteUrl}/kuran` },
-        { '@type': 'SiteNavigationElement', position: 3, name: 'Podcast', url: `${siteUrl}/podcasts` },
-        { '@type': 'SiteNavigationElement', position: 4, name: 'Ilahije', url: `${siteUrl}/ilahije/izvedba` },
-        { '@type': 'SiteNavigationElement', position: 5, name: 'Mekteb EDU', url: `${siteUrl}/mekteb` },
-        { '@type': 'SiteNavigationElement', position: 6, name: 'Poučne priče', url: `${siteUrl}/price` },
-        { '@type': 'SiteNavigationElement', position: 7, name: 'Blog', url: `${siteUrl}/blog` },
-        { '@type': 'SiteNavigationElement', position: 8, name: 'O Nama', url: `${siteUrl}/o-nama` },
-      ],
-    },
-    {
-      '@type': 'Person',
-      '@id': `${siteUrl}/#hamdo-solo`,
-      name: 'Hamdo Solo',
-      jobTitle: 'Imam, hafiz Kur\'ana',
-      worksFor: { '@id': `${siteUrl}/#organization` },
-      description: 'Hfz. Hamdo Solo, imam džamije Carina u Sarajevu, predavač i hafiz Kur\'ana.',
-    },
-  ],
+      {
+        '@type': 'ItemList',
+        '@id': `${siteUrl}/#navigation`,
+        name: t('navigation'),
+        itemListElement: [
+          { '@type': 'SiteNavigationElement', position: 1, name: nav('lectures'), url: url('/predavanja/duga') },
+          { '@type': 'SiteNavigationElement', position: 2, name: nav('quran'), url: url('/kuran') },
+          { '@type': 'SiteNavigationElement', position: 3, name: nav('podcast'), url: url('/podcasts') },
+          { '@type': 'SiteNavigationElement', position: 4, name: nav('ilahije'), url: url('/ilahije/izvedba') },
+          { '@type': 'SiteNavigationElement', position: 5, name: 'Mekteb EDU', url: url('/mekteb') },
+          { '@type': 'SiteNavigationElement', position: 6, name: nav('stories'), url: url('/price') },
+          { '@type': 'SiteNavigationElement', position: 7, name: nav('blog'), url: url('/blog') },
+          { '@type': 'SiteNavigationElement', position: 8, name: nav('aboutUs'), url: url('/o-nama') },
+        ],
+      },
+      {
+        '@type': 'Person',
+        '@id': `${siteUrl}/#hamdo-solo`,
+        name: 'Hamdo Solo',
+        jobTitle: t('hamdoJob'),
+        worksFor: { '@id': `${siteUrl}/#organization` },
+        description: t('hamdoDescription'),
+      },
+    ],
+  }
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const locale = getLocale()
+  const { dir } = LOCALE_INFO[locale]
+  const messages = await getMessages({ locale })
+  const fonts = `${manrope.variable} ${ibmMono.variable} ${notoArabic.variable}`
+
   return (
-    <html lang="bs" className={`${manrope.variable} ${ibmMono.variable}`}>
+    <html lang={locale} dir={dir} className={locale === 'ar' ? `${fonts} lang-ar` : fonts}>
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(await jsonLd()) }}
         />
       </head>
       <body className="min-h-screen flex flex-col font-sans antialiased" style={{ background: '#F5F2EF' }}>
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <ConditionalFooter />
-        <PozoviteNasButton />
+        <NextIntlClientProvider locale={locale} messages={clientMessages(messages)} timeZone="Europe/Sarajevo">
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <ConditionalFooter />
+          <PozoviteNasButton />
+        </NextIntlClientProvider>
       </body>
     </html>
   )

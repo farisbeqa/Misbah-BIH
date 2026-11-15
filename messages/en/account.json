@@ -1,0 +1,29 @@
+{
+  "deleteAccount": {
+    "meta": {
+      "title": "Delete account",
+      "description": "Permanently delete your user account on Misbah EDU (website and mobile app)."
+    },
+    "tag": "Account",
+    "title": "Delete account",
+    "whatIsDeleted": "Here you can permanently delete your Misbah EDU account — the same account is used on the website and in the mobile app. Deleting it permanently removes your <b>username, password, all of your comments and likes</b>. This action cannot be undone.",
+    "inApp": "In the mobile app, you can also delete your account in the menu <b>Više → Obriši nalog</b> (More → Delete account). Data stored only on your phone (saved content, settings) is deleted by uninstalling the app.",
+    "cannotLogIn": "Can't log in? Write to us at <mail>{email}</mail> with your username and we will delete the account within 7 days. More about data in the <privacyLink>Privacy Policy</privacyLink>.",
+    "mailSubject": "Account deletion",
+    "form": {
+      "username": "Username",
+      "password": "Password",
+      "confirm": "I understand that the account, comments and likes will be permanently deleted.",
+      "submit": "Permanently delete account",
+      "done": "Your account and all related data have been permanently deleted.",
+      "errors": {
+        "notConfirmed": "Please confirm that you want to permanently delete the account.",
+        "deleteFailed": "Error deleting the account",
+        "connection": "Connection error",
+        "missingCredentials": "Username and password are required",
+        "wrongCredentials": "Wrong username or password",
+        "server": "Server error"
+      }
+    }
+  }
+}

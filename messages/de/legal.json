@@ -1,0 +1,98 @@
+{
+  "tag": "Rechtliche Informationen",
+  "updated": "Letzte Änderung: {date}",
+  "privacy": {
+    "meta": {
+      "title": "Datenschutzerklärung",
+      "description": "Wie Misbah EDU (Website und mobile App) Ihre Daten erhebt, verwendet und schützt."
+    },
+    "title": "Datenschutzerklärung",
+    "about": {
+      "title": "Über diese Erklärung",
+      "scope": "Diese Erklärung erläutert, welche Daten die Website <b>{site}</b> und die mobile App <b>Misbah EDU</b> (iOS und Android) erheben, warum wir sie erheben und wie Sie sie löschen können. Bei allen Fragen schreiben Sie uns an <mail>{email}</mail>.",
+      "noAccountNeeded": "Die Inhalte der Plattform können Sie ohne Registrierung lesen, ansehen und anhören. Ein Konto ist nur für Likes und Kommentare erforderlich."
+    },
+    "collected": {
+      "title": "Daten, die wir erheben",
+      "account": "<b>Benutzerkonto (optional):</b> Benutzername, Passwort und Registrierungsdatum. Das Passwort speichern wir niemals im Klartext — gespeichert wird nur sein kryptografischer Hashwert.",
+      "content": "<b>Inhalte, die Sie veröffentlichen:</b> Kommentare und Likes, verknüpft mit Ihrem Benutzernamen. Kommentare sind für andere Nutzer öffentlich sichtbar.",
+      "technical": "<b>Technische Daten:</b> Der Server, auf dem die Plattform gehostet wird (Amazon Web Services), protokolliert automatisch standardmäßige technische Aufzeichnungen (z. B. IP-Adresse und Browsertyp) zur Sicherheit und für den Betrieb des Dienstes. Diese Aufzeichnungen verwenden wir nicht zur Nachverfolgung von Nutzern."
+    },
+    "onDevice": {
+      "title": "Daten, die nur auf Ihrem Gerät bleiben (mobile App)",
+      "storage": "Gespeicherte Inhalte, Textgröße, die gewählte Stadt für die Gebetszeiten (Vaktija), zuletzt gesuchte Begriffe und zwischengespeicherte Inhalte für die Nutzung ohne Internet werden ausschließlich auf Ihrem Telefon gespeichert und nicht an uns gesendet. Die Anmeldedaten werden im geschützten Speicher des Geräts abgelegt.",
+      "reminders": "Gebetserinnerungen sind lokale Benachrichtigungen, die das Telefon selbst plant. Die App verwendet Ihren Standort nicht — die Stadt wählen Sie manuell aus."
+    },
+    "notDone": {
+      "title": "Was wir nicht tun",
+      "text": "Wir zeigen keine Werbung, verwenden keine Tracking-Tools und keine Analyse und verkaufen oder teilen Ihre Daten nicht mit Werbetreibenden."
+    },
+    "thirdParty": {
+      "title": "Dienste Dritter",
+      "text": "Videoinhalte werden über die Plattformen YouTube, TikTok, Instagram und Facebook angezeigt. Wenn Sie ein solches Video abspielen, gelten die Datenschutzbestimmungen dieser Plattform. Die Gebetszeiten werden vom Dienst {prayerTimesSite} abgerufen (gesendet wird nur die gewählte Stadt). Die Plattform nutzt die Dienste von Amazon Web Services (Hosting der Seite, Datenbank sowie Speicherung von Bildern, Audio und Video; Server in der EU, Frankfurt). Auf der Plattform veröffentlichte Texte (nicht die Daten der Nutzer) werden mithilfe von Claude-Modellen auf dem Dienst Amazon Bedrock automatisch ins Englische, Arabische, Deutsche und Türkische übersetzt."
+    },
+    "retention": {
+      "title": "Wie lange wir Daten speichern",
+      "text": "Die Kontodaten speichern wir, solange das Konto besteht. Wenn Sie das Konto löschen, werden Benutzername, Passwort, alle Ihre Kommentare und Likes dauerhaft gelöscht."
+    },
+    "rights": {
+      "title": "Ihre Rechte und das Löschen des Kontos",
+      "text": "Sie haben das Recht, Auskunft über Ihre Daten, deren Berichtigung oder Löschung zu verlangen. Das Konto können Sie selbst in der App löschen (Više → Obriši nalog, d. h. Mehr → Konto löschen) oder auf der Seite <deleteLink>{deleteUrl}</deleteLink>. Wenn Sie sich nicht anmelden können, schreiben Sie uns per E-Mail unter Angabe Ihres Benutzernamens."
+    },
+    "children": {
+      "title": "Kinder",
+      "text": "Die Inhalte der Plattform sind lehrreich und für alle Altersgruppen bestimmt. Wir erheben nicht wissentlich Daten von Kindern unter 13 Jahren ohne Einwilligung der Eltern; erfahren wir von einem solchen Konto, löschen wir es."
+    },
+    "changes": {
+      "title": "Änderungen",
+      "text": "Wir können diese Erklärung von Zeit zu Zeit aktualisieren. Das Datum der letzten Änderung steht immer oben auf der Seite. Sehen Sie sich auch die <termsLink>Nutzungsbedingungen</termsLink> an."
+    }
+  },
+  "terms": {
+    "meta": {
+      "title": "Nutzungsbedingungen",
+      "description": "Nutzungsbedingungen der Website und der mobilen App Misbah EDU, einschließlich der Regeln für Kommentare."
+    },
+    "title": "Nutzungsbedingungen",
+    "acceptance": {
+      "title": "Annahme der Bedingungen",
+      "text": "Mit der Nutzung der Website {site} und der mobilen App Misbah EDU akzeptieren Sie diese Bedingungen. Mit der Registrierung eines Kontos bestätigen Sie, dass Sie sie gelesen haben und akzeptieren."
+    },
+    "account": {
+      "title": "Benutzerkonto",
+      "text": "Ein Konto ist nur für Likes und Kommentare erforderlich. Sie sind für die Geheimhaltung Ihres Passworts und für alle von Ihrem Konto aus veröffentlichten Inhalte verantwortlich. Es ist nicht erlaubt, sich fälschlich als eine andere Person auszugeben."
+    },
+    "comments": {
+      "title": "Kommentare — Null Toleranz bei unangemessenen Inhalten",
+      "intro": "Misbah EDU ist ein Raum für nützliches Wissen und schöne Worte. <b>Wir tolerieren weder unangemessene Inhalte noch beleidigendes Verhalten.</b> Es ist verboten, Folgendes zu veröffentlichen:",
+      "forbidden": {
+        "insults": "Schimpfwörter, Beleidigungen, Herabwürdigung und Kränkung anderer Nutzer, Autoren oder Gäste;",
+        "hate": "Hassrede, Drohungen, Belästigung oder Aufrufe zur Gewalt;",
+        "explicit": "pornografische, gewalttätige oder anderweitig unangemessene Inhalte;",
+        "spam": "Werbung, Spam und Falschinformationen;",
+        "personalData": "fremde persönliche Daten und Inhalte, die Urheberrechte verletzen."
+      },
+      "moderation": "Kommentare durchlaufen einen automatischen Filter und werden zusätzlich von der Redaktion geprüft. Inhalte, die gegen die Regeln verstoßen, entfernen wir ohne Ankündigung, und das Konto von Nutzern, die dagegen verstoßen, löschen wir dauerhaft."
+    },
+    "reporting": {
+      "title": "Melden und Blockieren",
+      "text": "Jeden Kommentar in der App können Sie melden (Schaltfläche „Prijavi“ (Melden) beim Kommentar) oder uns unter <mail>{email}</mail> schreiben. Wir prüfen die Meldungen und entfernen unangemessene Inhalte innerhalb von 24 Stunden. Nutzer, deren Kommentare Sie nicht sehen möchten, können Sie blockieren — ihre Kommentare werden dann auf Ihrem Gerät nicht mehr angezeigt."
+    },
+    "copyright": {
+      "title": "Urheberrechte",
+      "text": "Alle auf der Plattform Misbah EDU veröffentlichten Texte, Fotografien, Audio- und Videoinhalte sind urheberrechtlich geschützt. Das Übernehmen, Vervielfältigen oder Verwenden der Inhalte ist ausschließlich mit vorheriger Zustimmung der Redaktion und unter Angabe der Quelle gestattet."
+    },
+    "disclaimer": {
+      "title": "Haftungsausschluss",
+      "text": "Die in den Sendungen geäußerten Ansichten der Gäste sind ihre persönlichen Ansichten und spiegeln nicht zwingend die Ansichten der Redaktion wider. Die Gebetszeiten werden vom Dienst {prayerTimesSite} abgerufen und dienen der Information."
+    },
+    "deletion": {
+      "title": "Konto löschen",
+      "text": "Das Konto können Sie jederzeit in der App löschen (Više → Obriši nalog, d. h. Mehr → Konto löschen) oder auf der Seite <deleteLink>{deleteUrl}</deleteLink>. Einzelheiten zu den Daten finden Sie in der <privacyLink>Datenschutzerklärung</privacyLink>."
+    },
+    "contact": {
+      "title": "Kontakt und Änderungen",
+      "text": "Wir können die Bedingungen von Zeit zu Zeit ändern; das Datum der letzten Änderung steht oben auf der Seite. Bei Fragen schreiben Sie an <mail>{email}</mail>."
+    }
+  }
+}

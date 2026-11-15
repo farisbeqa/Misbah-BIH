@@ -106,6 +106,11 @@ function unknownVideo(): VideoInfo {
   }
 }
 
+/**
+ * Bosnian platform label (admin and API). Public pages show the brand names
+ * from here but translate the others ("Upload", "Nepoznato") with the
+ * messages in videos.platforms.
+ */
 export function getPlatformLabel(platform: string): string {
   const labels: Record<string, string> = {
     youtube: 'YouTube',

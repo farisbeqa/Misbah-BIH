@@ -1,7 +1,10 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useCurrentLocale } from '@/i18n/navigation'
+import { LOCALE_INFO } from '@/i18n/config'
 
 interface Quote { id: number; type: string; text: string; source: string | null }
 
@@ -9,6 +12,9 @@ const GAP        = 24
 const AUTO_DELAY = 5000
 
 export default function QuoteCarousel({ quotes }: { quotes: Quote[] }) {
+  const t = useTranslations('quotes.carousel')
+  // Right-to-left: the cards run from right to left, so the track moves the other way
+  const rtl = LOCALE_INFO[useCurrentLocale()].dir === 'rtl'
   const [perPage, setPerPage] = useState(3)
   const [current, setCurrent] = useState(0)
   const [noAnim,  setNoAnim]  = useState(false)
@@ -73,14 +79,14 @@ export default function QuoteCarousel({ quotes }: { quotes: Quote[] }) {
       onMouseEnter={() => { pausedRef.current = true }}
       onMouseLeave={() => { pausedRef.current = false }}
     >
-      {/* Left arrow */}
+      {/* Previous arrow (left; right in right-to-left languages) */}
       <button
         onClick={() => go(-1)}
         disabled={current === 0}
-        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white flex items-center justify-center transition-all duration-200 hover:scale-110 disabled:opacity-0 disabled:pointer-events-none"
+        className="absolute start-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white flex items-center justify-center transition-all duration-200 hover:scale-110 disabled:opacity-0 disabled:pointer-events-none"
         style={{ boxShadow: '0 2px 14px rgba(0,0,0,0.12)', border: '1px solid #E8E1DB' }}
       >
-        <ChevronLeft size={18} style={{ color: '#5A4F49' }} />
+        <ChevronLeft size={18} className="flip-rtl" style={{ color: '#5A4F49' }} />
       </button>
 
       {/* Card track — py-8 gives room for center-card shadow to not clip */}
@@ -91,7 +97,7 @@ export default function QuoteCarousel({ quotes }: { quotes: Quote[] }) {
             flexWrap:   'nowrap',
             gap:        GAP,
             alignItems: 'center',
-            transform:  step ? `translateX(-${current * step}px)` : 'none',
+            transform:  step ? `translateX(${rtl ? '' : '-'}${current * step}px)` : 'none',
             transition: noAnim ? 'none' : 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
           }}
         >
@@ -173,14 +179,14 @@ export default function QuoteCarousel({ quotes }: { quotes: Quote[] }) {
         </div>
       </div>
 
-      {/* Right arrow */}
+      {/* Next arrow (right; left in right-to-left languages) */}
       <button
         onClick={() => go(1)}
         disabled={current >= max}
-        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white flex items-center justify-center transition-all duration-200 hover:scale-110 disabled:opacity-0 disabled:pointer-events-none"
+        className="absolute end-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white flex items-center justify-center transition-all duration-200 hover:scale-110 disabled:opacity-0 disabled:pointer-events-none"
         style={{ boxShadow: '0 2px 14px rgba(0,0,0,0.12)', border: '1px solid #E8E1DB' }}
       >
-        <ChevronRight size={18} style={{ color: '#5A4F49' }} />
+        <ChevronRight size={18} className="flip-rtl" style={{ color: '#5A4F49' }} />
       </button>
 
       {/* Dot indicators */}
@@ -190,7 +196,7 @@ export default function QuoteCarousel({ quotes }: { quotes: Quote[] }) {
             <button
               key={i}
               onClick={() => { setNoAnim(false); setCurrent(i) }}
-              aria-label={`Stranica ${i + 1}`}
+              aria-label={t('page', { page: i + 1 })}
               className="rounded-full transition-all duration-300"
               style={{
                 width:      i === current ? 24 : 7,

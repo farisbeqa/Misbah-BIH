@@ -1,0 +1,98 @@
+{
+  "tag": "Pravne informacije",
+  "updated": "Posljednja izmjena: {date}",
+  "privacy": {
+    "meta": {
+      "title": "Politika privatnosti",
+      "description": "Kako Misbah EDU (web stranica i mobilna aplikacija) prikuplja, koristi i štiti vaše podatke."
+    },
+    "title": "Politika privatnosti",
+    "about": {
+      "title": "O ovoj politici",
+      "scope": "Ova politika objašnjava koje podatke prikupljaju web stranica <b>{site}</b> i mobilna aplikacija <b>Misbah EDU</b>(iOS i Android), zašto ih prikupljamo i kako ih možete obrisati. Za sva pitanja pišite nam na <mail>{email}</mail>.",
+      "noAccountNeeded": "Sadržaj platforme možete čitati, gledati i slušati bez registracije. Nalog je potreban samo za lajkove i komentare."
+    },
+    "collected": {
+      "title": "Podaci koje prikupljamo",
+      "account": "<b>Korisnički nalog (neobavezno):</b> korisničko ime, lozinka i datum registracije. Lozinku nikad ne čuvamo u izvornom obliku — pohranjuje se samo njen kriptografski sažetak (hash).",
+      "content": "<b>Sadržaj koji objavite:</b> komentari i lajkovi, povezani s vašim korisničkim imenom. Komentari su javno vidljivi drugim korisnicima.",
+      "technical": "<b>Tehnički podaci:</b> server na kojem je platforma smještena (Amazon Web Services) automatski bilježi standardne tehničke zapise (npr. IP adresu i vrstu preglednika) radi sigurnosti i rada usluge. Ove zapise ne koristimo za praćenje korisnika."
+    },
+    "onDevice": {
+      "title": "Podaci koji ostaju samo na vašem uređaju (mobilna aplikacija)",
+      "storage": "Sačuvani sadržaj, veličina teksta, izabrani grad za vaktiju, nedavne pretrage i privremeno pohranjen sadržaj za rad bez interneta čuvaju se isključivo na vašem telefonu i ne šalju se nama. Podaci za prijavu čuvaju se u zaštićenoj memoriji uređaja.",
+      "reminders": "Podsjetnici za namaz su lokalne obavijesti koje zakazuje sam telefon. Aplikacija ne koristi vašu lokaciju — grad birate ručno."
+    },
+    "notDone": {
+      "title": "Šta ne radimo",
+      "text": "Ne prikazujemo reklame, ne koristimo alate za praćenje ni analitiku i ne prodajemo niti dijelimo vaše podatke s oglašivačima."
+    },
+    "thirdParty": {
+      "title": "Usluge trećih strana",
+      "text": "Video sadržaji se prikazuju putem platformi YouTube, TikTok, Instagram i Facebook. Kada pustite takav video, primjenjuju se pravila privatnosti te platforme. Vremena namaza preuzimaju se sa servisa {prayerTimesSite} (šalje se samo izabrani grad). Platforma koristi usluge Amazon Web Services (smještaj stranice, baza podataka te pohrana slika, zvuka i videa; serveri u EU, Frankfurt). Tekstovi objavljeni na platformi (ne podaci korisnika) automatski se prevode na engleski, arapski, njemački i turski pomoću Claude modela na servisu Amazon Bedrock."
+    },
+    "retention": {
+      "title": "Koliko dugo čuvamo podatke",
+      "text": "Podatke naloga čuvamo dok nalog postoji. Kada obrišete nalog, trajno se brišu korisničko ime, lozinka, svi vaši komentari i lajkovi."
+    },
+    "rights": {
+      "title": "Vaša prava i brisanje naloga",
+      "text": "Imate pravo zatražiti uvid u svoje podatke, njihovu ispravku ili brisanje. Nalog možete obrisati sami u aplikaciji (Više → Obriši nalog) ili na stranici <deleteLink>{deleteUrl}</deleteLink>. Ako se ne možete prijaviti, pišite nam na email s korisničkim imenom."
+    },
+    "children": {
+      "title": "Djeca",
+      "text": "Sadržaj platforme je edukativan i namijenjen svim uzrastima. Ne prikupljamo svjesno podatke djece mlađe od 13 godina bez saglasnosti roditelja; ako saznamo za takav nalog, obrisat ćemo ga."
+    },
+    "changes": {
+      "title": "Izmjene",
+      "text": "Ovu politiku možemo povremeno ažurirati. Datum posljednje izmjene uvijek je naveden na vrhu stranice. Pogledajte i <termsLink>Pravila korištenja</termsLink>."
+    }
+  },
+  "terms": {
+    "meta": {
+      "title": "Pravila korištenja",
+      "description": "Pravila korištenja web stranice i mobilne aplikacije Misbah EDU, uključujući pravila za komentare."
+    },
+    "title": "Pravila korištenja",
+    "acceptance": {
+      "title": "Prihvatanje pravila",
+      "text": "Korištenjem web stranice {site} i mobilne aplikacije Misbah EDU prihvatate ova pravila. Registracijom naloga potvrđujete da ste ih pročitali i da ih prihvatate."
+    },
+    "account": {
+      "title": "Korisnički nalog",
+      "text": "Nalog je potreban samo za lajkove i komentare. Odgovorni ste za čuvanje svoje lozinke i za sav sadržaj objavljen s vašeg naloga. Nije dozvoljeno lažno se predstavljati kao druga osoba."
+    },
+    "comments": {
+      "title": "Komentari — nulta tolerancija za neprimjeren sadržaj",
+      "intro": "Misbah EDU je prostor za korisno znanje i lijepu riječ. <b>Ne tolerišemo neprimjeren sadržaj ni uvredljivo ponašanje.</b> Zabranjeno je objavljivati:",
+      "forbidden": {
+        "insults": "psovke, uvrede, ponižavanje i vrijeđanje drugih korisnika, autora ili gostiju;",
+        "hate": "govor mržnje, prijetnje, uznemiravanje ili pozivanje na nasilje;",
+        "explicit": "pornografski, nasilan ili na drugi način neprimjeren sadržaj;",
+        "spam": "reklame, spam i lažne informacije;",
+        "personalData": "tuđe lične podatke i sadržaj koji krši autorska prava."
+      },
+      "moderation": "Komentari prolaze automatski filter, a redakcija ih dodatno pregleda. Sadržaj koji krši pravila uklanjamo bez najave, a nalog korisnika koji ih krši trajno brišemo."
+    },
+    "reporting": {
+      "title": "Prijava i blokiranje",
+      "text": "Svaki komentar u aplikaciji možete prijaviti (dugme „Prijavi“ uz komentar) ili nam pisati na <mail>{email}</mail>. Prijave pregledamo i neprimjeren sadržaj uklanjamo u roku od 24 sata. Korisnika čije komentare ne želite vidjeti možete blokirati — njegovi komentari se tada više ne prikazuju na vašem uređaju."
+    },
+    "copyright": {
+      "title": "Autorska prava",
+      "text": "Svi tekstovi, fotografije, audio i video sadržaji objavljeni na platformi Misbah EDU zaštićeni su autorskim pravima. Preuzimanje, umnožavanje ili korištenje sadržaja dozvoljeno je isključivo uz prethodnu saglasnost redakcije i navođenje izvora."
+    },
+    "disclaimer": {
+      "title": "Odricanje odgovornosti",
+      "text": "Stavovi gostiju izneseni u emisijama predstavljaju njihove lične stavove i ne moraju nužno odražavati stavove redakcije. Vremena namaza preuzimaju se sa servisa {prayerTimesSite} i služe kao informacija."
+    },
+    "deletion": {
+      "title": "Brisanje naloga",
+      "text": "Nalog možete u svakom trenutku obrisati u aplikaciji (Više → Obriši nalog) ili na stranici <deleteLink>{deleteUrl}</deleteLink>. Detalji o podacima su u <privacyLink>Politici privatnosti</privacyLink>."
+    },
+    "contact": {
+      "title": "Kontakt i izmjene",
+      "text": "Pravila možemo povremeno izmijeniti; datum posljednje izmjene naveden je na vrhu stranice. Za pitanja pišite na <mail>{email}</mail>."
+    }
+  }
+}

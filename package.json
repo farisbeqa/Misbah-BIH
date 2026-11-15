@@ -8,9 +8,14 @@
     "start": "next start",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "i18n:translate": "node scripts/run-ts.mjs scripts/i18n/translate-messages.ts",
+    "translator": "node scripts/run-ts.mjs scripts/aws/translator.ts",
+    "translator:deploy": "node scripts/run-ts.mjs scripts/aws/translator.ts deploy"
   },
   "dependencies": {
+    "@anthropic-ai/bedrock-sdk": "^1.1.2",
+    "@aws-sdk/client-lambda": "^3.1169.0",
     "@aws-sdk/client-s3": "^3.1057.0",
     "@aws-sdk/dsql-signer": "^3.1165.0",
     "@aws-sdk/s3-request-presigner": "^3.1057.0",
@@ -21,17 +26,21 @@
     "iron-session": "^8.0.3",
     "lucide-react": "^0.447.0",
     "next": "14.2.5",
+    "next-intl": "^4.15.1",
     "pg": "^8.23.1",
     "react": "^18",
     "react-dom": "^18",
-    "react-markdown": "^9.0.1"
+    "react-markdown": "^9.0.1",
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
+    "@formatjs/icu-messageformat-parser": "^3.5.23",
     "@types/node": "^20",
     "@types/pg": "^8.23.1",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "esbuild": "^0.28.2",
     "postcss": "^8",
     "prisma": "^7.8.0",
     "tailwindcss": "^3.4.1",

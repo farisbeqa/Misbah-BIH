@@ -1,5 +1,6 @@
-import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import { ArrowRight } from 'lucide-react'
+import Link from '@/i18n/navigation'
 import { resolveAuthors } from '@/lib/authors'
 import { BIOS } from '@/lib/bios'
 
@@ -8,8 +9,13 @@ function initials(name: string) {
   return parts.length >= 2 ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase() : (parts[0]?.[0] ?? '?').toUpperCase()
 }
 
-/** "Vidi više od ovog autora" box shown under any published content item. */
+/**
+ * "Vidi više od ovog autora" box shown under any published content item.
+ * Pass the original (Bosnian) title: it is used to find the author when the
+ * author field is empty.
+ */
 export default function MoreFromAuthor({ author, title, className = '' }: { author?: string | null; title?: string | null; className?: string }) {
+  const t = useTranslations('blog')
   const authors = resolveAuthors(author, title)
   if (authors.length === 0) return null
 
@@ -29,13 +35,14 @@ export default function MoreFromAuthor({ author, title, className = '' }: { auth
                 </div>
             }
             <div className="min-w-0 flex-1">
-              <p className="font-mono text-[11px] uppercase tracking-widest text-warm-400">Autor</p>
+              <p className="font-mono text-[11px] uppercase tracking-widest text-warm-400">{t('moreFromAuthor.label')}</p>
               <p className="font-semibold text-warm-900 truncate">{a.name}</p>
             </div>
             <span className="flex items-center gap-1.5 text-sm font-medium whitespace-nowrap" style={{ color: '#8B1E3F' }}>
-              <span className="hidden sm:inline">Vidi više od ovog autora</span>
-              <span className="sm:hidden">Vidi više</span>
-              <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
+              <span className="hidden sm:inline">{t('moreFromAuthor.seeMore')}</span>
+              <span className="sm:hidden">{t('moreFromAuthor.seeMoreShort')}</span>
+              {/* rtl: keeps the arrow mirrored while it moves towards the end on hover */}
+              <ArrowRight size={15} className="flip-rtl transition-transform group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5" />
             </span>
           </Link>
         )

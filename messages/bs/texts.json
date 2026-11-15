@@ -1,0 +1,51 @@
+{
+  "list": {
+    "searchByTitle": "Pretraži po naslovu...",
+    "noResults": "Nema rezultata za \"{query}\"",
+    "read": "Čitaj",
+    "loadMore": "Učitaj još ({count, plural, one {# preostalih} few {# preostalih} other {# preostalih}})",
+    "shown": "Prikazano {shown} od {total}"
+  },
+  "audio": {
+    "play": "Reproduciraj",
+    "pause": "Pauza"
+  },
+  "ilahijePage": {
+    "meta": {
+      "title": "Ilahije – Tekstovi",
+      "description": "Tekstovi ilahija, kasida i duhovnih pjesama — čitajte i pratite pjesme koje jačaju ljubav prema vjeri."
+    },
+    "title": "Tekstovi ilahija",
+    "subtitle": "Tekstovi i stihovi ilahija i kasida",
+    "empty": "Nema tekstova još uvijek"
+  },
+  "ilahija": {
+    "metaTitle": "{title} — Ilahije",
+    "back": "Sve ilahije",
+    "meaning": "Značenje"
+  },
+  "duasPage": {
+    "meta": {
+      "title": "Dove – Tekstovi",
+      "description": "Tekstovi dova iz Kur'ana i Sunneta — dove za svaki dan, svaku situaciju i svaku potrebu."
+    },
+    "title": "Dove",
+    "empty": "Nema tekstova dova još uvijek",
+    "filters": {
+      "all": "Sve",
+      "kuransko": "Kur'anske dove"
+    },
+    "badges": {
+      "kuransko": "Kur'anska"
+    }
+  },
+  "dua": {
+    "metaTitle": "{title} — Dove",
+    "back": "Sve dove"
+  },
+  "zikr": {
+    "metaTitle": "{title} — Zikrovi",
+    "back": "Svi zikrovi",
+    "tag": "TEKST i AUDIO"
+  }
+}

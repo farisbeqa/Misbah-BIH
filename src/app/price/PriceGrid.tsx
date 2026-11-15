@@ -1,7 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
+import { useTranslations } from 'next-intl'
+import Link, { useCurrentLocale } from '@/i18n/navigation'
+import { formatShortDate } from '@/i18n/format'
 import { BookOpen, Calendar, Search } from 'lucide-react'
 
 interface Prica {
@@ -9,15 +11,11 @@ interface Prica {
   imageUrl: string | null; createdAt: Date | string
 }
 
-const MONTHS = ['jan','feb','mar','apr','maj','jun','jul','aug','sep','okt','nov','dec']
-function fmt(d: Date | string) {
-  const dt = new Date(d)
-  return `${dt.getDate()}. ${MONTHS[dt.getMonth()]} ${dt.getFullYear()}.`
-}
-
 const PAGE = 12
 
 export default function PriceGrid({ price }: { price: Prica[] }) {
+  const t = useTranslations('blog')
+  const locale = useCurrentLocale()
   const [query, setQuery] = useState('')
   const [visible, setVisible] = useState(PAGE)
 
@@ -34,17 +32,17 @@ export default function PriceGrid({ price }: { price: Prica[] }) {
     <>
       {price.length > 0 && (
         <div className="relative mb-8">
-          <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#a89888] pointer-events-none" />
+          <Search size={15} className="absolute start-3 top-1/2 -translate-y-1/2 text-[#a89888] pointer-events-none" />
           <input value={query} onChange={e => setQuery(e.target.value)}
-            placeholder="Pretraži po naslovu ili autoru..."
-            className="w-full pl-9 pr-4 py-2.5 border border-[#D6CCC3] bg-white focus:outline-none focus:border-[#8b1e3f] text-sm transition-colors" />
+            placeholder={t('list.searchByTitleOrAuthor')}
+            className="w-full ps-9 pe-4 py-2.5 border border-[#D6CCC3] bg-white focus:outline-none focus:border-[#8b1e3f] text-sm transition-colors" />
         </div>
       )}
       {filtered.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-24 bg-[#f5f2ef] border border-black/5">
           <BookOpen size={36} className="text-[#D6CCC3] mb-3" />
           <p className="text-sm text-[#a89888]">
-            {query.trim() ? `Nema rezultata za "${query}"` : 'Nema priča još uvijek'}
+            {query.trim() ? t('list.noResults', { query }) : t('storiesPage.empty')}
           </p>
         </div>
       ) : (
@@ -66,7 +64,7 @@ export default function PriceGrid({ price }: { price: Prica[] }) {
                   <div className="flex flex-col gap-2.5 px-6 py-7 flex-1">
                     <div className="flex items-center gap-1.5">
                       <Calendar size={10} style={{ color: '#8B1E3F' }} />
-                      <p className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{fmt(prica.createdAt)}</p>
+                      <p className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{formatShortDate(prica.createdAt, locale)}</p>
                     </div>
                     <p className="font-medium text-[#241f1d] leading-[1.12] line-clamp-2 group-hover:text-[#8b1e3f] transition-colors"
                       style={{ fontSize: 20, letterSpacing: '-0.6px' }}>
@@ -87,9 +85,9 @@ export default function PriceGrid({ price }: { price: Prica[] }) {
             <div className="flex flex-col items-center gap-2 mt-10">
               <button onClick={() => setVisible(v => v + PAGE)}
                 className="px-8 py-3 border border-[#D6CCC3] text-[#5a4f49] text-sm font-medium hover:border-[#8b1e3f] hover:text-[#8b1e3f] transition-colors">
-                Učitaj još ({filtered.length - visible} preostalih)
+                {t('list.loadMore', { count: filtered.length - visible })}
               </button>
-              <p className="text-xs text-[#a89888]">Prikazano {shown.length} od {filtered.length}</p>
+              <p className="text-xs text-[#a89888]">{t('list.shown', { shown: shown.length, total: filtered.length })}</p>
             </div>
           )}
         </>

@@ -1,0 +1,29 @@
+{
+  "deleteAccount": {
+    "meta": {
+      "title": "Brisanje naloga",
+      "description": "Trajno brisanje korisničkog naloga na Misbah EDU (web stranica i mobilna aplikacija)."
+    },
+    "tag": "Nalog",
+    "title": "Brisanje naloga",
+    "whatIsDeleted": "Ovdje možete trajno obrisati svoj Misbah EDU nalog — isti nalog koristi se na web stranici i u mobilnoj aplikaciji. Brisanjem se trajno uklanjaju <b>korisničko ime, lozinka, svi vaši komentari i lajkovi</b>. Ova radnja se ne može poništiti.",
+    "inApp": "U mobilnoj aplikaciji nalog možete obrisati i u meniju <b>Više → Obriši nalog</b>. Podaci sačuvani samo na telefonu (sačuvani sadržaj, postavke) brišu se deinstalacijom aplikacije.",
+    "cannotLogIn": "Ne možete se prijaviti? Pišite nam na <mail>{email}</mail> s korisničkim imenom i nalog ćemo obrisati u roku od 7 dana. Više o podacima u <privacyLink>Politici privatnosti</privacyLink>.",
+    "mailSubject": "Brisanje naloga",
+    "form": {
+      "username": "Korisničko ime",
+      "password": "Lozinka",
+      "confirm": "Razumijem da se nalog, komentari i lajkovi trajno brišu.",
+      "submit": "Trajno obriši nalog",
+      "done": "Vaš nalog i svi povezani podaci su trajno obrisani.",
+      "errors": {
+        "notConfirmed": "Potvrdite da želite trajno obrisati nalog.",
+        "deleteFailed": "Greška pri brisanju naloga",
+        "connection": "Greška pri konekciji",
+        "missingCredentials": "Korisničko ime i lozinka su obavezni",
+        "wrongCredentials": "Pogrešno korisničko ime ili lozinka",
+        "server": "Greška servera"
+      }
+    }
+  }
+}

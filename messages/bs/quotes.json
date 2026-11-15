@@ -1,0 +1,21 @@
+{
+  "types": {
+    "ajet": "Kur'anski ajet",
+    "hadis": "Hadis",
+    "izreka": "Misao dana"
+  },
+  "section": {
+    "tag": "PODSJETNIK",
+    "title": "Misao dana",
+    "text": "Misli iz Kur'ana, hadisa i islamske tradicije koje podstiču na razmišljanje i djelovanje.",
+    "previous": "Prethodna misao",
+    "next": "Sljedeća misao"
+  },
+  "popup": {
+    "defaultLabel": "Misao dana",
+    "close": "Zatvori"
+  },
+  "carousel": {
+    "page": "Stranica {page}"
+  }
+}

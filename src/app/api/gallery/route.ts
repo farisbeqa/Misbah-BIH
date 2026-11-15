@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
+import { apiLocale, localizeRows, queueTranslation } from '@/lib/translations'
 
 export const dynamic = 'force-dynamic'
 
@@ -15,7 +16,7 @@ export async function GET(request: NextRequest) {
       take: limit,
       skip,
     })
-    return NextResponse.json(images)
+    return NextResponse.json(await localizeRows('gallery', images, apiLocale(request)))
   } catch { return NextResponse.json({ error: 'Greška' }, { status: 500 }) }
 }
 
@@ -28,6 +29,7 @@ export async function POST(request: NextRequest) {
     const image = await prisma.galleryImage.create({
       data: { title: title?.trim() || null, imageUrl: imageUrl.trim(), description: description?.trim() || null },
     })
+    await queueTranslation('gallery', image.id)
     return NextResponse.json(image, { status: 201 })
   } catch { return NextResponse.json({ error: 'Greška servera' }, { status: 500 }) }
 }

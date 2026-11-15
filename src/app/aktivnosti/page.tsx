@@ -1,7 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
+import { useTranslations } from 'next-intl'
+import Link, { useCurrentLocale } from '@/i18n/navigation'
+import { formatShortDate } from '@/i18n/format'
 import { Calendar, MapPin } from 'lucide-react'
 
 interface Activity {
@@ -9,34 +11,26 @@ interface Activity {
   videoUrl: string | null; date: string; tag: string
 }
 
-const MONTHS = ['jan','feb','mar','apr','maj','jun','jul','aug','sep','okt','nov','dec']
-function fmt(d: string) {
-  const dt = new Date(d)
-  return `${dt.getDate()}. ${MONTHS[dt.getMonth()]} ${dt.getFullYear()}.`
-}
-
-const FILTERS = [
-  { key: 'all',        label: 'Sve' },
-  { key: 'vijesti',    label: 'Vijesti' },
-  { key: 'novosti',    label: 'Novosti' },
-  { key: 'aktivnosti', label: 'Aktivnosti' },
-]
-
-const TAG_LABELS: Record<string, string> = { vijesti: 'Vijesti', novosti: 'Novosti', aktivnosti: 'Aktivnosti' }
+const TAGS = ['vijesti', 'novosti', 'aktivnosti']
+const FILTERS = ['all', ...TAGS]
 const PAGE = 12
 
 export default function AktivnostiPage() {
+  const t = useTranslations('community.activities')
+  const locale = useCurrentLocale()
   const [activities, setActivities] = useState<Activity[]>([])
   const [filter, setFilter]         = useState('all')
   const [loading, setLoading]       = useState(true)
   const [visible, setVisible]       = useState(PAGE)
 
   useEffect(() => {
-    fetch('/api/activities')
+    let current = true
+    fetch(`/api/activities?lang=${locale}`)
       .then(r => r.json())
-      .then(d => { setActivities(d); setLoading(false) })
-      .catch(() => setLoading(false))
-  }, [])
+      .then(d => { if (current) { setActivities(d); setLoading(false) } })
+      .catch(() => { if (current) setLoading(false) })
+    return () => { current = false }
+  }, [locale])
 
   useEffect(() => { setVisible(PAGE) }, [filter])
 
@@ -46,27 +40,27 @@ export default function AktivnostiPage() {
   return (
     <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-12 sm:py-16">
       <div className="mb-10">
-        <p className="font-medium text-[#8b1e3f] text-base mb-2">ZAJEDNICA</p>
+        <p className="font-medium text-[#8b1e3f] text-base mb-2">{t('tag')}</p>
         <h1 className="font-semibold text-[#141110] mb-3"
           style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}>
-          Aktivnosti
+          {t('title')}
         </h1>
         <p className="font-normal text-[#746860]" style={{ fontSize: 18 }}>
-          Vijesti, novosti i aktivnosti zajednice — kvizovi, radionice, posjete i druženja.
+          {t('intro')}
         </p>
       </div>
 
       {/* Filters */}
       <div className="flex flex-wrap gap-2 mb-10">
-        {FILTERS.map(f => (
-          <button key={f.key} onClick={() => setFilter(f.key)}
+        {FILTERS.map(key => (
+          <button key={key} onClick={() => setFilter(key)}
             className="text-sm font-medium px-4 py-2 transition-all"
             style={{
-              border: filter === f.key ? 'none' : '1px solid #D6CCC3',
-              background: filter === f.key ? '#8B1E3F' : 'white',
-              color: filter === f.key ? '#fff' : '#5A4F49',
+              border: filter === key ? 'none' : '1px solid #D6CCC3',
+              background: filter === key ? '#8B1E3F' : 'white',
+              color: filter === key ? '#fff' : '#5A4F49',
             }}>
-            {f.label}
+            {key === 'all' ? t('filterAll') : t(`tags.${key}`)}
           </button>
         ))}
       </div>
@@ -85,7 +79,7 @@ export default function AktivnostiPage() {
         </div>
       ) : filtered.length === 0 ? (
         <div className="flex items-center justify-center py-20 bg-[#f5f2ef] border border-black/5">
-          <p className="text-sm text-[#a89888]">Nema stavki u ovoj kategoriji</p>
+          <p className="text-sm text-[#a89888]">{t('empty')}</p>
         </div>
       ) : (
         <>
@@ -103,16 +97,16 @@ export default function AktivnostiPage() {
                           <MapPin size={36} className="text-white/40" />
                         </div>
                     }
-                    <div className="absolute top-4 left-4 bg-[#faf5f5] px-2.5 py-1.5">
+                    <div className="absolute top-4 start-4 bg-[#faf5f5] px-2.5 py-1.5">
                       <span className="text-[#8b1e3f] uppercase" style={{ fontSize: 10, letterSpacing: '0.3px' }}>
-                        {TAG_LABELS[a.tag] ?? a.tag}
+                        {TAGS.includes(a.tag) ? t(`tags.${a.tag}`) : a.tag}
                       </span>
                     </div>
                   </div>
                   <div className="flex flex-col gap-2.5 px-6 py-7 flex-1">
                     <div className="flex items-center gap-1.5">
                       <Calendar size={10} style={{ color: '#8B1E3F' }} />
-                      <p className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{fmt(a.date)}</p>
+                      <p className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{formatShortDate(a.date, locale)}</p>
                     </div>
                     <p className="font-medium text-[#241f1d] leading-[1.12] line-clamp-2 group-hover:text-[#8b1e3f] transition-colors"
                       style={{ fontSize: 20, letterSpacing: '-0.6px' }}>
@@ -131,9 +125,9 @@ export default function AktivnostiPage() {
             <div className="flex flex-col items-center gap-2 mt-10">
               <button onClick={() => setVisible(v => v + PAGE)}
                 className="px-8 py-3 border border-[#D6CCC3] text-[#5a4f49] text-sm font-medium hover:border-[#8b1e3f] hover:text-[#8b1e3f] transition-colors">
-                Učitaj još ({filtered.length - visible} preostalih)
+                {t('loadMore', { count: filtered.length - visible })}
               </button>
-              <p className="text-xs text-[#a89888]">Prikazano {shown.length} od {filtered.length}</p>
+              <p className="text-xs text-[#a89888]">{t('shownOf', { shown: shown.length, total: filtered.length })}</p>
             </div>
           )}
         </>

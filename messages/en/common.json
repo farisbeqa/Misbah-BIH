@@ -1,0 +1,41 @@
+{
+  "meta": {
+    "title": "Misbah EDU | Education and spiritual growth",
+    "description": "Misbah EDU – a platform with Islamic lectures, khutbahs, Qur'an learning, ilahis and podcast content.",
+    "twitterTitle": "Misbah EDU – Islamic Lectures",
+    "keywords": [
+      "Misbah EDU",
+      "Misbah",
+      "Islamic lectures",
+      "khutbah",
+      "Hamdo Solo",
+      "hfz Hamdo Solo",
+      "hafiz Hamdo Solo",
+      "Carina Mosque",
+      "Sarajevo",
+      "Islamic content",
+      "Qur'an learning",
+      "ilahis",
+      "dhikrs",
+      "podcast",
+      "Islamic education",
+      "Bosnia",
+      "BiH",
+      "Islamic sciences"
+    ],
+    "logoAlt": "Misbah EDU logo",
+    "orgDescription": "Misbah EDU is an Islamic digital platform dedicated to spreading beneficial knowledge through lectures, khutbahs, Qur'an learning and other content.",
+    "siteDescription": "Islamic lectures, khutbahs, the Qur'an and content for Muslims in Bosnia and Herzegovina.",
+    "foundingLocation": "Sarajevo, Bosnia and Herzegovina",
+    "navigation": "Navigation",
+    "hamdoJob": "Imam, hafiz of the Qur'an",
+    "hamdoDescription": "Hfz. Hamdo Solo, imam of the Carina Mosque in Sarajevo, lecturer and hafiz of the Qur'an."
+  },
+  "notFound": {
+    "tag": "Error 404",
+    "title": "Page not found",
+    "text": "This page does not exist or has been removed.",
+    "back": "Back to home"
+  },
+  "machineTranslated": "This content has been translated automatically."
+}

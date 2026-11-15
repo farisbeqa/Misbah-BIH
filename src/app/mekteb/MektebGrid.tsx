@@ -1,7 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
+import { useTranslations } from 'next-intl'
+import Link, { useCurrentLocale } from '@/i18n/navigation'
+import { formatShortDate } from '@/i18n/format'
 import { BookOpen, Calendar } from 'lucide-react'
 
 interface MektebPost {
@@ -9,18 +11,14 @@ interface MektebPost {
   imageUrl: string | null; category: string; createdAt: Date | string
 }
 
-const CAT_LABELS: Record<string, string> = {
-  opste: 'Opšte', program: 'Plan i program', kviz: 'Kviz', materijali: 'Materijali',
-}
-const MONTHS = ['jan','feb','mar','apr','maj','jun','jul','aug','sep','okt','nov','dec']
-function fmt(d: Date | string) {
-  const dt = new Date(d)
-  return `${dt.getDate()}. ${MONTHS[dt.getMonth()]} ${dt.getFullYear()}.`
-}
+/** Categories with a label in blog.mektebCategories; any other value is shown as is */
+const CATEGORIES: readonly string[] = ['opste', 'program', 'kviz', 'materijali']
 
 const PAGE = 12
 
 export default function MektebGrid({ posts }: { posts: MektebPost[] }) {
+  const t = useTranslations('blog')
+  const locale = useCurrentLocale()
   const [visible, setVisible] = useState(PAGE)
   const shown = posts.slice(0, visible)
 
@@ -38,16 +36,16 @@ export default function MektebGrid({ posts }: { posts: MektebPost[] }) {
                       <BookOpen size={36} className="text-white/30" />
                     </div>
                 }
-                <div className="absolute top-4 left-4 bg-[#faf5f5] px-2.5 py-1.5">
+                <div className="absolute top-4 start-4 bg-[#faf5f5] px-2.5 py-1.5">
                   <span className="text-[#1D4ED8] uppercase" style={{ fontSize: 10, letterSpacing: '0.3px' }}>
-                    {CAT_LABELS[post.category] ?? post.category}
+                    {CATEGORIES.includes(post.category) ? t(`mektebCategories.${post.category}`) : post.category}
                   </span>
                 </div>
               </div>
               <div className="flex flex-col gap-2.5 px-6 py-7 flex-1">
                 <div className="flex items-center gap-1.5">
                   <Calendar size={10} style={{ color: '#8B1E3F' }} />
-                  <p className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{fmt(post.createdAt)}</p>
+                  <p className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{formatShortDate(post.createdAt, locale)}</p>
                 </div>
                 <p className="font-medium text-[#241f1d] leading-[1.12] line-clamp-2 group-hover:text-[#8b1e3f] transition-colors"
                   style={{ fontSize: 20, letterSpacing: '-0.6px' }}>
@@ -68,9 +66,9 @@ export default function MektebGrid({ posts }: { posts: MektebPost[] }) {
         <div className="flex flex-col items-center gap-2 mt-10">
           <button onClick={() => setVisible(v => v + PAGE)}
             className="px-8 py-3 border border-[#D6CCC3] text-[#5a4f49] text-sm font-medium hover:border-[#8b1e3f] hover:text-[#8b1e3f] transition-colors">
-            Učitaj još ({posts.length - visible} preostalih)
+            {t('list.loadMore', { count: posts.length - visible })}
           </button>
-          <p className="text-xs text-[#a89888]">Prikazano {shown.length} od {posts.length}</p>
+          <p className="text-xs text-[#a89888]">{t('list.shown', { shown: shown.length, total: posts.length })}</p>
         </div>
       )}
     </>

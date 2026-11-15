@@ -1,0 +1,41 @@
+{
+  "meta": {
+    "title": "Misbah EDU | Eğitim ve manevi gelişim",
+    "description": "Misbah EDU – İslami dersler, hutbeler, Kur'an öğrenimi, ilahiler ve podcast içerikleri sunan platform.",
+    "twitterTitle": "Misbah EDU – İslami dersler",
+    "keywords": [
+      "Misbah EDU",
+      "Misbah",
+      "İslami dersler",
+      "hutbe",
+      "Hamdo Solo",
+      "hfz Hamdo Solo",
+      "hafız Hamdo Solo",
+      "Carina Camii",
+      "Saraybosna",
+      "İslami içerik",
+      "Kur'an öğrenimi",
+      "ilahiler",
+      "zikirler",
+      "podcast",
+      "İslami eğitim",
+      "Bosna",
+      "Bosna-Hersek",
+      "İslami ilimler"
+    ],
+    "logoAlt": "Misbah EDU logosu",
+    "orgDescription": "Misbah EDU, dersler, hutbeler, Kur'an öğrenimi ve diğer içerikler aracılığıyla faydalı ilmin yayılmasına adanmış İslami bir dijital platformdur.",
+    "siteDescription": "Bosna-Hersek'teki Müslümanlar için İslami dersler, hutbeler, Kur'an ve içerikler.",
+    "foundingLocation": "Saraybosna, Bosna-Hersek",
+    "navigation": "Gezinme",
+    "hamdoJob": "İmam, Kur'an hafızı",
+    "hamdoDescription": "Hfz. Hamdo Solo, Saraybosna'daki Carina Camii imamı, eğitmen ve Kur'an hafızı."
+  },
+  "notFound": {
+    "tag": "Hata 404",
+    "title": "Sayfa bulunamadı",
+    "text": "Bu sayfa mevcut değil veya kaldırılmış.",
+    "back": "Ana sayfaya dön"
+  },
+  "machineTranslated": "Bu içerik otomatik olarak çevrilmiştir."
+}

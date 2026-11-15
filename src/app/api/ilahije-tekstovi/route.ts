@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
+import { queueTranslation } from '@/lib/translations'
 
 export const dynamic = 'force-dynamic'
 
@@ -24,6 +25,7 @@ export async function POST(req: Request) {
   const item = await prisma.ilahijaText.create({
     data: { title: title.trim(), content: content.trim(), author: author?.trim() || null, audioUrl: audioUrl?.trim() || null, published: published ?? true },
   })
+  await queueTranslation('ilahija', item.id)
   revalidatePath('/ilahije/tekstovi')
   return NextResponse.json(item, { status: 201 })
 }

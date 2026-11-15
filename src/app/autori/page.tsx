@@ -1,28 +1,34 @@
-import Link from 'next/link'
+import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
+import Link from '@/i18n/navigation'
 import { getAllAuthors } from '@/lib/authorContent'
 import { BIOS } from '@/lib/bios'
 
 // Rendered per request: the database is reachable at runtime, not during the build
 export const dynamic = 'force-dynamic'
-export const metadata = {
-  title: 'Autori',
-  description: 'Svi autori predavanja, hutbi i tekstova na platformi Misbah EDU.',
-  alternates: { canonical: '/autori' },
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('about.authors.meta')
+  return {
+    title: t('title'),
+    description: t('description'),
+  }
 }
 
 export default async function AutoriPage() {
+  const t = await getTranslations('about.authors')
   const authors = await getAllAuthors().catch(() => [])
 
   return (
     <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-12 sm:py-16">
       <div className="mb-12">
-        <p className="font-medium text-[#8b1e3f] text-base mb-2">AUTORI</p>
+        <p className="font-medium text-[#8b1e3f] text-base mb-2">{t('tag')}</p>
         <h1 className="font-semibold text-[#141110] mb-3"
           style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}>
-          Autori sadržaja
+          {t('title')}
         </h1>
         <p className="font-normal text-[#746860]" style={{ fontSize: 18 }}>
-          Odaberite autora i pogledajte sva njegova predavanja, hutbe i tekstove na jednom mjestu.
+          {t('text')}
         </p>
       </div>
 
@@ -41,7 +47,7 @@ export default async function AutoriPage() {
               }
               <div className="min-w-0">
                 <p className="font-semibold text-[#241f1d] truncate group-hover:text-[#8b1e3f] transition-colors">{a.name}</p>
-                <p className="text-sm text-[#746860]">{a.count} {a.count === 1 ? 'objava' : a.count < 5 ? 'objave' : 'objava'}</p>
+                <p className="text-sm text-[#746860]">{t('posts', { count: a.count })}</p>
               </div>
             </Link>
           )

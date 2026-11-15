@@ -1,0 +1,74 @@
+{
+  "list": {
+    "searchByTitle": "Nach Titel suchen...",
+    "searchByTitleOrAuthor": "Nach Titel oder Autor suchen...",
+    "noResults": "Keine Ergebnisse für \"{query}\"",
+    "loadMore": "Mehr laden ({count, plural, one {# verbleibend} other {# verbleibend}})",
+    "shown": "{shown} von {total} angezeigt"
+  },
+  "categories": {
+    "all": "Alle",
+    "hutbe": "Chutben",
+    "aktuelneTeme": "Aktuelle Themen",
+    "duhovnost": "Spiritualität",
+    "tefsirKuran": "Tafsir und Koran",
+    "sira": "Sira",
+    "fikh": "Fiqh",
+    "savjeti": "Ratschläge",
+    "odgoj": "Erziehung und Familie"
+  },
+  "blogPage": {
+    "meta": {
+      "title": "Blog",
+      "description": "Islamische Texte, Chutben und Ratschläge für den muslimischen Alltag — kurze und nützliche Texte für Gläubige."
+    },
+    "tag": "REFLEXIONEN",
+    "title": "Blog",
+    "subtitle": "Kurze und nützliche Texte für den Alltag der Gläubigen.",
+    "empty": "Noch keine Blogbeiträge"
+  },
+  "blogPost": {
+    "notFound": "Beitrag nicht gefunden",
+    "back": "Zurück zum Blog",
+    "hamdoRole": "Imam der Carina-Moschee · Sarajevo",
+    "allPosts": "Alle Beiträge"
+  },
+  "storiesPage": {
+    "meta": {
+      "title": "Lehrreiche Geschichten",
+      "description": "Lehrreiche Geschichten aus der islamischen Tradition, die das Herz wecken, Hoffnung schenken und an die wahren Werte erinnern."
+    },
+    "tag": "ISLAMISCHE GESCHICHTEN",
+    "title": "Lehrreiche Geschichten",
+    "subtitle": "Geschichten aus der islamischen Tradition, die das Herz wecken, Hoffnung schenken und mahnen, indem sie an die wahren Werte des Lebens erinnern.",
+    "empty": "Noch keine Geschichten"
+  },
+  "story": {
+    "notFound": "Geschichte nicht gefunden",
+    "back": "Lehrreiche Geschichten",
+    "kicker": "Lehrreiche Geschichte · {date}",
+    "allStories": "Alle Geschichten"
+  },
+  "mektebPage": {
+    "meta": {
+      "description": "Mekteb-Pläne und -Programme, Quizze und Unterrichtsmaterialien für den islamischen Religionsunterricht — Hilfe für Lehrer und Schüler."
+    },
+    "tag": "ISLAMISCHE BILDUNG",
+    "subtitle": "Pläne, Programme, Quizze und Materialien für den Mekteb-Unterricht.",
+    "empty": "Noch keine Inhalte"
+  },
+  "mektebCategories": {
+    "opste": "Allgemein",
+    "program": "Plan und Programm",
+    "kviz": "Quiz",
+    "materijali": "Materialien"
+  },
+  "mektebPost": {
+    "allPosts": "Alle Inhalte"
+  },
+  "moreFromAuthor": {
+    "label": "Autor",
+    "seeMore": "Mehr von diesem Autor ansehen",
+    "seeMoreShort": "Mehr ansehen"
+  }
+}

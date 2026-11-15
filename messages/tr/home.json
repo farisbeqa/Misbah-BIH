@@ -1,0 +1,66 @@
+{
+  "hero": {
+    "title": "Kalbi aydınlatan ve aklı nurlandıran ilmin ışığı.",
+    "text": "Hayata ışık getiren, insanı Allah'a yaklaştıran, kalbi sakinleştiren, iyiliğe teşvik eden ve her gün ilham veren mesajlar ve düşüncelerle dolu gençlik içerikleri.",
+    "explore": "İçerikleri keşfet",
+    "authors": "Yazarlar"
+  },
+  "benefits": {
+    "tag": "ÜZERİNDE DURDUĞUMUZ KONULAR",
+    "title": "İz bırakan ilim",
+    "text": "Maneviyattan ve ibadetten aileye ve eğitime, çağdaş toplumun sorunlarına kadar — Misbah, gençleri dini anlamalarına ve onun değerlerini günlük hayatta yaşamalarına yardımcı olan içeriklerle bir araya getirir.",
+    "spirituality": {
+      "title": "Maneviyat",
+      "description": "İlim, ibadet ve samimi nefis muhasebesi yoluyla Allah ile bağı güçlendirmek."
+    },
+    "family": {
+      "title": "Aile",
+      "description": "Daha sağlıklı ilişkiler, daha güçlü evlilikler ve çocuk eğitimi üzerine konular."
+    },
+    "society": {
+      "title": "Toplum",
+      "description": "Topluluğumuzu ve günlük hayatımızı şekillendiren meseleler üzerine tefekkürler."
+    },
+    "character": {
+      "title": "Karakter",
+      "description": "Güçlü, sorumlu ve dolu dolu bir hayatı şekillendiren değerleri ve alışkanlıkları geliştirin."
+    }
+  },
+  "team": {
+    "tag": "İÇERİĞİN ARKASINDAKİ İNSANLAR",
+    "title": "İlham veren sesler",
+    "text": "Misbah'taki içerikler; bilgi ve tecrübeleriyle faydalı ilmin yayılması yönündeki ortak misyona katkıda bulunan hocaların, profesörlerin, hafızların ve uzmanların iş birliğiyle ortaya çıkar."
+  },
+  "verse": {
+    "text": "De ki: Rabbim, ilmimi artır.",
+    "source": "Kur'an 20:114"
+  },
+  "lectures": {
+    "tag": "EN YENİ İÇERİKLER",
+    "title": "Dersler",
+    "text": "İslami ilmi, günlük hayatın soruları ve sorunlarıyla buluşturan içerikler.",
+    "cta": "Tüm dersleri izle",
+    "empty": "Henüz ders yok"
+  },
+  "quran": {
+    "tag": "KUR'AN İLİMLERİ",
+    "title": "Kur'an",
+    "text": "Kur'an-ı Kerim'den seçilmiş bölümler ve sûrelerin tamamı.",
+    "cta": "Kur'an içeriklerini keşfet",
+    "empty": "Henüz Kur'an içeriği yok"
+  },
+  "podcast": {
+    "tag": "SOHBETLER",
+    "title": "Podcast",
+    "text": "Hocalarla, uzmanlarla ve konuklarla din, toplum, eğitim ve günlük hayatımızı şekillendiren konular üzerine sohbetler.",
+    "cta": "Bölümleri dinle",
+    "empty": "Henüz podcast bölümü yok"
+  },
+  "blog": {
+    "tag": "TEFEKKÜRLER",
+    "title": "Blog",
+    "text": "İman, ilim, aile ve çağdaş insanın sorunları üzerine yazılar, değerlendirmeler ve düşünceler.",
+    "cta": "Tüm yazıları oku",
+    "empty": "Henüz blog yazısı yok"
+  }
+}

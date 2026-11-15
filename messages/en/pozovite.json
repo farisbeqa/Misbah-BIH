@@ -1,0 +1,296 @@
+{
+  "meta": {
+    "title": "Invite Us — Misbah EDU",
+    "pageTitle": "{page} — Invite Us — Misbah EDU",
+    "description": "Misbah EDU: lectures, the Misbah Choir and youth gatherings. Choose a program and invite us to your jamaat, school or community."
+  },
+  "sections": {
+    "breadcrumbs": "Breadcrumbs",
+    "home": "Invite Us",
+    "lectures": "Lectures",
+    "choir": "Choir",
+    "gatherings": "Youth gatherings",
+    "inquiry": "Inquiry"
+  },
+  "actions": {
+    "sendInquiry": "Send an inquiry",
+    "invite": "Invite: {name}"
+  },
+  "invite": {
+    "tag": "INVITE US",
+    "title": "Bring Misbah to your community",
+    "text": "Write to us with the date, place and type of program, and we will agree on the details together."
+  },
+  "home": {
+    "hero": {
+      "tag": "Invite Us · Youth initiative · Sarajevo · since 2022",
+      "title": "The light of knowledge, live in your community",
+      "text": "Young hafizes, imams and lecturers. Choose what you would like to host, and we will come to your jamaat, school or event."
+    },
+    "offer": {
+      "tag": "WHAT WE OFFER",
+      "title": "Choose what you would like to host",
+      "text": "Lectures for men, women and the whole jamaat, the Misbah Choir and youth gatherings with lectures, workshops and quizzes.",
+      "lectures": {
+        "tag": "For men · for women · for the jamaat",
+        "title": "Lectures",
+        "text": "Choose the audience, the lecturer and the type of program: a lecture, a training, a workshop or a multi-day training.",
+        "cta": "Choose a lecture"
+      },
+      "choir": {
+        "tag": "Men's · women's · mixed",
+        "title": "Choir",
+        "text": "Ilahis and qasidas with daffs for mosque openings, mawlids, iftars and celebrations.",
+        "cta": "Choose a choir"
+      },
+      "gatherings": {
+        "tag": "Lectures · workshops · quizzes",
+        "title": "Youth gatherings",
+        "text": "Educational lectures, interactive workshops and knowledge quizzes for young people.",
+        "cta": "Learn more"
+      }
+    },
+    "stats": {
+      "videos": "{count, plural, one {video on YouTube} other {videos on YouTube}}",
+      "views": "{count, plural, one {view} other {views}}",
+      "circles": "{count, plural, one {weekly halaqa} other {weekly halaqas}}",
+      "authors": "{count, plural, one {author and lecturer} other {authors and lecturers}}"
+    }
+  },
+  "lectures": {
+    "tag": "LECTURES",
+    "title": "Who are we preparing the program for?",
+    "text": "Choose the audience. Then you choose the lecturer and the type of program.",
+    "lecturers": "{count, plural, one {# lecturer} other {# lecturers}}",
+    "femaleLecturers": "{count, plural, one {# female lecturer} other {# female lecturers}}"
+  },
+  "lecturers": {
+    "pageTitle": "Lectures · {audience}",
+    "tag": "LECTURES · {audience}",
+    "title": "Choose a lecturer",
+    "text": "{description} On the lecturer's profile you choose the type of program and send an inquiry.",
+    "videos": "{count, plural, one {# video} other {# videos}}"
+  },
+  "profile": {
+    "allContent": "All content on Misbah",
+    "recordings": {
+      "tag": "RECORDINGS",
+      "title": "Watch the lectures"
+    }
+  },
+  "soon": {
+    "title": "Recordings coming soon",
+    "text": "We will add recordings soon. Until then, get in touch and we will send you examples of performances.",
+    "cta": "Ask us"
+  },
+  "choir": {
+    "pageTitle": "Misbah Choir",
+    "tag": "MISBAH CHOIR",
+    "title": "Choose a choir",
+    "text": "We perform at mosque openings, mawlids, iftars and celebrations.",
+    "recordings": "{count, plural, one {# recording} other {# recordings}}",
+    "groups": {
+      "muski": {
+        "title": "Men's choir",
+        "description": "Ilahis and qasidas with daffs: mosque openings, mawlids, iftars and celebrations."
+      },
+      "zenski": {
+        "title": "Women's choir",
+        "description": "Ilahis for women's programs, mawlids, mekteb performances and celebrations."
+      },
+      "mijesani": {
+        "title": "Mixed choir",
+        "description": "Joint performances for family and festive programs of the jamaat."
+      },
+      "vecer": {
+        "title": "Night of the Qur'an",
+        "description": "Qur'an recitation with translation and ilahis: evenings for the jamaat, Ramadan programs and special occasions."
+      }
+    }
+  },
+  "gatherings": {
+    "tag": "YOUTH GATHERINGS",
+    "title": "Join us",
+    "text": "What does Misbah offer to young people?",
+    "cta": "Organize a gathering with us",
+    "choice": "Youth gathering",
+    "offer": {
+      "lectures": {
+        "title": "Educational lectures",
+        "description": "We open important topics of faith and everyday life, bringing Islamic values closer to young people in a modern way that is close to them."
+      },
+      "workshops": {
+        "title": "Interactive workshops",
+        "description": "Through creative tasks, conversation and teamwork, we encourage active participation, the exchange of ideas and the development of new skills."
+      },
+      "quizzes": {
+        "title": "Knowledge quizzes",
+        "description": "Through fun, team competition and socializing, we encourage young people to broaden their knowledge of Islam, Islamic history and general culture."
+      }
+    },
+    "photos": {
+      "youthLecture": "Young people at a lecture in the Istiklal Mosque",
+      "spousesLecture": "{mubina} and {hamdo} at the lecture „The Role of Spouses in Islam”",
+      "youthInMosque": "Young people at a lecture in the mosque",
+      "youthIftar": "Youth iftar"
+    },
+    "recordings": {
+      "tag": "RECORDINGS",
+      "title": "From our gatherings"
+    }
+  },
+  "contact": {
+    "stayConnected": "Stay connected",
+    "location": "Sarajevo, Bosnia and Herzegovina"
+  },
+  "audiences": {
+    "muskarci": {
+      "title": "For men",
+      "description": "Lectures and halaqas for male members of the jamaat, youth and students."
+    },
+    "zene": {
+      "title": "For women",
+      "description": "Lectures, trainings and workshops for women and girls."
+    },
+    "dzemat": {
+      "title": "For the jamaat",
+      "description": "For the whole jamaat and families: talks, nights of the Qur'an, mawlids."
+    }
+  },
+  "formats": {
+    "predavanje": {
+      "title": "Lecture",
+      "description": "A single lecture or talk, with questions from the audience."
+    },
+    "edukacija": {
+      "title": "Training",
+      "description": "A thematic cycle of several sessions, e.g. weekly."
+    },
+    "radionica": {
+      "title": "Workshop",
+      "description": "Work in a smaller group, through conversation and tasks."
+    },
+    "visednevna": {
+      "title": "Multi-day training",
+      "description": "An intensive program over a weekend or several days."
+    }
+  },
+  "people": {
+    "hamdo": {
+      "role": "Tafsir",
+      "bio": "Teaching associate for qira'at at the Faculty of Islamic Studies and a doctoral student. Leads the tafsir halaqa on Thursdays in the Carina jamaat.",
+      "topics": [
+        "Tafsir of short surahs",
+        "Marriage and family"
+      ]
+    },
+    "hamza": {
+      "role": "Seerah and ethics",
+      "bio": "The life of the Prophet ﷺ and lessons for today. Leads the seerah halaqa on Mondays after Maghrib in the Bjelave jamaat.",
+      "topics": [
+        "Seerah of the Prophet ﷺ",
+        "Patience (sabr) and serenity",
+        "Iman (faith)"
+      ]
+    },
+    "mubina": {
+      "role": "Fiqh · Hafiza of the Qur'an",
+      "bio": "Assistant at the Department of Shariah Law (Fiqh) at the Faculty of Islamic Studies and hafiza of the Qur'an. Speaks about worship, family and the questions faced by the contemporary Muslim woman.",
+      "topics": [
+        "Fiqh for women",
+        "Prayer and worship",
+        "The character of the Prophet ﷺ",
+        "Ramadan"
+      ]
+    }
+  },
+  "videoTitles": {
+    "inshirah": "Surah al-Inshirah: After Hardship Comes Ease",
+    "zilzal": "What Does Surah az-Zalzalah Tell Us About the Day of Judgment?",
+    "nas": "Surah an-Nas: Protection from Evil Thoughts and the Whisperings of Shaytan",
+    "tin": "Surah at-Tin: Why Did Allah Mention the Fig and the Olive?",
+    "duha": "Surah ad-Duha: A Message for Moments When You Are Struggling",
+    "adiyat": "Surah al-Adiyat: The Surah We Know the Least About?",
+    "prophetInQuran": "Dimensions of Islam: The Prophet Muhammad ﷺ in the Qur'an",
+    "calmInAnxiousTimes": "Serenity in Anxious Times",
+    "sabrChangesTheHeart": "How Sabr Changes the Heart",
+    "blessingOfRememberingTheProphet": "The Blessing in Remembering the Prophet ﷺ",
+    "trueBeliever": "What Does It Mean to Be a True Believer?",
+    "marriageThatChangedHistory": "The Marriage That Changed History (Seerah, Part 7)",
+    "prophetsMercy": "The Mercy of Muhammad ﷺ",
+    "prophetsEmotionalIntelligence": "The Emotional Intelligence of Muhammad ﷺ",
+    "isIslamFairToWomen": "Is Islam Fair to Women?",
+    "gratitudeThroughPrayer": "Gratitude Through Prayer",
+    "easeAfterHardship": "After Trial Comes Ease",
+    "fastingAndRelationships": "How Fasting Affects Interpersonal Relationships",
+    "ilahijeCollage": "Ilahi Collage",
+    "performanceInSwitzerland": "Performance in Switzerland",
+    "ilahijaByCandlelight": "Ilahi by Candlelight",
+    "mosqueOpeningMaljevac": "Mosque Opening in Maljevac",
+    "youthIftarZagreb": "Youth Iftar in Zagreb",
+    "youthIftarZagrebStudio": "Youth Iftar in Zagreb (studio sound)",
+    "fullPerformanceMaljevac": "Full Performance in Maljevac",
+    "fullPerformanceZagreb": "Full Performance in Zagreb",
+    "ilahijaAtGathering": "Ilahi at a Gathering",
+    "ilahijaInMosque": "Ilahi in the Mosque",
+    "performanceInMosque": "Performance in the Mosque",
+    "quranRecitation": "Qur'an Recitation",
+    "quranRecitationInDzemat": "Qur'an Recitation in the Jamaat",
+    "suraIbrahim": "Surah Ibrahim (23–27)",
+    "suraFussilat": "Surah Fussilat (30–33)",
+    "suraIsra": "Surah al-Isra (11–12)",
+    "mukabelaJuz13": "Mukabala, 13th Juz",
+    "hijriNewYearCarina": "Hijri New Year in the Carina Jamaat"
+  },
+  "videoGrid": {
+    "views": "{count, plural, one {# view} other {# views}}",
+    "badges": {
+      "short": "Short",
+      "clip": "Clip"
+    }
+  },
+  "player": {
+    "close": "Close"
+  },
+  "heroVideo": {
+    "mute": "Mute",
+    "unmute": "Unmute"
+  },
+  "programPicker": {
+    "label": "Type of program",
+    "title": "What would you like to organize?"
+  },
+  "quickContact": {
+    "copy": "Copy",
+    "addressCopied": "Address copied",
+    "copyAddressManually": "Copy the address manually",
+    "viberCopied": "The message has been copied; if it does not appear in Viber, paste it"
+  },
+  "form": {
+    "title": "Performance inquiry",
+    "yourChoice": "Your choice: <b>{choice}</b>",
+    "change": "change",
+    "organizer": "Organizer",
+    "organizerPlaceholder": "e.g. Bjelave Jamaat",
+    "place": "Place",
+    "placePlaceholder": "City, venue",
+    "date": "Date",
+    "datePlaceholder": "e.g. 20 December or by arrangement",
+    "category": "Category",
+    "categories": {
+      "predavanja": "Lectures",
+      "hor": "Choir",
+      "druzenja": "Youth gatherings"
+    },
+    "note": "Note",
+    "notePlaceholder": "Occasion, duration, number of people, contact phone…",
+    "prepare": "Prepare message",
+    "sendWhatsApp": "Send on WhatsApp",
+    "copyMessage": "Copy message",
+    "openEmail": "Open in email",
+    "viberCopied": "The message has been copied; paste it into Viber",
+    "messageCopied": "Message copied",
+    "copyManually": "Select the message and copy it",
+    "hint": "WhatsApp opens a message ready to send. Viber also fills in the message, and just in case we copy it as well. Number: {phone}, email: {email}."
+  }
+}

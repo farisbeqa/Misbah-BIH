@@ -1,0 +1,21 @@
+{
+  "types": {
+    "ajet": "Qur'anic verse",
+    "hadis": "Hadith",
+    "izreka": "Thought of the day"
+  },
+  "section": {
+    "tag": "REMINDER",
+    "title": "Thought of the day",
+    "text": "Thoughts from the Qur'an, hadith and the Islamic tradition that encourage reflection and action.",
+    "previous": "Previous thought",
+    "next": "Next thought"
+  },
+  "popup": {
+    "defaultLabel": "Thought of the day",
+    "close": "Close"
+  },
+  "carousel": {
+    "page": "Page {page}"
+  }
+}

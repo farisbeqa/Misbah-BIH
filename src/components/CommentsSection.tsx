@@ -1,18 +1,25 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 import { MessageCircle, Loader2, Trash2, Send, Flag } from 'lucide-react'
-import AuthModal from './AuthModal'
+import { useCurrentLocale } from '@/i18n/navigation'
+import { formatDateIntl } from '@/i18n/format'
+import type { Locale } from '@/i18n/config'
+import AuthModal, { apiErrorText } from './AuthModal'
 
 interface Comment { id: number; content: string; createdAt: string; user: { username: string }; userId: number }
 interface AuthUser { id: number; username: string }
 interface Props { targetType: 'video' | 'blog'; targetId: number }
 
-function fmt(d: string) {
-  return new Date(d).toLocaleDateString('bs-BA', { day: 'numeric', month: 'short', year: 'numeric' })
+function fmt(d: string, locale: Locale) {
+  return formatDateIntl(d, locale, { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
+// Comments are written by users and are shown as written (never translated)
 export default function CommentsSection({ targetType, targetId }: Props) {
+  const t = useTranslations('auth')
+  const locale = useCurrentLocale()
   const [comments, setComments] = useState<Comment[]>([])
   const [user, setUser] = useState<AuthUser | null>(null)
   const [draft, setDraft] = useState('')
@@ -39,13 +46,13 @@ export default function CommentsSection({ targetType, targetId }: Props) {
       const res = await fetch(ep, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ content: draft.trim() }) })
       const data = await res.json()
       if (res.ok) { setComments(p => [data, ...p]); setDraft('') }
-      else setError(data.error || 'Greška')
-    } catch { setError('Greška') }
+      else setError(apiErrorText(t, data))
+    } catch { setError(t('errors.generic')) }
     finally { setSubmitting(false) }
   }
 
   const handleReport = async (commentId: number) => {
-    if (!confirm('Prijaviti ovaj komentar kao neprimjeren? Redakcija će ga pregledati.')) return
+    if (!confirm(t('comments.reportConfirm'))) return
     try {
       await fetch('/api/comments/report', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ commentId }) })
     } finally {
@@ -68,7 +75,7 @@ export default function CommentsSection({ targetType, targetId }: Props) {
         <div className="flex items-center gap-2 mb-6">
           <MessageCircle size={16} className="text-warm-400" />
           <h3 className="font-bold text-warm-800 text-base">
-            Komentari{' '}
+            {t('comments.title')}{' '}
             {!loading && <span className="font-mono text-[11px] text-warm-400 font-normal">({comments.length})</span>}
           </h3>
         </div>
@@ -83,17 +90,17 @@ export default function CommentsSection({ targetType, targetId }: Props) {
               <div className="flex-1">
                 <textarea value={draft} onChange={e => setDraft(e.target.value)}
                   onKeyDown={e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) handleSubmit(e) }}
-                  placeholder="Napiši komentar..." rows={3}
+                  placeholder={t('comments.placeholder')} rows={3}
                   className="w-full px-4 py-3 text-sm text-warm-900 resize-none outline-none transition-all focus:ring-2 focus:ring-brand/15 focus:border-brand"
                   style={{ background: '#FAF7F2', border: '1px solid #E8E1DB', borderRadius: 8 }} />
                 {error && <p className="font-mono text-[11px] text-red-600 mt-1">{error}</p>}
                 <div className="flex items-center justify-between mt-2">
-                  <p className="font-mono text-[10px] text-warm-400">Ctrl+Enter za slanje</p>
+                  <p className="font-mono text-[10px] text-warm-400">{t('comments.shortcutHint')}</p>
                   <button type="submit" disabled={submitting || !draft.trim()}
                     className="flex items-center gap-1.5 text-white text-xs font-semibold px-4 py-1.5 transition-colors disabled:opacity-40"
                     style={{ background: '#8B1E3F', borderRadius: 6 }}>
-                    {submitting ? <Loader2 size={11} className="animate-spin" /> : <Send size={11} />}
-                    Objavi
+                    {submitting ? <Loader2 size={11} className="animate-spin" /> : <Send size={11} className="flip-rtl" />}
+                    {t('comments.submit')}
                   </button>
                 </div>
               </div>
@@ -102,12 +109,16 @@ export default function CommentsSection({ targetType, targetId }: Props) {
         ) : (
           <div className="text-sm text-warm-500 text-center py-5 mb-6 font-mono text-[12px]"
             style={{ background: '#FAF7F2', border: '1px solid #E8E1DB', borderRadius: 8 }}>
-            <button onClick={() => { setModalMode('login'); setModalOpen(true) }}
-              className="text-brand hover:text-brand-light transition-colors font-semibold">Prijavi se</button>
-            {' '}ili{' '}
-            <button onClick={() => { setModalMode('register'); setModalOpen(true) }}
-              className="text-brand hover:text-brand-light transition-colors font-semibold">registruj se</button>
-            {' '}da komentarišeš
+            {t.rich('comments.loginPrompt', {
+              login: chunks => (
+                <button onClick={() => { setModalMode('login'); setModalOpen(true) }}
+                  className="text-brand hover:text-brand-light transition-colors font-semibold">{chunks}</button>
+              ),
+              register: chunks => (
+                <button onClick={() => { setModalMode('register'); setModalOpen(true) }}
+                  className="text-brand hover:text-brand-light transition-colors font-semibold">{chunks}</button>
+              ),
+            })}
           </div>
         )}
 
@@ -115,7 +126,7 @@ export default function CommentsSection({ targetType, targetId }: Props) {
         {loading ? (
           <div className="flex justify-center py-8"><Loader2 size={20} className="animate-spin text-warm-300" /></div>
         ) : comments.length === 0 ? (
-          <p className="font-mono text-[11px] text-warm-400 text-center py-8">Nema komentara. Budi prvi!</p>
+          <p className="font-mono text-[11px] text-warm-400 text-center py-8">{t('comments.empty')}</p>
         ) : (
           <div className="space-y-5">
             {comments.map(c => (
@@ -126,15 +137,15 @@ export default function CommentsSection({ targetType, targetId }: Props) {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="font-bold text-warm-800 text-sm">{c.user.username}</span>
-                    <time className="font-mono text-[10px] text-warm-400">{fmt(c.createdAt)}</time>
+                    <time className="font-mono text-[10px] text-warm-400">{fmt(c.createdAt, locale)}</time>
                   </div>
                   <p className="text-warm-600 text-sm leading-relaxed break-words">{c.content}</p>
                 </div>
                 {user?.id !== c.userId && (
                   reported.includes(c.id) ? (
-                    <span className="font-mono text-[10px] text-warm-400 flex-shrink-0 p-2">Prijavljeno</span>
+                    <span className="font-mono text-[10px] text-warm-400 flex-shrink-0 p-2">{t('comments.reported')}</span>
                   ) : (
-                    <button onClick={() => handleReport(c.id)} title="Prijavi komentar"
+                    <button onClick={() => handleReport(c.id)} title={t('comments.report')}
                       className="sm:opacity-0 sm:group-hover:opacity-100 text-warm-300 hover:text-red-400 transition-all flex-shrink-0 p-2">
                       <Flag size={12} />
                     </button>

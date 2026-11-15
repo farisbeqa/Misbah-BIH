@@ -7,10 +7,10 @@ export async function POST(request: NextRequest) {
   try {
     const { commentId, reason } = await request.json()
     const id = Number(commentId)
-    if (!Number.isInteger(id)) return NextResponse.json({ error: 'Neispravan komentar' }, { status: 400 })
+    if (!Number.isInteger(id)) return NextResponse.json({ error: 'Neispravan komentar', code: 'invalidComment' }, { status: 400 })
 
     const comment = await prisma.comment.findUnique({ where: { id }, select: { id: true } })
-    if (!comment) return NextResponse.json({ error: 'Komentar nije pronađen' }, { status: 404 })
+    if (!comment) return NextResponse.json({ error: 'Komentar nije pronađen', code: 'commentNotFound' }, { status: 404 })
 
     const user = await getRequestUser(request)
     await prisma.commentReport.create({
@@ -22,6 +22,6 @@ export async function POST(request: NextRequest) {
     })
     return NextResponse.json({ success: true }, { status: 201 })
   } catch {
-    return NextResponse.json({ error: 'Greška servera' }, { status: 500 })
+    return NextResponse.json({ error: 'Greška servera', code: 'serverError' }, { status: 500 })
   }
 }

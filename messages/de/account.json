@@ -1,0 +1,29 @@
+{
+  "deleteAccount": {
+    "meta": {
+      "title": "Konto löschen",
+      "description": "Dauerhaftes Löschen des Benutzerkontos bei Misbah EDU (Website und mobile App)."
+    },
+    "tag": "Konto",
+    "title": "Konto löschen",
+    "whatIsDeleted": "Hier können Sie Ihr Misbah-EDU-Konto dauerhaft löschen — dasselbe Konto wird auf der Website und in der mobilen App verwendet. Durch das Löschen werden <b>Benutzername, Passwort, alle Ihre Kommentare und Likes</b> dauerhaft entfernt. Diese Aktion kann nicht rückgängig gemacht werden.",
+    "inApp": "In der mobilen App können Sie das Konto auch im Menü <b>Više → Obriši nalog</b> (Mehr → Konto löschen) löschen. Nur auf dem Telefon gespeicherte Daten (gespeicherte Inhalte, Einstellungen) werden durch die Deinstallation der App gelöscht.",
+    "cannotLogIn": "Sie können sich nicht anmelden? Schreiben Sie uns an <mail>{email}</mail> unter Angabe Ihres Benutzernamens, und wir löschen das Konto innerhalb von 7 Tagen. Mehr zu den Daten in der <privacyLink>Datenschutzerklärung</privacyLink>.",
+    "mailSubject": "Konto löschen",
+    "form": {
+      "username": "Benutzername",
+      "password": "Passwort",
+      "confirm": "Ich verstehe, dass Konto, Kommentare und Likes dauerhaft gelöscht werden.",
+      "submit": "Konto dauerhaft löschen",
+      "done": "Ihr Konto und alle zugehörigen Daten wurden dauerhaft gelöscht.",
+      "errors": {
+        "notConfirmed": "Bestätigen Sie, dass Sie das Konto dauerhaft löschen möchten.",
+        "deleteFailed": "Fehler beim Löschen des Kontos",
+        "connection": "Verbindungsfehler",
+        "missingCredentials": "Benutzername und Passwort sind erforderlich",
+        "wrongCredentials": "Falscher Benutzername oder falsches Passwort",
+        "server": "Serverfehler"
+      }
+    }
+  }
+}

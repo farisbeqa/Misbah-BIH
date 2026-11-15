@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "longLectures": {
+      "title": "Duga predavanja",
+      "description": "Opširna islamska predavanja o temama vjere, ahlaka, historije i duhovnog razvoja — za dublje razumijevanje islama."
+    },
+    "shortLectures": {
+      "title": "Kratka predavanja",
+      "description": "Kratka i koncizna islamska predavanja idealna za svakodnevno učenje, podsjećanje i jačanje imana."
+    },
+    "quran": {
+      "title": "Kur'an",
+      "description": "Učite i slušajte Kur'an uz pažljivo odabrane tilawete, kiraete i tumačenja kur'anskih ajeta."
+    },
+    "podcast": {
+      "title": "Podcast",
+      "description": "Islamski podcast — razgovori o vjeri, znanju i svakodnevnom životu muslimana. Slušajte gdje god se nalazite."
+    },
+    "ilahije": {
+      "title": "Ilahije – Izvedba",
+      "description": "Ilahije, kaside i duhovna muzika — video i audio izvedbe koje bude ljubav prema Allahu i Poslaniku ﷺ."
+    },
+    "zikrovi": {
+      "title": "Zikrovi i Dove",
+      "description": "Zikrovi s tekstom i audiom za svakodnevno učenje — jutarnji i večernji zikrovi, dove i Allahova imena."
+    }
+  },
+  "list": {
+    "searchPlaceholder": "Pretraži po naslovu...",
+    "noResults": "Nema rezultata za \"{query}\"",
+    "loadMore": "{remaining, plural, one {Učitaj još (# preostalih)} few {Učitaj još (# preostalih)} other {Učitaj još (# preostalih)}}",
+    "shownOf": "Prikazano {shown} od {total}"
+  },
+  "topics": {
+    "all": "Sve",
+    "tefsir": "Tefsir",
+    "hadis": "Hadis",
+    "sira": "Sira",
+    "opste": "Opšte teme",
+    "akaid": "Akaid",
+    "fikh": "Fikh",
+    "duhovnost": "Duhovnost",
+    "historija": "Historija"
+  },
+  "longLectures": {
+    "tag": "PREDAVANJA",
+    "title": "Duga predavanja",
+    "text": "Pažljivo pripremljena predavanja o različitim islamskim i historijskim temama, uključujući tefsir, fikh, hadis, siru i duhovnost.",
+    "empty": "Nema predavanja u ovoj kategoriji"
+  },
+  "shortLectures": {
+    "tag": "PREDAVANJA",
+    "title": "Kratka predavanja",
+    "text": "Kratki sadržaji i isječci za brzi islamski duhovni podsjećaj.",
+    "empty": "Nema kratkih predavanja u ovoj kategoriji"
+  },
+  "lectures": {
+    "tag": "PREDAVANJA",
+    "title": "Predavanja",
+    "text": "Islamska predavanja i pouke o vjeri, ibadetu i svakodnevnom životu.",
+    "empty": "Nema predavanja još uvijek"
+  },
+  "quran": {
+    "tag": "KUR'ANSKE NAUKE",
+    "title": "Kur'an",
+    "text": "Odabrani odlomci iz Kur'ana i cjelovite sure.",
+    "empty": "Nema Kur'an sadržaja još uvijek"
+  },
+  "podcast": {
+    "tag": "RAZGOVORI",
+    "title": "Podcast",
+    "text": "Razgovori, intervjui i podcast epizode o vjeri i svakodnevnom životu.",
+    "empty": "Nema podcast epizoda još uvijek"
+  },
+  "ilahije": {
+    "tag": "ILAHIJE I KASIDE",
+    "title": "Izvedba",
+    "text": "Ilahije, kaside i duhovna muzika.",
+    "empty": "Nema ilahija još uvijek"
+  },
+  "zikrovi": {
+    "tag": "SJEĆANJE NA ALLAHA",
+    "title": "Zikrovi",
+    "empty": "Nema zikrova još uvijek"
+  },
+  "card": {
+    "short": "Kratki",
+    "textAndAudio": "TEKST i AUDIO"
+  },
+  "detail": {
+    "back": "Nazad na predavanja",
+    "shortContent": "Kratki sadržaj",
+    "description": "Opis"
+  },
+  "platforms": {
+    "upload": "Upload",
+    "unknown": "Nepoznato"
+  },
+  "embed": {
+    "unavailable": "Video nije dostupan za prikaz",
+    "openSource": "Otvori na izvoru",
+    "openOn": "Otvori na {platform}",
+    "instagramFallbackTitle": "Pogledaj ovu objavu na Instagramu",
+    "openInstagram": "Otvori na Instagramu",
+    "noVideoSupport": "Vaš pretraživač ne podržava video prikaz.",
+    "watchFacebook": "Gledaj na Facebooku",
+    "facebookHint": "Ako video nije dostupan ovdje, klikni dugme iznad da ga gledaš direktno na Facebooku."
+  }
+}

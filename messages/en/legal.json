@@ -1,0 +1,98 @@
+{
+  "tag": "Legal information",
+  "updated": "Last updated: {date}",
+  "privacy": {
+    "meta": {
+      "title": "Privacy Policy",
+      "description": "How Misbah EDU (website and mobile app) collects, uses and protects your data."
+    },
+    "title": "Privacy Policy",
+    "about": {
+      "title": "About this policy",
+      "scope": "This policy explains what data the website <b>{site}</b> and the <b>Misbah EDU</b> mobile app (iOS and Android) collect, why we collect it and how you can delete it. For any questions, write to us at <mail>{email}</mail>.",
+      "noAccountNeeded": "You can read, watch and listen to the platform's content without registering. An account is needed only for likes and comments."
+    },
+    "collected": {
+      "title": "Data we collect",
+      "account": "<b>User account (optional):</b> username, password and registration date. We never store your password in its original form — only its cryptographic hash is stored.",
+      "content": "<b>Content you publish:</b> comments and likes, linked to your username. Comments are publicly visible to other users.",
+      "technical": "<b>Technical data:</b> the server on which the platform is hosted (Amazon Web Services) automatically records standard technical logs (e.g. IP address and browser type) for security and operation of the service. We do not use these logs to track users."
+    },
+    "onDevice": {
+      "title": "Data that stays only on your device (mobile app)",
+      "storage": "Saved content, text size, the city selected for prayer times, recent searches and temporarily stored content for offline use are kept exclusively on your phone and are not sent to us. Login data is kept in the device's secure storage.",
+      "reminders": "Prayer reminders are local notifications scheduled by the phone itself. The app does not use your location — you choose the city manually."
+    },
+    "notDone": {
+      "title": "What we do not do",
+      "text": "We do not show ads, we do not use tracking tools or analytics, and we do not sell or share your data with advertisers."
+    },
+    "thirdParty": {
+      "title": "Third-party services",
+      "text": "Video content is displayed through the platforms YouTube, TikTok, Instagram and Facebook. When you play such a video, that platform's privacy rules apply. Prayer times are retrieved from the service {prayerTimesSite} (only the selected city is sent). The platform uses Amazon Web Services (hosting of the site, database, and storage of images, audio and video; servers in the EU, Frankfurt). Texts published on the platform (not user data) are automatically translated into English, Arabic, German and Turkish using Claude models on the Amazon Bedrock service."
+    },
+    "retention": {
+      "title": "How long we keep data",
+      "text": "We keep account data for as long as the account exists. When you delete your account, your username, password, all of your comments and likes are permanently deleted."
+    },
+    "rights": {
+      "title": "Your rights and account deletion",
+      "text": "You have the right to request access to your data, its correction or deletion. You can delete your account yourself in the app (Više → Obriši nalog (More → Delete account)) or on the page <deleteLink>{deleteUrl}</deleteLink>. If you cannot log in, write to us by email with your username."
+    },
+    "children": {
+      "title": "Children",
+      "text": "The platform's content is educational and intended for all ages. We do not knowingly collect data from children under 13 without parental consent; if we learn of such an account, we will delete it."
+    },
+    "changes": {
+      "title": "Changes",
+      "text": "We may update this policy from time to time. The date of the last update is always shown at the top of the page. See also the <termsLink>Terms of Use</termsLink>."
+    }
+  },
+  "terms": {
+    "meta": {
+      "title": "Terms of Use",
+      "description": "Terms of use for the Misbah EDU website and mobile app, including rules for comments."
+    },
+    "title": "Terms of Use",
+    "acceptance": {
+      "title": "Acceptance of the terms",
+      "text": "By using the website {site} and the Misbah EDU mobile app you accept these terms. By registering an account you confirm that you have read them and that you accept them."
+    },
+    "account": {
+      "title": "User account",
+      "text": "An account is needed only for likes and comments. You are responsible for keeping your password safe and for all content published from your account. Impersonating another person is not allowed."
+    },
+    "comments": {
+      "title": "Comments — zero tolerance for inappropriate content",
+      "intro": "Misbah EDU is a space for beneficial knowledge and kind words. <b>We do not tolerate inappropriate content or offensive behavior.</b> It is forbidden to post:",
+      "forbidden": {
+        "insults": "swearing, insults, humiliation and offending other users, authors or guests;",
+        "hate": "hate speech, threats, harassment or calls to violence;",
+        "explicit": "pornographic, violent or otherwise inappropriate content;",
+        "spam": "advertisements, spam and false information;",
+        "personalData": "other people's personal data and content that infringes copyright."
+      },
+      "moderation": "Comments pass through an automatic filter, and the editorial team reviews them further. We remove content that violates the rules without notice, and we permanently delete the account of any user who violates them."
+    },
+    "reporting": {
+      "title": "Reporting and blocking",
+      "text": "You can report any comment in the app (the „Prijavi“ (Report) button next to the comment) or write to us at <mail>{email}</mail>. We review reports and remove inappropriate content within 24 hours. You can block a user whose comments you do not want to see — their comments will then no longer be displayed on your device."
+    },
+    "copyright": {
+      "title": "Copyright",
+      "text": "All texts, photographs, audio and video content published on the Misbah EDU platform are protected by copyright. Downloading, copying or using the content is permitted only with the prior consent of the editorial team and with the source cited."
+    },
+    "disclaimer": {
+      "title": "Disclaimer",
+      "text": "The views of guests expressed in the programs represent their personal views and do not necessarily reflect the views of the editorial team. Prayer times are retrieved from the service {prayerTimesSite} and serve as information."
+    },
+    "deletion": {
+      "title": "Account deletion",
+      "text": "You can delete your account at any time in the app (Više → Obriši nalog (More → Delete account)) or on the page <deleteLink>{deleteUrl}</deleteLink>. Details about data are in the <privacyLink>Privacy Policy</privacyLink>."
+    },
+    "contact": {
+      "title": "Contact and changes",
+      "text": "We may change these terms from time to time; the date of the last update is shown at the top of the page. For questions, write to <mail>{email}</mail>."
+    }
+  }
+}

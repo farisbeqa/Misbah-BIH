@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "longLectures": {
+      "title": "Lange Vorträge",
+      "description": "Ausführliche islamische Vorträge zu Themen des Glaubens, der Ethik (Achlaq), der Geschichte und der spirituellen Entwicklung — für ein tieferes Verständnis des Islam."
+    },
+    "shortLectures": {
+      "title": "Kurzvorträge",
+      "description": "Kurze und prägnante islamische Vorträge, ideal zum täglichen Lernen, Erinnern und zur Stärkung des Iman."
+    },
+    "quran": {
+      "title": "Koran",
+      "description": "Lernen Sie und hören Sie den Koran mit sorgfältig ausgewählten Tilawa-Rezitationen, Qira’at und Auslegungen der Koranverse."
+    },
+    "podcast": {
+      "title": "Podcast",
+      "description": "Islamischer Podcast — Gespräche über Glauben, Wissen und den Alltag der Muslime. Hören Sie zu, wo immer Sie sind."
+    },
+    "ilahije": {
+      "title": "Ilahis – Aufführung",
+      "description": "Ilahis, Kasiden und spirituelle Musik — Video- und Audioaufführungen, die die Liebe zu Allah und zum Propheten ﷺ wecken."
+    },
+    "zikrovi": {
+      "title": "Dhikr und Bittgebete",
+      "description": "Dhikr mit Text und Audio zum täglichen Lernen — Morgen- und Abend-Dhikr, Bittgebete und die Namen Allahs."
+    }
+  },
+  "list": {
+    "searchPlaceholder": "Nach Titel suchen...",
+    "noResults": "Keine Ergebnisse für \"{query}\"",
+    "loadMore": "{remaining, plural, one {Mehr laden (# verbleibend)} other {Mehr laden (# verbleibend)}}",
+    "shownOf": "{shown} von {total} angezeigt"
+  },
+  "topics": {
+    "all": "Alle",
+    "tefsir": "Tafsir",
+    "hadis": "Hadith",
+    "sira": "Sira",
+    "opste": "Allgemeine Themen",
+    "akaid": "Aqida",
+    "fikh": "Fiqh",
+    "duhovnost": "Spiritualität",
+    "historija": "Geschichte"
+  },
+  "longLectures": {
+    "tag": "VORTRÄGE",
+    "title": "Lange Vorträge",
+    "text": "Sorgfältig vorbereitete Vorträge zu verschiedenen islamischen und historischen Themen, darunter Tafsir, Fiqh, Hadith, Sira und Spiritualität.",
+    "empty": "Keine Vorträge in dieser Kategorie"
+  },
+  "shortLectures": {
+    "tag": "VORTRÄGE",
+    "title": "Kurzvorträge",
+    "text": "Kurze Inhalte und Clips für eine schnelle islamische spirituelle Erinnerung.",
+    "empty": "Keine Kurzvorträge in dieser Kategorie"
+  },
+  "lectures": {
+    "tag": "VORTRÄGE",
+    "title": "Vorträge",
+    "text": "Islamische Vorträge und Lehren über Glauben, Gottesdienst und den Alltag.",
+    "empty": "Noch keine Vorträge"
+  },
+  "quran": {
+    "tag": "KORANWISSENSCHAFTEN",
+    "title": "Koran",
+    "text": "Ausgewählte Passagen aus dem Koran und vollständige Suren.",
+    "empty": "Noch keine Koraninhalte"
+  },
+  "podcast": {
+    "tag": "GESPRÄCHE",
+    "title": "Podcast",
+    "text": "Gespräche, Interviews und Podcast-Folgen über Glauben und den Alltag.",
+    "empty": "Noch keine Podcast-Folgen"
+  },
+  "ilahije": {
+    "tag": "ILAHIS UND KASIDEN",
+    "title": "Aufführung",
+    "text": "Ilahis, Kasiden und spirituelle Musik.",
+    "empty": "Noch keine Ilahis"
+  },
+  "zikrovi": {
+    "tag": "GEDENKEN ALLAHS",
+    "title": "Dhikr",
+    "empty": "Noch kein Dhikr"
+  },
+  "card": {
+    "short": "Kurz",
+    "textAndAudio": "TEXT UND AUDIO"
+  },
+  "detail": {
+    "back": "Zurück zu den Vorträgen",
+    "shortContent": "Kurzinhalt",
+    "description": "Beschreibung"
+  },
+  "platforms": {
+    "upload": "Upload",
+    "unknown": "Unbekannt"
+  },
+  "embed": {
+    "unavailable": "Das Video kann nicht angezeigt werden",
+    "openSource": "Auf der Quelle öffnen",
+    "openOn": "Auf {platform} öffnen",
+    "instagramFallbackTitle": "Sieh dir diesen Beitrag auf Instagram an",
+    "openInstagram": "Auf Instagram öffnen",
+    "noVideoSupport": "Ihr Browser unterstützt die Videowiedergabe nicht.",
+    "watchFacebook": "Auf Facebook ansehen",
+    "facebookHint": "Wenn das Video hier nicht verfügbar ist, klicke auf die Schaltfläche oben, um es direkt auf Facebook anzusehen."
+  }
+}

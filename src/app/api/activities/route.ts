@@ -1,16 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
+import { apiLocale, localizeRows, queueTranslation } from '@/lib/translations'
 
 export const dynamic = 'force-dynamic'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     const activities = await prisma.activity.findMany({
       where: { published: true },
       orderBy: { date: 'desc' },
     })
-    return NextResponse.json(activities)
+    return NextResponse.json(await localizeRows('activity', activities, apiLocale(request)))
   } catch { return NextResponse.json({ error: 'Greška' }, { status: 500 }) }
 }
 
@@ -34,6 +35,7 @@ export async function POST(request: NextRequest) {
         published: true,
       },
     })
+    await queueTranslation('activity', activity.id)
     return NextResponse.json(activity, { status: 201 })
   } catch { return NextResponse.json({ error: 'Greška servera' }, { status: 500 }) }
 }

@@ -1,0 +1,35 @@
+{
+  "activities": {
+    "meta": {
+      "title": "Faaliyetler",
+      "description": "İslam topluluğunun en son haberleri, faaliyetleri ve etkinlikleri — bilgili ve katılımcı kalın."
+    },
+    "tag": "TOPLULUK",
+    "title": "Faaliyetler",
+    "intro": "Topluluğun haberleri, yenilikleri ve faaliyetleri — bilgi yarışmaları, atölyeler, ziyaretler ve buluşmalar.",
+    "filterAll": "Tümü",
+    "tags": {
+      "vijesti": "Haberler",
+      "novosti": "Yenilikler",
+      "aktivnosti": "Faaliyetler"
+    },
+    "empty": "Bu kategoride öğe yok",
+    "loadMore": "Daha fazla yükle ({count, plural, one {# kalan} other {# kalan}})",
+    "shownOf": "{total} içinden {shown} gösteriliyor",
+    "backToList": "Faaliyetlere geri dön",
+    "allActivities": "Tüm faaliyetler"
+  },
+  "gallery": {
+    "meta": {
+      "title": "Galeri",
+      "description": "İslami derslerin, duaların ve ortak etkinliklerin fotoğraf arşivi."
+    },
+    "title": "Galeri",
+    "intro": "Faaliyetlerimizden ve etkinliklerimizden fotoğraflar",
+    "empty": "Galeri boş",
+    "loading": "Yükleniyor...",
+    "loadMore": "Daha fazla fotoğraf yükle",
+    "shownCount": "{count, plural, one {# fotoğraf gösteriliyor} other {# fotoğraf gösteriliyor}}",
+    "allLoaded": "Tüm fotoğraflar yüklendi ({count})"
+  }
+}

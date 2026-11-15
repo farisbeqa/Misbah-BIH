@@ -1,0 +1,74 @@
+{
+  "list": {
+    "searchByTitle": "Pretraži po naslovu...",
+    "searchByTitleOrAuthor": "Pretraži po naslovu ili autoru...",
+    "noResults": "Nema rezultata za \"{query}\"",
+    "loadMore": "Učitaj još ({count, plural, one {# preostalih} few {# preostalih} other {# preostalih}})",
+    "shown": "Prikazano {shown} od {total}"
+  },
+  "categories": {
+    "all": "Sve",
+    "hutbe": "Hutbe",
+    "aktuelneTeme": "Aktuelne teme",
+    "duhovnost": "Duhovnost",
+    "tefsirKuran": "Tefsir i Kur'an",
+    "sira": "Sira",
+    "fikh": "Fikh",
+    "savjeti": "Savjeti",
+    "odgoj": "Odgoj i porodica"
+  },
+  "blogPage": {
+    "meta": {
+      "title": "Blog",
+      "description": "Islamski tekstovi, hutbe i savjeti za svakodnevni muslimanski život — kratki i korisni tekstovi za vjernike."
+    },
+    "tag": "PROMIŠLJANJA",
+    "title": "Blog",
+    "subtitle": "Kratki i korisni tekstovi za svakodnevni život vjernika.",
+    "empty": "Nema blog postova još uvijek"
+  },
+  "blogPost": {
+    "notFound": "Post nije pronađen",
+    "back": "Nazad na blog",
+    "hamdoRole": "Imam džamije Carina · Sarajevo",
+    "allPosts": "Sve objave"
+  },
+  "storiesPage": {
+    "meta": {
+      "title": "Poučne priče",
+      "description": "Poučne priče iz islamske tradicije koje bude srce, ulijevaju nadu i podsjećaju na istinske vrijednosti."
+    },
+    "tag": "ISLAMSKE PRIČE",
+    "title": "Poučne priče",
+    "subtitle": "Priče iz islamske tradicije koje bude srce, ulijevaju nadu i opominju uz podsjećanje na istinske vrijednosti života.",
+    "empty": "Nema priča još uvijek"
+  },
+  "story": {
+    "notFound": "Priča nije pronađena",
+    "back": "Poučne priče",
+    "kicker": "Poučna priča · {date}",
+    "allStories": "Sve priče"
+  },
+  "mektebPage": {
+    "meta": {
+      "description": "Mektebski planovi i programi, kvizovi i nastavni materijali za islamsku vjeronauku — pomoć nastavnicima i učenicima."
+    },
+    "tag": "ISLAMSKO OBRAZOVANJE",
+    "subtitle": "Planovi, programi, kvizovi i materijali za mektebsku nastavu.",
+    "empty": "Nema sadržaja još uvijek"
+  },
+  "mektebCategories": {
+    "opste": "Opšte",
+    "program": "Plan i program",
+    "kviz": "Kviz",
+    "materijali": "Materijali"
+  },
+  "mektebPost": {
+    "allPosts": "Svi sadržaji"
+  },
+  "moreFromAuthor": {
+    "label": "Autor",
+    "seeMore": "Vidi više od ovog autora",
+    "seeMoreShort": "Vidi više"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "types": {
+    "ajet": "Kur'an ayeti",
+    "hadis": "Hadis",
+    "izreka": "Günün sözü"
+  },
+  "section": {
+    "tag": "HATIRLATMA",
+    "title": "Günün sözü",
+    "text": "Kur'an'dan, hadislerden ve İslami gelenekten, düşünmeye ve harekete geçmeye teşvik eden sözler.",
+    "previous": "Önceki söz",
+    "next": "Sonraki söz"
+  },
+  "popup": {
+    "defaultLabel": "Günün sözü",
+    "close": "Kapat"
+  },
+  "carousel": {
+    "page": "Sayfa {page}"
+  }
+}

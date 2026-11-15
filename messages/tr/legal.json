@@ -1,0 +1,98 @@
+{
+  "tag": "Hukuki bilgiler",
+  "updated": "Son güncelleme: {date}",
+  "privacy": {
+    "meta": {
+      "title": "Gizlilik Politikası",
+      "description": "Misbah EDU'nun (web sitesi ve mobil uygulama) verilerinizi nasıl topladığı, kullandığı ve koruduğu."
+    },
+    "title": "Gizlilik Politikası",
+    "about": {
+      "title": "Bu politika hakkında",
+      "scope": "Bu politika, <b>{site}</b> web sitesinin ve <b>Misbah EDU</b> mobil uygulamasının (iOS ve Android) hangi verileri topladığını, bunları neden topladığımızı ve nasıl silebileceğinizi açıklar. Tüm sorularınız için bize <mail>{email}</mail> adresinden yazın.",
+      "noAccountNeeded": "Platformun içeriklerini kayıt olmadan okuyabilir, izleyebilir ve dinleyebilirsiniz. Hesap yalnızca beğeniler ve yorumlar için gereklidir."
+    },
+    "collected": {
+      "title": "Topladığımız veriler",
+      "account": "<b>Kullanıcı hesabı (isteğe bağlı):</b> kullanıcı adı, şifre ve kayıt tarihi. Şifreyi hiçbir zaman özgün haliyle saklamayız — yalnızca kriptografik özeti (hash) kaydedilir.",
+      "content": "<b>Yayımladığınız içerik:</b> kullanıcı adınızla ilişkilendirilen yorumlar ve beğeniler. Yorumlar diğer kullanıcılar tarafından herkese açık olarak görülebilir.",
+      "technical": "<b>Teknik veriler:</b> platformun barındırıldığı sunucu (Amazon Web Services), güvenlik ve hizmetin işleyişi için standart teknik kayıtları (ör. IP adresi ve tarayıcı türü) otomatik olarak tutar. Bu kayıtları kullanıcıları izlemek için kullanmayız."
+    },
+    "onDevice": {
+      "title": "Yalnızca cihazınızda kalan veriler (mobil uygulama)",
+      "storage": "Kaydedilen içerikler, yazı boyutu, vakit takvimi için seçilen şehir, son aramalar ve internetsiz çalışmak için geçici olarak saklanan içerikler yalnızca telefonunuzda saklanır ve bize gönderilmez. Giriş bilgileri cihazın korumalı belleğinde saklanır.",
+      "reminders": "Namaz hatırlatıcıları, telefonun kendisi tarafından zamanlanan yerel bildirimlerdir. Uygulama konumunuzu kullanmaz — şehri kendiniz seçersiniz."
+    },
+    "notDone": {
+      "title": "Yapmadıklarımız",
+      "text": "Reklam göstermeyiz, izleme araçları veya analitik kullanmayız ve verilerinizi reklamverenlere satmayız ya da onlarla paylaşmayız."
+    },
+    "thirdParty": {
+      "title": "Üçüncü taraf hizmetler",
+      "text": "Video içerikleri YouTube, TikTok, Instagram ve Facebook platformları üzerinden gösterilir. Böyle bir videoyu oynattığınızda, o platformun gizlilik kuralları geçerli olur. Namaz vakitleri {prayerTimesSite} servisinden alınır (yalnızca seçilen şehir gönderilir). Platform, Amazon Web Services hizmetlerini kullanır (sitenin barındırılması, veritabanı ile görsel, ses ve video depolama; sunucular AB'de, Frankfurt'ta). Platformda yayımlanan metinler (kullanıcı verileri değil) Amazon Bedrock servisindeki Claude modeli aracılığıyla otomatik olarak İngilizceye, Arapçaya, Almancaya ve Türkçeye çevrilir."
+    },
+    "retention": {
+      "title": "Verileri ne kadar süre saklıyoruz",
+      "text": "Hesap verilerini hesap var olduğu sürece saklarız. Hesabı sildiğinizde kullanıcı adı, şifre, tüm yorumlarınız ve beğenileriniz kalıcı olarak silinir."
+    },
+    "rights": {
+      "title": "Haklarınız ve hesabın silinmesi",
+      "text": "Verilerinize erişim talep etme, düzeltme veya silme hakkına sahipsiniz. Hesabı uygulamada kendiniz silebilirsiniz (Više → Obriši nalog (Daha fazla → Hesabı sil)) veya <deleteLink>{deleteUrl}</deleteLink> sayfasından silebilirsiniz. Giriş yapamıyorsanız, kullanıcı adınızla birlikte bize e-posta yazın."
+    },
+    "children": {
+      "title": "Çocuklar",
+      "text": "Platformun içeriği eğitici nitelikte olup her yaştan kişiye yöneliktir. 13 yaşından küçük çocukların verilerini ebeveyn onayı olmadan bilerek toplamayız; böyle bir hesaptan haberdar olursak onu sileriz."
+    },
+    "changes": {
+      "title": "Değişiklikler",
+      "text": "Bu politikayı zaman zaman güncelleyebiliriz. Son değişiklik tarihi her zaman sayfanın en üstünde belirtilir. <termsLink>Kullanım Koşulları</termsLink>'na da göz atın."
+    }
+  },
+  "terms": {
+    "meta": {
+      "title": "Kullanım Koşulları",
+      "description": "Yorumlara ilişkin kurallar dahil, Misbah EDU web sitesinin ve mobil uygulamasının kullanım koşulları."
+    },
+    "title": "Kullanım Koşulları",
+    "acceptance": {
+      "title": "Koşulların kabulü",
+      "text": "{site} web sitesini ve Misbah EDU mobil uygulamasını kullanarak bu koşulları kabul etmiş olursunuz. Hesap kaydı yaparak bunları okuduğunuzu ve kabul ettiğinizi onaylarsınız."
+    },
+    "account": {
+      "title": "Kullanıcı hesabı",
+      "text": "Hesap yalnızca beğeniler ve yorumlar için gereklidir. Şifrenizi korumaktan ve hesabınızdan yayımlanan tüm içerikten siz sorumlusunuz. Başka bir kişi gibi davranmak yasaktır."
+    },
+    "comments": {
+      "title": "Yorumlar — uygunsuz içeriğe sıfır tolerans",
+      "intro": "Misbah EDU, faydalı ilim ve güzel söz için bir alandır. <b>Uygunsuz içeriğe ve hakaret içeren davranışlara tolerans göstermeyiz.</b> Aşağıdakileri yayımlamak yasaktır:",
+      "forbidden": {
+        "insults": "diğer kullanıcılara, yazarlara veya konuklara küfür, hakaret, aşağılama ve incitme;",
+        "hate": "nefret söylemi, tehdit, taciz veya şiddete çağrı;",
+        "explicit": "pornografik, şiddet içeren veya başka şekilde uygunsuz içerik;",
+        "spam": "reklam, spam ve yanlış bilgi;",
+        "personalData": "başkalarının kişisel verileri ve telif haklarını ihlal eden içerik."
+      },
+      "moderation": "Yorumlar otomatik filtreden geçer, yayın kurulu ise ayrıca inceler. Kuralları ihlal eden içeriği önceden haber vermeden kaldırırız, ihlal eden kullanıcının hesabını da kalıcı olarak sileriz."
+    },
+    "reporting": {
+      "title": "Bildirme ve engelleme",
+      "text": "Uygulamadaki her yorumu bildirebilir (yorumun yanındaki „Prijavi“ (Bildir) düğmesi) veya bize <mail>{email}</mail> adresinden yazabilirsiniz. Bildirimleri inceler ve uygunsuz içeriği 24 saat içinde kaldırırız. Yorumlarını görmek istemediğiniz kullanıcıyı engelleyebilirsiniz — bu durumda yorumları cihazınızda artık gösterilmez."
+    },
+    "copyright": {
+      "title": "Telif hakları",
+      "text": "Misbah EDU platformunda yayımlanan tüm yazılar, fotoğraflar, ses ve video içerikleri telif hakkı ile korunmaktadır. İçeriğin alınması, çoğaltılması veya kullanılması yalnızca yayın kurulunun önceden onayı ve kaynağın belirtilmesi şartıyla mümkündür."
+    },
+    "disclaimer": {
+      "title": "Sorumluluk reddi",
+      "text": "Konukların programlarda dile getirdiği görüşler kendi kişisel görüşleridir ve yayın kurulunun görüşlerini mutlaka yansıtmak zorunda değildir. Namaz vakitleri {prayerTimesSite} servisinden alınır ve bilgilendirme amaçlıdır."
+    },
+    "deletion": {
+      "title": "Hesabın silinmesi",
+      "text": "Hesabı istediğiniz zaman uygulamada (Više → Obriši nalog (Daha fazla → Hesabı sil)) veya <deleteLink>{deleteUrl}</deleteLink> sayfasından silebilirsiniz. Verilere ilişkin ayrıntılar <privacyLink>Gizlilik Politikası</privacyLink>'ndadır."
+    },
+    "contact": {
+      "title": "İletişim ve değişiklikler",
+      "text": "Koşulları zaman zaman değiştirebiliriz; son değişiklik tarihi sayfanın en üstünde belirtilir. Sorularınız için <mail>{email}</mail> adresine yazın."
+    }
+  }
+}

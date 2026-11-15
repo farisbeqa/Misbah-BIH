@@ -1,0 +1,21 @@
+{
+  "types": {
+    "ajet": "Koranvers",
+    "hadis": "Hadith",
+    "izreka": "Gedanke des Tages"
+  },
+  "section": {
+    "tag": "ERINNERUNG",
+    "title": "Gedanke des Tages",
+    "text": "Gedanken aus dem Koran, den Hadithen und der islamischen Tradition, die zum Nachdenken und Handeln anregen.",
+    "previous": "Vorheriger Gedanke",
+    "next": "Nächster Gedanke"
+  },
+  "popup": {
+    "defaultLabel": "Gedanke des Tages",
+    "close": "Schließen"
+  },
+  "carousel": {
+    "page": "Seite {page}"
+  }
+}

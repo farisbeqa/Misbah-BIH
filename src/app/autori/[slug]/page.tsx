@@ -1,44 +1,48 @@
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
+import Link from '@/i18n/navigation'
+import { getLocale } from '@/i18n/server'
+import { formatShortDate } from '@/i18n/format'
+import type { Locale } from '@/i18n/config'
 import { getAuthorPage } from '@/lib/authorContent'
-import { BIOS } from '@/lib/bios'
+import { biosFor } from '@/lib/bios'
 
 // Rendered per request: the database is reachable at runtime, not during the build
 export const dynamic = 'force-dynamic'
 
-const MONTHS = ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec']
-function formatDate(d: Date) {
-  return `${d.getDate()}. ${MONTHS[d.getMonth()]} ${d.getFullYear()}.`
-}
-
-async function load(slug: string) {
-  try { return await getAuthorPage(slug) } catch { return null }
+async function load(slug: string, locale?: Locale) {
+  try { return await getAuthorPage(slug, locale) } catch { return null }
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const t = await getTranslations('about.author.meta')
+  // Only the author's name is needed here, which is the same in every language
   const data = await load(params.slug)
-  if (!data) return { title: 'Autor' }
+  if (!data) return { title: t('fallbackTitle') }
   return {
-    title: `${data.author.name} – sav sadržaj`,
-    description: `Predavanja, hutbe, tekstovi i ostali sadržaj autora ${data.author.name} na platformi Misbah EDU.`,
-    alternates: { canonical: `/autori/${params.slug}` },
+    title: t('title', { name: data.author.name }),
+    description: t('description', { name: data.author.name }),
   }
 }
 
 export default async function AutorPage({ params }: { params: { slug: string } }) {
-  const data = await load(params.slug)
+  const locale = getLocale()
+  const data = await load(params.slug, locale)
   if (!data) notFound()
+  const t = await getTranslations('about.author')
 
   const { author, sections, total } = data
-  const bio = author.bioSlug ? BIOS[author.bioSlug] : undefined
+  // Biography texts (role) in the visitor's language (server-only `bios` messages)
+  const bios = biosFor((await getTranslations('bios')).raw('people'))
+  const bio = author.bioSlug ? bios[author.bioSlug] : undefined
 
   return (
     <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-10 sm:py-14">
       <Link href="/autori"
         className="inline-flex items-center gap-2 text-warm-400 hover:text-warm-700 text-sm mb-8 transition-colors font-mono">
-        <ArrowLeft size={14} /> Svi autori
+        <ArrowLeft size={14} className="flip-rtl" /> {t('back')}
       </Link>
 
       {/* Header */}
@@ -51,18 +55,18 @@ export default async function AutorPage({ params }: { params: { slug: string } }
             </div>
         }
         <div>
-          <p className="font-medium text-[#8b1e3f] text-base mb-1 uppercase">Autor</p>
+          <p className="font-medium text-[#8b1e3f] text-base mb-1 uppercase">{t('tag')}</p>
           <h1 className="font-semibold text-[#141110] mb-2"
             style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.2, letterSpacing: '-0.44px' }}>
             {author.name}
           </h1>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[#746860]">
             {bio && <span>{bio.role}</span>}
-            <span>{total} {total === 1 ? 'objava' : total < 5 ? 'objave' : 'objava'}</span>
+            <span>{t('posts', { count: total })}</span>
             {author.bioSlug && bio && (
               <Link href={`/o-nama/tim/${author.bioSlug}`}
                 className="inline-flex items-center gap-1 font-medium hover:underline" style={{ color: '#8B1E3F' }}>
-                Biografija <ArrowRight size={14} />
+                {t('biography')} <ArrowRight size={14} className="flip-rtl" />
               </Link>
             )}
           </div>
@@ -101,14 +105,14 @@ export default async function AutorPage({ params }: { params: { slug: string } }
                           <img alt={item.title} src={item.image} loading="lazy"
                             className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                         )}
-                        <div className="absolute top-3 left-3 bg-[#faf5f5] px-2.5 py-1.5">
+                        <div className="absolute top-3 start-3 bg-[#faf5f5] px-2.5 py-1.5">
                           <span className="text-[#8b1e3f] uppercase" style={{ fontSize: 10, letterSpacing: '0.3px' }}>{item.label}</span>
                         </div>
                       </div>
                     )}
                     <div className="flex flex-col gap-2 px-5 py-5 flex-1">
                       <p className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">
-                        {item.image === undefined && <>{item.label} · </>}{formatDate(item.date)}
+                        {item.image === undefined && <>{item.label} · </>}{formatShortDate(item.date, locale)}
                       </p>
                       <p className="font-medium text-[#241f1d] leading-[1.2] line-clamp-3 group-hover:text-[#8b1e3f] transition-colors"
                         style={{ fontSize: 18, letterSpacing: '-0.4px' }}>

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
+import { deleteTranslations, queueTranslation } from '@/lib/translations'
 
 export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
   try {
@@ -19,6 +20,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       where: { id: parseInt(params.id) },
       data: { title: title?.trim() || null },
     })
+    await queueTranslation('gallery', image.id)
     return NextResponse.json(image)
   } catch { return NextResponse.json({ error: 'Greška' }, { status: 500 }) }
 }
@@ -28,6 +30,7 @@ export async function DELETE(_req: NextRequest, { params }: { params: { id: stri
   if (!session) return NextResponse.json({ error: 'Nije autorizovano' }, { status: 401 })
   try {
     await prisma.galleryImage.delete({ where: { id: parseInt(params.id) } })
+    await deleteTranslations('gallery', parseInt(params.id))
     return NextResponse.json({ success: true })
   } catch { return NextResponse.json({ error: 'Greška' }, { status: 500 }) }
 }

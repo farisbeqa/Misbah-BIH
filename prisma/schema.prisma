@@ -215,3 +215,26 @@ model DailyPost {
 
   @@index([date])
 }
+
+// Translations of the content above into the other website languages
+// (en, ar, de, tr); Bosnian is the source. One row per item and language;
+// `fields` holds the translated columns as JSON. Written by the translator
+// worker (lambda/translator, Claude on Amazon Bedrock) and by /admin/prijevodi.
+// Created with scripts/aws/add-translation-table.js
+model Translation {
+  id         Int      @id @default(autoincrement())
+  entity     String // video | blog | activity | quote | gallery | ilahija | dua | mekteb | zikr | prica
+  entityId   Int
+  locale     String // en | ar | de | tr
+  fields     String // JSON: { "title": "...", "content": "..." }
+  sourceHash String // fingerprint of the Bosnian text it was made from
+  status     String   @default("done") // done | stale (source changed, manual translation kept) | error
+  manual     Boolean  @default(false) // edited by hand: never overwritten automatically
+  model      String?
+  error      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([entity, entityId, locale])
+  @@index([entity, locale])
+}

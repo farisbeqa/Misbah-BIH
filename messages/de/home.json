@@ -1,0 +1,66 @@
+{
+  "hero": {
+    "title": "Das Licht des Wissens, das das Herz erhellt und den Verstand erleuchtet.",
+    "text": "Jugendinhalte voller Botschaften und Gedanken, die Licht in das Leben bringen, den Menschen Allah näherbringen, das Herz beruhigen, zum Guten anspornen und jeden Tag inspirieren.",
+    "explore": "Inhalte entdecken",
+    "authors": "Autoren"
+  },
+  "benefits": {
+    "tag": "THEMEN, DIE WIR ERFORSCHEN",
+    "title": "Wissen, das Spuren hinterlässt",
+    "text": "Von Spiritualität und Ibadet (Gottesdienst) über Familie und Erziehung bis zu den Herausforderungen der modernen Gesellschaft — Misbah versammelt junge Menschen durch Inhalte, die helfen, den Glauben zu verstehen und seine Werte im Alltag zu leben.",
+    "spirituality": {
+      "title": "Spiritualität",
+      "description": "Die Verbindung zu Allah stärken durch Wissen, Gottesdienst und aufrichtige Selbstprüfung."
+    },
+    "family": {
+      "title": "Familie",
+      "description": "Themen zu gesünderen Beziehungen, stärkeren Ehen und zur Kindererziehung."
+    },
+    "society": {
+      "title": "Gesellschaft",
+      "description": "Reflexionen über Fragen, die unsere Gemeinschaft und den Alltag prägen."
+    },
+    "character": {
+      "title": "Charakter",
+      "description": "Entwickeln Sie Werte und Gewohnheiten, die ein starkes, verantwortungsvolles und erfülltes Leben formen."
+    }
+  },
+  "team": {
+    "tag": "DIE MENSCHEN HINTER DEN INHALTEN",
+    "title": "Stimmen, die inspirieren",
+    "text": "Die Inhalte bei Misbah entstehen in der Zusammenarbeit von Dozenten, Professoren, Hafizen und Fachleuten, die mit ihrem Wissen und ihrer Erfahrung zur gemeinsamen Mission beitragen, nützliches Wissen zu verbreiten."
+  },
+  "verse": {
+    "text": "Und sprich: Mein Herr, vermehre mein Wissen.",
+    "source": "Koran 20:114"
+  },
+  "lectures": {
+    "tag": "NEUESTE INHALTE",
+    "title": "Vorträge",
+    "text": "Inhalte, die islamisches Wissen mit den Fragen und Herausforderungen des Alltags verbinden.",
+    "cta": "Alle Vorträge ansehen",
+    "empty": "Noch keine Vorträge"
+  },
+  "quran": {
+    "tag": "KORANWISSENSCHAFTEN",
+    "title": "Koran",
+    "text": "Ausgewählte Passagen aus dem Koran und vollständige Suren.",
+    "cta": "Koraninhalte entdecken",
+    "empty": "Noch keine Koraninhalte"
+  },
+  "podcast": {
+    "tag": "GESPRÄCHE",
+    "title": "Podcast",
+    "text": "Gespräche mit Dozenten, Fachleuten und Gästen über Glauben, Gesellschaft, Erziehung und Themen, die unseren Alltag prägen.",
+    "cta": "Folgen anhören",
+    "empty": "Noch keine Podcast-Folgen"
+  },
+  "blog": {
+    "tag": "REFLEXIONEN",
+    "title": "Blog",
+    "text": "Texte, Rückblicke und Gedanken über Glauben, Wissen, Familie und die Herausforderungen des modernen Menschen.",
+    "cta": "Alle Texte lesen",
+    "empty": "Noch keine Blogbeiträge"
+  }
+}

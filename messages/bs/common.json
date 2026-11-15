@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "title": "Misbah EDU | Edukacija i duhovni razvoj",
+    "description": "Misbah EDU – platforma s islamskim predavanjima, hutbama, učenjem Kur'ana, ilahijama i podcast sadržajima.",
+    "twitterTitle": "Misbah EDU – Islamska predavanja",
+    "keywords": ["Misbah EDU", "Misbah", "islamska predavanja", "hutba", "Hamdo Solo", "hfz Hamdo Solo", "hafiz Hamdo Solo", "džamija Carina", "Sarajevo", "islamski sadržaj", "učenje Kur'ana", "ilahije", "zikrovi", "podcast", "islamska edukacija", "Bosna", "BIH", "islamske nauke"],
+    "logoAlt": "Misbah EDU logo",
+    "orgDescription": "Misbah EDU je islamska digitalna platforma posvećena širenju korisnog znanja kroz predavanja, hutbe, učenje Kur'ana i druge sadržaje.",
+    "siteDescription": "Islamska predavanja, hutbe, Kur'an i sadržaji za muslimane u Bosni i Hercegovini.",
+    "foundingLocation": "Sarajevo, Bosna i Hercegovina",
+    "navigation": "Navigacija",
+    "hamdoJob": "Imam, hafiz Kur'ana",
+    "hamdoDescription": "Hfz. Hamdo Solo, imam džamije Carina u Sarajevu, predavač i hafiz Kur'ana."
+  },
+  "notFound": {
+    "tag": "Greška 404",
+    "title": "Stranica nije pronađena",
+    "text": "Ova stranica ne postoji ili je uklonjena.",
+    "back": "Nazad na početnu"
+  },
+  "machineTranslated": "Ovaj sadržaj je automatski preveden."
+}

@@ -1,9 +1,12 @@
 import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 
-export const metadata: Metadata = {
-  title: "Kur'an",
-  description: "Učite i slušajte Kur'an uz pažljivo odabrane tilawete, kiraete i tumačenja kur'anskih ajeta.",
-  alternates: { canonical: '/kuran' },
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('videos')
+  return {
+    title: t('meta.quran.title'),
+    description: t('meta.quran.description'),
+  }
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {

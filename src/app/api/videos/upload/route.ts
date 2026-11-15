@@ -3,6 +3,7 @@ import { writeFile, mkdir } from 'fs/promises'
 import path from 'path'
 import { prisma } from '@/lib/db'
 import { requireAuth } from '@/lib/auth'
+import { queueTranslation } from '@/lib/translations'
 
 export const runtime = 'nodejs'
 
@@ -35,6 +36,7 @@ export async function POST(request: NextRequest) {
           published: true,
         },
       })
+      await queueTranslation('video', video.id)
       return NextResponse.json(video, { status: 201 })
     }
 
@@ -78,6 +80,7 @@ export async function POST(request: NextRequest) {
     const video = await prisma.video.create({
       data: { title, description, url: videoUrl, platform: 'upload', embedUrl: videoUrl, thumbnailUrl, isShortForm, published: true },
     })
+    await queueTranslation('video', video.id)
 
     return NextResponse.json(video, { status: 201 })
   } catch (error) {

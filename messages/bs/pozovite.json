@@ -1,0 +1,284 @@
+{
+  "meta": {
+    "title": "Pozovite nas — Misbah EDU",
+    "pageTitle": "{page} — Pozovite nas — Misbah EDU",
+    "description": "Misbah EDU: predavanja, Hor Misbah i omladinska druženja. Izaberite program i pozovite nas u svoj džemat, školu ili zajednicu."
+  },
+  "sections": {
+    "breadcrumbs": "Putanja",
+    "home": "Pozovite nas",
+    "lectures": "Predavanja",
+    "choir": "Hor",
+    "gatherings": "Omladinska druženja",
+    "inquiry": "Upit"
+  },
+  "actions": {
+    "sendInquiry": "Pošaljite upit",
+    "invite": "Pozovite: {name}"
+  },
+  "invite": {
+    "tag": "POZOVITE NAS",
+    "title": "Dovedite Misbah u svoju zajednicu",
+    "text": "Pišite nam s datumom, mjestom i vrstom programa, pa ćemo zajedno dogovoriti detalje."
+  },
+  "home": {
+    "hero": {
+      "tag": "Pozovite nas · Omladinska inicijativa · Sarajevo · od 2022.",
+      "title": "Svjetlo znanja, uživo u vašoj zajednici",
+      "text": "Mladi hafizi, imami i predavači. Izaberite šta želite ugostiti, a mi dolazimo u vaš džemat, školu ili na vašu manifestaciju."
+    },
+    "offer": {
+      "tag": "ŠTA NUDIMO",
+      "title": "Izaberite šta želite ugostiti",
+      "text": "Predavanja za muškarce, žene i cijeli džemat, Hor Misbah i omladinska druženja s predavanjima, radionicama i kvizovima.",
+      "lectures": {
+        "tag": "Za muškarce · za žene · za džemat",
+        "title": "Predavanja",
+        "text": "Izaberite publiku, predavača i vrstu programa: predavanje, edukaciju, radionicu ili višednevnu edukaciju.",
+        "cta": "Izaberite predavanje"
+      },
+      "choir": {
+        "tag": "Muški · ženski · miješani",
+        "title": "Hor",
+        "text": "Ilahije i kaside uz defove za otvorenja džamija, mevlude, iftare i svečanosti.",
+        "cta": "Izaberite hor"
+      },
+      "gatherings": {
+        "tag": "Predavanja · radionice · kvizovi",
+        "title": "Omladinska druženja",
+        "text": "Edukativna predavanja, interaktivne radionice i kvizovi znanja za mlade.",
+        "cta": "Saznajte više"
+      }
+    },
+    "stats": {
+      "videos": "{count, plural, other {video na YouTubeu}}",
+      "views": "{count, plural, other {pregleda}}",
+      "circles": "{count, plural, other {sedmične halke}}",
+      "authors": "{count, plural, other {autora i predavača}}"
+    }
+  },
+  "lectures": {
+    "tag": "PREDAVANJA",
+    "title": "Za koga pripremamo program?",
+    "text": "Izaberite publiku. Zatim birate predavača i vrstu programa.",
+    "lecturers": "{count, plural, one {# predavač} few {# predavača} other {# predavača}}",
+    "femaleLecturers": "{count, plural, one {# predavačica} few {# predavačice} other {# predavačica}}"
+  },
+  "lecturers": {
+    "pageTitle": "Predavanja · {audience}",
+    "tag": "PREDAVANJA · {audience}",
+    "title": "Izaberite predavača",
+    "text": "{description} Na profilu predavača birate vrstu programa i šaljete upit.",
+    "videos": "{count, plural, one {# video} few {# videa} other {# videa}}"
+  },
+  "profile": {
+    "allContent": "Svi sadržaji na Misbahu",
+    "recordings": {
+      "tag": "SNIMCI",
+      "title": "Pogledajte predavanja"
+    }
+  },
+  "soon": {
+    "title": "Snimci uskoro",
+    "text": "Snimke ćemo uskoro dodati. Do tada nam se javite i poslat ćemo vam primjere nastupa.",
+    "cta": "Pitajte nas"
+  },
+  "choir": {
+    "pageTitle": "Hor Misbah",
+    "tag": "HOR MISBAH",
+    "title": "Izaberite hor",
+    "text": "Nastupamo na otvorenjima džamija, mevludima, iftarima i svečanostima.",
+    "recordings": "{count, plural, one {# snimak} few {# snimka} other {# snimaka}}",
+    "groups": {
+      "muski": {
+        "title": "Muški hor",
+        "description": "Ilahije i kaside uz defove: otvorenja džamija, mevludi, iftari i svečanosti."
+      },
+      "zenski": {
+        "title": "Ženski hor",
+        "description": "Ilahije za ženske programe, mevlude, mektebske priredbe i svečanosti."
+      },
+      "mijesani": {
+        "title": "Miješani hor",
+        "description": "Zajednički nastupi za porodične i svečane programe džemata."
+      },
+      "vecer": {
+        "title": "Večer Kur'ana",
+        "description": "Učenje Kur'ana uz prijevod i ilahije: večeri za džemat, ramazanski programi i posebne prilike."
+      }
+    }
+  },
+  "gatherings": {
+    "tag": "OMLADINSKA DRUŽENJA",
+    "title": "Družite se sa nama",
+    "text": "Šta Misbah nudi mladima?",
+    "cta": "Organizujte druženje s nama",
+    "choice": "Omladinsko druženje",
+    "offer": {
+      "lectures": {
+        "title": "Edukativna predavanja",
+        "description": "Otvaramo važne teme iz vjere i svakodnevnog života, približavajući mladima islamske vrijednosti na savremen i njima blizak način."
+      },
+      "workshops": {
+        "title": "Interaktivne radionice",
+        "description": "Kroz kreativne zadatke, razgovor i timski rad podstičemo aktivno učešće, razmjenu ideja i razvoj novih vještina."
+      },
+      "quizzes": {
+        "title": "Kvizovi znanja",
+        "description": "Kroz zabavu, timsko nadmetanje i druženje podstičemo mlade da proširuju svoje znanje o islamu, islamskoj historiji i općoj kulturi."
+      }
+    },
+    "photos": {
+      "youthLecture": "Mladi na predavanju u Istiklal džamiji",
+      "spousesLecture": "{mubina} i {hamdo} na predavanju „Uloga supružnika u islamu”",
+      "youthInMosque": "Mladi na predavanju u džamiji",
+      "youthIftar": "Omladinski iftar"
+    },
+    "recordings": {
+      "tag": "SNIMCI",
+      "title": "Sa naših druženja"
+    }
+  },
+  "contact": {
+    "stayConnected": "Ostanimo povezani",
+    "location": "Sarajevo, Bosna i Hercegovina"
+  },
+  "audiences": {
+    "muskarci": {
+      "title": "Za muškarce",
+      "description": "Predavanja i halke za muške džematlije, omladinu i studente."
+    },
+    "zene": {
+      "title": "Za žene",
+      "description": "Predavanja, edukacije i radionice za žene i djevojke."
+    },
+    "dzemat": {
+      "title": "Za džemat",
+      "description": "Za cijeli džemat i porodice: tribine, večeri Kur'ana, mevludi."
+    }
+  },
+  "formats": {
+    "predavanje": {
+      "title": "Predavanje",
+      "description": "Jedno predavanje ili tribina, s pitanjima publike."
+    },
+    "edukacija": {
+      "title": "Edukacija",
+      "description": "Tematski ciklus od nekoliko susreta, npr. sedmično."
+    },
+    "radionica": {
+      "title": "Radionica",
+      "description": "Rad u manjoj grupi, kroz razgovor i zadatke."
+    },
+    "visednevna": {
+      "title": "Višednevna edukacija",
+      "description": "Intenzivan program kroz vikend ili više dana."
+    }
+  },
+  "people": {
+    "hamdo": {
+      "role": "Tefsir",
+      "bio": "Saradnik za kiraet na FIN-u i doktorand. Vodi halku tefsira četvrtkom u džematu Carina.",
+      "topics": ["Tefsir kratkih sura", "Brak i porodica"]
+    },
+    "hamza": {
+      "role": "Sira i etika",
+      "bio": "Život Poslanika ﷺ i pouke za danas. Vodi halku sire ponedjeljkom nakon akšama u džematu Bjelave.",
+      "topics": ["Sira Poslanika ﷺ", "Sabur i smirenost", "Iman"]
+    },
+    "mubina": {
+      "role": "Fikh · hafiza Kur'ana",
+      "bio": "Asistentica na Katedri za šerijatsko pravo (fikh) na FIN-u i hafiza Kur'ana. Govori o ibadetu, porodici i pitanjima s kojima se susreće savremena muslimanka.",
+      "topics": ["Fikh za žene", "Namaz i ibadet", "Poslanikov ﷺ karakter", "Ramazan"]
+    }
+  },
+  "videoTitles": {
+    "inshirah": "Sura el-Inširah: nakon teškoće dolazi olakšanje",
+    "zilzal": "Šta nam sura ez-Zilzal govori o Sudnjem danu?",
+    "nas": "Sura en-Nas: zaštita od zlih misli i šejtanskih došaptavanja",
+    "tin": "Sura et-Tin: zašto je Allah spomenuo smokvu i maslinu?",
+    "duha": "Sura ed-Duha: poruka za trenutke kad ti je teško",
+    "adiyat": "Sura el-Adijat: sura o kojoj znamo najmanje?",
+    "prophetInQuran": "Dimenzije islama: Poslanik Muhammed, s.a.v.s., u Kur'anu",
+    "calmInAnxiousTimes": "Smirenost u vremenu anksioznosti",
+    "sabrChangesTheHeart": "Kako sabur mijenja srce",
+    "blessingOfRememberingTheProphet": "Bereket u spomenu Poslanika ﷺ",
+    "trueBeliever": "Šta znači biti istinski vjernik?",
+    "marriageThatChangedHistory": "Brak koji je promijenio historiju (Sira, 7. dio)",
+    "prophetsMercy": "Milostivost Muhameda, a.s.",
+    "prophetsEmotionalIntelligence": "Emocionalna inteligencija Muhameda, a.s.",
+    "isIslamFairToWomen": "Da li je islam pravedan prema ženi?",
+    "gratitudeThroughPrayer": "Namazom do zahvalnosti",
+    "easeAfterHardship": "Poslije iskušenja dolazi olakšanje",
+    "fastingAndRelationships": "Kako post utiče na međuljudske odnose",
+    "ilahijeCollage": "Kolaž ilahija",
+    "performanceInSwitzerland": "Nastup u Švicarskoj",
+    "ilahijaByCandlelight": "Ilahija uz kandilj",
+    "mosqueOpeningMaljevac": "Otvorenje džamije u Maljevcu",
+    "youthIftarZagreb": "Omladinski iftar u Zagrebu",
+    "youthIftarZagrebStudio": "Omladinski iftar u Zagrebu (studio zvuk)",
+    "fullPerformanceMaljevac": "Cijeli nastup u Maljevcu",
+    "fullPerformanceZagreb": "Cijeli nastup u Zagrebu",
+    "ilahijaAtGathering": "Ilahija na druženju",
+    "ilahijaInMosque": "Ilahija u džamiji",
+    "performanceInMosque": "Nastup u džamiji",
+    "quranRecitation": "Učenje Kur'ana",
+    "quranRecitationInDzemat": "Učenje Kur'ana u džematu",
+    "suraIbrahim": "Sura Ibrahim (23–27)",
+    "suraFussilat": "Sura Fussilet (30–33)",
+    "suraIsra": "Sura el-Isra (11–12)",
+    "mukabelaJuz13": "Mukabela, 13. džuz",
+    "hijriNewYearCarina": "Nova hidžretska godina u džematu Carina"
+  },
+  "videoGrid": {
+    "views": "{count, plural, one {# pregleda} few {# pregleda} other {# pregleda}}",
+    "badges": {
+      "short": "Kratko",
+      "clip": "Isječak"
+    }
+  },
+  "player": {
+    "close": "Zatvori"
+  },
+  "heroVideo": {
+    "mute": "Isključi zvuk",
+    "unmute": "Uključi zvuk"
+  },
+  "programPicker": {
+    "label": "Vrsta programa",
+    "title": "Šta želite organizovati?"
+  },
+  "quickContact": {
+    "copy": "Kopiraj",
+    "addressCopied": "Adresa je kopirana",
+    "copyAddressManually": "Kopirajte adresu ručno",
+    "viberCopied": "Poruka je kopirana, ako se ne pojavi u Viberu, zalijepite je"
+  },
+  "form": {
+    "title": "Upit za nastup",
+    "yourChoice": "Vaš izbor: <b>{choice}</b>",
+    "change": "promijeni",
+    "organizer": "Organizator",
+    "organizerPlaceholder": "npr. Džemat Bjelave",
+    "place": "Mjesto",
+    "placePlaceholder": "Grad, objekat",
+    "date": "Datum",
+    "datePlaceholder": "npr. 20. decembar ili po dogovoru",
+    "category": "Rubrika",
+    "categories": {
+      "predavanja": "Predavanja",
+      "hor": "Hor",
+      "druzenja": "Omladinska druženja"
+    },
+    "note": "Napomena",
+    "notePlaceholder": "Prilika, trajanje, broj ljudi, kontakt telefon…",
+    "prepare": "Pripremi poruku",
+    "sendWhatsApp": "Pošalji na WhatsApp",
+    "copyMessage": "Kopiraj poruku",
+    "openEmail": "Otvori u e-mailu",
+    "viberCopied": "Poruka je kopirana, zalijepite je u Viber",
+    "messageCopied": "Poruka je kopirana",
+    "copyManually": "Označite poruku i kopirajte je",
+    "hint": "WhatsApp otvara poruku spremnu za slanje. Viber također upisuje poruku, a za svaki slučaj je i kopiramo. Broj: {phone}, e-mail: {email}."
+  }
+}

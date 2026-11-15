@@ -1,0 +1,127 @@
+{
+  "aboutUs": {
+    "meta": {
+      "title": "About Us - Misbah EDU",
+      "description": "Learn more about Misbah EDU — an Islamic educational platform dedicated to spreading beneficial knowledge and spiritual growth."
+    },
+    "tag": "Platform",
+    "title": "About Us",
+    "intro": "The Misbah EDU media platform is an initiative of young people aimed at contributing to the Community through educational and beneficial content. Connecting faith and true values, it is devoted to stories that inspire and have an educational character.",
+    "studyCircles": {
+      "intro": "Three regular educational study circles (halaqas) are currently held within the Misbah EDU platform:",
+      "tafsir": "The <b>Tafsir halaqa</b> is held every Thursday in the Carina jamaat, an hour before the Maghrib prayer. The lectures are led by {name}, who, through the interpretation of Qur'anic verses, seeks to bring their meaning and messages closer to everyday life.",
+      "sira": "The <b>Seerah halaqa</b> is held every Monday after the Maghrib prayer in the Bjelave jamaat. This halaqa is led by {name}, covering the life and practice of the Messenger of Allah, with particular emphasis on lessons that can be applied today.",
+      "hadith": "The <b>Hadith halaqa</b> is also held every Monday after the Maghrib prayer in the Bakareva Mosque jamaat. The halaqa is led by {name}, focusing on understanding and applying hadith in everyday life.",
+      "outro": "All halaqas are open to everyone interested, with the aim of strengthening knowledge, spirituality and togetherness."
+    },
+    "cards": {
+      "impressum": {
+        "title": "Imprint",
+        "description": "Editors, authors and legal notices"
+      },
+      "contact": {
+        "title": "Contact",
+        "description": "Email and contact information"
+      }
+    }
+  },
+  "contact": {
+    "meta": {
+      "title": "Contact - Misbah EDU"
+    },
+    "back": "About Us",
+    "title": "Contact",
+    "text": "Feel free to contact us with any questions, suggestions and for collaboration.",
+    "email": "Email",
+    "phone": "Phone",
+    "collaboration": {
+      "title": "Collaboration and guest articles",
+      "text": "Misbah EDU is an open space for all authors who wish to publish texts with Islamic or educational content. Get in touch with us by email and we will gladly reply."
+    }
+  },
+  "impressum": {
+    "meta": {
+      "title": "Imprint - Misbah EDU"
+    },
+    "back": "About Us",
+    "title": "Imprint",
+    "platform": {
+      "title": "About the platform",
+      "text1": "The Misbah EDU media platform is an initiative of young people aimed at contributing to the Community through educational and beneficial content. Through lectures, podcasts and interviews, we strive to weave true values into society.",
+      "text2": "We open the platform and offer it as a space for publishing texts to all interested authors."
+    },
+    "editorial": {
+      "title": "Editorial team",
+      "editors": "Editors",
+      "socialMedia": "Social media",
+      "authors": "Authors of educational content"
+    },
+    "biography": "Biography",
+    "copyright": {
+      "title": "Copyright",
+      "text1": "All texts, photographs, audio and video content published on the Misbah EDU platform are protected by copyright. Downloading, copying or using the content is permitted only with the prior consent of the editorial team and with the source cited.",
+      "text2": "The editorial team reserves the right to edit and remove content that is not in line with the mission and values of the platform.",
+      "text3": "The views of guests expressed in the programs represent their personal views and do not necessarily reflect the views of the Misbah EDU editorial team."
+    }
+  },
+  "teamMember": {
+    "back": "Imprint",
+    "born": "Date and place of birth:"
+  },
+  "authors": {
+    "meta": {
+      "title": "Authors",
+      "description": "All authors of lectures, khutbahs and texts on the Misbah EDU platform."
+    },
+    "tag": "AUTHORS",
+    "title": "Content authors",
+    "text": "Choose an author and see all of their lectures, khutbahs and texts in one place.",
+    "posts": "{count, plural, one {# post} other {# posts}}"
+  },
+  "author": {
+    "meta": {
+      "fallbackTitle": "Author",
+      "title": "{name} – all content",
+      "description": "Lectures, khutbahs, texts and other content by {name} on the Misbah EDU platform."
+    },
+    "back": "All authors",
+    "tag": "Author",
+    "posts": "{count, plural, one {# post} other {# posts}}",
+    "biography": "Biography"
+  },
+  "contentTypes": {
+    "sections": {
+      "predavanja": "Lectures",
+      "kratka": "Short lectures",
+      "blog": "Reflections and khutbahs",
+      "kuran": "Qur'an",
+      "podcast": "Podcast",
+      "price": "Instructive stories",
+      "zikrovi": "Dhikrs",
+      "dove": "Duas",
+      "ilahije": "Ilahis",
+      "mekteb": "Mekteb"
+    },
+    "blogCategories": {
+      "hutbe": "Khutbah",
+      "aktuelneTeme": "Current topics",
+      "duhovnost": "Spirituality",
+      "tefsirKuran": "Tafsir and Qur'an",
+      "sira": "Seerah",
+      "fikh": "Fiqh",
+      "savjeti": "Advice",
+      "odgoj": "Upbringing and family"
+    },
+    "items": {
+      "reflection": "Reflection",
+      "story": "Instructive story",
+      "zikr": "Dhikr",
+      "dua": "Dua",
+      "ilahija": "Ilahi",
+      "mekteb": "Mekteb"
+    }
+  },
+  "voices": {
+    "title": "Authors of educational content"
+  }
+}

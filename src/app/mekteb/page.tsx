@@ -1,39 +1,47 @@
 import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 import { prisma } from '@/lib/db'
+import { localizeRows } from '@/lib/translations'
+import { getLocale } from '@/i18n/server'
 import { BookOpen } from 'lucide-react'
 import MektebGrid from './MektebGrid'
 
 // Rendered per request: the database is reachable at runtime, not during the build
 export const dynamic = 'force-dynamic'
-export const metadata: Metadata = {
-  title: 'Mekteb EDU',
-  description: 'Mektebski planovi i programi, kvizovi i nastavni materijali za islamsku vjeronauku — pomoć nastavnicima i učenicima.',
-  alternates: { canonical: '/mekteb' },
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('blog')
+  return {
+    title: 'Mekteb EDU',
+    description: t('mektebPage.meta.description'),
+  }
 }
 
 export default async function MektebPage() {
-  const posts = await prisma.mektebPost.findMany({
+  const t = await getTranslations('blog')
+  const rows = await prisma.mektebPost.findMany({
     where: { published: true },
     orderBy: { createdAt: 'desc' },
   }).catch(() => [])
+  const posts = await localizeRows('mekteb', rows, getLocale())
 
   return (
     <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-12 sm:py-16" style={{ minHeight: '60vh' }}>
       <div className="mb-12">
-        <p className="font-medium text-[#8b1e3f] text-base mb-2">ISLAMSKO OBRAZOVANJE</p>
+        <p className="font-medium text-[#8b1e3f] text-base mb-2">{t('mektebPage.tag')}</p>
         <h1 className="font-semibold text-[#141110] mb-3"
           style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}>
           Mekteb EDU
         </h1>
         <p className="font-normal text-[#746860]" style={{ fontSize: 18 }}>
-          Planovi, programi, kvizovi i materijali za mektebsku nastavu.
+          {t('mektebPage.subtitle')}
         </p>
       </div>
 
       {posts.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-24 bg-[#f5f2ef] border border-black/5">
           <BookOpen size={36} className="text-[#D6CCC3] mb-3" />
-          <p className="text-sm text-[#a89888]">Nema sadržaja još uvijek</p>
+          <p className="text-sm text-[#a89888]">{t('mektebPage.empty')}</p>
         </div>
       ) : (
         <MektebGrid posts={posts} />

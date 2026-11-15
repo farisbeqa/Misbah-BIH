@@ -1,5 +1,6 @@
-import Link from 'next/link'
-import { TEAM, type TeamMember } from '@/lib/team'
+import { getTranslations } from 'next-intl/server'
+import Link from '@/i18n/navigation'
+import { teamFor, type TeamMember } from '@/lib/team'
 
 function MemberCard({ m }: { m: TeamMember }) {
   const inner = (
@@ -33,16 +34,20 @@ function MemberCard({ m }: { m: TeamMember }) {
     )
 }
 
-export default function GlasoviSection() {
+// Server component: the card texts come from the server-only `bios` messages
+export default async function GlasoviSection() {
+  const t = await getTranslations('about.voices')
+  const team = teamFor((await getTranslations('bios')).raw('people'))
+
   return (
     <div>
       <p className="font-semibold text-sm mb-6" style={{ color: '#8b1e3f' }}>
-        Autori edukativnog sadržaja
+        {t('title')}
       </p>
 
       {/* Cards grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-        {TEAM.map(m => (
+        {team.map(m => (
           <MemberCard key={m.name} m={m} />
         ))}
       </div>

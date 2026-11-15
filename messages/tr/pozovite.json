@@ -1,0 +1,296 @@
+{
+  "meta": {
+    "title": "Bizi davet edin — Misbah EDU",
+    "pageTitle": "{page} — Bizi davet edin — Misbah EDU",
+    "description": "Misbah EDU: dersler, Misbah Korosu ve gençlik buluşmaları. Programı seçin ve bizi cemaatinize, okulunuza veya topluluğunuza davet edin."
+  },
+  "sections": {
+    "breadcrumbs": "Yol",
+    "home": "Bizi davet edin",
+    "lectures": "Dersler",
+    "choir": "Koro",
+    "gatherings": "Gençlik buluşmaları",
+    "inquiry": "Talep"
+  },
+  "actions": {
+    "sendInquiry": "Talep gönderin",
+    "invite": "Davet edin: {name}"
+  },
+  "invite": {
+    "tag": "BİZİ DAVET EDİN",
+    "title": "Misbah'ı topluluğunuza getirin",
+    "text": "Bize tarih, yer ve program türünü yazın, ayrıntıları birlikte kararlaştıralım."
+  },
+  "home": {
+    "hero": {
+      "tag": "Bizi davet edin · Gençlik girişimi · Saraybosna · 2022'den beri",
+      "title": "İlmin ışığı, topluluğunuzda canlı",
+      "text": "Genç hafızlar, imamlar ve hocalar. Ağırlamak istediğinizi seçin, biz cemaatinize, okulunuza veya etkinliğinize gelelim."
+    },
+    "offer": {
+      "tag": "NELER SUNUYORUZ",
+      "title": "Ağırlamak istediğinizi seçin",
+      "text": "Erkekler, kadınlar ve tüm cemaat için dersler, Misbah Korosu ve dersler, atölyeler ve bilgi yarışmalarıyla gençlik buluşmaları.",
+      "lectures": {
+        "tag": "Erkekler için · kadınlar için · cemaat için",
+        "title": "Dersler",
+        "text": "Dinleyici kitlesini, hocayı ve program türünü seçin: ders, eğitim, atölye veya çok günlük eğitim.",
+        "cta": "Ders seçin"
+      },
+      "choir": {
+        "tag": "Erkek · kadın · karma",
+        "title": "Koro",
+        "text": "Cami açılışları, mevlidler, iftarlar ve törenler için defli ilahiler ve kasideler.",
+        "cta": "Koro seçin"
+      },
+      "gatherings": {
+        "tag": "Dersler · atölyeler · bilgi yarışmaları",
+        "title": "Gençlik buluşmaları",
+        "text": "Gençler için eğitici dersler, interaktif atölyeler ve bilgi yarışmaları.",
+        "cta": "Daha fazla bilgi edinin"
+      }
+    },
+    "stats": {
+      "videos": "{count, plural, other {YouTube'da video}}",
+      "views": "{count, plural, other {görüntülenme}}",
+      "circles": "{count, plural, other {haftalık halka}}",
+      "authors": "{count, plural, other {yazar ve hoca}}"
+    }
+  },
+  "lectures": {
+    "tag": "DERSLER",
+    "title": "Programı kimin için hazırlıyoruz?",
+    "text": "Dinleyici kitlesini seçin. Ardından hocayı ve program türünü seçersiniz.",
+    "lecturers": "{count, plural, one {# hoca} other {# hoca}}",
+    "femaleLecturers": "{count, plural, one {# hanım hoca} other {# hanım hoca}}"
+  },
+  "lecturers": {
+    "pageTitle": "Dersler · {audience}",
+    "tag": "DERSLER · {audience}",
+    "title": "Hocayı seçin",
+    "text": "{description} Hocanın profilinde program türünü seçer ve talebinizi gönderirsiniz.",
+    "videos": "{count, plural, one {# video} other {# video}}"
+  },
+  "profile": {
+    "allContent": "Misbah'taki tüm içerikler",
+    "recordings": {
+      "tag": "KAYITLAR",
+      "title": "Dersleri izleyin"
+    }
+  },
+  "soon": {
+    "title": "Kayıtlar yakında",
+    "text": "Kayıtları yakında ekleyeceğiz. O zamana kadar bize ulaşın, size icra örnekleri gönderelim.",
+    "cta": "Bize sorun"
+  },
+  "choir": {
+    "pageTitle": "Misbah Korosu",
+    "tag": "MİSBAH KOROSU",
+    "title": "Koro seçin",
+    "text": "Cami açılışlarında, mevlidlerde, iftarlarda ve törenlerde icra ediyoruz.",
+    "recordings": "{count, plural, one {# kayıt} other {# kayıt}}",
+    "groups": {
+      "muski": {
+        "title": "Erkek korosu",
+        "description": "Defli ilahiler ve kasideler: cami açılışları, mevlidler, iftarlar ve törenler."
+      },
+      "zenski": {
+        "title": "Kadın korosu",
+        "description": "Kadın programları, mevlidler, mektep gösterileri ve törenler için ilahiler."
+      },
+      "mijesani": {
+        "title": "Karma koro",
+        "description": "Cemaatin aile ve tören programları için ortak icralar."
+      },
+      "vecer": {
+        "title": "Kur'an Gecesi",
+        "description": "Meal ve ilahilerle Kur'an okuma: cemaat için geceler, Ramazan programları ve özel vesileler."
+      }
+    }
+  },
+  "gatherings": {
+    "tag": "GENÇLİK BULUŞMALARI",
+    "title": "Bizimle buluşun",
+    "text": "Misbah gençlere neler sunuyor?",
+    "cta": "Bizimle bir buluşma düzenleyin",
+    "choice": "Gençlik buluşması",
+    "offer": {
+      "lectures": {
+        "title": "Eğitici dersler",
+        "description": "Dinden ve gündelik hayattan önemli konuları ele alıyor, İslami değerleri gençlere çağdaş ve onlara yakın bir şekilde yaklaştırıyoruz."
+      },
+      "workshops": {
+        "title": "İnteraktif atölyeler",
+        "description": "Yaratıcı görevler, sohbet ve ekip çalışması yoluyla aktif katılımı, fikir alışverişini ve yeni becerilerin gelişimini teşvik ediyoruz."
+      },
+      "quizzes": {
+        "title": "Bilgi yarışmaları",
+        "description": "Eğlence, takım yarışması ve buluşma yoluyla gençleri İslam, İslam tarihi ve genel kültür hakkındaki bilgilerini genişletmeye teşvik ediyoruz."
+      }
+    },
+    "photos": {
+      "youthLecture": "Gençler İstiklal Camii'ndeki derste",
+      "spousesLecture": "{mubina} ve {hamdo} „İslam'da eşlerin rolü” dersinde",
+      "youthInMosque": "Gençler camideki derste",
+      "youthIftar": "Gençlik iftarı"
+    },
+    "recordings": {
+      "tag": "KAYITLAR",
+      "title": "Buluşmalarımızdan"
+    }
+  },
+  "contact": {
+    "stayConnected": "Bağlantıda kalalım",
+    "location": "Saraybosna, Bosna-Hersek"
+  },
+  "audiences": {
+    "muskarci": {
+      "title": "Erkekler için",
+      "description": "Erkek cemaat üyeleri, gençler ve öğrenciler için dersler ve halkalar."
+    },
+    "zene": {
+      "title": "Kadınlar için",
+      "description": "Kadınlar ve genç kızlar için dersler, eğitimler ve atölyeler."
+    },
+    "dzemat": {
+      "title": "Cemaat için",
+      "description": "Tüm cemaat ve aileler için: konferanslar, Kur'an geceleri, mevlidler."
+    }
+  },
+  "formats": {
+    "predavanje": {
+      "title": "Ders",
+      "description": "Dinleyicilerin soru sorabildiği tek bir ders veya konferans."
+    },
+    "edukacija": {
+      "title": "Eğitim",
+      "description": "Birkaç buluşmadan oluşan tematik seri, örn. haftalık."
+    },
+    "radionica": {
+      "title": "Atölye",
+      "description": "Küçük grupla sohbet ve görevler yoluyla çalışma."
+    },
+    "visednevna": {
+      "title": "Çok günlük eğitim",
+      "description": "Hafta sonu veya birkaç gün boyunca yoğun program."
+    }
+  },
+  "people": {
+    "hamdo": {
+      "role": "Tefsir",
+      "bio": "İslami İlimler Fakültesi'nde kıraat uzman yardımcısı ve doktora öğrencisi. Carina cemaatinde perşembe günleri tefsir halkasını yürütür.",
+      "topics": [
+        "Kısa surelerin tefsiri",
+        "Evlilik ve aile"
+      ]
+    },
+    "hamza": {
+      "role": "Siyer ve ahlak",
+      "bio": "Peygamber Efendimiz ﷺ'in hayatı ve bugün için dersler. Bjelave cemaatinde pazartesi günleri akşam namazından sonra siyer halkasını yürütür.",
+      "topics": [
+        "Peygamber Efendimiz ﷺ'in siyeri",
+        "Sabır ve huzur",
+        "İman"
+      ]
+    },
+    "mubina": {
+      "role": "Fıkıh · Kur'an hafızı",
+      "bio": "İslami İlimler Fakültesi Şer'i Hukuk (Fıkıh) Kürsüsü asistanı ve Kur'an hafızı. İbadet, aile ve çağdaş Müslüman kadının karşılaştığı meseleler hakkında konuşur.",
+      "topics": [
+        "Kadınlar için fıkıh",
+        "Namaz ve ibadet",
+        "Peygamber Efendimiz ﷺ'in karakteri",
+        "Ramazan"
+      ]
+    }
+  },
+  "videoTitles": {
+    "inshirah": "İnşirah suresi: zorluğun ardından kolaylık gelir",
+    "zilzal": "Zilzal suresi bize Kıyamet Günü hakkında ne söylüyor?",
+    "nas": "Nas suresi: kötü düşüncelerden ve şeytanın vesveselerinden korunma",
+    "tin": "Tin suresi: Allah neden incir ve zeytini zikretti?",
+    "duha": "Duha suresi: zor anlarında sana bir mesaj",
+    "adiyat": "Adiyat suresi: hakkında en az şey bildiğimiz sure mi?",
+    "prophetInQuran": "İslam'ın boyutları: Hz. Muhammed (s.a.v.) Kur'an'da",
+    "calmInAnxiousTimes": "Kaygı çağında huzur",
+    "sabrChangesTheHeart": "Sabır kalbi nasıl değiştirir",
+    "blessingOfRememberingTheProphet": "Peygamber Efendimiz ﷺ'i anmanın bereketi",
+    "trueBeliever": "Gerçek mümin olmak ne demektir?",
+    "marriageThatChangedHistory": "Tarihi değiştiren evlilik (Siyer, 7. bölüm)",
+    "prophetsMercy": "Hz. Muhammed'in (s.a.v.) merhameti",
+    "prophetsEmotionalIntelligence": "Hz. Muhammed'in (s.a.v.) duygusal zekâsı",
+    "isIslamFairToWomen": "İslam kadına karşı adil mi?",
+    "gratitudeThroughPrayer": "Namazla şükre",
+    "easeAfterHardship": "İmtihanın ardından kolaylık gelir",
+    "fastingAndRelationships": "Oruç insanlar arası ilişkileri nasıl etkiler",
+    "ilahijeCollage": "İlahi kolajı",
+    "performanceInSwitzerland": "İsviçre'de icra",
+    "ilahijaByCandlelight": "Mum ışığında ilahi",
+    "mosqueOpeningMaljevac": "Maljevac'ta cami açılışı",
+    "youthIftarZagreb": "Zagreb'de gençlik iftarı",
+    "youthIftarZagrebStudio": "Zagreb'de gençlik iftarı (stüdyo sesi)",
+    "fullPerformanceMaljevac": "Maljevac'ta icranın tamamı",
+    "fullPerformanceZagreb": "Zagreb'de icranın tamamı",
+    "ilahijaAtGathering": "Buluşmada ilahi",
+    "ilahijaInMosque": "Camide ilahi",
+    "performanceInMosque": "Camide icra",
+    "quranRecitation": "Kur'an okuma",
+    "quranRecitationInDzemat": "Cemaatte Kur'an okuma",
+    "suraIbrahim": "İbrahim suresi (23–27)",
+    "suraFussilat": "Fussilet suresi (30–33)",
+    "suraIsra": "İsra suresi (11–12)",
+    "mukabelaJuz13": "Mukabele, 13. cüz",
+    "hijriNewYearCarina": "Carina cemaatinde yeni hicri yıl"
+  },
+  "videoGrid": {
+    "views": "{count, plural, one {# görüntülenme} other {# görüntülenme}}",
+    "badges": {
+      "short": "Kısa",
+      "clip": "Kesit"
+    }
+  },
+  "player": {
+    "close": "Kapat"
+  },
+  "heroVideo": {
+    "mute": "Sesi kapat",
+    "unmute": "Sesi aç"
+  },
+  "programPicker": {
+    "label": "Program türü",
+    "title": "Ne düzenlemek istiyorsunuz?"
+  },
+  "quickContact": {
+    "copy": "Kopyala",
+    "addressCopied": "Adres kopyalandı",
+    "copyAddressManually": "Adresi elle kopyalayın",
+    "viberCopied": "Mesaj kopyalandı, Viber'da görünmezse yapıştırın"
+  },
+  "form": {
+    "title": "İcra talebi",
+    "yourChoice": "Seçiminiz: <b>{choice}</b>",
+    "change": "değiştir",
+    "organizer": "Organizatör",
+    "organizerPlaceholder": "örn. Bjelave Cemaati",
+    "place": "Yer",
+    "placePlaceholder": "Şehir, mekân",
+    "date": "Tarih",
+    "datePlaceholder": "örn. 20 Aralık veya anlaşmaya göre",
+    "category": "Bölüm",
+    "categories": {
+      "predavanja": "Dersler",
+      "hor": "Koro",
+      "druzenja": "Gençlik buluşmaları"
+    },
+    "note": "Not",
+    "notePlaceholder": "Vesile, süre, kişi sayısı, iletişim telefonu…",
+    "prepare": "Mesajı hazırla",
+    "sendWhatsApp": "WhatsApp'a gönder",
+    "copyMessage": "Mesajı kopyala",
+    "openEmail": "E-postada aç",
+    "viberCopied": "Mesaj kopyalandı, Viber'a yapıştırın",
+    "messageCopied": "Mesaj kopyalandı",
+    "copyManually": "Mesajı seçin ve kopyalayın",
+    "hint": "WhatsApp, mesajı göndermeye hazır olarak açar. Viber de mesajı yazar, ayrıca her ihtimale karşı kopyalıyoruz. Numara: {phone}, e-posta: {email}."
+  }
+}

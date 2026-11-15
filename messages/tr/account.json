@@ -1,0 +1,29 @@
+{
+  "deleteAccount": {
+    "meta": {
+      "title": "Hesabı silme",
+      "description": "Misbah EDU kullanıcı hesabının kalıcı olarak silinmesi (web sitesi ve mobil uygulama)."
+    },
+    "tag": "Hesap",
+    "title": "Hesabı silme",
+    "whatIsDeleted": "Burada Misbah EDU hesabınızı kalıcı olarak silebilirsiniz; aynı hesap web sitesinde ve mobil uygulamada kullanılır. Silme işlemiyle <b>kullanıcı adı, şifre, tüm yorumlarınız ve beğenileriniz</b> kalıcı olarak kaldırılır. Bu işlem geri alınamaz.",
+    "inApp": "Mobil uygulamada hesabı <b>Više → Obriši nalog</b> (Daha fazla → Hesabı sil) menüsünden de silebilirsiniz. Yalnızca telefonda saklanan veriler (kaydedilen içerikler, ayarlar) uygulama kaldırıldığında silinir.",
+    "cannotLogIn": "Giriş yapamıyor musunuz? Kullanıcı adınızla birlikte bize <mail>{email}</mail> adresinden yazın, hesabı 7 gün içinde sileceğiz. Veriler hakkında daha fazla bilgi için <privacyLink>Gizlilik Politikası</privacyLink>'na bakın.",
+    "mailSubject": "Hesabın silinmesi",
+    "form": {
+      "username": "Kullanıcı adı",
+      "password": "Şifre",
+      "confirm": "Hesabın, yorumların ve beğenilerin kalıcı olarak silineceğini anlıyorum.",
+      "submit": "Hesabı kalıcı olarak sil",
+      "done": "Hesabınız ve ilgili tüm veriler kalıcı olarak silindi.",
+      "errors": {
+        "notConfirmed": "Hesabı kalıcı olarak silmek istediğinizi onaylayın.",
+        "deleteFailed": "Hesap silinirken hata oluştu",
+        "connection": "Bağlantı hatası",
+        "missingCredentials": "Kullanıcı adı ve şifre zorunludur",
+        "wrongCredentials": "Kullanıcı adı veya şifre hatalı",
+        "server": "Sunucu hatası"
+      }
+    }
+  }
+}

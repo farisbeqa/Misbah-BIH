@@ -1,7 +1,12 @@
-﻿import Link from 'next/link'
+﻿import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
+import Link from '@/i18n/navigation'
 import { ArrowLeft, Mail, Phone } from 'lucide-react'
 
-export const metadata = { title: 'Kontakt - Misbah EDU' }
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('about.contact.meta')
+  return { title: t('title') }
+}
 
 // ── Ažurirajte kontakt podatke ovdje ──────────────────────────────────────
 const KONTAKT = {
@@ -10,16 +15,18 @@ const KONTAKT = {
 }
 // ─────────────────────────────────────────────────────────────────────────
 
-export default function KontaktPage() {
+export default async function KontaktPage() {
+  const t = await getTranslations('about.contact')
+
   return (
     <div className="max-w-xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <Link href="/o-nama"
         className="inline-flex items-center gap-2 text-warm-400 hover:text-warm-700 text-sm mb-8 transition-colors font-mono">
-        <ArrowLeft size={14} /> O Nama
+        <ArrowLeft size={14} className="flip-rtl" /> {t('back')}
       </Link>
 
-      <h1 className="text-2xl sm:text-3xl font-extrabold text-warm-900 tracking-tight mb-3">Kontakt</h1>
-      <p className="text-warm-500 text-sm mb-10">Slobodno nas kontaktirajte za sve upite, sugestije i saradnju.</p>
+      <h1 className="text-2xl sm:text-3xl font-extrabold text-warm-900 tracking-tight mb-3">{t('title')}</h1>
+      <p className="text-warm-500 text-sm mb-10">{t('text')}</p>
 
       <div className="space-y-4">
         {/* Email */}
@@ -31,8 +38,8 @@ export default function KontaktPage() {
             <Mail size={20} className="text-white" />
           </div>
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-wider text-warm-400 mb-0.5">Email</p>
-            <p className="font-semibold text-warm-900 group-hover:text-brand transition-colors">{KONTAKT.email}</p>
+            <p className="font-mono text-[11px] uppercase tracking-wider text-warm-400 mb-0.5">{t('email')}</p>
+            <p className="font-semibold text-warm-900 group-hover:text-brand transition-colors" dir="ltr">{KONTAKT.email}</p>
           </div>
         </a>
 
@@ -46,18 +53,17 @@ export default function KontaktPage() {
               <Phone size={20} className="text-white" />
             </div>
             <div>
-              <p className="font-mono text-[11px] uppercase tracking-wider text-warm-400 mb-0.5">Telefon</p>
-              <p className="font-semibold text-warm-900 group-hover:text-brand transition-colors">{KONTAKT.telefon}</p>
+              <p className="font-mono text-[11px] uppercase tracking-wider text-warm-400 mb-0.5">{t('phone')}</p>
+              <p className="font-semibold text-warm-900 group-hover:text-brand transition-colors" dir="ltr">{KONTAKT.telefon}</p>
             </div>
           </a>
         )}
       </div>
 
       <div className="mt-10 p-5 rounded-2xl text-sm text-warm-600" style={{ background: '#FAF7F2', border: '1px solid #E8E1DB' }}>
-        <p className="font-bold text-warm-800 mb-2">Saradnja i autorski tekstovi</p>
+        <p className="font-bold text-warm-800 mb-2">{t('collaboration.title')}</p>
         <p>
-          Misbah EDU je otvoren prostor za sve autore koji žele objaviti tekstove s islamskim ili edukativnim sadržajem.
-          Javite nam se putem emaila i rado ćemo vam odgovoriti.
+          {t('collaboration.text')}
         </p>
       </div>
     </div>

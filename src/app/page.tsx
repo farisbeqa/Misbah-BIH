@@ -1,20 +1,17 @@
-import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 import { prisma } from '@/lib/db'
+import { localizeRows } from '@/lib/translations'
+import Link from '@/i18n/navigation'
+import { getLocale } from '@/i18n/server'
+import { formatShortDate } from '@/i18n/format'
+import type { Locale } from '@/i18n/config'
 import MisaoDana from '@/components/MisaoDana'
 import GlasoviSection from '@/components/GlasoviSection'
 import MisaoDanaPopup from '@/components/MisaoDanaPopup'
-import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
-export const metadata: Metadata = { alternates: { canonical: '/' } }
 
-const MONTHS = ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec']
-function fmtDate(d: string | Date) {
-  const dt = new Date(d)
-  return `${dt.getDate()}. ${MONTHS[dt.getMonth()]} ${dt.getFullYear()}.`
-}
-
-async function getData() {
+async function getData(locale: Locale) {
   try {
     const [predavanja, kuran, podcasts, posts, quotes] = await Promise.all([
       prisma.video.findMany({ where: { published: true, category: 'predavanja' }, orderBy: { createdAt: 'desc' }, take: 3 }),
@@ -23,7 +20,14 @@ async function getData() {
       prisma.blogPost.findMany({ where: { published: true }, orderBy: { createdAt: 'desc' }, take: 3 }),
       prisma.quote.findMany({ where: { published: true }, orderBy: { createdAt: 'desc' }, take: 8 }),
     ])
-    return { predavanja, kuran, podcasts, posts, quotes }
+    const [videos, localizedPosts, localizedQuotes] = await Promise.all([
+      localizeRows('video', [...predavanja, ...kuran, ...podcasts], locale),
+      localizeRows('blog', posts, locale),
+      localizeRows('quote', quotes, locale),
+    ])
+    const byId = new Map(videos.map(v => [v.id, v]))
+    const pick = (rows: { id: number }[]) => rows.map(r => byId.get(r.id)!)
+    return { predavanja: pick(predavanja), kuran: pick(kuran), podcasts: pick(podcasts), posts: localizedPosts, quotes: localizedQuotes }
   } catch {
     return { predavanja: [], kuran: [], podcasts: [], posts: [], quotes: [] }
   }
@@ -32,7 +36,7 @@ async function getData() {
 // ── Arrow icon (16 px) ───────────────────────────────────────────────────────
 function ArrowUpRight() {
   return (
-    <svg className="block shrink-0" width="16" height="16" fill="none" viewBox="0 0 11.5 11.5">
+    <svg className="block shrink-0 flip-rtl" width="16" height="16" fill="none" viewBox="0 0 11.5 11.5">
       <path d="M0.75 10.75L10.75 0.75M10.75 10.75V0.75H0.75"
         stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
     </svg>
@@ -65,7 +69,7 @@ function SectionHead({
       </div>
       {cta && (
         <Link href={cta.href}
-          className="bg-[#8b1e3f] text-white flex items-center gap-2 pl-8 pr-6 py-3 text-base font-normal shrink-0 hover:bg-[#7a1a37] transition-colors self-start lg:self-auto">
+          className="bg-[#8b1e3f] text-white flex items-center gap-2 ps-8 pe-6 py-3 text-base font-normal shrink-0 hover:bg-[#7a1a37] transition-colors self-start lg:self-auto">
           {cta.label}
           <ArrowUpRight />
         </Link>
@@ -80,7 +84,7 @@ type VideoRow = {
   platform: string; thumbnailUrl?: string | null; createdAt: string | Date
 }
 
-function VideoCard({ v }: { v: VideoRow }) {
+function VideoCard({ v, locale }: { v: VideoRow; locale: Locale }) {
   return (
     <Link href={`/videos/${v.id}`} className="group block h-full">
       <div className="bg-[#f5f2ef] overflow-hidden border border-black/5 flex flex-col h-full">
@@ -91,14 +95,14 @@ function VideoCard({ v }: { v: VideoRow }) {
                 <span className="text-[#a89888] text-4xl">▶</span>
               </div>
           }
-          <div className="absolute top-4 left-4 bg-[#faf5f5] px-2.5 py-1.5">
+          <div className="absolute top-4 start-4 bg-[#faf5f5] px-2.5 py-1.5">
             <span className="text-[#8b1e3f] uppercase" style={{ fontSize: 10, letterSpacing: '0.3px' }}>
               {v.platform}
             </span>
           </div>
         </div>
         <div className="flex flex-col gap-2.5 px-6 py-7 flex-1">
-          <p className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{fmtDate(v.createdAt)}</p>
+          <p className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{formatShortDate(v.createdAt, locale)}</p>
           <p className="font-medium text-[#241f1d] leading-[1.12] line-clamp-2 group-hover:text-[#8b1e3f] transition-colors"
             style={{ fontSize: 20, letterSpacing: '-0.6px' }}>
             {v.title}
@@ -115,7 +119,7 @@ function VideoCard({ v }: { v: VideoRow }) {
 // ── Content card for blog posts ──────────────────────────────────────────────
 type PostRow = { id: number; title: string; content: string; imageUrl?: string | null; createdAt: string | Date }
 
-function PostCard({ p }: { p: PostRow }) {
+function PostCard({ p, locale }: { p: PostRow; locale: Locale }) {
   return (
     <Link href={`/blog/${p.id}`} className="group block h-full">
       <div className="bg-[#f5f2ef] overflow-hidden border border-black/5 flex flex-col h-full">
@@ -126,7 +130,7 @@ function PostCard({ p }: { p: PostRow }) {
           }
         </div>
         <div className="flex flex-col gap-2.5 px-6 py-7 flex-1">
-          <p className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{fmtDate(p.createdAt)}</p>
+          <p className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{formatShortDate(p.createdAt, locale)}</p>
           <p className="font-medium text-[#241f1d] leading-[1.12] line-clamp-2 group-hover:text-[#8b1e3f] transition-colors"
             style={{ fontSize: 20, letterSpacing: '-0.6px' }}>
             {p.title}
@@ -151,32 +155,18 @@ function EmptySlate({ text }: { text: string }) {
 
 // ── Benefits data ────────────────────────────────────────────────────────────
 const BENEFITS = [
-  {
-    title: 'Duhovnost',
-    description: 'Jačanje veze sa Allahom kroz znanje, ibadet i iskreno preispitivanje sebe.',
-    image: '/benefits/duhovnost.svg',
-  },
-  {
-    title: 'Porodica',
-    description: 'Teme o zdravijim odnosima, snažnijim brakovima i odgoju djece.',
-    image: '/benefits/porodica.svg',
-  },
-  {
-    title: 'Društvo',
-    description: 'Promišljanja o pitanjima koja oblikuju našu zajednicu i svakodnevni život.',
-    image: '/benefits/zajednica.svg',
-  },
-  {
-    title: 'Karakter',
-    description: 'Razvijajte vrijednosti i navike koje oblikuju snažan, odgovoran i ispunjen život.',
-    image: '/benefits/karakter.svg',
-  },
-]
+  { key: 'spirituality', image: '/benefits/duhovnost.svg' },
+  { key: 'family',       image: '/benefits/porodica.svg' },
+  { key: 'society',      image: '/benefits/zajednica.svg' },
+  { key: 'character',    image: '/benefits/karakter.svg' },
+] as const
 
 
 // ════════════════════════════════════════════════════════════════════════════
 export default async function HomePage() {
-  const { predavanja, kuran, podcasts, posts, quotes } = await getData()
+  const locale = getLocale()
+  const t = await getTranslations('home')
+  const { predavanja, kuran, podcasts, posts, quotes } = await getData(locale)
 
   return (
     <div className="min-h-screen w-full bg-white">
@@ -188,30 +178,30 @@ export default async function HomePage() {
           {/* Left panel */}
           <div className="bg-[#faf7f2] flex flex-col justify-end gap-16 lg:gap-20 px-6 sm:px-10 lg:px-[60px] py-16 lg:py-[104px] w-full lg:w-[55%] xl:w-[798px] shrink-0">
             <div className="flex flex-col gap-2">
-              <p className="text-base font-medium text-[#141110] text-center lg:text-left"
+              <p className={`text-base font-medium text-[#141110] text-center ${locale === 'ar' ? 'lg:text-right' : 'lg:text-left'}`}
                 dir="rtl" style={{ fontFamily: "'Noto Sans Arabic', Manrope, sans-serif" }}>
                 بسم الله الرحمن الرحيم
               </p>
               <div className="flex flex-col gap-6 mt-2">
                 <h1 className="font-semibold text-[#141110]"
                   style={{ fontSize: 'clamp(32px, 5vw, 52px)', lineHeight: 1.3, letterSpacing: '-1.04px' }}>
-                  Svjetlo znanja koje obasjava srce i prosvjetljuje razum.
+                  {t('hero.title')}
                 </h1>
                 <p className="font-normal text-[#5a4f49]"
                   style={{ fontSize: 18, lineHeight: 1.5, letterSpacing: '-0.18px' }}>
-                  Omladinski sadržaji ispunjeni porukama i mislima koje unose svjetlo u život, približavaju čovjeka Allahu, smiruju srce, podstiču na dobro i svakodnevno inspirišu.
+                  {t('hero.text')}
                 </p>
               </div>
             </div>
             <div className="flex flex-wrap gap-4">
               <Link href="/predavanja/duga"
-                className="bg-[#8b1e3f] text-white flex items-center gap-2 pl-8 pr-6 py-3 text-base font-normal hover:bg-[#7a1a37] transition-colors">
-                Istraži sadržaj
+                className="bg-[#8b1e3f] text-white flex items-center gap-2 ps-8 pe-6 py-3 text-base font-normal hover:bg-[#7a1a37] transition-colors">
+                {t('hero.explore')}
                 <ArrowUpRight />
               </Link>
               <Link href="/autori"
                 className="border border-[#8b1e3f] text-[#8b1e3f] px-6 py-3 text-base font-normal hover:bg-[#faf5f5] transition-colors">
-                Autori
+                {t('hero.authors')}
               </Link>
             </div>
           </div>
@@ -228,33 +218,31 @@ export default async function HomePage() {
       <section className="bg-white w-full">
         <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
           <div className="flex flex-col gap-4 max-w-[705px]">
-            <p className="font-medium text-[#8b1e3f] text-base">TEME KOJE ISTRAŽUJEMO</p>
+            <p className="font-medium text-[#8b1e3f] text-base">{t('benefits.tag')}</p>
             <div className="flex flex-col gap-6">
               <h2 className="font-semibold text-[#141110]"
                 style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}>
-                Znanje koje ostavlja trag
+                {t('benefits.title')}
               </h2>
               <p className="font-normal text-[#746860]"
                 style={{ fontSize: 18, lineHeight: 1.5, letterSpacing: '-0.18px' }}>
-                Od duhovnosti i ibadeta, preko porodice i odgoja, do izazova savremenog
-                društva — Misbah okuplja mlade ljude kroz sadržaje koji pomažu razumjeti vjeru i živjeti
-                njene vrijednosti u svakodnevici.
+                {t('benefits.text')}
               </p>
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
             {BENEFITS.map(b => (
-              <div key={b.title} className="bg-[#faf5f5] flex flex-col gap-6 p-8" style={{ minHeight: 380 }}>
+              <div key={b.key} className="bg-[#faf5f5] flex flex-col gap-6 p-8" style={{ minHeight: 380 }}>
                 <div className="flex-1 overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={b.image} alt={b.title} className="w-full h-full object-cover object-center" style={{ maxHeight: 220 }} />
+                  <img src={b.image} alt={t(`benefits.${b.key}.title`)} className="w-full h-full object-cover object-center" style={{ maxHeight: 220 }} />
                 </div>
                 <div className="flex flex-col gap-4 shrink-0">
                   <h3 className="font-medium text-[#241f1d]"
                     style={{ fontSize: 24, lineHeight: 1.12, letterSpacing: '-0.72px' }}>
-                    {b.title}
+                    {t(`benefits.${b.key}.title`)}
                   </h3>
-                  <p className="font-normal text-[#5a4f49] text-base leading-normal">{b.description}</p>
+                  <p className="font-normal text-[#5a4f49] text-base leading-normal">{t(`benefits.${b.key}.description`)}</p>
                 </div>
               </div>
             ))}
@@ -266,17 +254,15 @@ export default async function HomePage() {
       <section className="bg-[#fcfbfa] w-full">
         <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
           <div className="flex flex-col gap-4 max-w-[705px]">
-            <p className="font-medium text-[#8b1e3f] text-base">LJUDI IZA SADRŽAJA</p>
+            <p className="font-medium text-[#8b1e3f] text-base">{t('team.tag')}</p>
             <div className="flex flex-col gap-6">
               <h2 className="font-semibold text-[#141110]"
                 style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}>
-                Glasovi koji inspirišu
+                {t('team.title')}
               </h2>
               <p className="font-normal text-[#746860]"
                 style={{ fontSize: 18, lineHeight: 1.5, letterSpacing: '-0.18px' }}>
-                Sadržaj na Misbahu nastaje kroz saradnju predavača, profesora, hafiza i
-                stručnjaka koji svojim znanjem i iskustvom doprinose zajedničkoj misiji
-                širenja korisnog znanja.
+                {t('team.text')}
               </p>
             </div>
           </div>
@@ -297,11 +283,11 @@ export default async function HomePage() {
           <div className="max-w-[646px]">
             <blockquote className="font-medium text-[#8b1e3f] leading-[1.08]"
               style={{ fontSize: 'clamp(32px, 5vw, 64px)', letterSpacing: '-2.56px' }}>
-              &ldquo;I reci: Gospodaru moj, povećaj mi znanje.&rdquo;
+              &ldquo;{t('verse.text')}&rdquo;
             </blockquote>
             <p className="font-medium text-[#8b1e3f] mt-8"
               style={{ fontSize: 'clamp(18px, 2vw, 24px)', lineHeight: 1.12, letterSpacing: '-0.72px' }}>
-              Kur&apos;an 20:114
+              {t('verse.source')}
             </p>
           </div>
         </div>
@@ -311,15 +297,15 @@ export default async function HomePage() {
       <section className="bg-white w-full">
         <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
           <SectionHead
-            tag="NAJNOVIJI SADRŽAJI"
-            title="Predavanja"
-            description="Sadržaji koji povezuju islamsko znanje sa pitanjima i izazovima svakodnevnog života."
-            cta={{ label: 'Pogledaj sva predavanja', href: '/predavanja/duga' }}
+            tag={t('lectures.tag')}
+            title={t('lectures.title')}
+            description={t('lectures.text')}
+            cta={{ label: t('lectures.cta'), href: '/predavanja/duga' }}
           />
           {predavanja.length === 0
-            ? <EmptySlate text="Nema predavanja još uvijek" />
+            ? <EmptySlate text={t('lectures.empty')} />
             : <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {predavanja.map(v => <VideoCard key={v.id} v={v} />)}
+                {predavanja.map(v => <VideoCard key={v.id} v={v} locale={locale} />)}
               </div>
           }
         </div>
@@ -329,15 +315,15 @@ export default async function HomePage() {
       <section style={{ backgroundColor: '#fcfbfa' }} className="w-full">
         <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
           <SectionHead
-            tag="KUR'ANSKE NAUKE"
-            title="Kur'an"
-            description="Odabrani odlomci iz Kur'ana i cjelovite sure."
-            cta={{ label: "Istraži kur'anske sadržaje", href: '/kuran' }}
+            tag={t('quran.tag')}
+            title={t('quran.title')}
+            description={t('quran.text')}
+            cta={{ label: t('quran.cta'), href: '/kuran' }}
           />
           {kuran.length === 0
-            ? <EmptySlate text="Nema Kur'an sadržaja još uvijek" />
+            ? <EmptySlate text={t('quran.empty')} />
             : <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {kuran.map(v => <VideoCard key={v.id} v={v} />)}
+                {kuran.map(v => <VideoCard key={v.id} v={v} locale={locale} />)}
               </div>
           }
         </div>
@@ -347,15 +333,15 @@ export default async function HomePage() {
       <section className="bg-white w-full">
         <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
           <SectionHead
-            tag="RAZGOVORI"
-            title="Podcast"
-            description="Razgovori sa predavačima, stručnjacima i gostima o vjeri, društvu, odgoju i temama koje oblikuju naš svakodnevni život."
-            cta={{ label: 'Poslušaj epizode', href: '/podcasts' }}
+            tag={t('podcast.tag')}
+            title={t('podcast.title')}
+            description={t('podcast.text')}
+            cta={{ label: t('podcast.cta'), href: '/podcasts' }}
           />
           {podcasts.length === 0
-            ? <EmptySlate text="Nema podcast epizoda još uvijek" />
+            ? <EmptySlate text={t('podcast.empty')} />
             : <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {podcasts.map(v => <VideoCard key={v.id} v={v} />)}
+                {podcasts.map(v => <VideoCard key={v.id} v={v} locale={locale} />)}
               </div>
           }
         </div>
@@ -365,15 +351,15 @@ export default async function HomePage() {
       <section style={{ backgroundColor: '#fcfbfa' }} className="w-full">
         <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
           <SectionHead
-            tag="PROMIŠLJANJA"
-            title="Blog"
-            description="Tekstovi, osvrti i razmišljanja o vjeri, znanju, porodici i izazovima savremenog čovjeka."
-            cta={{ label: 'Čitaj sve tekstove', href: '/blog' }}
+            tag={t('blog.tag')}
+            title={t('blog.title')}
+            description={t('blog.text')}
+            cta={{ label: t('blog.cta'), href: '/blog' }}
           />
           {posts.length === 0
-            ? <EmptySlate text="Nema blog postova još uvijek" />
+            ? <EmptySlate text={t('blog.empty')} />
             : <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {posts.map(p => <PostCard key={p.id} p={p} />)}
+                {posts.map(p => <PostCard key={p.id} p={p} locale={locale} />)}
               </div>
           }
         </div>

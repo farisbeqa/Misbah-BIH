@@ -95,3 +95,15 @@ main { min-height: 0; }
 
 /* ── Platform badge instagram ────────────────────────────────────────── */
 .badge-ig { background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); }
+
+/* ── Arabic version of the site (html.lang-ar, dir="rtl") ───────────── */
+html.lang-ar body {
+  font-family: var(--font-arabic), var(--font-manrope), system-ui, sans-serif;
+}
+/* Negative letter-spacing tuned for Manrope breaks the joined Arabic letters */
+html.lang-ar body * { letter-spacing: 0 !important; }
+/* Monospace labels/dates and Georgia quotes have no Arabic letters: fall back to the Arabic font */
+html.lang-ar .font-mono { font-family: var(--font-ibm-mono), var(--font-arabic), monospace; }
+html.lang-ar [style*="Georgia"] { font-family: Georgia, var(--font-arabic), serif !important; }
+/* Directional icons (arrows, chevrons) point the other way in right-to-left text */
+[dir="rtl"] .flip-rtl { transform: scaleX(-1); }

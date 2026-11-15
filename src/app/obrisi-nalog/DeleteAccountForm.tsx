@@ -1,9 +1,19 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { CheckCircle2, Loader2 } from 'lucide-react'
 
+// Known error texts of /api/auth/delete-account, shown in the visitor's
+// language; any other server text is shown as it comes
+const SERVER_ERRORS = new Map([
+  ['Korisničko ime i lozinka su obavezni', 'missingCredentials'],
+  ['Pogrešno korisničko ime ili lozinka', 'wrongCredentials'],
+  ['Greška servera', 'server'],
+])
+
 export default function DeleteAccountForm() {
+  const t = useTranslations('account.deleteAccount.form')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [confirmed, setConfirmed] = useState(false)
@@ -14,7 +24,7 @@ export default function DeleteAccountForm() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
-    if (!confirmed) return setError('Potvrdite da želite trajno obrisati nalog.')
+    if (!confirmed) return setError(t('errors.notConfirmed'))
     setLoading(true)
     try {
       const res = await fetch('/api/auth/delete-account', {
@@ -24,9 +34,12 @@ export default function DeleteAccountForm() {
       })
       const data = await res.json().catch(() => ({}))
       if (res.ok) setDone(true)
-      else setError(data.error || 'Greška pri brisanju naloga')
+      else {
+        const known = SERVER_ERRORS.get(data.error)
+        setError(known ? t(`errors.${known}`) : data.error || t('errors.deleteFailed'))
+      }
     } catch {
-      setError('Greška pri konekciji')
+      setError(t('errors.connection'))
     } finally {
       setLoading(false)
     }
@@ -36,7 +49,7 @@ export default function DeleteAccountForm() {
     return (
       <div className="flex items-start gap-3 p-5" style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', borderRadius: 8 }}>
         <CheckCircle2 size={20} className="text-green-600 flex-shrink-0 mt-0.5" />
-        <p className="text-sm text-green-800">Vaš nalog i svi povezani podaci su trajno obrisani.</p>
+        <p className="text-sm text-green-800">{t('done')}</p>
       </div>
     )
   }
@@ -47,16 +60,16 @@ export default function DeleteAccountForm() {
   return (
     <form onSubmit={submit} className="space-y-4 p-6" style={{ background: '#FCFBFA', border: '1px solid #E8E1DB', borderRadius: 12 }}>
       <div>
-        <label className="block font-mono text-[11px] text-warm-500 uppercase tracking-widest mb-2">Korisničko ime</label>
+        <label className="block font-mono text-[11px] text-warm-500 uppercase tracking-widest mb-2">{t('username')}</label>
         <input value={username} onChange={e => setUsername(e.target.value)} required autoComplete="username" className={inputCls} style={inputStyle} />
       </div>
       <div>
-        <label className="block font-mono text-[11px] text-warm-500 uppercase tracking-widest mb-2">Lozinka</label>
+        <label className="block font-mono text-[11px] text-warm-500 uppercase tracking-widest mb-2">{t('password')}</label>
         <input type="password" value={password} onChange={e => setPassword(e.target.value)} required autoComplete="current-password" className={inputCls} style={inputStyle} />
       </div>
       <label className="flex items-start gap-2 text-sm text-warm-600">
         <input type="checkbox" checked={confirmed} onChange={e => setConfirmed(e.target.checked)} className="mt-1" />
-        Razumijem da se nalog, komentari i lajkovi trajno brišu.
+        {t('confirm')}
       </label>
       {error ? (
         <div className="text-xs px-4 py-3 font-mono" style={{ background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: 6, color: '#991B1B' }}>
@@ -67,7 +80,7 @@ export default function DeleteAccountForm() {
         className="w-full text-white font-semibold py-2.5 text-sm flex items-center justify-center gap-2 disabled:opacity-50"
         style={{ background: '#B91C1C', borderRadius: 8 }}>
         {loading ? <Loader2 size={14} className="animate-spin" /> : null}
-        Trajno obriši nalog
+        {t('submit')}
       </button>
     </form>
   )

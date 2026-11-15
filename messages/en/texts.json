@@ -1,0 +1,51 @@
+{
+  "list": {
+    "searchByTitle": "Search by title...",
+    "noResults": "No results for \"{query}\"",
+    "read": "Read",
+    "loadMore": "Load more ({count, plural, one {# remaining} other {# remaining}})",
+    "shown": "Showing {shown} of {total}"
+  },
+  "audio": {
+    "play": "Play",
+    "pause": "Pause"
+  },
+  "ilahijePage": {
+    "meta": {
+      "title": "Ilahis – Lyrics",
+      "description": "Lyrics of ilahis, qasidas and spiritual songs — read and follow songs that strengthen love for the faith."
+    },
+    "title": "Ilahi lyrics",
+    "subtitle": "Lyrics and verses of ilahis and qasidas",
+    "empty": "No lyrics yet"
+  },
+  "ilahija": {
+    "metaTitle": "{title} — Ilahis",
+    "back": "All ilahis",
+    "meaning": "Meaning"
+  },
+  "duasPage": {
+    "meta": {
+      "title": "Duas – Texts",
+      "description": "Texts of duas from the Qur'an and Sunnah — duas for every day, every situation and every need."
+    },
+    "title": "Duas",
+    "empty": "No dua texts yet",
+    "filters": {
+      "all": "All",
+      "kuransko": "Qur'anic duas"
+    },
+    "badges": {
+      "kuransko": "Qur'anic"
+    }
+  },
+  "dua": {
+    "metaTitle": "{title} — Duas",
+    "back": "All duas"
+  },
+  "zikr": {
+    "metaTitle": "{title} — Dhikrs",
+    "back": "All dhikrs",
+    "tag": "TEXT and AUDIO"
+  }
+}

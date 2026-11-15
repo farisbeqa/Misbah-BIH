@@ -1,5 +1,8 @@
-import Link from 'next/link'
+'use client'
+
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
+import Link from '@/i18n/navigation'
 
 function TikTokIcon() {
   return (
@@ -40,17 +43,18 @@ const SOCIAL = [
   { href: 'https://www.facebook.com/MisbahBIH/',   Icon: FacebookIcon,  label: 'Facebook' },
 ]
 
-const NAV_LINKS = [
-  { href: '/',                  label: 'Početna' },
-  { href: '/predavanja/duga',   label: 'Predavanja' },
-  { href: '/kuran',             label: "Kur'an" },
-  { href: '/podcasts',          label: 'Podcast' },
-  { href: '/blog',              label: 'Blog' },
-  { href: '/o-nama',            label: 'O nama' },
-  { href: '/pozovite-nas',      label: 'Pozovite nas' },
-]
-
 export default function Footer() {
+  const t = useTranslations('nav')
+  const NAV_LINKS = [
+    { href: '/',                  label: t('home') },
+    { href: '/predavanja/duga',   label: t('lectures') },
+    { href: '/kuran',             label: t('quran') },
+    { href: '/podcasts',          label: t('podcast') },
+    { href: '/blog',              label: t('blog') },
+    { href: '/o-nama',            label: t('footer.aboutUs') },
+    { href: '/pozovite-nas',      label: t('inviteUs') },
+  ]
+
   return (
     <footer className="bg-[#fcfbfa] w-full overflow-hidden">
       {/* Main row */}
@@ -64,13 +68,11 @@ export default function Footer() {
             </span>
           </Link>
           <p className="font-normal text-[#746860] max-w-[320px]" style={{ fontSize: 16, lineHeight: 1.5 }}>
-            Misbah EDU je digitalna platforma posvećena širenju korisnog znanja kroz
-            predavanja, razgovore i pisane sadržaje koji povezuju vjeru sa
-            svakodnevnim životom.
+            {t('footer.about')}
           </p>
           <div className="flex flex-col gap-4">
             <p className="font-normal text-[#746860] uppercase" style={{ fontSize: 13, letterSpacing: '0.42px' }}>
-              OSTANIMO POVEZANI
+              {t('footer.stayConnected')}
             </p>
             <div className="flex gap-1.5">
               {SOCIAL.map(({ href, Icon, label }) => (
@@ -93,7 +95,7 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row gap-10 w-full sm:w-auto">
           <div className="flex flex-col gap-4">
             <p className="font-normal text-[#746860] uppercase" style={{ fontSize: 13, letterSpacing: '0.42px' }}>
-              NAVIGACIJA
+              {t('footer.navigation')}
             </p>
             <div className="flex flex-col gap-0.5">
               {NAV_LINKS.map(({ href, label }) => (
@@ -111,14 +113,14 @@ export default function Footer() {
 
           <div className="flex flex-col gap-4">
             <p className="font-normal text-[#746860] uppercase" style={{ fontSize: 13, letterSpacing: '0.42px' }}>
-              KONTAKT
+              {t('footer.contact')}
             </p>
             <div className="flex flex-col gap-0.5">
-              <p className="py-1 font-normal text-[#141110] text-base" style={{ lineHeight: 1.5 }}>
+              <p className="py-1 font-normal text-[#141110] text-base" style={{ lineHeight: 1.5 }} dir="ltr">
                 misbah.bosna@gmail.com
               </p>
               <p className="py-1 font-normal text-[#141110] text-base" style={{ lineHeight: 1.5 }}>
-                Sarajevo, Bosna i Hercegovina
+                {t('footer.location')}
               </p>
             </div>
           </div>
@@ -139,13 +141,13 @@ export default function Footer() {
           </a>
           <div className="flex items-center gap-4 flex-wrap justify-end">
             <Link href="/privatnost" className="underline font-normal text-[#746860] uppercase hover:text-[#141110] transition-colors" style={{ fontSize: 13, letterSpacing: '0.42px' }}>
-              Privatnost
+              {t('footer.privacy')}
             </Link>
             <Link href="/pravila-koristenja" className="underline font-normal text-[#746860] uppercase hover:text-[#141110] transition-colors" style={{ fontSize: 13, letterSpacing: '0.42px' }}>
-              Pravila korištenja
+              {t('footer.terms')}
             </Link>
             <p className="font-normal text-[#746860] uppercase" style={{ fontSize: 13, letterSpacing: '0.42px' }}>
-              © 2026 Misbah EDU. Sva prava zadržana.
+              {t('footer.rights')}
             </p>
           </div>
         </div>

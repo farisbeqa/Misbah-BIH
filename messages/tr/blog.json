@@ -1,0 +1,74 @@
+{
+  "list": {
+    "searchByTitle": "Başlığa göre ara...",
+    "searchByTitleOrAuthor": "Başlığa veya yazara göre ara...",
+    "noResults": "\"{query}\" için sonuç yok",
+    "loadMore": "Daha fazla yükle ({count, plural, one {# kalan} other {# kalan}})",
+    "shown": "{total} içinden {shown} gösteriliyor"
+  },
+  "categories": {
+    "all": "Tümü",
+    "hutbe": "Hutbeler",
+    "aktuelneTeme": "Güncel konular",
+    "duhovnost": "Maneviyat",
+    "tefsirKuran": "Tefsir ve Kur'an",
+    "sira": "Siyer",
+    "fikh": "Fıkıh",
+    "savjeti": "Tavsiyeler",
+    "odgoj": "Eğitim ve aile"
+  },
+  "blogPage": {
+    "meta": {
+      "title": "Blog",
+      "description": "Günlük Müslüman hayatı için İslami yazılar, hutbeler ve tavsiyeler — inananlar için kısa ve faydalı yazılar."
+    },
+    "tag": "TEFEKKÜRLER",
+    "title": "Blog",
+    "subtitle": "Müminlerin günlük hayatı için kısa ve faydalı yazılar.",
+    "empty": "Henüz blog yazısı yok"
+  },
+  "blogPost": {
+    "notFound": "Yazı bulunamadı",
+    "back": "Bloga geri dön",
+    "hamdoRole": "Carina Camii imamı · Saraybosna",
+    "allPosts": "Tüm yayınlar"
+  },
+  "storiesPage": {
+    "meta": {
+      "title": "Öğretici hikâyeler",
+      "description": "İslami gelenekten, kalpleri uyandıran, umut aşılayan ve gerçek değerleri hatırlatan öğretici hikâyeler."
+    },
+    "tag": "İSLAMİ HİKÂYELER",
+    "title": "Öğretici hikâyeler",
+    "subtitle": "İslami gelenekten, kalpleri uyandıran, umut aşılayan ve hayatın gerçek değerlerini hatırlatarak uyaran hikâyeler.",
+    "empty": "Henüz hikâye yok"
+  },
+  "story": {
+    "notFound": "Hikâye bulunamadı",
+    "back": "Öğretici hikâyeler",
+    "kicker": "Öğretici hikâye · {date}",
+    "allStories": "Tüm hikâyeler"
+  },
+  "mektebPage": {
+    "meta": {
+      "description": "İslam din eğitimi için mektep planları ve programları, bilgi yarışmaları ve ders materyalleri — öğretmenlere ve öğrencilere yardım."
+    },
+    "tag": "İSLAMİ EĞİTİM",
+    "subtitle": "Mektep eğitimi için planlar, programlar, bilgi yarışmaları ve materyaller.",
+    "empty": "Henüz içerik yok"
+  },
+  "mektebCategories": {
+    "opste": "Genel",
+    "program": "Plan ve program",
+    "kviz": "Bilgi yarışması",
+    "materijali": "Materyaller"
+  },
+  "mektebPost": {
+    "allPosts": "Tüm içerikler"
+  },
+  "moreFromAuthor": {
+    "label": "Yazar",
+    "seeMore": "Bu yazarın daha fazlasını gör",
+    "seeMoreShort": "Daha fazlasını gör"
+  }
+}

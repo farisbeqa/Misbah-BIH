@@ -1,0 +1,296 @@
+{
+  "meta": {
+    "title": "Laden Sie uns ein — Misbah EDU",
+    "pageTitle": "{page} — Laden Sie uns ein — Misbah EDU",
+    "description": "Misbah EDU: Vorträge, Chor Misbah und Jugendtreffen. Wählen Sie ein Programm und laden Sie uns in Ihre Gemeinde, Schule oder Gemeinschaft ein."
+  },
+  "sections": {
+    "breadcrumbs": "Pfad",
+    "home": "Laden Sie uns ein",
+    "lectures": "Vorträge",
+    "choir": "Chor",
+    "gatherings": "Jugendtreffen",
+    "inquiry": "Anfrage"
+  },
+  "actions": {
+    "sendInquiry": "Anfrage senden",
+    "invite": "Einladen: {name}"
+  },
+  "invite": {
+    "tag": "LADEN SIE UNS EIN",
+    "title": "Bringen Sie Misbah in Ihre Gemeinschaft",
+    "text": "Schreiben Sie uns mit Datum, Ort und Art des Programms, dann besprechen wir die Einzelheiten gemeinsam."
+  },
+  "home": {
+    "hero": {
+      "tag": "Laden Sie uns ein · Jugendinitiative · Sarajevo · seit 2022",
+      "title": "Das Licht des Wissens, live in Ihrer Gemeinschaft",
+      "text": "Junge Hafize, Imame und Dozenten. Wählen Sie, was Sie gern bei sich begrüßen möchten, und wir kommen in Ihre Gemeinde, Ihre Schule oder zu Ihrer Veranstaltung."
+    },
+    "offer": {
+      "tag": "WAS WIR ANBIETEN",
+      "title": "Wählen Sie, was Sie begrüßen möchten",
+      "text": "Vorträge für Männer, Frauen und die ganze Gemeinde, Chor Misbah und Jugendtreffen mit Vorträgen, Workshops und Quizzen.",
+      "lectures": {
+        "tag": "Für Männer · für Frauen · für die Gemeinde",
+        "title": "Vorträge",
+        "text": "Wählen Sie Publikum, Dozent und Art des Programms: Vortrag, Schulung, Workshop oder mehrtägige Schulung.",
+        "cta": "Vortrag auswählen"
+      },
+      "choir": {
+        "tag": "Männer · Frauen · gemischt",
+        "title": "Chor",
+        "text": "Ilahis und Kasiden mit Rahmentrommeln (Daff) zu Moscheeeröffnungen, Mevluden, Iftars und Festveranstaltungen.",
+        "cta": "Chor auswählen"
+      },
+      "gatherings": {
+        "tag": "Vorträge · Workshops · Quizze",
+        "title": "Jugendtreffen",
+        "text": "Lehrreiche Vorträge, interaktive Workshops und Wissensquizze für junge Menschen.",
+        "cta": "Mehr erfahren"
+      }
+    },
+    "stats": {
+      "videos": "{count, plural, other {Videos auf YouTube}}",
+      "views": "{count, plural, other {Aufrufe}}",
+      "circles": "{count, plural, other {wöchentliche Halkas}}",
+      "authors": "{count, plural, other {Autoren und Dozenten}}"
+    }
+  },
+  "lectures": {
+    "tag": "VORTRÄGE",
+    "title": "Für wen bereiten wir das Programm vor?",
+    "text": "Wählen Sie das Publikum. Danach wählen Sie den Dozenten und die Art des Programms.",
+    "lecturers": "{count, plural, one {# Dozent} other {# Dozenten}}",
+    "femaleLecturers": "{count, plural, one {# Dozentin} other {# Dozentinnen}}"
+  },
+  "lecturers": {
+    "pageTitle": "Vorträge · {audience}",
+    "tag": "VORTRÄGE · {audience}",
+    "title": "Dozent auswählen",
+    "text": "{description} Im Profil des Dozenten wählen Sie die Art des Programms und senden eine Anfrage.",
+    "videos": "{count, plural, one {# Video} other {# Videos}}"
+  },
+  "profile": {
+    "allContent": "Alle Inhalte bei Misbah",
+    "recordings": {
+      "tag": "AUFNAHMEN",
+      "title": "Sehen Sie sich die Vorträge an"
+    }
+  },
+  "soon": {
+    "title": "Aufnahmen folgen bald",
+    "text": "Wir werden die Aufnahmen bald hinzufügen. Bis dahin melden Sie sich bei uns, dann schicken wir Ihnen Beispiele von Auftritten.",
+    "cta": "Fragen Sie uns"
+  },
+  "choir": {
+    "pageTitle": "Chor Misbah",
+    "tag": "CHOR MISBAH",
+    "title": "Chor auswählen",
+    "text": "Wir treten bei Moscheeeröffnungen, Mevluden, Iftars und Festveranstaltungen auf.",
+    "recordings": "{count, plural, one {# Aufnahme} other {# Aufnahmen}}",
+    "groups": {
+      "muski": {
+        "title": "Männerchor",
+        "description": "Ilahis und Kasiden mit Rahmentrommeln (Daff): Moscheeeröffnungen, Mevlude, Iftars und Festveranstaltungen."
+      },
+      "zenski": {
+        "title": "Frauenchor",
+        "description": "Ilahis für Frauenprogramme, Mevlude, Mekteb-Aufführungen und Festveranstaltungen."
+      },
+      "mijesani": {
+        "title": "Gemischter Chor",
+        "description": "Gemeinsame Auftritte für Familien- und Festprogramme der Gemeinde."
+      },
+      "vecer": {
+        "title": "Abend des Korans",
+        "description": "Koranrezitation mit Übersetzung und Ilahis: Abende für die Gemeinde, Ramadan-Programme und besondere Anlässe."
+      }
+    }
+  },
+  "gatherings": {
+    "tag": "JUGENDTREFFEN",
+    "title": "Treffen Sie sich mit uns",
+    "text": "Was bietet Misbah jungen Menschen?",
+    "cta": "Veranstalten Sie ein Treffen mit uns",
+    "choice": "Jugendtreffen",
+    "offer": {
+      "lectures": {
+        "title": "Lehrreiche Vorträge",
+        "description": "Wir greifen wichtige Themen des Glaubens und des Alltags auf und bringen jungen Menschen die islamischen Werte auf zeitgemäße und ihnen nahe Weise näher."
+      },
+      "workshops": {
+        "title": "Interaktive Workshops",
+        "description": "Durch kreative Aufgaben, Gespräch und Teamarbeit fördern wir aktive Teilnahme, den Austausch von Ideen und die Entwicklung neuer Fähigkeiten."
+      },
+      "quizzes": {
+        "title": "Wissensquizze",
+        "description": "Durch Spaß, Teamwettbewerb und Zusammensein ermutigen wir junge Menschen, ihr Wissen über den Islam, die islamische Geschichte und die Allgemeinbildung zu erweitern."
+      }
+    },
+    "photos": {
+      "youthLecture": "Junge Menschen bei einem Vortrag in der Istiklal-Moschee",
+      "spousesLecture": "{mubina} und {hamdo} beim Vortrag „Die Rolle der Ehepartner im Islam”",
+      "youthInMosque": "Junge Menschen bei einem Vortrag in der Moschee",
+      "youthIftar": "Jugend-Iftar"
+    },
+    "recordings": {
+      "tag": "AUFNAHMEN",
+      "title": "Von unseren Treffen"
+    }
+  },
+  "contact": {
+    "stayConnected": "Bleiben wir verbunden",
+    "location": "Sarajevo, Bosnien und Herzegowina"
+  },
+  "audiences": {
+    "muskarci": {
+      "title": "Für Männer",
+      "description": "Vorträge und Halkas für männliche Gemeindemitglieder, Jugendliche und Studenten."
+    },
+    "zene": {
+      "title": "Für Frauen",
+      "description": "Vorträge, Schulungen und Workshops für Frauen und Mädchen."
+    },
+    "dzemat": {
+      "title": "Für die Gemeinde",
+      "description": "Für die ganze Gemeinde und Familien: Podiumsgespräche, Abende des Korans, Mevlude."
+    }
+  },
+  "formats": {
+    "predavanje": {
+      "title": "Vortrag",
+      "description": "Ein Vortrag oder Podiumsgespräch, mit Fragen des Publikums."
+    },
+    "edukacija": {
+      "title": "Schulung",
+      "description": "Thematischer Zyklus aus mehreren Treffen, z. B. wöchentlich."
+    },
+    "radionica": {
+      "title": "Workshop",
+      "description": "Arbeit in einer kleineren Gruppe, durch Gespräch und Aufgaben."
+    },
+    "visednevna": {
+      "title": "Mehrtägige Schulung",
+      "description": "Intensives Programm über ein Wochenende oder mehrere Tage."
+    }
+  },
+  "people": {
+    "hamdo": {
+      "role": "Tafsir",
+      "bio": "Mitarbeiter für Qira’at an der Fakultät für Islamische Wissenschaften und Doktorand. Leitet die Tafsir-Halka donnerstags in der Gemeinde Carina.",
+      "topics": [
+        "Tafsir kurzer Suren",
+        "Ehe und Familie"
+      ]
+    },
+    "hamza": {
+      "role": "Sira und Ethik",
+      "bio": "Das Leben des Propheten ﷺ und Lehren für heute. Leitet die Sira-Halka montags nach dem Akscham in der Gemeinde Bjelave.",
+      "topics": [
+        "Sira des Propheten ﷺ",
+        "Sabr (Geduld) und innere Ruhe",
+        "Iman (Glaube)"
+      ]
+    },
+    "mubina": {
+      "role": "Fiqh · Hafiza des Korans",
+      "bio": "Assistentin am Lehrstuhl für Scharia-Recht (Fiqh) an der Fakultät für Islamische Wissenschaften und Hafiza des Korans. Spricht über Ibadet (Gottesdienst), Familie und Fragen, denen die moderne Muslimin begegnet.",
+      "topics": [
+        "Fiqh für Frauen",
+        "Gebet und Ibadet",
+        "Der Charakter des Propheten ﷺ",
+        "Ramadan"
+      ]
+    }
+  },
+  "videoTitles": {
+    "inshirah": "Sure el-Inširah: Nach der Schwierigkeit kommt die Erleichterung",
+    "zilzal": "Was sagt uns die Sure ez-Zilzal über den Jüngsten Tag?",
+    "nas": "Sure en-Nas: Schutz vor bösen Gedanken und den Einflüsterungen des Satans",
+    "tin": "Sure et-Tin: Warum hat Allah die Feige und die Olive erwähnt?",
+    "duha": "Sure ed-Duha: Eine Botschaft für Momente, in denen es dir schwerfällt",
+    "adiyat": "Sure el-Adijat: Die Sure, über die wir am wenigsten wissen?",
+    "prophetInQuran": "Dimensionen des Islam: Der Prophet Muhammad ﷺ im Koran",
+    "calmInAnxiousTimes": "Ruhe in Zeiten der Angst",
+    "sabrChangesTheHeart": "Wie Sabr (Geduld) das Herz verändert",
+    "blessingOfRememberingTheProphet": "Der Segen im Gedenken an den Propheten ﷺ",
+    "trueBeliever": "Was bedeutet es, ein wahrer Gläubiger zu sein?",
+    "marriageThatChangedHistory": "Die Ehe, die die Geschichte veränderte (Sira, Teil 7)",
+    "prophetsMercy": "Die Barmherzigkeit Muhammads ﷺ",
+    "prophetsEmotionalIntelligence": "Die emotionale Intelligenz Muhammads ﷺ",
+    "isIslamFairToWomen": "Ist der Islam gerecht gegenüber der Frau?",
+    "gratitudeThroughPrayer": "Durch das Gebet zur Dankbarkeit",
+    "easeAfterHardship": "Nach der Prüfung kommt die Erleichterung",
+    "fastingAndRelationships": "Wie das Fasten zwischenmenschliche Beziehungen beeinflusst",
+    "ilahijeCollage": "Collage von Ilahis",
+    "performanceInSwitzerland": "Auftritt in der Schweiz",
+    "ilahijaByCandlelight": "Ilahi bei Kerzenschein",
+    "mosqueOpeningMaljevac": "Moscheeeröffnung in Maljevac",
+    "youthIftarZagreb": "Jugend-Iftar in Zagreb",
+    "youthIftarZagrebStudio": "Jugend-Iftar in Zagreb (Studioton)",
+    "fullPerformanceMaljevac": "Der ganze Auftritt in Maljevac",
+    "fullPerformanceZagreb": "Der ganze Auftritt in Zagreb",
+    "ilahijaAtGathering": "Ilahi beim Treffen",
+    "ilahijaInMosque": "Ilahi in der Moschee",
+    "performanceInMosque": "Auftritt in der Moschee",
+    "quranRecitation": "Koranrezitation",
+    "quranRecitationInDzemat": "Koranrezitation in der Gemeinde",
+    "suraIbrahim": "Sure Ibrahim (23–27)",
+    "suraFussilat": "Sure Fussilet (30–33)",
+    "suraIsra": "Sure el-Isra (11–12)",
+    "mukabelaJuz13": "Mukabela, 13. Dschuz",
+    "hijriNewYearCarina": "Das neue Hidschri-Jahr in der Gemeinde Carina"
+  },
+  "videoGrid": {
+    "views": "{count, plural, one {# Aufruf} other {# Aufrufe}}",
+    "badges": {
+      "short": "Kurz",
+      "clip": "Clip"
+    }
+  },
+  "player": {
+    "close": "Schließen"
+  },
+  "heroVideo": {
+    "mute": "Ton ausschalten",
+    "unmute": "Ton einschalten"
+  },
+  "programPicker": {
+    "label": "Art des Programms",
+    "title": "Was möchten Sie veranstalten?"
+  },
+  "quickContact": {
+    "copy": "Kopieren",
+    "addressCopied": "Adresse wurde kopiert",
+    "copyAddressManually": "Kopieren Sie die Adresse manuell",
+    "viberCopied": "Die Nachricht wurde kopiert; falls sie in Viber nicht erscheint, fügen Sie sie ein"
+  },
+  "form": {
+    "title": "Anfrage für einen Auftritt",
+    "yourChoice": "Ihre Auswahl: <b>{choice}</b>",
+    "change": "ändern",
+    "organizer": "Veranstalter",
+    "organizerPlaceholder": "z. B. Gemeinde Bjelave",
+    "place": "Ort",
+    "placePlaceholder": "Stadt, Gebäude",
+    "date": "Datum",
+    "datePlaceholder": "z. B. 20. Dezember oder nach Absprache",
+    "category": "Rubrik",
+    "categories": {
+      "predavanja": "Vorträge",
+      "hor": "Chor",
+      "druzenja": "Jugendtreffen"
+    },
+    "note": "Anmerkung",
+    "notePlaceholder": "Anlass, Dauer, Personenzahl, Kontakttelefon…",
+    "prepare": "Nachricht vorbereiten",
+    "sendWhatsApp": "Über WhatsApp senden",
+    "copyMessage": "Nachricht kopieren",
+    "openEmail": "In E-Mail öffnen",
+    "viberCopied": "Die Nachricht wurde kopiert, fügen Sie sie in Viber ein",
+    "messageCopied": "Nachricht wurde kopiert",
+    "copyManually": "Markieren Sie die Nachricht und kopieren Sie sie",
+    "hint": "WhatsApp öffnet eine versandfertige Nachricht. Viber trägt die Nachricht ebenfalls ein, und für alle Fälle kopieren wir sie auch. Nummer: {phone}, E-Mail: {email}."
+  }
+}

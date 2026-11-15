@@ -1,46 +1,57 @@
-﻿import Link from 'next/link'
-import { FileText, Mail, Users, ArrowRight } from 'lucide-react'
+﻿import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
+import Link from '@/i18n/navigation'
+import { FileText, Mail, ArrowRight } from 'lucide-react'
 
-export const metadata = {
-  title: 'O Nama - Misbah EDU',
-  description: 'Saznajte više o Misbah EDU — islamskoj obrazovnoj platformi posvećenoj širenju korisnog znanja i duhovnom razvoju.',
-  alternates: { canonical: '/o-nama' },
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('about.aboutUs.meta')
+  return {
+    title: t('title'),
+    description: t('description'),
+  }
 }
 
-export default function ONamaPage() {
+// Weekly study circles (halke) and who leads them
+const STUDY_CIRCLES = [
+  { key: 'tafsir', name: 'hfz. Hamdo Solo' },
+  { key: 'sira',   name: 'Hamza ef. Bajraktarević' },
+  { key: 'hadith', name: 'Zeko ef. Hasanović' },
+] as const
+
+export default async function ONamaPage() {
+  const t = await getTranslations('about.aboutUs')
+
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
       <div className="mb-12">
-        <p className="font-mono text-[11px] text-brand-light uppercase tracking-widest mb-2">Platforma</p>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-warm-900 tracking-tight mb-4">O Nama</h1>
+        <p className="font-mono text-[11px] text-brand-light uppercase tracking-widest mb-2">{t('tag')}</p>
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-warm-900 tracking-tight mb-4">{t('title')}</h1>
         <p className="text-warm-500 leading-relaxed">
-          Medijska platforma Misbah EDU predstavlja inicijativu mladih ljudi usmjerenu ka doprinosu Zajednici kroz edukativni i korisni sadržaj.
-          Povezujući vjeru i prave vrijednosti, posvećena je pričama koje inspirišu i imaju edukativni karakter.
+          {t('intro')}
         </p>
         <br />
         <p className="text-warm-500 leading-relaxed">
-          Trenutno se u okviru platforme Misbah EDU održavaju tri redovne edukativne halke:
+          {t('studyCircles.intro')}
         </p>
         <ul className="mt-4 space-y-4 text-warm-500 leading-relaxed list-none">
-          <li>
-            <span className="font-semibold text-warm-900">Halka tefsira</span> održava se svakog četvrtka u džematu Carina, sahat vremena prije akšam-namaza. Predavanja vodi hfz. Hamdo Solo, koji kroz tumačenje kur&apos;anskih ajeta nastoji približiti njihovo značenje i poruke svakodnevnom životu.
-          </li>
-          <li>
-            <span className="font-semibold text-warm-900">Halka sire</span> održava se svakog ponedjeljka nakon akšam-namaza u džematu Bjelave. Ovu halku vodi Hamza ef. Bajraktarević, obrađujući život i praksu Allahovog Poslanika, s posebnim naglaskom na pouke koje se mogu primijeniti danas.
-          </li>
-          <li>
-            <span className="font-semibold text-warm-900">Halka hadisa</span> također se održava svakog ponedjeljka nakon akšam-namaza u džematu Bakareva džamija. Halku vodi Zeko ef. Hasanović, fokusirajući se na razumijevanje i primjenu hadisa u svakodnevnom životu.
-          </li>
+          {STUDY_CIRCLES.map(circle => (
+            <li key={circle.key}>
+              {t.rich(`studyCircles.${circle.key}`, {
+                name: circle.name,
+                b: chunks => <span className="font-semibold text-warm-900">{chunks}</span>,
+              })}
+            </li>
+          ))}
         </ul>
         <p className="text-warm-500 leading-relaxed mt-4">
-          Sve halke su otvorene za sve zainteresovane, s ciljem jačanja znanja, duhovnosti i zajedništva.
+          {t('studyCircles.outro')}
         </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {[
-          { href: '/o-nama/impressum', icon: <FileText size={22} />, title: 'Impressum', desc: 'Urednici, autori i pravne napomene' },
-          { href: '/o-nama/kontakt',   icon: <Mail size={22} />,     title: 'Kontakt',   desc: 'Email i kontakt informacije' },
+          { href: '/o-nama/impressum', icon: <FileText size={22} />, title: t('cards.impressum.title'), desc: t('cards.impressum.description') },
+          { href: '/o-nama/kontakt',   icon: <Mail size={22} />,     title: t('cards.contact.title'),   desc: t('cards.contact.description') },
         ].map(card => (
           <Link key={card.href} href={card.href}
             className="group flex items-center gap-4 p-5 rounded-2xl transition-all hover:-translate-y-0.5"
@@ -53,7 +64,7 @@ export default function ONamaPage() {
               <p className="font-bold text-warm-900">{card.title}</p>
               <p className="text-sm text-warm-500 mt-0.5">{card.desc}</p>
             </div>
-            <ArrowRight size={16} className="text-warm-300 group-hover:text-brand transition-colors flex-shrink-0" />
+            <ArrowRight size={16} className="text-warm-300 group-hover:text-brand transition-colors flex-shrink-0 flip-rtl" />
           </Link>
         ))}
       </div>

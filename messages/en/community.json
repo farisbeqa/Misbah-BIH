@@ -1,0 +1,35 @@
+{
+  "activities": {
+    "meta": {
+      "title": "Activities",
+      "description": "The latest news, activities and events of the Islamic community — stay informed and involved."
+    },
+    "tag": "COMMUNITY",
+    "title": "Activities",
+    "intro": "News, updates and community activities — quizzes, workshops, visits and gatherings.",
+    "filterAll": "All",
+    "tags": {
+      "vijesti": "News",
+      "novosti": "Updates",
+      "aktivnosti": "Activities"
+    },
+    "empty": "No items in this category",
+    "loadMore": "Load more ({count, plural, one {# remaining} other {# remaining}})",
+    "shownOf": "Showing {shown} of {total}",
+    "backToList": "Back to activities",
+    "allActivities": "All activities"
+  },
+  "gallery": {
+    "meta": {
+      "title": "Gallery",
+      "description": "A photo archive of Islamic lectures, duas and community events."
+    },
+    "title": "Gallery",
+    "intro": "Photos from our activities and events",
+    "empty": "The gallery is empty",
+    "loading": "Loading...",
+    "loadMore": "Load more images",
+    "shownCount": "{count, plural, one {# image shown} other {# images shown}}",
+    "allLoaded": "All images have been loaded ({count})"
+  }
+}

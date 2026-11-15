@@ -1,0 +1,51 @@
+{
+  "list": {
+    "searchByTitle": "Nach Titel suchen...",
+    "noResults": "Keine Ergebnisse für \"{query}\"",
+    "read": "Lesen",
+    "loadMore": "Mehr laden ({count, plural, one {# verbleibend} other {# verbleibend}})",
+    "shown": "{shown} von {total} angezeigt"
+  },
+  "audio": {
+    "play": "Abspielen",
+    "pause": "Pause"
+  },
+  "ilahijePage": {
+    "meta": {
+      "title": "Ilahis – Texte",
+      "description": "Texte von Ilahis, Kasiden und spirituellen Liedern — lesen und verfolgen Sie Lieder, die die Liebe zum Glauben stärken."
+    },
+    "title": "Ilahi-Texte",
+    "subtitle": "Texte und Verse von Ilahis und Kasiden",
+    "empty": "Noch keine Texte"
+  },
+  "ilahija": {
+    "metaTitle": "{title} — Ilahis",
+    "back": "Alle Ilahis",
+    "meaning": "Bedeutung"
+  },
+  "duasPage": {
+    "meta": {
+      "title": "Bittgebete – Texte",
+      "description": "Texte von Bittgebeten aus Koran und Sunna — Bittgebete für jeden Tag, jede Situation und jedes Anliegen."
+    },
+    "title": "Bittgebete",
+    "empty": "Noch keine Bittgebet-Texte",
+    "filters": {
+      "all": "Alle",
+      "kuransko": "Koranische Bittgebete"
+    },
+    "badges": {
+      "kuransko": "Koranisch"
+    }
+  },
+  "dua": {
+    "metaTitle": "{title} — Bittgebete",
+    "back": "Alle Bittgebete"
+  },
+  "zikr": {
+    "metaTitle": "{title} — Dhikr",
+    "back": "Alle Dhikr",
+    "tag": "TEXT UND AUDIO"
+  }
+}

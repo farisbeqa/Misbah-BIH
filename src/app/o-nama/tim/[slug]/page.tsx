@@ -1,7 +1,8 @@
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
+import Link from '@/i18n/navigation'
 import { ArrowLeft } from 'lucide-react'
-import { BIOS } from '@/lib/bios'
+import { BIOS, biosFor } from '@/lib/bios'
 import type { Metadata } from 'next'
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
@@ -10,15 +11,17 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return { title: `${bio.name} - Misbah EDU` }
 }
 
-export default function TimBioPage({ params }: { params: { slug: string } }) {
-  const bio = BIOS[params.slug]
+export default async function TimBioPage({ params }: { params: { slug: string } }) {
+  // Biography texts in the visitor's language (server-only `bios` messages)
+  const bio = biosFor((await getTranslations('bios')).raw('people'))[params.slug]
   if (!bio) notFound()
+  const t = await getTranslations('about.teamMember')
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <Link href="/o-nama/impressum"
         className="inline-flex items-center gap-2 text-warm-400 hover:text-warm-700 text-sm mb-8 transition-colors font-mono">
-        <ArrowLeft size={14} /> Impressum
+        <ArrowLeft size={14} className="flip-rtl" /> {t('back')}
       </Link>
 
       {/* Header card */}
@@ -37,7 +40,7 @@ export default function TimBioPage({ params }: { params: { slug: string } }) {
           <h1 className="text-2xl sm:text-3xl font-extrabold text-warm-900 tracking-tight mb-2">{bio.name}</h1>
           {bio.born && (
             <p className="text-sm text-warm-500">
-              <span className="font-medium">Datum i mjesto rođenja:</span> {bio.born}
+              <span className="font-medium">{t('born')}</span> {bio.born}
             </p>
           )}
         </div>

@@ -1,0 +1,51 @@
+{
+  "list": {
+    "searchByTitle": "Başlığa göre ara...",
+    "noResults": "\"{query}\" için sonuç yok",
+    "read": "Oku",
+    "loadMore": "Daha fazla yükle ({count, plural, one {# kalan} other {# kalan}})",
+    "shown": "{total} içinden {shown} gösteriliyor"
+  },
+  "audio": {
+    "play": "Oynat",
+    "pause": "Duraklat"
+  },
+  "ilahijePage": {
+    "meta": {
+      "title": "İlahiler – Sözler",
+      "description": "İlahi, kaside ve manevi şarkı sözleri — imana olan sevgiyi güçlendiren şarkıları okuyun ve takip edin."
+    },
+    "title": "İlahi sözleri",
+    "subtitle": "İlahi ve kasidelerin sözleri ve dizeleri",
+    "empty": "Henüz söz yok"
+  },
+  "ilahija": {
+    "metaTitle": "{title} — İlahiler",
+    "back": "Tüm ilahiler",
+    "meaning": "Anlamı"
+  },
+  "duasPage": {
+    "meta": {
+      "title": "Dualar – Metinler",
+      "description": "Kur'an'dan ve Sünnet'ten dua metinleri — her gün, her durum ve her ihtiyaç için dualar."
+    },
+    "title": "Dualar",
+    "empty": "Henüz dua metni yok",
+    "filters": {
+      "all": "Tümü",
+      "kuransko": "Kur'an'daki dualar"
+    },
+    "badges": {
+      "kuransko": "Kur'an'da geçen"
+    }
+  },
+  "dua": {
+    "metaTitle": "{title} — Dualar",
+    "back": "Tüm dualar"
+  },
+  "zikr": {
+    "metaTitle": "{title} — Zikirler",
+    "back": "Tüm zikirler",
+    "tag": "METİN ve SES"
+  }
+}
