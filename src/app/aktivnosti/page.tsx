@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import Link, { useCurrentLocale } from '@/i18n/navigation'
 import { formatShortDate } from '@/i18n/format'
-import { Calendar, MapPin } from 'lucide-react'
+import { Calendar } from 'lucide-react'
+import CardImage from '@/components/CardImage'
 
 interface Activity {
   id: number; title: string; content: string; imageUrl: string | null
@@ -90,12 +91,7 @@ export default function AktivnostiPage() {
                   <div className="relative h-[228px] w-full shrink-0 overflow-hidden">
                     {a.videoUrl
                       ? <video src={a.videoUrl} className="absolute inset-0 w-full h-full object-cover" muted playsInline />
-                      : a.imageUrl
-                      ? <img src={a.imageUrl} alt={a.title} loading="lazy"
-                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                      : <div className="absolute inset-0 flex items-center justify-center" style={{ background: 'linear-gradient(135deg,var(--bg-8b1e3f),var(--bg-5e1028))' }}>
-                          <MapPin size={36} className="text-white/40" />
-                        </div>
+                      : <CardImage src={a.imageUrl} alt={a.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                     }
                     <div className="absolute top-4 start-4 bg-[var(--bg-faf5f5)] px-2.5 py-1.5">
                       <span className="text-[var(--fg-8b1e3f)] uppercase" style={{ fontSize: 10, letterSpacing: '0.3px' }}>

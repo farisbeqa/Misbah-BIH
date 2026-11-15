@@ -13,10 +13,8 @@
 :root,
 [data-theme="light"] {
   --bg-1d4ed8:         #1D4ED8;
-  --bg-1e3a8a:         #1E3A8A;
   --bg-3f3f46:         #3F3F46;
   --bg-5a1429:         #5A1429;
-  --bg-5e1028:         #5E1028;
   --bg-6b7280:         #6B7280;
   --bg-7a1a37:         #7A1A37;
   --bg-8a7bf5:         #8A7BF5;
@@ -110,10 +108,8 @@
 :root[data-theme="dark"] {
   color-scheme: dark;
   --bg-1d4ed8:         #1D4ED8;
-  --bg-1e3a8a:         #1E3A8A;
   --bg-3f3f46:         #3F3F46;
   --bg-5a1429:         #5A1429;
-  --bg-5e1028:         #5E1028;
   --bg-6b7280:         #6B7280;
   --bg-7a1a37:         #9C2A4B;
   --bg-8a7bf5:         #8A7BF5;
@@ -211,6 +207,9 @@
 :root[data-theme="dark"] .theme-label-dark { display: none; }
 :root[data-theme="dark"] .theme-icon-sun,
 :root[data-theme="dark"] .theme-label-light { display: block; }
+
+/* The bright fallback picture of cards (src/components/CardImage.tsx) is toned down a little */
+:root[data-theme="dark"] .card-fallback { filter: brightness(0.82); }
 
 /* The logo's cream background blends into the light page; on dark it is a small tile */
 :root[data-theme="dark"] .site-logo {

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Globe, ChevronDown, Check } from 'lucide-react'
+import { ChevronDown, Check } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { LOCALES, LOCALE_COOKIE, LOCALE_INFO, type Locale } from '@/i18n/config'
 import { localizeHref, stripLocale } from '@/i18n/href'
@@ -14,9 +14,24 @@ export function switchLocale(next: Locale) {
   window.location.assign(localizeHref(stripLocale(pathname) + search + hash, next))
 }
 
+/** Small flag of a language (public/flags, from flag-icons, MIT) so the picker is easy to notice */
+function Flag({ locale, large = false }: { locale: Locale; large?: boolean }) {
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={`/flags/${locale}.svg`}
+      alt=""
+      width={large ? 22 : 20}
+      height={large ? 16 : 15}
+      className="shrink-0 rounded-[2px] object-cover"
+      style={{ boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.12)' }}
+    />
+  )
+}
+
 /**
  * Language picker for the navigation bar. `variant="desktop"` matches the menu
- * dropdowns; `variant="mobile"` is the compact globe button in the mobile bar.
+ * dropdowns; `variant="mobile"` is the compact button in the mobile bar.
  */
 export default function LanguageSwitcher({ variant = 'desktop' }: { variant?: 'desktop' | 'mobile' }) {
   const t = useTranslations('nav')
@@ -42,12 +57,12 @@ export default function LanguageSwitcher({ variant = 'desktop' }: { variant?: 'd
         aria-expanded={open}
         className={
           variant === 'desktop'
-            ? 'flex items-center gap-1 px-1 py-2 text-base whitespace-nowrap hover:text-[var(--fg-8b1e3f)] transition-colors'
-            : 'flex items-center gap-1 p-1 text-sm font-medium'
+            ? 'flex items-center gap-1.5 px-1 py-2 text-base whitespace-nowrap hover:text-[var(--fg-8b1e3f)] transition-colors'
+            : 'flex items-center gap-1.5 p-1 text-sm font-medium'
         }
         style={{ color: open ? 'var(--fg-8b1e3f)' : 'var(--fg-5a4f49)' }}
       >
-        <Globe size={variant === 'desktop' ? 17 : 20} strokeWidth={1.75} />
+        <Flag locale={current} large={variant === 'mobile'} />
         <span className={variant === 'desktop' ? 'text-sm font-medium' : ''}>{LOCALE_INFO[current].short}</span>
         {variant === 'desktop' && <ChevronDown size={13} className={`hidden min-[1440px]:block transition-transform ${open ? 'rotate-180' : ''}`} />}
       </button>
@@ -71,7 +86,10 @@ export default function LanguageSwitcher({ variant = 'desktop' }: { variant?: 'd
                   className="w-full flex items-center justify-between gap-3 px-4 py-3 text-sm hover:bg-[var(--bg-faf7f2)] transition-colors text-start"
                   style={{ color: active ? 'var(--fg-8b1e3f)' : 'var(--fg-5a4f49)', fontWeight: active ? 600 : 400 }}
                 >
-                  <span>{LOCALE_INFO[l].name}</span>
+                  <span className="flex items-center gap-2.5">
+                    <Flag locale={l} />
+                    <span>{LOCALE_INFO[l].name}</span>
+                  </span>
                   {active && <Check size={14} />}
                 </button>
               </li>

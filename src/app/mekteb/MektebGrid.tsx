@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import Link, { useCurrentLocale } from '@/i18n/navigation'
 import { formatShortDate } from '@/i18n/format'
-import { BookOpen, Calendar } from 'lucide-react'
+import { Calendar } from 'lucide-react'
+import CardImage from '@/components/CardImage'
 
 interface MektebPost {
   id: number; title: string; content: string; author: string | null
@@ -29,13 +30,7 @@ export default function MektebGrid({ posts }: { posts: MektebPost[] }) {
           <Link key={post.id} href={`/mekteb/${post.id}`} className="group block h-full">
             <div className="bg-[var(--bg-f5f2ef)] overflow-hidden border border-[var(--line-black5)] flex flex-col h-full">
               <div className="relative h-[228px] w-full shrink-0 overflow-hidden">
-                {post.imageUrl
-                  ? <img src={post.imageUrl} alt={post.title} loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                  : <div className="absolute inset-0 flex items-center justify-center" style={{ background: 'linear-gradient(135deg,var(--bg-1d4ed8),var(--bg-1e3a8a))' }}>
-                      <BookOpen size={36} className="text-white/30" />
-                    </div>
-                }
+                <CardImage src={post.imageUrl} alt={post.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 <div className="absolute top-4 start-4 bg-[var(--bg-faf5f5)] px-2.5 py-1.5">
                   <span className="text-[var(--fg-1d4ed8)] uppercase" style={{ fontSize: 10, letterSpacing: '0.3px' }}>
                     {CATEGORIES.includes(post.category) ? t(`mektebCategories.${post.category}`) : post.category}

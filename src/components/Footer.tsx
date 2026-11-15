@@ -56,7 +56,8 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-[var(--bg-fcfbfa)] w-full overflow-hidden">
+    // Beige like the "Misao dana" section; the top line keeps it apart from a section of the same colour
+    <footer className="bg-[var(--bg-f5f2ef)] border-t border-[var(--line-d6ccc3)] w-full overflow-hidden">
       {/* Main row */}
       <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-12 flex flex-col lg:flex-row items-start justify-between gap-10">
         {/* Logo + description + social */}
@@ -128,7 +129,7 @@ export default function Footer() {
       </div>
 
       {/* Legal bar */}
-      <div className="bg-[var(--bg-f5f2ef)]">
+      <div className="bg-[var(--bg-f5f2ef)] border-t border-[var(--line-e8e1db)]">
         <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-3 flex items-center justify-between gap-3 flex-wrap">
           <a
             href="https://strossa.com/"

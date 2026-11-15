@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import Link, { useCurrentLocale } from '@/i18n/navigation'
 import { formatShortDate } from '@/i18n/format'
 import { BookOpen, Calendar, Search } from 'lucide-react'
+import CardImage from '@/components/CardImage'
 
 interface Prica {
   id: number; title: string; content: string; author: string | null
@@ -52,14 +53,7 @@ export default function PriceGrid({ price }: { price: Prica[] }) {
               <Link key={prica.id} href={`/price/${prica.id}`} className="group block h-full">
                 <div className="bg-[var(--bg-f5f2ef)] overflow-hidden border border-[var(--line-black5)] flex flex-col h-full">
                   <div className="relative h-[228px] w-full shrink-0 overflow-hidden">
-                    {prica.imageUrl
-                      ? <img src={prica.imageUrl} alt={prica.title} loading="lazy"
-                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                      : <div className="absolute inset-0 flex items-center justify-center"
-                          style={{ background: 'linear-gradient(135deg,var(--bg-8b1e3f),var(--bg-5a1429))' }}>
-                          <BookOpen size={36} className="text-white/30" />
-                        </div>
-                    }
+                    <CardImage src={prica.imageUrl} alt={prica.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                   </div>
                   <div className="flex flex-col gap-2.5 px-6 py-7 flex-1">
                     <div className="flex items-center gap-1.5">

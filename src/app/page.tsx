@@ -8,6 +8,7 @@ import type { Locale } from '@/i18n/config'
 import MisaoDana from '@/components/MisaoDana'
 import GlasoviSection from '@/components/GlasoviSection'
 import MisaoDanaPopup from '@/components/MisaoDanaPopup'
+import CardImage from '@/components/CardImage'
 
 export const dynamic = 'force-dynamic'
 
@@ -89,12 +90,7 @@ function VideoCard({ v, locale }: { v: VideoRow; locale: Locale }) {
     <Link href={`/videos/${v.id}`} className="group block h-full">
       <div className="bg-[var(--bg-f5f2ef)] overflow-hidden border border-[var(--line-black5)] flex flex-col h-full">
         <div className="relative h-[228px] w-full shrink-0 overflow-hidden">
-          {v.thumbnailUrl
-            ? <img alt={v.title} src={v.thumbnailUrl} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-            : <div className="absolute inset-0 bg-[var(--bg-e0d8d0)] flex items-center justify-center">
-                <span className="text-[var(--fg-a89888)] text-4xl">▶</span>
-              </div>
-          }
+          <CardImage src={v.thumbnailUrl} alt={v.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
           <div className="absolute top-4 start-4 bg-[var(--bg-faf5f5)] px-2.5 py-1.5">
             <span className="text-[var(--fg-8b1e3f)] uppercase" style={{ fontSize: 10, letterSpacing: '0.3px' }}>
               {v.platform}
@@ -124,10 +120,7 @@ function PostCard({ p, locale }: { p: PostRow; locale: Locale }) {
     <Link href={`/blog/${p.id}`} className="group block h-full">
       <div className="bg-[var(--bg-f5f2ef)] overflow-hidden border border-[var(--line-black5)] flex flex-col h-full">
         <div className="relative h-[228px] w-full shrink-0 overflow-hidden">
-          {p.imageUrl
-            ? <img alt={p.title} src={p.imageUrl} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-            : <div className="absolute inset-0 bg-[var(--bg-e0d8d0)]" />
-          }
+          <CardImage src={p.imageUrl} alt={p.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
         </div>
         <div className="flex flex-col gap-2.5 px-6 py-7 flex-1">
           <p className="font-medium text-[var(--fg-8b1e3f)] text-xs uppercase tracking-wide">{formatShortDate(p.createdAt, locale)}</p>

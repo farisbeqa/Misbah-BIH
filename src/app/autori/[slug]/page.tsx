@@ -8,6 +8,7 @@ import { formatShortDate } from '@/i18n/format'
 import type { Locale } from '@/i18n/config'
 import { getAuthorPage } from '@/lib/authorContent'
 import { biosFor } from '@/lib/bios'
+import CardImage from '@/components/CardImage'
 
 // Rendered per request: the database is reachable at runtime, not during the build
 export const dynamic = 'force-dynamic'
@@ -100,11 +101,7 @@ export default async function AutorPage({ params }: { params: { slug: string } }
                   <div className="bg-[var(--bg-f5f2ef)] overflow-hidden border border-[var(--line-black5)] flex flex-col h-full">
                     {item.image !== undefined && (
                       <div className="relative h-[180px] w-full shrink-0 overflow-hidden bg-[var(--bg-e0d8d0)]">
-                        {item.image && (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img alt={item.title} src={item.image} loading="lazy"
-                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                        )}
+                        <CardImage src={item.image} alt={item.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                         <div className="absolute top-3 start-3 bg-[var(--bg-faf5f5)] px-2.5 py-1.5">
                           <span className="text-[var(--fg-8b1e3f)] uppercase" style={{ fontSize: 10, letterSpacing: '0.3px' }}>{item.label}</span>
                         </div>

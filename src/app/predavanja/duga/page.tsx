@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
+import { Search } from 'lucide-react'
 import { useCurrentLocale } from '@/i18n/navigation'
 import VideoCard from '@/components/VideoCard'
 
@@ -15,6 +16,9 @@ const TOPICS = ['all', 'tefsir', 'hadis', 'sira', 'opste', 'akaid', 'fikh', 'duh
 
 const PAGE = 12
 
+/** Lowercase without diacritics, so "sutkovic" finds "Šutković" */
+const fold = (s: string) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd')
+
 export default function DugaPredavanjaPage() {
   const t = useTranslations('videos')
   const locale = useCurrentLocale()
@@ -22,6 +26,7 @@ export default function DugaPredavanjaPage() {
   const [topic, setTopic]     = useState('all')
   const [loading, setLoading] = useState(true)
   const [visible, setVisible] = useState(PAGE)
+  const [query, setQuery]     = useState('')
 
   useEffect(() => {
     setLoading(true)
@@ -30,9 +35,12 @@ export default function DugaPredavanjaPage() {
     fetch(url).then(r => r.json()).then(d => { setVideos(d); setLoading(false) }).catch(() => setLoading(false))
   }, [topic, locale])
 
-  useEffect(() => { setVisible(PAGE) }, [topic])
+  useEffect(() => { setVisible(PAGE) }, [topic, query])
 
-  const shown = videos.slice(0, visible)
+  // Search in the title and the lecturer's name
+  const q = fold(query.trim())
+  const filtered = q ? videos.filter(v => fold(`${v.title} ${v.author ?? ''}`).includes(q)) : videos
+  const shown = filtered.slice(0, visible)
 
   return (
     <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-12 sm:py-16" style={{ minHeight: '60vh' }}>
@@ -47,7 +55,7 @@ export default function DugaPredavanjaPage() {
         </p>
       </div>
 
-      <div className="flex flex-wrap gap-2 mb-10">
+      <div className="flex flex-wrap gap-2 mb-6">
         {TOPICS.map(key => (
           <button key={key} onClick={() => setTopic(key)}
             className="text-sm font-medium px-4 py-2 transition-all"
@@ -59,6 +67,13 @@ export default function DugaPredavanjaPage() {
             {t(`topics.${key}`)}
           </button>
         ))}
+      </div>
+
+      <div className="relative mb-10">
+        <Search size={15} className="absolute start-3 top-1/2 -translate-y-1/2 text-[var(--fg-a89888)] pointer-events-none" />
+        <input value={query} onChange={e => setQuery(e.target.value)}
+          placeholder={t('list.searchPlaceholder')}
+          className="w-full ps-9 pe-4 py-2.5 border border-[var(--line-d6ccc3)] bg-[var(--bg-ffffff)] focus:outline-none focus:border-[var(--line-8b1e3f)] text-sm transition-colors" />
       </div>
 
       {loading ? (
@@ -73,9 +88,9 @@ export default function DugaPredavanjaPage() {
             </div>
           ))}
         </div>
-      ) : videos.length === 0 ? (
+      ) : filtered.length === 0 ? (
         <div className="flex items-center justify-center py-20 bg-[var(--bg-f5f2ef)] border border-[var(--line-black5)]">
-          <p className="text-sm text-[var(--fg-a89888)]">{t('longLectures.empty')}</p>
+          <p className="text-sm text-[var(--fg-a89888)]">{q ? t('list.noResults', { query }) : t('longLectures.empty')}</p>
         </div>
       ) : (
         <>
@@ -86,13 +101,13 @@ export default function DugaPredavanjaPage() {
                 isShortForm={v.isShortForm} createdAt={v.createdAt} />
             ))}
           </div>
-          {visible < videos.length && (
+          {visible < filtered.length && (
             <div className="flex flex-col items-center gap-2 mt-10">
               <button onClick={() => setVisible(v => v + PAGE)}
                 className="px-8 py-3 border border-[var(--line-d6ccc3)] text-[var(--fg-5a4f49)] text-sm font-medium hover:border-[var(--line-8b1e3f)] hover:text-[var(--fg-8b1e3f)] transition-colors">
-                {t('list.loadMore', { remaining: videos.length - visible })}
+                {t('list.loadMore', { remaining: filtered.length - visible })}
               </button>
-              <p className="text-xs text-[var(--fg-a89888)]">{t('list.shownOf', { shown: shown.length, total: videos.length })}</p>
+              <p className="text-xs text-[var(--fg-a89888)]">{t('list.shownOf', { shown: shown.length, total: filtered.length })}</p>
             </div>
           )}
         </>
