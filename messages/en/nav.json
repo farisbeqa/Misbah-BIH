@@ -37,5 +37,7 @@
     "privacy": "Privacy",
     "terms": "Terms of Use",
     "rights": "© 2026 Misbah EDU. All rights reserved."
-  }
+  },
+  "themeDark": "Switch to dark mode",
+  "themeLight": "Switch to light mode"
 }

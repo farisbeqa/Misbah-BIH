@@ -40,8 +40,8 @@ export default async function ZikrTextPage({ params }: { params: { id: string } 
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10 sm:py-16" style={{ minHeight: '60vh' }}>
       <Link href="/zikrovi"
-        className="inline-flex items-center gap-2 text-sm mb-8 hover:text-brand transition-colors"
-        style={{ color: '#978A81' }}>
+        className="inline-flex items-center gap-2 text-sm mb-8 hover:text-[var(--fg-8b1e3f)] transition-colors"
+        style={{ color: 'var(--fg-978a81)' }}>
         <ArrowLeft size={14} className="flip-rtl" /> {t('zikr.back')}
       </Link>
 
@@ -53,14 +53,14 @@ export default async function ZikrTextPage({ params }: { params: { id: string } 
       )}
 
       <header className="mb-6">
-        <p className="text-xs font-medium uppercase tracking-widest mb-3" style={{ color: '#2563EB' }}>
+        <p className="text-xs font-medium uppercase tracking-widest mb-3" style={{ color: 'var(--fg-2563eb)' }}>
           {t('zikr.tag')}
         </p>
-        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-2" style={{ color: '#241F1D' }}>
+        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-2" style={{ color: 'var(--fg-241f1d)' }}>
           {tekst.title}
         </h1>
         {tekst.author && (
-          <p className="text-sm font-medium" style={{ color: '#2563EB' }}>{tekst.author}</p>
+          <p className="text-sm font-medium" style={{ color: 'var(--fg-2563eb)' }}>{tekst.author}</p>
         )}
         <MachineTranslationNote show={tekst.translated} className="mt-3" />
       </header>
@@ -70,7 +70,7 @@ export default async function ZikrTextPage({ params }: { params: { id: string } 
       {tekst.content && (
         <div
           className="prose prose-sm sm:prose max-w-none leading-relaxed whitespace-pre-wrap mt-6"
-          style={{ color: '#3F3733', fontFamily: 'Georgia, serif', fontSize: '1rem', lineHeight: 1.9, ...rtlText }}
+          style={{ color: 'var(--fg-3f3733)', fontFamily: 'Georgia, serif', fontSize: '1rem', lineHeight: 1.9, ...rtlText }}
         >
           {tekst.content}
         </div>

@@ -29,7 +29,7 @@ export default async function ActivityPage({ params }: PageProps) {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <Link href="/aktivnosti"
-        className="inline-flex items-center gap-2 text-warm-400 hover:text-warm-700 text-sm mb-8 transition-colors font-mono tracking-wide">
+        className="inline-flex items-center gap-2 text-[var(--fg-b8aca2)] hover:text-[var(--fg-5a4f49)] text-sm mb-8 transition-colors font-mono tracking-wide">
         <ArrowLeft size={14} className="flip-rtl" /> {t('backToList')}
       </Link>
 
@@ -46,11 +46,11 @@ export default async function ActivityPage({ params }: PageProps) {
       ) : null}
 
       <div className="flex items-center gap-2 mb-4">
-        <Calendar size={13} style={{ color: '#A94A61' }} />
-        <time className="font-mono text-xs tracking-wider" style={{ color: '#A94A61' }}>{formatDate(activity.date)}</time>
+        <Calendar size={13} style={{ color: 'var(--fg-a94a61)' }} />
+        <time className="font-mono text-xs tracking-wider" style={{ color: 'var(--fg-a94a61)' }}>{formatDate(activity.date)}</time>
       </div>
 
-      <h1 className="text-2xl sm:text-3xl font-extrabold text-warm-900 leading-tight tracking-tight mb-8 break-words">
+      <h1 className="text-2xl sm:text-3xl font-extrabold text-[var(--fg-241f1d)] leading-tight tracking-tight mb-8 break-words">
         {activity.title}
       </h1>
 
@@ -62,10 +62,10 @@ export default async function ActivityPage({ params }: PageProps) {
         )}
       </div>
 
-      <div className="mt-10 pt-6 flex justify-center" style={{ borderTop: '1px solid #E8E1DB' }}>
+      <div className="mt-10 pt-6 flex justify-center" style={{ borderTop: '1px solid var(--line-e8e1db)' }}>
         <Link href="/aktivnosti"
-          className="inline-flex items-center gap-2 font-mono text-xs text-warm-400 hover:text-warm-700 transition-colors px-4 py-2"
-          style={{ border: '1px solid #E8E1DB', borderRadius: 6 }}>
+          className="inline-flex items-center gap-2 font-mono text-xs text-[var(--fg-b8aca2)] hover:text-[var(--fg-5a4f49)] transition-colors px-4 py-2"
+          style={{ border: '1px solid var(--line-e8e1db)', borderRadius: 6 }}>
           <MapPin size={11} /> {t('allActivities')}
         </Link>
       </div>

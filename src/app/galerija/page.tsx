@@ -65,21 +65,21 @@ export default function GalerijaPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16" style={{ minHeight: '60vh' }}>
       <div className="mb-12">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-warm-900 tracking-tight mb-2">{t('title')}</h1>
-        <p className="text-warm-500 text-sm">{t('intro')}</p>
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-[var(--fg-241f1d)] tracking-tight mb-2">{t('title')}</h1>
+        <p className="text-[var(--fg-978a81)] text-sm">{t('intro')}</p>
       </div>
 
       {initialLoad ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
           {Array.from({ length: PAGE }).map((_, i) => (
-            <div key={i} className="animate-pulse aspect-square rounded-xl" style={{ background: '#E8E1DB' }} />
+            <div key={i} className="animate-pulse aspect-square rounded-xl" style={{ background: 'var(--bg-e8e1db)' }} />
           ))}
         </div>
       ) : images.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-24"
-          style={{ background: '#FAF7F2', border: '1px dashed #E8E1DB', borderRadius: 8 }}>
-          <Images size={40} className="mb-3" style={{ color: '#D6CCC3' }} />
-          <p className="font-mono text-sm text-warm-400">{t('empty')}</p>
+          style={{ background: 'var(--bg-faf7f2)', border: '1px dashed var(--line-e8e1db)', borderRadius: 8 }}>
+          <Images size={40} className="mb-3" style={{ color: 'var(--fg-d6ccc3)' }} />
+          <p className="font-mono text-sm text-[var(--fg-b8aca2)]">{t('empty')}</p>
         </div>
       ) : (
         <>
@@ -87,7 +87,7 @@ export default function GalerijaPage() {
             {images.map((img, index) => (
               <button key={img.id} onClick={() => setLightbox({ img, index })}
                 className="group relative overflow-hidden rounded-xl aspect-square focus:outline-none"
-                style={{ background: '#E8E1DB' }}>
+                style={{ background: 'var(--bg-e8e1db)' }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={img.imageUrl} alt={img.title || ''}
                   loading="lazy"
@@ -106,17 +106,17 @@ export default function GalerijaPage() {
           {hasMore && (
             <div className="flex flex-col items-center gap-3 mt-10">
               <button onClick={loadMore} disabled={loadingMore}
-                className="flex items-center gap-2 px-8 py-3 border border-[#D6CCC3] text-[#5a4f49] text-sm font-medium hover:border-[#8b1e3f] hover:text-[#8b1e3f] transition-colors disabled:opacity-50">
+                className="flex items-center gap-2 px-8 py-3 border border-[var(--line-d6ccc3)] text-[var(--fg-5a4f49)] text-sm font-medium hover:border-[var(--line-8b1e3f)] hover:text-[var(--fg-8b1e3f)] transition-colors disabled:opacity-50">
                 {loadingMore
                   ? <><Loader2 size={15} className="animate-spin" /> {t('loading')}</>
                   : t('loadMore')
                 }
               </button>
-              <p className="text-xs text-[#a89888]">{t('shownCount', { count: images.length })}</p>
+              <p className="text-xs text-[var(--fg-a89888)]">{t('shownCount', { count: images.length })}</p>
             </div>
           )}
           {!hasMore && images.length > PAGE && (
-            <p className="text-center text-xs text-[#a89888] mt-8">{t('allLoaded', { count: images.length })}</p>
+            <p className="text-center text-xs text-[var(--fg-a89888)] mt-8">{t('allLoaded', { count: images.length })}</p>
           )}
         </>
       )}
@@ -155,7 +155,7 @@ export default function GalerijaPage() {
               </button>
             )}
             <button onClick={() => setLightbox(null)}
-              className="absolute -top-3 -end-3 w-8 h-8 bg-white rounded-full flex items-center justify-center text-zinc-900 hover:bg-zinc-100 transition-colors text-lg font-bold">
+              className="absolute -top-3 -end-3 w-8 h-8 bg-[var(--bg-ffffff)] rounded-full flex items-center justify-center text-[var(--fg-18181b)] hover:bg-[var(--bg-f4f4f5)] transition-colors text-lg font-bold">
               ×
             </button>
           </div>

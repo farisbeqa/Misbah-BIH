@@ -42,8 +42,8 @@ export default function BlogSearch({ posts }: { posts: Post[] }) {
           <button key={c.value} onClick={() => setCategory(c.value)}
             className={`px-4 py-2 text-sm font-medium transition-colors border ${
               category === c.value
-                ? 'bg-[#8b1e3f] text-white border-[#8b1e3f]'
-                : 'bg-white text-[#5a4f49] border-[#D6CCC3] hover:border-[#8b1e3f]'
+                ? 'bg-[var(--bg-8b1e3f)] text-white border-[var(--line-8b1e3f)]'
+                : 'bg-[var(--bg-ffffff)] text-[var(--fg-5a4f49)] border-[var(--line-d6ccc3)] hover:border-[var(--line-8b1e3f)]'
             }`}>
             {t(`categories.${c.key}`)}
           </button>
@@ -52,16 +52,16 @@ export default function BlogSearch({ posts }: { posts: Post[] }) {
 
       {posts.length > 0 && (
         <div className="relative mb-8">
-          <Search size={15} className="absolute start-3 top-1/2 -translate-y-1/2 text-[#a89888] pointer-events-none" />
+          <Search size={15} className="absolute start-3 top-1/2 -translate-y-1/2 text-[var(--fg-a89888)] pointer-events-none" />
           <input value={query} onChange={e => setQuery(e.target.value)}
             placeholder={t('list.searchByTitle')}
-            className="w-full ps-9 pe-4 py-2.5 border border-[#D6CCC3] bg-white focus:outline-none focus:border-[#8b1e3f] text-sm transition-colors" />
+            className="w-full ps-9 pe-4 py-2.5 border border-[var(--line-d6ccc3)] bg-[var(--bg-ffffff)] focus:outline-none focus:border-[var(--line-8b1e3f)] text-sm transition-colors" />
         </div>
       )}
 
       {filtered.length === 0 ? (
-        <div className="flex items-center justify-center py-20 bg-[#f5f2ef] border border-black/5">
-          <p className="text-sm text-[#a89888]">
+        <div className="flex items-center justify-center py-20 bg-[var(--bg-f5f2ef)] border border-[var(--line-black5)]">
+          <p className="text-sm text-[var(--fg-a89888)]">
             {query.trim() ? t('list.noResults', { query }) : t('blogPage.empty')}
           </p>
         </div>
@@ -76,10 +76,10 @@ export default function BlogSearch({ posts }: { posts: Post[] }) {
           {visible < filtered.length && (
             <div className="flex flex-col items-center gap-2 mt-10">
               <button onClick={() => setVisible(v => v + PAGE)}
-                className="px-8 py-3 border border-[#D6CCC3] text-[#5a4f49] text-sm font-medium hover:border-[#8b1e3f] hover:text-[#8b1e3f] transition-colors">
+                className="px-8 py-3 border border-[var(--line-d6ccc3)] text-[var(--fg-5a4f49)] text-sm font-medium hover:border-[var(--line-8b1e3f)] hover:text-[var(--fg-8b1e3f)] transition-colors">
                 {t('list.loadMore', { count: filtered.length - visible })}
               </button>
-              <p className="text-xs text-[#a89888]">{t('list.shown', { shown: shown.length, total: filtered.length })}</p>
+              <p className="text-xs text-[var(--fg-a89888)]">{t('list.shown', { shown: shown.length, total: filtered.length })}</p>
             </div>
           )}
         </>

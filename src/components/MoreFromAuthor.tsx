@@ -25,20 +25,20 @@ export default function MoreFromAuthor({ author, title, className = '' }: { auth
         const photo = a.bioSlug ? BIOS[a.bioSlug]?.photo : undefined
         return (
           <Link key={a.slug} href={`/autori/${a.slug}`}
-            className="group flex items-center gap-4 p-4 sm:p-5 transition-colors hover:bg-[#f3ece4]"
-            style={{ background: '#FAF7F2', border: '1px solid #E8E1DB', borderRadius: 8 }}>
+            className="group flex items-center gap-4 p-4 sm:p-5 transition-colors hover:bg-[var(--bg-f3ece4)]"
+            style={{ background: 'var(--bg-faf7f2)', border: '1px solid var(--line-e8e1db)', borderRadius: 8 }}>
             {photo
               // eslint-disable-next-line @next/next/no-img-element
               ? <img src={photo} alt={a.name} className="w-12 h-12 rounded-full object-cover object-top flex-shrink-0" />
-              : <div className="w-12 h-12 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style={{ background: '#8B1E3F' }}>
+              : <div className="w-12 h-12 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style={{ background: 'var(--bg-8b1e3f)' }}>
                   {initials(a.name)}
                 </div>
             }
             <div className="min-w-0 flex-1">
-              <p className="font-mono text-[11px] uppercase tracking-widest text-warm-400">{t('moreFromAuthor.label')}</p>
-              <p className="font-semibold text-warm-900 truncate">{a.name}</p>
+              <p className="font-mono text-[11px] uppercase tracking-widest text-[var(--fg-b8aca2)]">{t('moreFromAuthor.label')}</p>
+              <p className="font-semibold text-[var(--fg-241f1d)] truncate">{a.name}</p>
             </div>
-            <span className="flex items-center gap-1.5 text-sm font-medium whitespace-nowrap" style={{ color: '#8B1E3F' }}>
+            <span className="flex items-center gap-1.5 text-sm font-medium whitespace-nowrap" style={{ color: 'var(--fg-8b1e3f)' }}>
               <span className="hidden sm:inline">{t('moreFromAuthor.seeMore')}</span>
               <span className="sm:hidden">{t('moreFromAuthor.seeMoreShort')}</span>
               {/* rtl: keeps the arrow mirrored while it moves towards the end on hover */}

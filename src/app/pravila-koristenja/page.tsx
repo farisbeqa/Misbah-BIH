@@ -22,8 +22,8 @@ const FORBIDDEN = ['insults', 'hate', 'explicit', 'spam', 'personalData'] as con
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="mb-8">
-      <h2 className="font-bold text-warm-900 text-lg mb-3">{title}</h2>
-      <div className="space-y-3 text-warm-600 leading-relaxed">{children}</div>
+      <h2 className="font-bold text-[var(--fg-241f1d)] text-lg mb-3">{title}</h2>
+      <div className="space-y-3 text-[var(--fg-746860)] leading-relaxed">{children}</div>
     </section>
   )
 }
@@ -33,9 +33,9 @@ export default async function PravilaPage() {
   // Markup and fixed values (e-mail and web addresses) used inside the texts
   const rich = {
     b: (chunks: ReactNode) => <b>{chunks}</b>,
-    mail: (chunks: ReactNode) => <a href={`mailto:${EMAIL}`} className="text-brand hover:underline">{chunks}</a>,
-    deleteLink: (chunks: ReactNode) => <Link href="/obrisi-nalog" className="text-brand hover:underline">{chunks}</Link>,
-    privacyLink: (chunks: ReactNode) => <Link href="/privatnost" className="text-brand hover:underline">{chunks}</Link>,
+    mail: (chunks: ReactNode) => <a href={`mailto:${EMAIL}`} className="text-[var(--fg-8b1e3f)] hover:underline">{chunks}</a>,
+    deleteLink: (chunks: ReactNode) => <Link href="/obrisi-nalog" className="text-[var(--fg-8b1e3f)] hover:underline">{chunks}</Link>,
+    privacyLink: (chunks: ReactNode) => <Link href="/privatnost" className="text-[var(--fg-8b1e3f)] hover:underline">{chunks}</Link>,
     email: EMAIL,
     site: SITE,
     deleteUrl: `${SITE}${href('/obrisi-nalog')}`,
@@ -44,9 +44,9 @@ export default async function PravilaPage() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
-      <p className="font-mono text-[11px] text-brand-light uppercase tracking-widest mb-2">{t('tag')}</p>
-      <h1 className="text-3xl sm:text-4xl font-extrabold text-warm-900 tracking-tight mb-3">{t('terms.title')}</h1>
-      <p className="text-warm-500 text-sm mb-10">{t('updated', { date: formatDate(UPDATED) })}</p>
+      <p className="font-mono text-[11px] text-[var(--fg-a94a61)] uppercase tracking-widest mb-2">{t('tag')}</p>
+      <h1 className="text-3xl sm:text-4xl font-extrabold text-[var(--fg-241f1d)] tracking-tight mb-3">{t('terms.title')}</h1>
+      <p className="text-[var(--fg-978a81)] text-sm mb-10">{t('updated', { date: formatDate(UPDATED) })}</p>
 
       <Section title={t('terms.acceptance.title')}>
         <p>{t.rich('terms.acceptance.text', rich)}</p>

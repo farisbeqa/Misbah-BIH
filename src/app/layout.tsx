@@ -3,6 +3,7 @@ import { Manrope, IBM_Plex_Mono, Noto_Sans_Arabic } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations } from 'next-intl/server'
 import './globals.css'
+import './theme.css'
 import Navbar from '@/components/Navbar'
 import ConditionalFooter from '@/components/ConditionalFooter'
 import PozoviteNasButton from '@/components/PozoviteNasButton'
@@ -168,6 +169,11 @@ async function jsonLd() {
   }
 }
 
+// Light or dark theme before the first paint: the visitor's choice (cookie
+// "theme", set by the sun/moon button) or else the device setting. The admin
+// pages always stay light. Colours: src/app/theme.css.
+const THEME_SCRIPT = `(function(){try{if(location.pathname.indexOf('/admin')===0)return;var m=document.cookie.match(/(?:^|; )theme=(dark|light)/);var t=m?m[1]:(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t)}catch(e){}})()`
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const locale = getLocale()
   const { dir } = LOCALE_INFO[locale]
@@ -175,14 +181,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const fonts = `${manrope.variable} ${ibmMono.variable} ${notoArabic.variable}`
 
   return (
-    <html lang={locale} dir={dir} className={locale === 'ar' ? `${fonts} lang-ar` : fonts}>
+    // data-theme is set by THEME_SCRIPT before React starts, hence suppressHydrationWarning
+    <html lang={locale} dir={dir} className={locale === 'ar' ? `${fonts} lang-ar` : fonts} suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(await jsonLd()) }}
         />
       </head>
-      <body className="min-h-screen flex flex-col font-sans antialiased" style={{ background: '#F5F2EF' }}>
+      <body className="min-h-screen flex flex-col font-sans antialiased" style={{ background: 'var(--bg-f5f2ef)' }}>
         <NextIntlClientProvider locale={locale} messages={clientMessages(messages)} timeZone="Europe/Sarajevo">
           <Navbar />
           <main className="flex-1">{children}</main>

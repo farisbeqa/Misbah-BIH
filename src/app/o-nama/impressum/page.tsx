@@ -27,12 +27,12 @@ function MemberCard({ name, slug, photo, accent, bioLabel }: { name: string; slu
         )}
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-warm-900 truncate">{name}</p>
+        <p className="text-sm font-medium text-[var(--fg-241f1d)] truncate">{name}</p>
       </div>
       {slug && (
         <Link href={`/o-nama/tim/${slug}`}
           className="flex items-center gap-1 text-xs font-medium px-3 py-1.5 rounded-lg transition-colors hover:opacity-80 flex-shrink-0"
-          style={{ background: '#F5EDE8', color: '#8B1E3F' }}>
+          style={{ background: 'var(--bg-f5ede8)', color: 'var(--fg-8b1e3f)' }}>
           {bioLabel} <ExternalLink size={10} className="flip-rtl" />
         </Link>
       )}
@@ -47,16 +47,16 @@ export default async function ImpressumPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <Link href="/o-nama"
-        className="inline-flex items-center gap-2 text-warm-400 hover:text-warm-700 text-sm mb-8 transition-colors font-mono">
+        className="inline-flex items-center gap-2 text-[var(--fg-b8aca2)] hover:text-[var(--fg-5a4f49)] text-sm mb-8 transition-colors font-mono">
         <ArrowLeft size={14} className="flip-rtl" /> {t('back')}
       </Link>
 
-      <h1 className="text-2xl sm:text-3xl font-extrabold text-warm-900 tracking-tight mb-10">{t('title')}</h1>
+      <h1 className="text-2xl sm:text-3xl font-extrabold text-[var(--fg-241f1d)] tracking-tight mb-10">{t('title')}</h1>
 
       {/* About */}
-      <section className="mb-10 p-6 rounded-2xl" style={{ background: '#FAF7F2', border: '1px solid #E8E1DB' }}>
-        <h2 className="font-bold text-warm-900 mb-4">{t('platform.title')}</h2>
-        <div className="space-y-3 text-sm text-warm-700 leading-relaxed">
+      <section className="mb-10 p-6 rounded-2xl" style={{ background: 'var(--bg-faf7f2)', border: '1px solid var(--line-e8e1db)' }}>
+        <h2 className="font-bold text-[var(--fg-241f1d)] mb-4">{t('platform.title')}</h2>
+        <div className="space-y-3 text-sm text-[var(--fg-5a4f49)] leading-relaxed">
           <p>
             {t('platform.text1')}
           </p>
@@ -68,27 +68,27 @@ export default async function ImpressumPage() {
 
       {/* Team */}
       <section className="mb-10">
-        <h2 className="font-bold text-warm-900 mb-5 text-lg">{t('editorial.title')}</h2>
+        <h2 className="font-bold text-[var(--fg-241f1d)] mb-5 text-lg">{t('editorial.title')}</h2>
         <div className="grid sm:grid-cols-2 gap-4">
-          <div className="p-5 rounded-2xl" style={{ background: '#FAF7F2', border: '1px solid #E8E1DB' }}>
-            <p className="font-mono text-[11px] uppercase tracking-widest mb-3" style={{ color: '#A94A61' }}>{t('editorial.editors')}</p>
-            <ul className="divide-y divide-[#EDE5DB]">
+          <div className="p-5 rounded-2xl" style={{ background: 'var(--bg-faf7f2)', border: '1px solid var(--line-e8e1db)' }}>
+            <p className="font-mono text-[11px] uppercase tracking-widest mb-3" style={{ color: 'var(--fg-a94a61)' }}>{t('editorial.editors')}</p>
+            <ul className="divide-y divide-[var(--line-ede5db)]">
               {UREDNICI.map(m => (
                 <MemberCard key={m.name} name={m.name} slug={m.slug} accent="#8B1E3F" bioLabel={bioLabel} />
               ))}
             </ul>
           </div>
-          <div className="p-5 rounded-2xl" style={{ background: '#FAF7F2', border: '1px solid #E8E1DB' }}>
-            <p className="font-mono text-[11px] uppercase tracking-widest mb-3" style={{ color: '#A94A61' }}>{t('editorial.socialMedia')}</p>
-            <ul className="divide-y divide-[#EDE5DB]">
+          <div className="p-5 rounded-2xl" style={{ background: 'var(--bg-faf7f2)', border: '1px solid var(--line-e8e1db)' }}>
+            <p className="font-mono text-[11px] uppercase tracking-widest mb-3" style={{ color: 'var(--fg-a94a61)' }}>{t('editorial.socialMedia')}</p>
+            <ul className="divide-y divide-[var(--line-ede5db)]">
               {DRUSTVENE_MREZE.map(m => (
                 <MemberCard key={m.name} name={m.name} slug={m.slug} photo={m.photo} accent="#C8A96B" bioLabel={bioLabel} />
               ))}
             </ul>
           </div>
-          <div className="p-5 rounded-2xl sm:col-span-2" style={{ background: '#FAF7F2', border: '1px solid #E8E1DB' }}>
-            <p className="font-mono text-[11px] uppercase tracking-widest mb-3" style={{ color: '#A94A61' }}>{t('editorial.authors')}</p>
-            <ul className="divide-y divide-[#EDE5DB]">
+          <div className="p-5 rounded-2xl sm:col-span-2" style={{ background: 'var(--bg-faf7f2)', border: '1px solid var(--line-e8e1db)' }}>
+            <p className="font-mono text-[11px] uppercase tracking-widest mb-3" style={{ color: 'var(--fg-a94a61)' }}>{t('editorial.authors')}</p>
+            <ul className="divide-y divide-[var(--line-ede5db)]">
               {AUTORI.map(m => (
                 <MemberCard key={m.name} name={m.name} slug={m.slug} photo={m.photo} accent="#8B1E3F" bioLabel={bioLabel} />
               ))}
@@ -98,9 +98,9 @@ export default async function ImpressumPage() {
       </section>
 
       {/* Copyright */}
-      <section className="p-6 rounded-2xl" style={{ background: '#FAF7F2', border: '1px solid #E8E1DB' }}>
-        <h2 className="font-bold text-warm-900 mb-4">{t('copyright.title')}</h2>
-        <div className="space-y-3 text-sm text-warm-600 leading-relaxed">
+      <section className="p-6 rounded-2xl" style={{ background: 'var(--bg-faf7f2)', border: '1px solid var(--line-e8e1db)' }}>
+        <h2 className="font-bold text-[var(--fg-241f1d)] mb-4">{t('copyright.title')}</h2>
+        <div className="space-y-3 text-sm text-[var(--fg-746860)] leading-relaxed">
           <p>
             {t('copyright.text1')}
           </p>
@@ -113,7 +113,7 @@ export default async function ImpressumPage() {
         </div>
       </section>
 
-      <p className="font-mono text-xs text-warm-300 mt-8 text-center">
+      <p className="font-mono text-xs text-[var(--fg-d6ccc3)] mt-8 text-center">
         © {new Date().getFullYear()} Strossa d.o.o. · Misbah EDU
       </p>
     </div>

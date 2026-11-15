@@ -65,22 +65,22 @@ export default function IlahijaAudioPlayer({ audioUrl }: { audioUrl: string }) {
   }
 
   return (
-    <div className="flex items-center gap-3 bg-white border border-gray-100 rounded-2xl px-4 py-3 shadow-sm mb-8">
+    <div className="flex items-center gap-3 bg-[var(--bg-ffffff)] border border-[var(--line-f3f4f6)] rounded-2xl px-4 py-3 shadow-sm mb-8">
       <audio ref={audioRef} src={audioUrl} preload="metadata" />
 
       <button
         onClick={togglePlay}
         className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white transition-colors"
-        style={{ backgroundColor: '#8B1E3F' }}
+        style={{ backgroundColor: 'var(--bg-8b1e3f)' }}
         aria-label={playing ? t('audio.pause') : t('audio.play')}
       >
         {playing ? <Pause size={16} fill="white" /> : <Play size={16} fill="white" />}
       </button>
 
-      <Music size={14} className="flex-shrink-0" style={{ color: '#978A81' }} />
+      <Music size={14} className="flex-shrink-0" style={{ color: 'var(--fg-978a81)' }} />
 
       <div className="flex-1 flex items-center gap-2 min-w-0">
-        <span className="text-xs tabular-nums flex-shrink-0" style={{ color: '#978A81' }}>
+        <span className="text-xs tabular-nums flex-shrink-0" style={{ color: 'var(--fg-978a81)' }}>
           {fmt(progress)}
         </span>
         <input
@@ -90,10 +90,10 @@ export default function IlahijaAudioPlayer({ audioUrl }: { audioUrl: string }) {
           step={0.1}
           value={progress}
           onChange={handleSeek}
-          className="flex-1 h-1.5 rounded-full accent-[#8B1E3F] cursor-pointer"
-          style={{ background: `linear-gradient(to ${rtl ? 'left' : 'right'}, #8B1E3F ${duration ? (progress / duration) * 100 : 0}%, #e5e7eb ${duration ? (progress / duration) * 100 : 0}%)` }}
+          className="flex-1 h-1.5 rounded-full accent-[var(--fg-8b1e3f)] cursor-pointer"
+          style={{ background: `linear-gradient(to ${rtl ? 'left' : 'right'}, var(--bg-8b1e3f) ${duration ? (progress / duration) * 100 : 0}%, var(--bg-e5e7eb) ${duration ? (progress / duration) * 100 : 0}%)` }}
         />
-        <span className="text-xs tabular-nums flex-shrink-0" style={{ color: '#978A81' }}>
+        <span className="text-xs tabular-nums flex-shrink-0" style={{ color: 'var(--fg-978a81)' }}>
           {fmt(duration)}
         </span>
       </div>

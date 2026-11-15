@@ -6,8 +6,8 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: #F5F2EF;
-  color: #241F1D;
+  background: var(--bg-f5f2ef);
+  color: var(--fg-241f1d);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -57,9 +57,9 @@ main { min-height: 0; }
 
 /* ── Scrollbar ───────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: #F5F2EF; }
-::-webkit-scrollbar-thumb { background: #CDB8A6; border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: #B8ACA2; }
+::-webkit-scrollbar-track { background: var(--bg-f5f2ef); }
+::-webkit-scrollbar-thumb { background: var(--bg-cdb8a6); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--bg-b8aca2); }
 
 /* ── Video embed ─────────────────────────────────────────────────────── */
 .embed-landscape {
@@ -74,7 +74,7 @@ main { min-height: 0; }
 
 /* ── Blog prose ──────────────────────────────────────────────────────── */
 .prose-blog {
-  color: #5A4F49;
+  color: var(--fg-5a4f49);
   font-size: 1.0625rem;
   line-height: 1.9;
   word-break: break-word;
@@ -94,7 +94,7 @@ main { min-height: 0; }
 .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
 /* ── Platform badge instagram ────────────────────────────────────────── */
-.badge-ig { background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); }
+.badge-ig { background: linear-gradient(45deg,var(--bg-f09433),var(--bg-e6683c),var(--bg-dc2743),var(--bg-cc2366),var(--bg-bc1888)); }
 
 /* ── Arabic version of the site (html.lang-ar, dir="rtl") ───────────── */
 html.lang-ar body {

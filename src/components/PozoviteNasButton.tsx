@@ -13,7 +13,7 @@ export default function PozoviteNasButton() {
 
   return (
     <Link href="/pozovite-nas" aria-label={t('inviteUsLabel')}
-      className="fixed bottom-4 end-4 sm:bottom-6 sm:end-6 z-40 flex items-center gap-2 bg-[#8b1e3f] text-white ps-3.5 pe-4 py-3 text-sm sm:text-base shadow-[0_8px_24px_rgba(20,17,16,0.25)] hover:bg-[#7a1a37] transition-colors">
+      className="fixed bottom-4 end-4 sm:bottom-6 sm:end-6 z-40 flex items-center gap-2 bg-[var(--bg-8b1e3f)] text-white ps-3.5 pe-4 py-3 text-sm sm:text-base shadow-[0_8px_24px_rgba(20,17,16,0.25)] hover:bg-[var(--bg-7a1a37)] transition-colors">
       <CalendarHeart size={18} />
       {t('inviteUs')}
     </Link>

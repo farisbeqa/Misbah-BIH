@@ -27,20 +27,20 @@ export default async function PricePage() {
   return (
     <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-12 sm:py-16" style={{ minHeight: '60vh' }}>
       <div className="mb-12">
-        <p className="font-medium text-[#8b1e3f] text-base mb-2">{t('storiesPage.tag')}</p>
-        <h1 className="font-semibold text-[#141110] mb-3"
+        <p className="font-medium text-[var(--fg-8b1e3f)] text-base mb-2">{t('storiesPage.tag')}</p>
+        <h1 className="font-semibold text-[var(--fg-141110)] mb-3"
           style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}>
           {t('storiesPage.title')}
         </h1>
-        <p className="font-normal text-[#746860]" style={{ fontSize: 18 }}>
+        <p className="font-normal text-[var(--fg-746860)]" style={{ fontSize: 18 }}>
           {t('storiesPage.subtitle')}
         </p>
       </div>
 
       {price.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-24 bg-[#f5f2ef] border border-black/5">
-          <BookOpen size={36} className="text-[#D6CCC3] mb-3" />
-          <p className="text-sm text-[#a89888]">{t('storiesPage.empty')}</p>
+        <div className="flex flex-col items-center justify-center py-24 bg-[var(--bg-f5f2ef)] border border-[var(--line-black5)]">
+          <BookOpen size={36} className="text-[var(--fg-d6ccc3)] mb-3" />
+          <p className="text-sm text-[var(--fg-a89888)]">{t('storiesPage.empty')}</p>
         </div>
       ) : (
         <PriceGrid price={price} />

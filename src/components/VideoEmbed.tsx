@@ -31,10 +31,10 @@ export default function VideoEmbed({ platform, embedUrl, isShortForm, originalUr
 
   if (!embedUrl) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 gap-4 bg-zinc-50 rounded-2xl">
-        <p className="text-zinc-500 text-sm">{t('embed.unavailable')}</p>
+      <div className="flex flex-col items-center justify-center py-16 gap-4 bg-[var(--bg-fafafa)] rounded-2xl">
+        <p className="text-[var(--fg-71717a)] text-sm">{t('embed.unavailable')}</p>
         <a href={originalUrl} target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-2 bg-zinc-900 text-white px-5 py-2.5 rounded-full text-sm hover:bg-zinc-700 transition-colors">
+          className="flex items-center gap-2 bg-[var(--bg-18181b)] text-white px-5 py-2.5 rounded-full text-sm hover:bg-[var(--bg-3f3f46)] transition-colors">
           <ExternalLink size={14} className="flip-rtl" />
           {t('embed.openSource')}
         </a>
@@ -95,7 +95,7 @@ export default function VideoEmbed({ platform, embedUrl, isShortForm, originalUr
             data-instgrm-permalink={postUrl}
             data-instgrm-version="14"
             style={{
-              background: '#fff',
+              background: 'var(--bg-ffffff)',
               border: '0',
               borderRadius: 12,
               boxShadow: '0 0 1px rgba(0,0,0,0.08),0 1px 5px rgba(0,0,0,0.1)',
@@ -108,8 +108,8 @@ export default function VideoEmbed({ platform, embedUrl, isShortForm, originalUr
           >
             <div style={{ padding: '16px' }}>
               <a href={postUrl} target="_blank" rel="noopener noreferrer"
-                style={{ display: 'block', textDecoration: 'none', color: '#3d3d4e' }}>
-                <p style={{ color: '#c9c8cd', fontFamily: 'Arial,sans-serif', fontSize: 14, margin: 0, padding: '8px 0 7px' }}>
+                style={{ display: 'block', textDecoration: 'none', color: 'var(--fg-3d3d4e)' }}>
+                <p style={{ color: 'var(--fg-c9c8cd)', fontFamily: 'Arial,sans-serif', fontSize: 14, margin: 0, padding: '8px 0 7px' }}>
                   {title || t('embed.instagramFallbackTitle')}
                 </p>
               </a>
@@ -118,7 +118,7 @@ export default function VideoEmbed({ platform, embedUrl, isShortForm, originalUr
         </div>
         <a href={originalUrl} target="_blank" rel="noopener noreferrer"
           className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white rounded-xl transition-opacity hover:opacity-85"
-          style={{ background: 'linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)' }}>
+          style={{ background: 'linear-gradient(45deg,var(--bg-f09433),var(--bg-e6683c),var(--bg-dc2743),var(--bg-cc2366),var(--bg-bc1888))' }}>
           <Instagram size={15} />
           {t('embed.openInstagram')}
         </a>
@@ -138,7 +138,7 @@ export default function VideoEmbed({ platform, embedUrl, isShortForm, originalUr
             preload="metadata"
           >
             <source src={embedUrl} />
-            <p className="text-zinc-400 text-sm p-4">{t('embed.noVideoSupport')}</p>
+            <p className="text-[var(--fg-a1a1aa)] text-sm p-4">{t('embed.noVideoSupport')}</p>
           </video>
         </div>
       </div>
@@ -184,11 +184,11 @@ export default function VideoEmbed({ platform, embedUrl, isShortForm, originalUr
         </div>
         <a href={originalUrl} target="_blank" rel="noopener noreferrer"
           className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white rounded-xl transition-opacity hover:opacity-85"
-          style={{ background: '#1877f2' }}>
+          style={{ background: 'var(--bg-1877f2)' }}>
           <Facebook size={16} />
           {t('embed.watchFacebook')}
         </a>
-        <p className="text-xs text-zinc-400 text-center max-w-sm px-4">
+        <p className="text-xs text-[var(--fg-a1a1aa)] text-center max-w-sm px-4">
           {t('embed.facebookHint')}
         </p>
       </div>
@@ -203,7 +203,7 @@ function OriginalLink({ href, platform }: { href: string; platform: string }) {
   return (
     <div className="flex justify-center">
       <a href={href} target="_blank" rel="noopener noreferrer"
-        className="inline-flex items-center gap-1.5 text-zinc-400 hover:text-zinc-700 text-xs transition-colors">
+        className="inline-flex items-center gap-1.5 text-[var(--fg-a1a1aa)] hover:text-[var(--fg-3f3f46)] text-xs transition-colors">
         <ExternalLink size={12} className="flip-rtl" />
         {t('embed.openOn', { platform })}
       </a>

@@ -1,0 +1,219 @@
+/* Colours of the website, light and dark.
+ *
+ * Every colour of the public pages is a variable named after its role and its
+ * original (light) colour: --bg-… backgrounds, --fg-… text and icons, --line-…
+ * borders, e.g. --bg-f5f2ef is the cream page background. The light values ARE
+ * the original design. The dark values apply with data-theme="dark" on <html>:
+ * chosen with the sun/moon button (cookie "theme"), otherwise following the
+ * device setting (script in src/app/layout.tsx). The admin pages stay light.
+ *
+ * A new colour in the public pages needs a variable here with a dark value.
+ * (Generated once from the code in Nov 2026; edit by hand from now on.)
+ */
+:root,
+[data-theme="light"] {
+  --bg-1d4ed8:         #1D4ED8;
+  --bg-1e3a8a:         #1E3A8A;
+  --bg-3f3f46:         #3F3F46;
+  --bg-5a1429:         #5A1429;
+  --bg-5e1028:         #5E1028;
+  --bg-6b7280:         #6B7280;
+  --bg-7a1a37:         #7A1A37;
+  --bg-8a7bf5:         #8A7BF5;
+  --bg-8b1e3f:         #8B1E3F;
+  --bg-25d366:         #25D366;
+  --bg-45e283:         #45E283;
+  --bg-1877f2:         #1877F2;
+  --bg-7360f2:         #7360F2;
+  --bg-18181b:         #18181B;
+  --bg-a94a61:         #A94A61;
+  --bg-b8aca2:         #B8ACA2;
+  --bg-b91c1c:         #B91C1C;
+  --bg-bc1888:         #BC1888;
+  --bg-cc2366:         #CC2366;
+  --bg-cdb8a6:         #CDB8A6;
+  --bg-d6ccc3:         #D6CCC3;
+  --bg-dc2743:         #DC2743;
+  --bg-e0d8d0:         #E0D8D0;
+  --bg-e5e7eb:         #E5E7EB;
+  --bg-e8e1db:         #E8E1DB;
+  --bg-e6683c:         #E6683C;
+  --bg-ede6db:         #EDE6DB;
+  --bg-eff6ff:         #EFF6FF;
+  --bg-f0ebe4:         #F0EBE4;
+  --bg-f0fdf4:         #F0FDF4;
+  --bg-f3ece4:         #F3ECE4;
+  --bg-f3f4f6:         #F3F4F6;
+  --bg-f4f4f5:         #F4F4F5;
+  --bg-f5ede8:         #F5EDE8;
+  --bg-f5f2ef:         #F5F2EF;
+  --bg-f6efe7:         #F6EFE7;
+  --bg-f09433:         #F09433;
+  --bg-faf5f5:         #FAF5F5;
+  --bg-faf7f2:         #FAF7F2;
+  --bg-fafafa:         #FAFAFA;
+  --bg-fcfbfa:         #FCFBFA;
+  --bg-fdf4ff:         #FDF4FF;
+  --bg-fef2f2:         #FEF2F2;
+  --bg-fff1f2:         #FFF1F2;
+  --bg-ffffff:         #FFFFFF;
+  --fg-1d4ed8:         #1D4ED8;
+  --fg-2c2420:         #2C2420;
+  --fg-3d3d4e:         #3D3D4E;
+  --fg-3f3f46:         #3F3F46;
+  --fg-3f3733:         #3F3733;
+  --fg-5a4f49:         #5A4F49;
+  --fg-8b1e3f:         #8B1E3F;
+  --fg-9ca3af:         #9CA3AF;
+  --fg-241f1d:         #241F1D;
+  --fg-978a81:         #978A81;
+  --fg-991b1b:         #991B1B;
+  --fg-2563eb:         #2563EB;
+  --fg-06301a:         #06301A;
+  --fg-9333ea:         #9333EA;
+  --fg-18181b:         #18181B;
+  --fg-71717a:         #71717A;
+  --fg-141110:         #141110;
+  --fg-374151:         #374151;
+  --fg-746860:         #746860;
+  --fg-a1a1aa:         #A1A1AA;
+  --fg-a94a61:         #A94A61;
+  --fg-a89888:         #A89888;
+  --fg-b8aca2:         #B8ACA2;
+  --fg-be123c:         #BE123C;
+  --fg-c8a96b:         #C8A96B;
+  --fg-c9c8cd:         #C9C8CD;
+  --fg-cbbfb8:         #CBBFB8;
+  --fg-d6ccc3:         #D6CCC3;
+  --fg-dc2626:         #DC2626;
+  --fg-e0d8d0:         #E0D8D0;
+  --fg-ffffff:         #FFFFFF;
+  --line-1d4ed8:       #1D4ED8;
+  --line-8b1e3f:       #8B1E3F;
+  --line-141110:       #141110;
+  --line-bbf7d0:       #BBF7D0;
+  --line-black5:       rgba(0, 0, 0, 0.05);
+  --line-cfc5bb:       #CFC5BB;
+  --line-d6ccc3:       #D6CCC3;
+  --line-e3d9cf:       #E3D9CF;
+  --line-e8e1db:       #E8E1DB;
+  --line-ede5db:       #EDE5DB;
+  --line-ede5dc:       #EDE5DC;
+  --line-ede8e2:       #EDE8E2;
+  --line-f0ebe4:       #F0EBE4;
+  --line-f3f4f6:       #F3F4F6;
+  --line-f5f0eb:       #F5F0EB;
+  --line-fecaca:       #FECACA;
+  --line-fecdd3:       #FECDD3;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg-1d4ed8:         #1D4ED8;
+  --bg-1e3a8a:         #1E3A8A;
+  --bg-3f3f46:         #3F3F46;
+  --bg-5a1429:         #5A1429;
+  --bg-5e1028:         #5E1028;
+  --bg-6b7280:         #6B7280;
+  --bg-7a1a37:         #9C2A4B;
+  --bg-8a7bf5:         #8A7BF5;
+  --bg-8b1e3f:         #8B1E3F;
+  --bg-25d366:         #25D366;
+  --bg-45e283:         #45E283;
+  --bg-1877f2:         #1877F2;
+  --bg-7360f2:         #7360F2;
+  --bg-18181b:         #18181B;
+  --bg-a94a61:         #7E3347;
+  --bg-b8aca2:         #5C4F47;
+  --bg-b91c1c:         #B91C1C;
+  --bg-bc1888:         #BC1888;
+  --bg-cc2366:         #CC2366;
+  --bg-cdb8a6:         #4A3F38;
+  --bg-d6ccc3:         #4A3F38;
+  --bg-dc2743:         #DC2743;
+  --bg-e0d8d0:         #2B2522;
+  --bg-e5e7eb:         #382F2A;
+  --bg-e8e1db:         #342D29;
+  --bg-e6683c:         #E6683C;
+  --bg-ede6db:         #2B2522;
+  --bg-eff6ff:         #16202E;
+  --bg-f0ebe4:         #2B2522;
+  --bg-f0fdf4:         #15241A;
+  --bg-f3ece4:         #2B2522;
+  --bg-f3f4f6:         #2B2522;
+  --bg-f4f4f5:         #2B2522;
+  --bg-f5ede8:         #2B2522;
+  --bg-f5f2ef:         #181412;
+  --bg-f6efe7:         #2B2522;
+  --bg-f09433:         #F09433;
+  --bg-faf5f5:         #2C1C21;
+  --bg-faf7f2:         #1D1815;
+  --bg-fafafa:         #1D1815;
+  --bg-fcfbfa:         #1D1815;
+  --bg-fdf4ff:         #2A1B30;
+  --bg-fef2f2:         #2E1A1A;
+  --bg-fff1f2:         #3A1E26;
+  --bg-ffffff:         #221D1A;
+  --fg-1d4ed8:         #8DB0F7;
+  --fg-2c2420:         #EFE7DF;
+  --fg-3d3d4e:         #CFC4BA;
+  --fg-3f3f46:         #CFC4BA;
+  --fg-3f3733:         #CFC4BA;
+  --fg-5a4f49:         #BBAFA4;
+  --fg-8b1e3f:         #D88CA1;
+  --fg-9ca3af:         #938779;
+  --fg-241f1d:         #E2D9CF;
+  --fg-978a81:         #A09485;
+  --fg-991b1b:         #F29B9B;
+  --fg-2563eb:         #8FB3FA;
+  --fg-06301a:         #9BD9B0;
+  --fg-9333ea:         #C7A0F5;
+  --fg-18181b:         #EFE7DF;
+  --fg-71717a:         #A09485;
+  --fg-141110:         #EFE7DF;
+  --fg-374151:         #CFC4BA;
+  --fg-746860:         #A59A8F;
+  --fg-a1a1aa:         #938779;
+  --fg-a94a61:         #DDA0B0;
+  --fg-a89888:         #938779;
+  --fg-b8aca2:         #8B7F74;
+  --fg-be123c:         #F27A97;
+  --fg-c8a96b:         #D7BA80;
+  --fg-c9c8cd:         #6E6A70;
+  --fg-cbbfb8:         #6A5E55;
+  --fg-d6ccc3:         #5A4E46;
+  --fg-dc2626:         #F58A8A;
+  --fg-e0d8d0:         #E0D8D0;
+  --fg-ffffff:         #FFFFFF;
+  --line-1d4ed8:       #4E6FB8;
+  --line-8b1e3f:       #B65D77;
+  --line-141110:       #CFC4BA;
+  --line-bbf7d0:       #2D5A3C;
+  --line-black5:       rgba(255, 255, 255, 0.07);
+  --line-cfc5bb:       #4A3F38;
+  --line-d6ccc3:       #4A3F38;
+  --line-e3d9cf:       #382F2A;
+  --line-e8e1db:       #382F2A;
+  --line-ede5db:       #2E2723;
+  --line-ede5dc:       #2E2723;
+  --line-ede8e2:       #2E2723;
+  --line-f0ebe4:       #2E2723;
+  --line-f3f4f6:       #2E2723;
+  --line-f5f0eb:       #2E2723;
+  --line-fecaca:       #5A2B2B;
+  --line-fecdd3:       #5C2A38;
+}
+
+/* Sun/moon button (src/components/ThemeToggle.tsx): icon and label of the other theme */
+.theme-icon-sun,
+.theme-label-light { display: none; }
+:root[data-theme="dark"] .theme-icon-moon,
+:root[data-theme="dark"] .theme-label-dark { display: none; }
+:root[data-theme="dark"] .theme-icon-sun,
+:root[data-theme="dark"] .theme-label-light { display: block; }
+
+/* The logo's cream background blends into the light page; on dark it is a small tile */
+:root[data-theme="dark"] .site-logo {
+  mix-blend-mode: normal;
+  border-radius: 6px;
+}

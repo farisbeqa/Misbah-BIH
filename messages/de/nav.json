@@ -4,7 +4,7 @@
   "longLectures": "Lange Vorträge",
   "shortLectures": "Kurzvorträge",
   "quran": "Koran",
-  "zikrAndDua": "Dhikr und Bittgebete",
+  "zikrAndDua": "Dhikr & Bittgebete",
   "zikrs": "Dhikr (Text und Audio)",
   "duas": "Bittgebete (Text und Audio)",
   "podcast": "Podcast",
@@ -37,5 +37,7 @@
     "privacy": "Datenschutz",
     "terms": "Nutzungsbedingungen",
     "rights": "© 2026 Misbah EDU. Alle Rechte vorbehalten."
-  }
+  },
+  "themeDark": "Dunkelmodus einschalten",
+  "themeLight": "Hellmodus einschalten"
 }

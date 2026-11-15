@@ -77,7 +77,7 @@ export default async function PozoviteNasPage({ params }: { params: { slug?: str
   const isHome = r.crumbs.length === 1
   const isInquiry = params.slug?.[0] === 'kontakt'
   return (
-    <div className="min-h-screen w-full bg-white">
+    <div className="min-h-screen w-full bg-[var(--bg-ffffff)]">
       {isHome ? null : <Crumbs crumbs={r.crumbs} label={t('sections.breadcrumbs')} />}
       {r.body}
       {isInquiry ? null : <InviteSection t={t} />}
@@ -106,7 +106,7 @@ function ArrowUpRight() {
 function PrimaryLink({ href, children }: { href: string; children: ReactNode }) {
   return (
     <Link href={href}
-      className="bg-[#8b1e3f] text-white flex items-center gap-2 ps-8 pe-6 py-3 text-base font-normal shrink-0 hover:bg-[#7a1a37] transition-colors self-start">
+      className="bg-[var(--bg-8b1e3f)] text-white flex items-center gap-2 ps-8 pe-6 py-3 text-base font-normal shrink-0 hover:bg-[var(--bg-7a1a37)] transition-colors self-start">
       {children}
       <ArrowUpRight />
     </Link>
@@ -115,13 +115,13 @@ function PrimaryLink({ href, children }: { href: string; children: ReactNode }) 
 
 function OutlineLink({ href, children }: { href: string; children: ReactNode }) {
   return (
-    <Link href={href} className="border border-[#8b1e3f] text-[#8b1e3f] px-6 py-3 text-base font-normal hover:bg-[#faf5f5] transition-colors">
+    <Link href={href} className="border border-[var(--line-8b1e3f)] text-[var(--fg-8b1e3f)] px-6 py-3 text-base font-normal hover:bg-[var(--bg-faf5f5)] transition-colors">
       {children}
     </Link>
   )
 }
 
-function Section({ children, bg = 'bg-white' }: { children: ReactNode; bg?: string }) {
+function Section({ children, bg = 'bg-[var(--bg-ffffff)]' }: { children: ReactNode; bg?: string }) {
   return (
     <section className={`${bg} w-full`}>
       <div className={`${WRAP} py-16 lg:py-20 flex flex-col gap-14`}>{children}</div>
@@ -136,17 +136,17 @@ function SectionHead({ back, tag, title, description, cta }: {
     <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
       <div className="flex flex-col gap-4 max-w-[705px]">
         {back ? (
-          <Link href={back.href} className="inline-flex items-center gap-1 self-start text-sm text-[#746860] hover:text-[#8b1e3f]">
+          <Link href={back.href} className="inline-flex items-center gap-1 self-start text-sm text-[var(--fg-746860)] hover:text-[var(--fg-8b1e3f)]">
             <ChevronLeft size={16} className="flip-rtl" /> {back.label}
           </Link>
         ) : null}
-        <p className="font-medium text-[#8b1e3f] text-base uppercase">{tag}</p>
+        <p className="font-medium text-[var(--fg-8b1e3f)] text-base uppercase">{tag}</p>
         <div className="flex flex-col gap-6">
-          <h1 className="font-semibold text-[#141110]" style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}>
+          <h1 className="font-semibold text-[var(--fg-141110)]" style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}>
             {title}
           </h1>
           {description ? (
-            <p className="font-normal text-[#746860]" style={{ fontSize: 18, lineHeight: 1.5, letterSpacing: '-0.18px' }}>{description}</p>
+            <p className="font-normal text-[var(--fg-746860)]" style={{ fontSize: 18, lineHeight: 1.5, letterSpacing: '-0.18px' }}>{description}</p>
           ) : null}
         </div>
       </div>
@@ -157,14 +157,14 @@ function SectionHead({ back, tag, title, description, cta }: {
 
 function Crumbs({ crumbs, label }: { crumbs: Crumb[]; label: string }) {
   return (
-    <nav aria-label={label} className="bg-[#faf7f2] border-b border-[#ede5dc]">
+    <nav aria-label={label} className="bg-[var(--bg-faf7f2)] border-b border-[var(--line-ede5dc)]">
       <ol className={`${WRAP} flex items-center gap-1.5 py-3 text-sm overflow-x-auto whitespace-nowrap`}>
         {crumbs.map((c, i) => (
           <li key={c.href} className="flex items-center gap-1.5 shrink-0">
-            {i > 0 ? <ChevronRight size={14} className="text-[#a89888] flip-rtl" aria-hidden="true" /> : null}
+            {i > 0 ? <ChevronRight size={14} className="text-[var(--fg-a89888)] flip-rtl" aria-hidden="true" /> : null}
             {i === crumbs.length - 1
-              ? <span aria-current="page" className="text-[#8b1e3f] font-medium">{c.label}</span>
-              : <Link href={c.href} className="text-[#746860] hover:text-[#8b1e3f]">{c.label}</Link>}
+              ? <span aria-current="page" className="text-[var(--fg-8b1e3f)] font-medium">{c.label}</span>
+              : <Link href={c.href} className="text-[var(--fg-746860)] hover:text-[var(--fg-8b1e3f)]">{c.label}</Link>}
           </li>
         ))}
       </ol>
@@ -178,19 +178,19 @@ function Card({ href, tag, title, description, img, video, footer, tall = false 
 }) {
   return (
     <Link href={href} className="group flex flex-col overflow-hidden h-full">
-      <div className="relative w-full overflow-hidden shrink-0 bg-[#e0d8d0]" style={{ height: tall ? 340 : 240 }}>
+      <div className="relative w-full overflow-hidden shrink-0 bg-[var(--bg-e0d8d0)]" style={{ height: tall ? 340 : 240 }}>
         {video ? <TileVideo src={VIDEO(video)} poster={IMG(img)} /> : (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={IMG(img)} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" />
         )}
       </div>
-      <div className="bg-[#f5f2ef] flex flex-col gap-3 p-6 flex-1">
-        <p className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{tag}</p>
-        <p className="font-medium text-[#241f1d] group-hover:text-[#8b1e3f] transition-colors" style={{ fontSize: 24, lineHeight: 1.12, letterSpacing: '-0.72px' }}>
+      <div className="bg-[var(--bg-f5f2ef)] flex flex-col gap-3 p-6 flex-1">
+        <p className="font-medium text-[var(--fg-8b1e3f)] text-xs uppercase tracking-wide">{tag}</p>
+        <p className="font-medium text-[var(--fg-241f1d)] group-hover:text-[var(--fg-8b1e3f)] transition-colors" style={{ fontSize: 24, lineHeight: 1.12, letterSpacing: '-0.72px' }}>
           {title}
         </p>
-        <p className="font-normal text-[#5a4f49] text-base leading-normal">{description}</p>
-        {footer ? <p className="font-medium text-[#8b1e3f] text-sm mt-auto pt-1">{footer} {textArrow()}</p> : null}
+        <p className="font-normal text-[var(--fg-5a4f49)] text-base leading-normal">{description}</p>
+        {footer ? <p className="font-medium text-[var(--fg-8b1e3f)] text-sm mt-auto pt-1">{footer} {textArrow()}</p> : null}
       </div>
     </Link>
   )
@@ -199,13 +199,13 @@ function Card({ href, tag, title, description, img, video, footer, tall = false 
 /** Closing call to action */
 function InviteSection({ t }: { t: T }) {
   return (
-    <Section bg="bg-[#fcfbfa]">
+    <Section bg="bg-[var(--bg-fcfbfa)]">
       <SectionHead tag={t('invite.tag')} title={t('invite.title')}
         description={t('invite.text')}
         cta={
           <div className="flex flex-wrap gap-4 self-start lg:self-auto">
             <PrimaryLink href={`${BASE}/kontakt`}>{t('actions.sendInquiry')}</PrimaryLink>
-            <a href={`mailto:${CONTACT.email}`} className="border border-[#8b1e3f] text-[#8b1e3f] px-6 py-3 text-base font-normal hover:bg-[#faf5f5] transition-colors">
+            <a href={`mailto:${CONTACT.email}`} className="border border-[var(--line-8b1e3f)] text-[var(--fg-8b1e3f)] px-6 py-3 text-base font-normal hover:bg-[var(--bg-faf5f5)] transition-colors">
               {CONTACT.email}
             </a>
           </div>
@@ -221,22 +221,22 @@ function Home({ t }: { t: T }) {
   return (
     <>
       {/* Hero, as on the home page: text panel first, showreel after it */}
-      <section className="bg-white w-full">
+      <section className="bg-[var(--bg-ffffff)] w-full">
         <div className="max-w-[1440px] mx-auto w-full flex flex-col lg:flex-row items-stretch min-h-[520px] lg:min-h-[640px]">
-          <div className="bg-[#faf7f2] flex flex-col justify-end gap-16 lg:gap-20 px-6 sm:px-10 lg:px-[60px] py-16 lg:py-[104px] w-full lg:w-[55%] xl:w-[798px] shrink-0">
+          <div className="bg-[var(--bg-faf7f2)] flex flex-col justify-end gap-16 lg:gap-20 px-6 sm:px-10 lg:px-[60px] py-16 lg:py-[104px] w-full lg:w-[55%] xl:w-[798px] shrink-0">
             <div className="flex flex-col gap-2">
               {/* The line itself is dir="rtl", where text-start would mean right in every
                   language; on large screens it lines up with the start of the page instead */}
-              <p className={`text-base font-medium text-[#141110] text-center ${isRtl() ? 'lg:text-right' : 'lg:text-left'}`} dir="rtl"
+              <p className={`text-base font-medium text-[var(--fg-141110)] text-center ${isRtl() ? 'lg:text-right' : 'lg:text-left'}`} dir="rtl"
                 style={{ fontFamily: "'Noto Sans Arabic', Manrope, sans-serif" }}>
                 بسم الله الرحمن الرحيم
               </p>
               <div className="flex flex-col gap-6 mt-2">
-                <p className="font-medium text-[#8b1e3f] text-base uppercase">{t('home.hero.tag')}</p>
-                <h1 className="font-semibold text-[#141110]" style={{ fontSize: 'clamp(32px, 5vw, 52px)', lineHeight: 1.3, letterSpacing: '-1.04px' }}>
+                <p className="font-medium text-[var(--fg-8b1e3f)] text-base uppercase">{t('home.hero.tag')}</p>
+                <h1 className="font-semibold text-[var(--fg-141110)]" style={{ fontSize: 'clamp(32px, 5vw, 52px)', lineHeight: 1.3, letterSpacing: '-1.04px' }}>
                   {t('home.hero.title')}
                 </h1>
-                <p className="font-normal text-[#5a4f49]" style={{ fontSize: 18, lineHeight: 1.5, letterSpacing: '-0.18px' }}>
+                <p className="font-normal text-[var(--fg-5a4f49)]" style={{ fontSize: 18, lineHeight: 1.5, letterSpacing: '-0.18px' }}>
                   {t('home.hero.text')}
                 </p>
               </div>
@@ -246,7 +246,7 @@ function Home({ t }: { t: T }) {
               <OutlineLink href={`${BASE}/predavanja`}>{t('sections.lectures')}</OutlineLink>
             </div>
           </div>
-          <div className="relative flex-1 min-w-0 min-h-[300px] lg:min-h-0 overflow-hidden bg-[#ede6db]">
+          <div className="relative flex-1 min-w-0 min-h-[300px] lg:min-h-0 overflow-hidden bg-[var(--bg-ede6db)]">
             <HeroVideo src={VIDEO('v/showreel.mp4')} poster={IMG('p/showreel.jpg')} />
           </div>
         </div>
@@ -265,9 +265,9 @@ function Home({ t }: { t: T }) {
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {STATS.map(s => (
-            <div key={s.key} className="bg-[#faf5f5] px-6 py-6 flex flex-col gap-1">
-              <span className="font-semibold text-[#8b1e3f]" style={{ fontSize: 'clamp(26px, 3vw, 36px)', letterSpacing: '-0.5px' }}>{`${number.format(s.n)}${s.plus ? '+' : ''}`}</span>
-              <span className="text-[#5a4f49]">{t(`home.stats.${s.key}`, { count: s.n })}</span>
+            <div key={s.key} className="bg-[var(--bg-faf5f5)] px-6 py-6 flex flex-col gap-1">
+              <span className="font-semibold text-[var(--fg-8b1e3f)]" style={{ fontSize: 'clamp(26px, 3vw, 36px)', letterSpacing: '-0.5px' }}>{`${number.format(s.n)}${s.plus ? '+' : ''}`}</span>
+              <span className="text-[var(--fg-5a4f49)]">{t(`home.stats.${s.key}`, { count: s.n })}</span>
             </div>
           ))}
         </div>
@@ -320,24 +320,24 @@ function Profile({ t, aud, id, back }: { t: T; aud: Audience; id: string; back: 
   return (
     <>
       <Section>
-        <Link href={back.href} className="inline-flex items-center gap-1 self-start text-sm text-[#746860] hover:text-[#8b1e3f] -mb-8">
+        <Link href={back.href} className="inline-flex items-center gap-1 self-start text-sm text-[var(--fg-746860)] hover:text-[var(--fg-8b1e3f)] -mb-8">
           <ChevronLeft size={16} className="flip-rtl" /> {back.label}
         </Link>
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-10 lg:gap-14 items-start">
           <div className="flex flex-col sm:flex-row overflow-hidden">
-            <div className="relative w-full sm:w-[240px] shrink-0 overflow-hidden bg-[#e0d8d0]" style={{ minHeight: 300 }}>
+            <div className="relative w-full sm:w-[240px] shrink-0 overflow-hidden bg-[var(--bg-e0d8d0)]" style={{ minHeight: 300 }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={IMG(p.img)} alt={p.n} className="absolute inset-0 w-full h-full object-cover object-top" />
             </div>
-            <div className="bg-[#f5f2ef] flex flex-col gap-3 p-6 flex-1">
-              <p className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{t(`people.${id}.role`)}</p>
-              <h1 className="font-medium text-[#241f1d]" style={{ fontSize: 'clamp(24px, 2.6vw, 32px)', lineHeight: 1.12, letterSpacing: '-0.72px' }}>{p.n}</h1>
-              <p className="font-normal text-[#5a4f49] text-base leading-normal">{t(`people.${id}.bio`)}</p>
+            <div className="bg-[var(--bg-f5f2ef)] flex flex-col gap-3 p-6 flex-1">
+              <p className="font-medium text-[var(--fg-8b1e3f)] text-xs uppercase tracking-wide">{t(`people.${id}.role`)}</p>
+              <h1 className="font-medium text-[var(--fg-241f1d)]" style={{ fontSize: 'clamp(24px, 2.6vw, 32px)', lineHeight: 1.12, letterSpacing: '-0.72px' }}>{p.n}</h1>
+              <p className="font-normal text-[var(--fg-5a4f49)] text-base leading-normal">{t(`people.${id}.bio`)}</p>
               <div className="flex flex-wrap gap-2">
-                {topics.map(topic => <span key={topic} className="bg-[#faf5f5] px-2.5 py-1.5 text-[#8b1e3f] uppercase" style={{ fontSize: 10, letterSpacing: '0.3px' }}>{topic}</span>)}
+                {topics.map(topic => <span key={topic} className="bg-[var(--bg-faf5f5)] px-2.5 py-1.5 text-[var(--fg-8b1e3f)] uppercase" style={{ fontSize: 10, letterSpacing: '0.3px' }}>{topic}</span>)}
               </div>
               {p.author ? (
-                <Link href={`/autori/${p.author}`} className="self-start text-sm font-medium text-[#8b1e3f] hover:underline mt-auto pt-1">
+                <Link href={`/autori/${p.author}`} className="self-start text-sm font-medium text-[var(--fg-8b1e3f)] hover:underline mt-auto pt-1">
                   {t('profile.allContent')} {textArrow()}
                 </Link>
               ) : null}
@@ -346,7 +346,7 @@ function Profile({ t, aud, id, back }: { t: T; aud: Audience; id: string; back: 
           <ProfileInvite name={p.n} aud={aud} path={path} />
         </div>
       </Section>
-      <Section bg="bg-[#fcfbfa]">
+      <Section bg="bg-[var(--bg-fcfbfa)]">
         <SectionHead tag={t('profile.recordings.tag')} title={t('profile.recordings.title')} />
         {short.length ? <VideoGrid vids={short} label={p.n} portrait /> : null}
         {long.length ? <VideoGrid vids={long} label={p.n} /> : null}
@@ -358,9 +358,9 @@ function Profile({ t, aud, id, back }: { t: T; aud: Audience; id: string; back: 
 
 function Soon({ t }: { t: T }) {
   return (
-    <div className="bg-[#f5f2ef] p-8 flex flex-col gap-3 items-start max-w-[620px]">
-      <p className="font-medium text-[#241f1d]" style={{ fontSize: 20 }}>{t('soon.title')}</p>
-      <p className="text-[#5a4f49]">{t('soon.text')}</p>
+    <div className="bg-[var(--bg-f5f2ef)] p-8 flex flex-col gap-3 items-start max-w-[620px]">
+      <p className="font-medium text-[var(--fg-241f1d)]" style={{ fontSize: 20 }}>{t('soon.title')}</p>
+      <p className="text-[var(--fg-5a4f49)]">{t('soon.text')}</p>
       <OutlineLink href={`${BASE}/kontakt`}>{t('soon.cta')}</OutlineLink>
     </div>
   )
@@ -414,9 +414,9 @@ function Druzenja({ t }: { t: T }) {
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] gap-10 lg:gap-14 items-start">
           <div className="grid grid-cols-1 gap-4">
             {DRUZENJA_OFFER.map(o => (
-              <div key={o} className="bg-[#faf5f5] flex flex-col gap-3 p-8">
-                <h3 className="font-medium text-[#241f1d]" style={{ fontSize: 24, lineHeight: 1.12, letterSpacing: '-0.72px' }}>{t(`gatherings.offer.${o}.title`)}</h3>
-                <p className="font-normal text-[#5a4f49] text-base leading-normal">{t(`gatherings.offer.${o}.description`)}</p>
+              <div key={o} className="bg-[var(--bg-faf5f5)] flex flex-col gap-3 p-8">
+                <h3 className="font-medium text-[var(--fg-241f1d)]" style={{ fontSize: 24, lineHeight: 1.12, letterSpacing: '-0.72px' }}>{t(`gatherings.offer.${o}.title`)}</h3>
+                <p className="font-normal text-[var(--fg-5a4f49)] text-base leading-normal">{t(`gatherings.offer.${o}.description`)}</p>
               </div>
             ))}
           </div>
@@ -428,7 +428,7 @@ function Druzenja({ t }: { t: T }) {
           </div>
         </div>
       </Section>
-      <Section bg="bg-[#fcfbfa]">
+      <Section bg="bg-[var(--bg-fcfbfa)]">
         <SectionHead tag={t('gatherings.recordings.tag')} title={t('gatherings.recordings.title')} />
         <VideoGrid vids={DRUZENJA_VIDS} label={t('sections.gatherings')} />
       </Section>
@@ -452,16 +452,16 @@ function Kontakt({ t }: { t: T }) {
             description={t('invite.text')} />
           <ContactQuick />
           <div className="flex flex-col gap-3">
-            <p className="font-normal text-[#746860] uppercase" style={{ fontSize: 13, letterSpacing: '0.42px' }}>{t('contact.stayConnected')}</p>
+            <p className="font-normal text-[var(--fg-746860)] uppercase" style={{ fontSize: 13, letterSpacing: '0.42px' }}>{t('contact.stayConnected')}</p>
             <div className="flex flex-wrap gap-2">
               {SOCIALS.map(s => (
                 <a key={s.href} href={s.href} target="_blank" rel="noopener"
-                  className="border border-[#ede5dc] px-4 py-2 text-sm text-[#5a4f49] hover:border-[#8b1e3f] hover:text-[#8b1e3f] transition-colors">
+                  className="border border-[var(--line-ede5dc)] px-4 py-2 text-sm text-[var(--fg-5a4f49)] hover:border-[var(--line-8b1e3f)] hover:text-[var(--fg-8b1e3f)] transition-colors">
                   {s.label} {externalArrow()}
                 </a>
               ))}
             </div>
-            <p className="text-sm text-[#978a81]">{t('contact.location')}</p>
+            <p className="text-sm text-[var(--fg-978a81)]">{t('contact.location')}</p>
           </div>
         </div>
         <Suspense>

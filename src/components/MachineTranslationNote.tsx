@@ -10,7 +10,7 @@ export default function MachineTranslationNote({ show, className = '' }: { show?
   const t = useTranslations('common')
   if (!show) return null
   return (
-    <p className={`flex items-center gap-1.5 text-xs text-[#978a81] ${className}`}>
+    <p className={`flex items-center gap-1.5 text-xs text-[var(--fg-978a81)] ${className}`}>
       <Languages size={13} className="shrink-0" />
       {t('machineTranslated')}
     </p>

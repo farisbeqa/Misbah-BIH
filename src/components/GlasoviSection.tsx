@@ -10,13 +10,13 @@ function MemberCard({ m }: { m: TeamMember }) {
         <img alt={m.name} src={m.image}
           className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" />
       </div>
-      <div className="bg-[#f5f2ef] flex flex-col gap-3 p-4 flex-1">
-        <p className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{m.tag}</p>
-        <p className="font-medium text-[#241f1d] group-hover:text-[#8b1e3f] transition-colors"
+      <div className="bg-[var(--bg-f5f2ef)] flex flex-col gap-3 p-4 flex-1">
+        <p className="font-medium text-[var(--fg-8b1e3f)] text-xs uppercase tracking-wide">{m.tag}</p>
+        <p className="font-medium text-[var(--fg-241f1d)] group-hover:text-[var(--fg-8b1e3f)] transition-colors"
           style={{ fontSize: 20, lineHeight: 1.12, letterSpacing: '-0.6px' }}>
           {m.name}
         </p>
-        <p className="font-normal text-[#5a4f49] text-base leading-normal">{m.bio}</p>
+        <p className="font-normal text-[var(--fg-5a4f49)] text-base leading-normal">{m.bio}</p>
       </div>
     </>
   )
@@ -41,7 +41,7 @@ export default async function GlasoviSection() {
 
   return (
     <div>
-      <p className="font-semibold text-sm mb-6" style={{ color: '#8b1e3f' }}>
+      <p className="font-semibold text-sm mb-6" style={{ color: 'var(--fg-8b1e3f)' }}>
         {t('title')}
       </p>
 

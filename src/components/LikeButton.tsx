@@ -44,9 +44,9 @@ export default function LikeButton({ targetType, targetId, initialCount }: Props
           className="flex items-center gap-2 px-5 py-2.5 font-medium text-sm transition-all"
           style={{
             borderRadius: 8,
-            border: liked ? '1px solid #FECDD3' : '1px solid #E8E1DB',
-            background: liked ? '#FFF1F2' : '#FAF7F2',
-            color: liked ? '#BE123C' : '#746860',
+            border: liked ? '1px solid var(--line-fecdd3)' : '1px solid var(--line-e8e1db)',
+            background: liked ? 'var(--bg-fff1f2)' : 'var(--bg-faf7f2)',
+            color: liked ? 'var(--fg-be123c)' : 'var(--fg-746860)',
             opacity: loading ? 0.6 : 1,
           }}>
           {toggling
@@ -58,11 +58,11 @@ export default function LikeButton({ targetType, targetId, initialCount }: Props
         </button>
 
         {!user && !loading && (
-          <p className="text-warm-400 text-xs font-mono">
+          <p className="text-[var(--fg-b8aca2)] text-xs font-mono">
             {t.rich('likes.loginPrompt', {
               login: chunks => (
                 <button onClick={() => { setModalMode('login'); setModalOpen(true) }}
-                  className="text-brand hover:text-brand-light transition-colors">{chunks}</button>
+                  className="text-[var(--fg-8b1e3f)] hover:text-[var(--fg-a94a61)] transition-colors">{chunks}</button>
               ),
             })}
           </p>

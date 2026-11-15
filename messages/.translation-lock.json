@@ -673,7 +673,9 @@
     "footer.aboutUs": "394d91228622a321",
     "footer.privacy": "ae37d08b9bdd8c25",
     "footer.terms": "bd258a38e164d7ea",
-    "footer.rights": "d709be0cba34d1ef"
+    "footer.rights": "d709be0cba34d1ef",
+    "themeDark": "709da37167a9aab0",
+    "themeLight": "77b17fe4caa37309"
   },
   "en/pozovite": {
     "meta.title": "c9e5fa9a1eb43613",
@@ -1646,7 +1648,9 @@
     "footer.aboutUs": "394d91228622a321",
     "footer.privacy": "ae37d08b9bdd8c25",
     "footer.terms": "bd258a38e164d7ea",
-    "footer.rights": "d709be0cba34d1ef"
+    "footer.rights": "d709be0cba34d1ef",
+    "themeDark": "709da37167a9aab0",
+    "themeLight": "77b17fe4caa37309"
   },
   "ar/pozovite": {
     "meta.title": "c9e5fa9a1eb43613",
@@ -2619,7 +2623,9 @@
     "footer.aboutUs": "394d91228622a321",
     "footer.privacy": "ae37d08b9bdd8c25",
     "footer.terms": "bd258a38e164d7ea",
-    "footer.rights": "d709be0cba34d1ef"
+    "footer.rights": "d709be0cba34d1ef",
+    "themeDark": "709da37167a9aab0",
+    "themeLight": "77b17fe4caa37309"
   },
   "de/pozovite": {
     "meta.title": "c9e5fa9a1eb43613",
@@ -3592,7 +3598,9 @@
     "footer.aboutUs": "394d91228622a321",
     "footer.privacy": "ae37d08b9bdd8c25",
     "footer.terms": "bd258a38e164d7ea",
-    "footer.rights": "d709be0cba34d1ef"
+    "footer.rights": "d709be0cba34d1ef",
+    "themeDark": "709da37167a9aab0",
+    "themeLight": "77b17fe4caa37309"
   },
   "tr/pozovite": {
     "meta.title": "c9e5fa9a1eb43613",

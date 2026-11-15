@@ -38,8 +38,8 @@ export default async function MektebPostPage({ params }: PageProps) {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12" style={{ minHeight: '60vh' }}>
       <Link href="/mekteb"
-        className="inline-flex items-center gap-2 text-sm mb-8 hover:text-brand transition-colors"
-        style={{ color: '#978A81' }}>
+        className="inline-flex items-center gap-2 text-sm mb-8 hover:text-[var(--fg-8b1e3f)] transition-colors"
+        style={{ color: 'var(--fg-978a81)' }}>
         <ArrowLeft size={14} className="flip-rtl" /> Mekteb EDU
       </Link>
 
@@ -55,16 +55,16 @@ export default async function MektebPostPage({ params }: PageProps) {
           {CATEGORIES.includes(post.category) ? t(`mektebCategories.${post.category}`) : post.category}
         </span>
         <div className="flex items-center gap-1.5">
-          <Calendar size={12} style={{ color: '#A94A61' }} />
-          <time className="text-xs font-mono tracking-wide" style={{ color: '#A94A61' }}>{formatDate(post.createdAt)}</time>
+          <Calendar size={12} style={{ color: 'var(--fg-a94a61)' }} />
+          <time className="text-xs font-mono tracking-wide" style={{ color: 'var(--fg-a94a61)' }}>{formatDate(post.createdAt)}</time>
         </div>
       </div>
 
-      <h1 className="text-2xl sm:text-3xl font-extrabold text-warm-900 leading-tight tracking-tight mb-3 break-words">
+      <h1 className="text-2xl sm:text-3xl font-extrabold text-[var(--fg-241f1d)] leading-tight tracking-tight mb-3 break-words">
         {post.title}
       </h1>
       {post.author && (
-        <p className="text-sm font-medium mb-8" style={{ color: '#1D4ED8' }}>{post.author}</p>
+        <p className="text-sm font-medium mb-8" style={{ color: 'var(--fg-1d4ed8)' }}>{post.author}</p>
       )}
 
       <MachineTranslationNote show={post.translated} className="mb-6" />
@@ -79,10 +79,10 @@ export default async function MektebPostPage({ params }: PageProps) {
       {/* Author lookup uses the original (Bosnian) title */}
       <MoreFromAuthor author={post.author} title={found.title} className="mt-10" />
 
-      <div className="mt-10 pt-6 flex justify-center" style={{ borderTop: '1px solid #E8E1DB' }}>
+      <div className="mt-10 pt-6 flex justify-center" style={{ borderTop: '1px solid var(--line-e8e1db)' }}>
         <Link href="/mekteb"
-          className="inline-flex items-center gap-2 font-mono text-xs text-warm-400 hover:text-warm-700 transition-colors px-4 py-2"
-          style={{ border: '1px solid #E8E1DB', borderRadius: 6 }}>
+          className="inline-flex items-center gap-2 font-mono text-xs text-[var(--fg-b8aca2)] hover:text-[var(--fg-5a4f49)] transition-colors px-4 py-2"
+          style={{ border: '1px solid var(--line-e8e1db)', borderRadius: 6 }}>
           {`${rtl ? '→' : '←'} ${t('mektebPost.allPosts')}`}
         </Link>
       </div>

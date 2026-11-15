@@ -21,20 +21,20 @@ export default async function ObrisiNalogPage() {
 
   return (
     <div className="max-w-xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
-      <p className="font-mono text-[11px] text-brand-light uppercase tracking-widest mb-2">{t('tag')}</p>
-      <h1 className="text-3xl font-extrabold text-warm-900 tracking-tight mb-4">{t('title')}</h1>
-      <div className="space-y-3 text-warm-600 leading-relaxed mb-8">
+      <p className="font-mono text-[11px] text-[var(--fg-a94a61)] uppercase tracking-widest mb-2">{t('tag')}</p>
+      <h1 className="text-3xl font-extrabold text-[var(--fg-241f1d)] tracking-tight mb-4">{t('title')}</h1>
+      <div className="space-y-3 text-[var(--fg-746860)] leading-relaxed mb-8">
         <p>{t.rich('whatIsDeleted', { b })}</p>
         <p>{t.rich('inApp', { b })}</p>
       </div>
 
       <DeleteAccountForm />
 
-      <p className="text-sm text-warm-500 mt-8">
+      <p className="text-sm text-[var(--fg-978a81)] mt-8">
         {t.rich('cannotLogIn', {
           email: EMAIL,
-          mail: chunks => <a href={mailto} className="text-brand hover:underline">{chunks}</a>,
-          privacyLink: chunks => <Link href="/privatnost" className="text-brand hover:underline">{chunks}</Link>,
+          mail: chunks => <a href={mailto} className="text-[var(--fg-8b1e3f)] hover:underline">{chunks}</a>,
+          privacyLink: chunks => <Link href="/privatnost" className="text-[var(--fg-8b1e3f)] hover:underline">{chunks}</Link>,
         })}
       </p>
     </div>

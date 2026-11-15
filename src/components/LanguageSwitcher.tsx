@@ -42,10 +42,10 @@ export default function LanguageSwitcher({ variant = 'desktop' }: { variant?: 'd
         aria-expanded={open}
         className={
           variant === 'desktop'
-            ? 'flex items-center gap-1 px-1 py-2 text-base whitespace-nowrap hover:text-[#8b1e3f] transition-colors'
+            ? 'flex items-center gap-1 px-1 py-2 text-base whitespace-nowrap hover:text-[var(--fg-8b1e3f)] transition-colors'
             : 'flex items-center gap-1 p-1 text-sm font-medium'
         }
-        style={{ color: open ? '#8b1e3f' : '#5a4f49' }}
+        style={{ color: open ? 'var(--fg-8b1e3f)' : 'var(--fg-5a4f49)' }}
       >
         <Globe size={variant === 'desktop' ? 17 : 20} strokeWidth={1.75} />
         <span className={variant === 'desktop' ? 'text-sm font-medium' : ''}>{LOCALE_INFO[current].short}</span>
@@ -55,21 +55,21 @@ export default function LanguageSwitcher({ variant = 'desktop' }: { variant?: 'd
         <ul
           role="listbox"
           aria-label={t('language')}
-          className="absolute top-full end-0 mt-1 bg-white shadow-lg border border-[#ede5dc] overflow-hidden z-50"
+          className="absolute top-full end-0 mt-1 bg-[var(--bg-ffffff)] shadow-lg border border-[var(--line-ede5dc)] overflow-hidden z-50"
           style={{ minWidth: 170 }}
         >
           {LOCALES.map((l, i) => {
             const active = l === current
             return (
               <li key={l} role="option" aria-selected={active}>
-                {i > 0 && <div className="border-t border-[#f0ebe4]" />}
+                {i > 0 && <div className="border-t border-[var(--line-f0ebe4)]" />}
                 <button
                   type="button"
                   lang={l}
                   dir={LOCALE_INFO[l].dir}
                   onClick={() => { setOpen(false); if (!active) switchLocale(l) }}
-                  className="w-full flex items-center justify-between gap-3 px-4 py-3 text-sm hover:bg-[#faf7f2] transition-colors text-start"
-                  style={{ color: active ? '#8b1e3f' : '#5a4f49', fontWeight: active ? 600 : 400 }}
+                  className="w-full flex items-center justify-between gap-3 px-4 py-3 text-sm hover:bg-[var(--bg-faf7f2)] transition-colors text-start"
+                  style={{ color: active ? 'var(--fg-8b1e3f)' : 'var(--fg-5a4f49)', fontWeight: active ? 600 : 400 }}
                 >
                   <span>{LOCALE_INFO[l].name}</span>
                   {active && <Check size={14} />}

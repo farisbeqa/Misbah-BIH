@@ -73,10 +73,10 @@ export default function CommentsSection({ targetType, targetId }: Props) {
       <div>
         {/* Section header */}
         <div className="flex items-center gap-2 mb-6">
-          <MessageCircle size={16} className="text-warm-400" />
-          <h3 className="font-bold text-warm-800 text-base">
+          <MessageCircle size={16} className="text-[var(--fg-b8aca2)]" />
+          <h3 className="font-bold text-[var(--fg-3f3733)] text-base">
             {t('comments.title')}{' '}
-            {!loading && <span className="font-mono text-[11px] text-warm-400 font-normal">({comments.length})</span>}
+            {!loading && <span className="font-mono text-[11px] text-[var(--fg-b8aca2)] font-normal">({comments.length})</span>}
           </h3>
         </div>
 
@@ -84,21 +84,21 @@ export default function CommentsSection({ targetType, targetId }: Props) {
         {user ? (
           <form onSubmit={handleSubmit} className="mb-8">
             <div className="flex gap-3">
-              <div className="w-8 h-8 rounded-full bg-brand flex-shrink-0 flex items-center justify-center text-white text-[11px] font-bold mt-0.5">
+              <div className="w-8 h-8 rounded-full bg-[var(--bg-8b1e3f)] flex-shrink-0 flex items-center justify-center text-white text-[11px] font-bold mt-0.5">
                 {user.username[0].toUpperCase()}
               </div>
               <div className="flex-1">
                 <textarea value={draft} onChange={e => setDraft(e.target.value)}
                   onKeyDown={e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) handleSubmit(e) }}
                   placeholder={t('comments.placeholder')} rows={3}
-                  className="w-full px-4 py-3 text-sm text-warm-900 resize-none outline-none transition-all focus:ring-2 focus:ring-brand/15 focus:border-brand"
-                  style={{ background: '#FAF7F2', border: '1px solid #E8E1DB', borderRadius: 8 }} />
+                  className="w-full px-4 py-3 text-sm text-[var(--fg-241f1d)] resize-none outline-none transition-all focus:ring-2 focus:ring-[color:color-mix(in_srgb,var(--line-8b1e3f)_15%,transparent)] focus:border-[var(--line-8b1e3f)]"
+                  style={{ background: 'var(--bg-faf7f2)', border: '1px solid var(--line-e8e1db)', borderRadius: 8 }} />
                 {error && <p className="font-mono text-[11px] text-red-600 mt-1">{error}</p>}
                 <div className="flex items-center justify-between mt-2">
-                  <p className="font-mono text-[10px] text-warm-400">{t('comments.shortcutHint')}</p>
+                  <p className="font-mono text-[10px] text-[var(--fg-b8aca2)]">{t('comments.shortcutHint')}</p>
                   <button type="submit" disabled={submitting || !draft.trim()}
                     className="flex items-center gap-1.5 text-white text-xs font-semibold px-4 py-1.5 transition-colors disabled:opacity-40"
-                    style={{ background: '#8B1E3F', borderRadius: 6 }}>
+                    style={{ background: 'var(--bg-8b1e3f)', borderRadius: 6 }}>
                     {submitting ? <Loader2 size={11} className="animate-spin" /> : <Send size={11} className="flip-rtl" />}
                     {t('comments.submit')}
                   </button>
@@ -107,16 +107,16 @@ export default function CommentsSection({ targetType, targetId }: Props) {
             </div>
           </form>
         ) : (
-          <div className="text-sm text-warm-500 text-center py-5 mb-6 font-mono text-[12px]"
-            style={{ background: '#FAF7F2', border: '1px solid #E8E1DB', borderRadius: 8 }}>
+          <div className="text-sm text-[var(--fg-978a81)] text-center py-5 mb-6 font-mono text-[12px]"
+            style={{ background: 'var(--bg-faf7f2)', border: '1px solid var(--line-e8e1db)', borderRadius: 8 }}>
             {t.rich('comments.loginPrompt', {
               login: chunks => (
                 <button onClick={() => { setModalMode('login'); setModalOpen(true) }}
-                  className="text-brand hover:text-brand-light transition-colors font-semibold">{chunks}</button>
+                  className="text-[var(--fg-8b1e3f)] hover:text-[var(--fg-a94a61)] transition-colors font-semibold">{chunks}</button>
               ),
               register: chunks => (
                 <button onClick={() => { setModalMode('register'); setModalOpen(true) }}
-                  className="text-brand hover:text-brand-light transition-colors font-semibold">{chunks}</button>
+                  className="text-[var(--fg-8b1e3f)] hover:text-[var(--fg-a94a61)] transition-colors font-semibold">{chunks}</button>
               ),
             })}
           </div>
@@ -124,36 +124,36 @@ export default function CommentsSection({ targetType, targetId }: Props) {
 
         {/* List */}
         {loading ? (
-          <div className="flex justify-center py-8"><Loader2 size={20} className="animate-spin text-warm-300" /></div>
+          <div className="flex justify-center py-8"><Loader2 size={20} className="animate-spin text-[var(--fg-d6ccc3)]" /></div>
         ) : comments.length === 0 ? (
-          <p className="font-mono text-[11px] text-warm-400 text-center py-8">{t('comments.empty')}</p>
+          <p className="font-mono text-[11px] text-[var(--fg-b8aca2)] text-center py-8">{t('comments.empty')}</p>
         ) : (
           <div className="space-y-5">
             {comments.map(c => (
               <div key={c.id} className="flex gap-3 group">
-                <div className="w-7 h-7 rounded-full bg-warm-200 flex-shrink-0 flex items-center justify-center text-warm-600 text-[10px] font-bold mt-0.5">
+                <div className="w-7 h-7 rounded-full bg-[var(--bg-e8e1db)] flex-shrink-0 flex items-center justify-center text-[var(--fg-746860)] text-[10px] font-bold mt-0.5">
                   {c.user.username[0].toUpperCase()}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="font-bold text-warm-800 text-sm">{c.user.username}</span>
-                    <time className="font-mono text-[10px] text-warm-400">{fmt(c.createdAt, locale)}</time>
+                    <span className="font-bold text-[var(--fg-3f3733)] text-sm">{c.user.username}</span>
+                    <time className="font-mono text-[10px] text-[var(--fg-b8aca2)]">{fmt(c.createdAt, locale)}</time>
                   </div>
-                  <p className="text-warm-600 text-sm leading-relaxed break-words">{c.content}</p>
+                  <p className="text-[var(--fg-746860)] text-sm leading-relaxed break-words">{c.content}</p>
                 </div>
                 {user?.id !== c.userId && (
                   reported.includes(c.id) ? (
-                    <span className="font-mono text-[10px] text-warm-400 flex-shrink-0 p-2">{t('comments.reported')}</span>
+                    <span className="font-mono text-[10px] text-[var(--fg-b8aca2)] flex-shrink-0 p-2">{t('comments.reported')}</span>
                   ) : (
                     <button onClick={() => handleReport(c.id)} title={t('comments.report')}
-                      className="sm:opacity-0 sm:group-hover:opacity-100 text-warm-300 hover:text-red-400 transition-all flex-shrink-0 p-2">
+                      className="sm:opacity-0 sm:group-hover:opacity-100 text-[var(--fg-d6ccc3)] hover:text-red-400 transition-all flex-shrink-0 p-2">
                       <Flag size={12} />
                     </button>
                   )
                 )}
                 {user?.id === c.userId && (
                   <button onClick={() => handleDelete(c.id)} disabled={deletingId === c.id}
-                    className="sm:opacity-0 sm:group-hover:opacity-100 text-warm-300 hover:text-red-400 transition-all flex-shrink-0 p-2">
+                    className="sm:opacity-0 sm:group-hover:opacity-100 text-[var(--fg-d6ccc3)] hover:text-red-400 transition-all flex-shrink-0 p-2">
                     {deletingId === c.id ? <Loader2 size={12} className="animate-spin" /> : <Trash2 size={12} />}
                   </button>
                 )}

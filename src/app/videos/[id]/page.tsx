@@ -38,37 +38,37 @@ export default async function VideoDetailPage({ params }: PageProps) {
   const platformLabel = t.has(platformKey) ? t(platformKey) : getPlatformLabel(video.platform)
 
   const platformColors: Record<string, string> = {
-    youtube:   '#fef2f2 / #dc2626',
-    instagram: '#fdf4ff / #9333ea',
-    tiktok:    '#f5f2ef / #5a4f49',
-    facebook:  '#eff6ff / #2563eb',
-    upload:    '#f5f2ef / #374151',
+    youtube:   'var(--bg-fef2f2) / var(--fg-dc2626)',
+    instagram: 'var(--bg-fdf4ff) / var(--fg-9333ea)',
+    tiktok:    'var(--bg-f5f2ef) / var(--fg-5a4f49)',
+    facebook:  'var(--bg-eff6ff) / var(--fg-2563eb)',
+    upload:    'var(--bg-f5f2ef) / var(--fg-374151)',
   }
-  const [bg, fg] = (platformColors[video.platform] || '#f5f2ef / #5a4f49').split(' / ')
+  const [bg, fg] = (platformColors[video.platform] || 'var(--bg-f5f2ef) / var(--fg-5a4f49)').split(' / ')
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <Link href="/videos"
-        className="inline-flex items-center gap-2 text-warm-400 hover:text-warm-700 text-sm mb-8 transition-colors font-mono tracking-wide">
+        className="inline-flex items-center gap-2 text-[var(--fg-b8aca2)] hover:text-[var(--fg-5a4f49)] text-sm mb-8 transition-colors font-mono tracking-wide">
         <ArrowLeft size={14} className="flip-rtl" /> {t('detail.back')}
       </Link>
 
       {/* Title */}
-      <h1 className="text-2xl sm:text-3xl font-extrabold text-warm-900 leading-tight tracking-tight mb-4 break-words">
+      <h1 className="text-2xl sm:text-3xl font-extrabold text-[var(--fg-241f1d)] leading-tight tracking-tight mb-4 break-words">
         {video.title}
       </h1>
 
       {/* Meta row */}
       <div className="flex flex-wrap items-center gap-3 mb-8">
-        <time className="font-mono text-xs text-brand-light tracking-wider">
+        <time className="font-mono text-xs text-[var(--fg-a94a61)] tracking-wider">
           {formatDate(video.createdAt)}
         </time>
-        <span className="w-1 h-1 rounded-full bg-warm-300" />
+        <span className="w-1 h-1 rounded-full bg-[var(--bg-d6ccc3)]" />
         <span className="font-mono text-xs px-2.5 py-1 font-medium" style={{ background: bg, color: fg, borderRadius: 4 }}>
           {platformLabel}
         </span>
         {video.isShortForm && (
-          <span className="font-mono text-xs px-2.5 py-1" style={{ background: '#F6EFE7', color: '#8B1E3F', borderRadius: 4 }}>
+          <span className="font-mono text-xs px-2.5 py-1" style={{ background: 'var(--bg-f6efe7)', color: 'var(--fg-8b1e3f)', borderRadius: 4 }}>
             {t('detail.shortContent')}
           </span>
         )}
@@ -82,9 +82,9 @@ export default async function VideoDetailPage({ params }: PageProps) {
 
       {/* Description (the note appears only when title/description are a translation) */}
       {video.description ? (
-        <div className="mb-8 p-6" style={{ background: '#FAF7F2', border: '1px solid #E8E1DB', borderRadius: 8 }}>
-          <p className="font-mono text-[11px] text-warm-400 uppercase tracking-widest mb-3">{t('detail.description')}</p>
-          <p className="text-warm-600 text-sm leading-relaxed whitespace-pre-line break-words">{video.description}</p>
+        <div className="mb-8 p-6" style={{ background: 'var(--bg-faf7f2)', border: '1px solid var(--line-e8e1db)', borderRadius: 8 }}>
+          <p className="font-mono text-[11px] text-[var(--fg-b8aca2)] uppercase tracking-widest mb-3">{t('detail.description')}</p>
+          <p className="text-[var(--fg-746860)] text-sm leading-relaxed whitespace-pre-line break-words">{video.description}</p>
           <MachineTranslationNote show={video.translated} className="mt-4" />
         </div>
       ) : (
@@ -95,7 +95,7 @@ export default async function VideoDetailPage({ params }: PageProps) {
       <MoreFromAuthor author={video.author} title={original.title} className="mb-8" />
 
       {/* Likes + Comments */}
-      <div style={{ borderTop: '1px solid #E8E1DB', paddingTop: 32 }} className="space-y-8">
+      <div style={{ borderTop: '1px solid var(--line-e8e1db)', paddingTop: 32 }} className="space-y-8">
         <LikeButton targetType="video" targetId={video.id} initialCount={video._count.likes} />
         <CommentsSection targetType="video" targetId={video.id} />
       </div>

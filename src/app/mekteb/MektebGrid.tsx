@@ -27,34 +27,34 @@ export default function MektebGrid({ posts }: { posts: MektebPost[] }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {shown.map(post => (
           <Link key={post.id} href={`/mekteb/${post.id}`} className="group block h-full">
-            <div className="bg-[#f5f2ef] overflow-hidden border border-black/5 flex flex-col h-full">
+            <div className="bg-[var(--bg-f5f2ef)] overflow-hidden border border-[var(--line-black5)] flex flex-col h-full">
               <div className="relative h-[228px] w-full shrink-0 overflow-hidden">
                 {post.imageUrl
                   ? <img src={post.imageUrl} alt={post.title} loading="lazy"
                       className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                  : <div className="absolute inset-0 flex items-center justify-center" style={{ background: 'linear-gradient(135deg,#1D4ED8,#1e3a8a)' }}>
+                  : <div className="absolute inset-0 flex items-center justify-center" style={{ background: 'linear-gradient(135deg,var(--bg-1d4ed8),var(--bg-1e3a8a))' }}>
                       <BookOpen size={36} className="text-white/30" />
                     </div>
                 }
-                <div className="absolute top-4 start-4 bg-[#faf5f5] px-2.5 py-1.5">
-                  <span className="text-[#1D4ED8] uppercase" style={{ fontSize: 10, letterSpacing: '0.3px' }}>
+                <div className="absolute top-4 start-4 bg-[var(--bg-faf5f5)] px-2.5 py-1.5">
+                  <span className="text-[var(--fg-1d4ed8)] uppercase" style={{ fontSize: 10, letterSpacing: '0.3px' }}>
                     {CATEGORIES.includes(post.category) ? t(`mektebCategories.${post.category}`) : post.category}
                   </span>
                 </div>
               </div>
               <div className="flex flex-col gap-2.5 px-6 py-7 flex-1">
                 <div className="flex items-center gap-1.5">
-                  <Calendar size={10} style={{ color: '#8B1E3F' }} />
-                  <p className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{formatShortDate(post.createdAt, locale)}</p>
+                  <Calendar size={10} style={{ color: 'var(--fg-8b1e3f)' }} />
+                  <p className="font-medium text-[var(--fg-8b1e3f)] text-xs uppercase tracking-wide">{formatShortDate(post.createdAt, locale)}</p>
                 </div>
-                <p className="font-medium text-[#241f1d] leading-[1.12] line-clamp-2 group-hover:text-[#8b1e3f] transition-colors"
+                <p className="font-medium text-[var(--fg-241f1d)] leading-[1.12] line-clamp-2 group-hover:text-[var(--fg-8b1e3f)] transition-colors"
                   style={{ fontSize: 20, letterSpacing: '-0.6px' }}>
                   {post.title}
                 </p>
                 {post.author && (
-                  <p className="font-normal text-[#5a4f49] text-base leading-normal">{post.author}</p>
+                  <p className="font-normal text-[var(--fg-5a4f49)] text-base leading-normal">{post.author}</p>
                 )}
-                <p className="font-normal text-[#5a4f49] text-sm leading-normal line-clamp-3 mt-auto">
+                <p className="font-normal text-[var(--fg-5a4f49)] text-sm leading-normal line-clamp-3 mt-auto">
                   {post.content.replace(/\n+/g, ' ').trim()}
                 </p>
               </div>
@@ -65,10 +65,10 @@ export default function MektebGrid({ posts }: { posts: MektebPost[] }) {
       {visible < posts.length && (
         <div className="flex flex-col items-center gap-2 mt-10">
           <button onClick={() => setVisible(v => v + PAGE)}
-            className="px-8 py-3 border border-[#D6CCC3] text-[#5a4f49] text-sm font-medium hover:border-[#8b1e3f] hover:text-[#8b1e3f] transition-colors">
+            className="px-8 py-3 border border-[var(--line-d6ccc3)] text-[var(--fg-5a4f49)] text-sm font-medium hover:border-[var(--line-8b1e3f)] hover:text-[var(--fg-8b1e3f)] transition-colors">
             {t('list.loadMore', { count: posts.length - visible })}
           </button>
-          <p className="text-xs text-[#a89888]">{t('list.shown', { shown: shown.length, total: posts.length })}</p>
+          <p className="text-xs text-[var(--fg-a89888)]">{t('list.shown', { shown: shown.length, total: posts.length })}</p>
         </div>
       )}
     </>

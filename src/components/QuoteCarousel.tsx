@@ -83,10 +83,10 @@ export default function QuoteCarousel({ quotes }: { quotes: Quote[] }) {
       <button
         onClick={() => go(-1)}
         disabled={current === 0}
-        className="absolute start-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white flex items-center justify-center transition-all duration-200 hover:scale-110 disabled:opacity-0 disabled:pointer-events-none"
-        style={{ boxShadow: '0 2px 14px rgba(0,0,0,0.12)', border: '1px solid #E8E1DB' }}
+        className="absolute start-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-[var(--bg-ffffff)] flex items-center justify-center transition-all duration-200 hover:scale-110 disabled:opacity-0 disabled:pointer-events-none"
+        style={{ boxShadow: '0 2px 14px rgba(0,0,0,0.12)', border: '1px solid var(--line-e8e1db)' }}
       >
-        <ChevronLeft size={18} className="flip-rtl" style={{ color: '#5A4F49' }} />
+        <ChevronLeft size={18} className="flip-rtl" style={{ color: 'var(--fg-5a4f49)' }} />
       </button>
 
       {/* Card track — py-8 gives room for center-card shadow to not clip */}
@@ -115,10 +115,10 @@ export default function QuoteCarousel({ quotes }: { quotes: Quote[] }) {
                   flexGrow:      0,
                   width:         cardWidth,
                   boxSizing:     'border-box',
-                  background:    '#FFFFFF',
+                  background:    'var(--bg-ffffff)',
                   border:        isCenter && perPage === 3
-                    ? '1.5px solid #CFC5BB'
-                    : '1px solid #EDE8E2',
+                    ? '1.5px solid var(--line-cfc5bb)'
+                    : '1px solid var(--line-ede8e2)',
                   borderRadius:  20,
                   padding:       '44px 36px 36px',
                   display:       'flex',
@@ -141,7 +141,7 @@ export default function QuoteCarousel({ quotes }: { quotes: Quote[] }) {
                     display:      'block',
                     fontSize:     76,
                     lineHeight:   0.6,
-                    color:        isCenter && perPage === 3 ? '#8B1E3F' : '#CBBFB8',
+                    color:        isCenter && perPage === 3 ? 'var(--fg-8b1e3f)' : 'var(--fg-cbbfb8)',
                     fontFamily:   'Georgia, "Times New Roman", serif',
                     marginBottom: 20,
                     userSelect:   'none',
@@ -152,7 +152,7 @@ export default function QuoteCarousel({ quotes }: { quotes: Quote[] }) {
                 </span>
 
                 <p style={{
-                  color:      '#2C2420',
+                  color:      'var(--fg-2c2420)',
                   fontSize:   '0.97rem',
                   lineHeight: 1.88,
                   flex:       1,
@@ -163,7 +163,7 @@ export default function QuoteCarousel({ quotes }: { quotes: Quote[] }) {
 
                 {q.source && (
                   <p style={{
-                    color:         '#8B1E3F',
+                    color:         'var(--fg-8b1e3f)',
                     fontSize:      '0.67rem',
                     letterSpacing: '0.09em',
                     textTransform: 'uppercase',
@@ -183,10 +183,10 @@ export default function QuoteCarousel({ quotes }: { quotes: Quote[] }) {
       <button
         onClick={() => go(1)}
         disabled={current >= max}
-        className="absolute end-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white flex items-center justify-center transition-all duration-200 hover:scale-110 disabled:opacity-0 disabled:pointer-events-none"
-        style={{ boxShadow: '0 2px 14px rgba(0,0,0,0.12)', border: '1px solid #E8E1DB' }}
+        className="absolute end-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-[var(--bg-ffffff)] flex items-center justify-center transition-all duration-200 hover:scale-110 disabled:opacity-0 disabled:pointer-events-none"
+        style={{ boxShadow: '0 2px 14px rgba(0,0,0,0.12)', border: '1px solid var(--line-e8e1db)' }}
       >
-        <ChevronRight size={18} className="flip-rtl" style={{ color: '#5A4F49' }} />
+        <ChevronRight size={18} className="flip-rtl" style={{ color: 'var(--fg-5a4f49)' }} />
       </button>
 
       {/* Dot indicators */}
@@ -201,7 +201,7 @@ export default function QuoteCarousel({ quotes }: { quotes: Quote[] }) {
               style={{
                 width:      i === current ? 24 : 7,
                 height:     7,
-                background: i === current ? '#8B1E3F' : '#D6CCC3',
+                background: i === current ? 'var(--bg-8b1e3f)' : 'var(--bg-d6ccc3)',
               }}
             />
           ))}

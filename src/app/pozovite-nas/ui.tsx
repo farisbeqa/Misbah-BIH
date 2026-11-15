@@ -42,7 +42,7 @@ function useToast() {
   }
   const node = (
     <div role="status" aria-live="polite"
-      className={`fixed left-1/2 bottom-8 -translate-x-1/2 z-[60] px-5 py-2.5 text-sm font-semibold text-white bg-[#8b1e3f] shadow-lg transition-all duration-200 pointer-events-none ${msg ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}>
+      className={`fixed left-1/2 bottom-8 -translate-x-1/2 z-[60] px-5 py-2.5 text-sm font-semibold text-white bg-[var(--bg-8b1e3f)] shadow-lg transition-all duration-200 pointer-events-none ${msg ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}>
       {msg}
     </div>
   )
@@ -88,7 +88,7 @@ export function HeroVideo({ src, poster }: { src: string; poster: string }) {
       <video ref={ref} src={src} poster={poster} muted loop playsInline preload="metadata" aria-hidden="true"
         className="absolute inset-0 w-full h-full object-cover" />
       <button type="button" onClick={toggle} aria-pressed={sound}
-        className="absolute start-4 bottom-4 flex items-center gap-2 bg-[#faf5f5] text-[#8b1e3f] px-3 py-2 text-sm hover:bg-white transition-colors">
+        className="absolute start-4 bottom-4 flex items-center gap-2 bg-[var(--bg-faf5f5)] text-[var(--fg-8b1e3f)] px-3 py-2 text-sm hover:bg-[var(--bg-ffffff)] transition-colors">
         {sound ? <Volume2 size={16} /> : <VolumeX size={16} />}
         {sound ? t('heroVideo.mute') : t('heroVideo.unmute')}
       </button>
@@ -126,21 +126,21 @@ export function VideoGrid({ vids, label, portrait = false }: { vids: Vid[]; labe
           const meta = [v.kind === 'yt' ? v.src : null, v.d, v.v != null ? t('videoGrid.views', { count: v.v }) : null].filter(Boolean).join(' · ')
           return (
             <button key={`${v.kind}-${v.id}`} type="button" onClick={() => setOpen(v)} className="group block h-full text-start">
-              <span className="bg-[#f5f2ef] overflow-hidden border border-black/5 flex flex-col h-full">
-                <span className={`relative block w-full shrink-0 overflow-hidden bg-[#e0d8d0] ${portrait ? 'aspect-[9/16]' : 'h-[228px]'}`}>
+              <span className="bg-[var(--bg-f5f2ef)] overflow-hidden border border-[var(--line-black5)] flex flex-col h-full">
+                <span className={`relative block w-full shrink-0 overflow-hidden bg-[var(--bg-e0d8d0)] ${portrait ? 'aspect-[9/16]' : 'h-[228px]'}`}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={m.thumb} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                  <span className="absolute top-4 start-4 bg-[#faf5f5] px-2.5 py-1.5">
-                    <span className="text-[#8b1e3f] uppercase" style={{ fontSize: 10, letterSpacing: '0.3px' }}>{m.badge === 'youtube' ? 'YouTube' : t(`videoGrid.badges.${m.badge}`)}</span>
+                  <span className="absolute top-4 start-4 bg-[var(--bg-faf5f5)] px-2.5 py-1.5">
+                    <span className="text-[var(--fg-8b1e3f)] uppercase" style={{ fontSize: 10, letterSpacing: '0.3px' }}>{m.badge === 'youtube' ? 'YouTube' : t(`videoGrid.badges.${m.badge}`)}</span>
                   </span>
-                  <span className="absolute inset-0 m-auto size-12 rounded-full bg-black/40 grid place-items-center text-white opacity-90 group-hover:bg-[#8b1e3f] transition-colors">
+                  <span className="absolute inset-0 m-auto size-12 rounded-full bg-black/40 grid place-items-center text-white opacity-90 group-hover:bg-[var(--bg-8b1e3f)] transition-colors">
                     {/* Play icons are not mirrored in right-to-left languages, so this optical nudge stays physical */}
                     <Play size={18} className="ml-0.5" fill="currentColor" />
                   </span>
                 </span>
                 <span className={`flex flex-col gap-2.5 flex-1 ${portrait ? 'px-4 py-4' : 'px-6 py-6'}`}>
-                  {meta ? <span className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{meta}</span> : null}
-                  <span className="font-medium text-[#241f1d] leading-[1.15] line-clamp-3 group-hover:text-[#8b1e3f] transition-colors"
+                  {meta ? <span className="font-medium text-[var(--fg-8b1e3f)] text-xs uppercase tracking-wide">{meta}</span> : null}
+                  <span className="font-medium text-[var(--fg-241f1d)] leading-[1.15] line-clamp-3 group-hover:text-[var(--fg-8b1e3f)] transition-colors"
                     style={{ fontSize: portrait ? 16 : 20, letterSpacing: portrait ? '-0.3px' : '-0.6px' }}>
                     {t(`videoTitles.${v.key}`)}
                   </span>
@@ -179,7 +179,7 @@ function Player({ vid, label, onClose }: { vid: Vid; label: string; onClose: () 
       <div onClick={e => e.stopPropagation()} className={`w-full flex flex-col gap-3 ${m.tall ? 'max-w-[420px]' : 'max-w-[1016px]'}`}>
         <div className="flex items-start gap-3">
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-medium uppercase tracking-wide text-[#e0d8d0]">{label}</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-[var(--fg-e0d8d0)]">{label}</p>
             <h3 className="text-white font-semibold text-lg sm:text-xl leading-snug">{title}</h3>
           </div>
           <button ref={closeRef} type="button" onClick={onClose} aria-label={t('player.close')}
@@ -214,18 +214,18 @@ export function ProfileInvite({ name, aud, path }: { name: string; aud: Audience
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
-        <p className="font-medium text-[#8b1e3f] text-base uppercase">{t('programPicker.label')}</p>
-        <h2 className="font-semibold text-[#141110]" style={{ fontSize: 28, lineHeight: 1.3, letterSpacing: '-0.3px' }}>{t('programPicker.title')}</h2>
+        <p className="font-medium text-[var(--fg-8b1e3f)] text-base uppercase">{t('programPicker.label')}</p>
+        <h2 className="font-semibold text-[var(--fg-141110)]" style={{ fontSize: 28, lineHeight: 1.3, letterSpacing: '-0.3px' }}>{t('programPicker.title')}</h2>
       </div>
       <div role="radiogroup" aria-label={t('programPicker.label')} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {FORMATS.map(f => {
           const on = f === format
           return (
             <button key={f} type="button" role="radio" aria-checked={on} onClick={() => setFormat(f)}
-              className={`relative text-start flex flex-col gap-1 p-4 pe-10 border transition-colors ${on ? 'border-[#8b1e3f] bg-[#faf5f5]' : 'border-[#ede5dc] bg-white hover:border-[#d6ccc3]'}`}>
-              <span className="font-semibold text-[#241f1d]">{t(`formats.${f}.title`)}</span>
-              <span className="text-sm text-[#746860] leading-snug">{t(`formats.${f}.description`)}</span>
-              <span className={`absolute top-4 end-4 size-5 rounded-full border-2 grid place-items-center ${on ? 'border-[#8b1e3f] bg-[#8b1e3f]' : 'border-[#d6ccc3]'}`}>
+              className={`relative text-start flex flex-col gap-1 p-4 pe-10 border transition-colors ${on ? 'border-[var(--line-8b1e3f)] bg-[var(--bg-faf5f5)]' : 'border-[var(--line-ede5dc)] bg-[var(--bg-ffffff)] hover:border-[var(--line-d6ccc3)]'}`}>
+              <span className="font-semibold text-[var(--fg-241f1d)]">{t(`formats.${f}.title`)}</span>
+              <span className="text-sm text-[var(--fg-746860)] leading-snug">{t(`formats.${f}.description`)}</span>
+              <span className={`absolute top-4 end-4 size-5 rounded-full border-2 grid place-items-center ${on ? 'border-[var(--line-8b1e3f)] bg-[var(--bg-8b1e3f)]' : 'border-[var(--line-d6ccc3)]'}`}>
                 {on ? <Check size={12} className="text-white" strokeWidth={3} /> : null}
               </span>
             </button>
@@ -233,7 +233,7 @@ export function ProfileInvite({ name, aud, path }: { name: string; aud: Audience
         })}
       </div>
       <button type="button" onClick={invite}
-        className="self-start bg-[#8b1e3f] text-white flex items-center gap-2 ps-8 pe-6 py-3 text-base font-normal hover:bg-[#7a1a37] transition-colors">
+        className="self-start bg-[var(--bg-8b1e3f)] text-white flex items-center gap-2 ps-8 pe-6 py-3 text-base font-normal hover:bg-[var(--bg-7a1a37)] transition-colors">
         {t('actions.invite', { name })}
         <ArrowUpRight />
       </button>
@@ -248,9 +248,9 @@ export function ContactQuick() {
   const toast = useToast()
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-wrap items-center gap-3 p-3 ps-4 border border-[#ede5dc] bg-[#faf7f2]">
-        <span className="font-semibold text-[#241f1d] break-all select-all">{CONTACT.email}</span>
-        <button type="button" className="ms-auto inline-flex items-center gap-1.5 border border-[#d6ccc3] px-3 py-1.5 text-sm text-[#5a4f49] hover:border-[#8b1e3f] hover:text-[#8b1e3f]"
+      <div className="flex flex-wrap items-center gap-3 p-3 ps-4 border border-[var(--line-ede5dc)] bg-[var(--bg-faf7f2)]">
+        <span className="font-semibold text-[var(--fg-241f1d)] break-all select-all">{CONTACT.email}</span>
+        <button type="button" className="ms-auto inline-flex items-center gap-1.5 border border-[var(--line-d6ccc3)] px-3 py-1.5 text-sm text-[var(--fg-5a4f49)] hover:border-[var(--line-8b1e3f)] hover:text-[var(--fg-8b1e3f)]"
           onClick={async () => toast.show((await copyText(CONTACT.email)) ? t('quickContact.addressCopied') : t('quickContact.copyAddressManually'))}>
           <Copy size={14} /> {t('quickContact.copy')}
         </button>
@@ -258,23 +258,23 @@ export function ContactQuick() {
       <div className="flex flex-wrap items-center gap-3">
         {/* INVITE_TEMPLATE is the Bosnian message for the Misbah team, in every language */}
         <a href={waHref(INVITE_TEMPLATE)} target="_blank" rel="noopener"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#25d366] text-[#06301a] font-semibold hover:bg-[#45e283] transition-colors">
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--bg-25d366)] text-[var(--fg-06301a)] font-semibold hover:bg-[var(--bg-45e283)] transition-colors">
           <WhatsAppIcon /> WhatsApp
         </a>
         <a href={vbHref(INVITE_TEMPLATE)}
           onClick={async () => (await copyText(INVITE_TEMPLATE)) && toast.show(t('quickContact.viberCopied'))}
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#7360f2] text-white font-semibold hover:bg-[#8a7bf5] transition-colors">
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--bg-7360f2)] text-white font-semibold hover:bg-[var(--bg-8a7bf5)] transition-colors">
           <ViberIcon /> Viber
         </a>
         {/* dir="ltr": the digit groups of the number would be reversed in right-to-left text */}
-        <span className="text-[#746860] text-sm font-mono" dir="ltr">{CONTACT.phone}</span>
+        <span className="text-[var(--fg-746860)] text-sm font-mono" dir="ltr">{CONTACT.phone}</span>
       </div>
       {toast.node}
     </div>
   )
 }
 
-const field = 'w-full border border-[#ede5dc] bg-white px-3.5 py-2.5 text-[15px] text-[#241f1d] placeholder:text-[#a89888] focus:outline-none focus:border-[#8b1e3f]'
+const field = 'w-full border border-[var(--line-ede5dc)] bg-[var(--bg-ffffff)] px-3.5 py-2.5 text-[15px] text-[var(--fg-241f1d)] placeholder:text-[var(--fg-a89888)] focus:outline-none focus:border-[var(--line-8b1e3f)]'
 
 /** Unicode "left-to-right isolate" and "pop directional isolate" (invisible) */
 const LRI = String.fromCharCode(0x2066)
@@ -333,34 +333,34 @@ export function InquiryForm() {
   }
 
   return (
-    <form onSubmit={submit} noValidate className="flex flex-col gap-4 p-5 sm:p-7 bg-[#faf7f2] border border-[#ede5dc]">
-      <h3 className="font-semibold text-[#141110] text-2xl">{t('form.title')}</h3>
+    <form onSubmit={submit} noValidate className="flex flex-col gap-4 p-5 sm:p-7 bg-[var(--bg-faf7f2)] border border-[var(--line-ede5dc)]">
+      <h3 className="font-semibold text-[var(--fg-141110)] text-2xl">{t('form.title')}</h3>
       {izbor ? (
-        <div className="flex flex-wrap items-center gap-2 px-3.5 py-2.5 border border-[#ede5dc] bg-[#faf5f5] text-sm">
-          <span className="text-[#5a4f49]">{t.rich('form.yourChoice', { choice, b: chunks => <b className="text-[#8b1e3f] font-semibold">{chunks}</b> })}</span>
-          {nazad.startsWith(BASE) ? <Link href={nazad} className="ms-auto underline text-[#746860] hover:text-[#8b1e3f]">{t('form.change')}</Link> : null}
+        <div className="flex flex-wrap items-center gap-2 px-3.5 py-2.5 border border-[var(--line-ede5dc)] bg-[var(--bg-faf5f5)] text-sm">
+          <span className="text-[var(--fg-5a4f49)]">{t.rich('form.yourChoice', { choice, b: chunks => <b className="text-[var(--fg-8b1e3f)] font-semibold">{chunks}</b> })}</span>
+          {nazad.startsWith(BASE) ? <Link href={nazad} className="ms-auto underline text-[var(--fg-746860)] hover:text-[var(--fg-8b1e3f)]">{t('form.change')}</Link> : null}
         </div>
       ) : null}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <label className="flex flex-col gap-1.5 text-sm text-[#746860]">{t('form.organizer')}
+        <label className="flex flex-col gap-1.5 text-sm text-[var(--fg-746860)]">{t('form.organizer')}
           <input name="org" placeholder={t('form.organizerPlaceholder')} autoComplete="organization" className={field} />
         </label>
-        <label className="flex flex-col gap-1.5 text-sm text-[#746860]">{t('form.place')}
+        <label className="flex flex-col gap-1.5 text-sm text-[var(--fg-746860)]">{t('form.place')}
           <input name="place" placeholder={t('form.placePlaceholder')} className={field} />
         </label>
-        <label className="flex flex-col gap-1.5 text-sm text-[#746860]">{t('form.date')}
+        <label className="flex flex-col gap-1.5 text-sm text-[var(--fg-746860)]">{t('form.date')}
           <input name="date" placeholder={t('form.datePlaceholder')} className={field} />
         </label>
-        <label className="flex flex-col gap-1.5 text-sm text-[#746860]">{t('form.category')}
+        <label className="flex flex-col gap-1.5 text-sm text-[var(--fg-746860)]">{t('form.category')}
           <select name="rub" value={rub} onChange={e => setRub(e.target.value as Rubrika)} className={field}>
             {RUBRIKE.map(r => <option key={r} value={r}>{t(`form.categories.${r}`)}</option>)}
           </select>
         </label>
       </div>
-      <label className="flex flex-col gap-1.5 text-sm text-[#746860]">{t('form.note')}
+      <label className="flex flex-col gap-1.5 text-sm text-[var(--fg-746860)]">{t('form.note')}
         <textarea name="note" rows={3} placeholder={t('form.notePlaceholder')} className={`${field} resize-y`} />
       </label>
-      <button type="submit" className="self-start bg-[#8b1e3f] text-white flex items-center gap-2 ps-8 pe-6 py-3 text-base font-normal hover:bg-[#7a1a37] transition-colors">
+      <button type="submit" className="self-start bg-[var(--bg-8b1e3f)] text-white flex items-center gap-2 ps-8 pe-6 py-3 text-base font-normal hover:bg-[var(--bg-7a1a37)] transition-colors">
         {t('form.prepare')}
         <ArrowUpRight />
       </button>
@@ -368,26 +368,26 @@ export function InquiryForm() {
       {msg ? (
         <div className="flex flex-col gap-3">
           {/* The Bosnian message: left-to-right and marked as Bosnian on every language's page */}
-          <pre lang="bs" dir="ltr" className="whitespace-pre-wrap font-sans text-sm text-[#5a4f49] bg-white border border-[#ede5dc] p-3.5 max-h-48 overflow-auto">{msg}</pre>
+          <pre lang="bs" dir="ltr" className="whitespace-pre-wrap font-sans text-sm text-[var(--fg-5a4f49)] bg-[var(--bg-ffffff)] border border-[var(--line-ede5dc)] p-3.5 max-h-48 overflow-auto">{msg}</pre>
           <div className="flex flex-wrap gap-2.5">
             <a href={waHref(msg)} target="_blank" rel="noopener"
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#25d366] text-[#06301a] font-semibold hover:bg-[#45e283]">
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-[var(--bg-25d366)] text-[var(--fg-06301a)] font-semibold hover:bg-[var(--bg-45e283)]">
               <WhatsAppIcon /> {t('form.sendWhatsApp')}
             </a>
             <a href={vbHref(msg)} onClick={async () => (await copyText(msg)) && toast.show(t('form.viberCopied'))}
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#7360f2] text-white font-semibold hover:bg-[#8a7bf5]">
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-[var(--bg-7360f2)] text-white font-semibold hover:bg-[var(--bg-8a7bf5)]">
               <ViberIcon /> Viber
             </a>
             <button type="button" onClick={async () => toast.show((await copyText(msg)) ? t('form.messageCopied') : t('form.copyManually'))}
-              className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#d6ccc3] bg-white text-[#5a4f49] hover:border-[#8b1e3f] hover:text-[#8b1e3f]">
+              className="inline-flex items-center gap-2 px-4 py-2.5 border border-[var(--line-d6ccc3)] bg-[var(--bg-ffffff)] text-[var(--fg-5a4f49)] hover:border-[var(--line-8b1e3f)] hover:text-[var(--fg-8b1e3f)]">
               <Copy size={15} /> {t('form.copyMessage')}
             </button>
             <a href={`mailto:${CONTACT.email}?subject=${encodeURIComponent(`Poziv – ${program}`)}&body=${encodeURIComponent(msg)}`}
-              className="inline-flex items-center px-4 py-2.5 border border-[#d6ccc3] bg-white text-[#5a4f49] hover:border-[#8b1e3f] hover:text-[#8b1e3f]">
+              className="inline-flex items-center px-4 py-2.5 border border-[var(--line-d6ccc3)] bg-[var(--bg-ffffff)] text-[var(--fg-5a4f49)] hover:border-[var(--line-8b1e3f)] hover:text-[var(--fg-8b1e3f)]">
               {t('form.openEmail')}
             </a>
           </div>
-          <p className="text-xs text-[#978a81] leading-relaxed">
+          <p className="text-xs text-[var(--fg-978a81)] leading-relaxed">
             {t('form.hint', { phone: ltr(CONTACT.phone), email: ltr(CONTACT.email) })}
           </p>
         </div>

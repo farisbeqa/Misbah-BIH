@@ -129,9 +129,9 @@ export function getPlatformColor(platform: string): string {
     instagram: 'bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white',
     tiktok: 'bg-black text-white',
     facebook: 'bg-blue-600 text-white',
-    unknown: 'bg-gray-500 text-white',
+    unknown: 'bg-[var(--bg-6b7280)] text-white',
   }
-  return colors[platform] || 'bg-gray-500 text-white'
+  return colors[platform] || 'bg-[var(--bg-6b7280)] text-white'
 }
 
 export async function fetchYouTubeOEmbed(url: string): Promise<{ title?: string; thumbnailUrl?: string } | null> {

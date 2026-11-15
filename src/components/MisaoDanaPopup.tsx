@@ -77,38 +77,38 @@ export default function MisaoDanaPopup() {
       onClick={() => setOpen(false)}
     >
       <div
-        className="relative bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden"
+        className="relative bg-[var(--bg-ffffff)] w-full max-w-md rounded-2xl shadow-2xl overflow-hidden"
         style={{ maxHeight: '90vh', overflowY: 'auto' }}
         onClick={e => e.stopPropagation()}
       >
         {/* Accent bar */}
-        <div className="h-1 w-full" style={{ background: '#8B1E3F' }} />
+        <div className="h-1 w-full" style={{ background: 'var(--bg-8b1e3f)' }} />
 
         {/* Header */}
         <div className="flex items-center justify-between px-6 pt-5 pb-3">
           <span
             className="text-xs font-bold uppercase tracking-widest"
-            style={{ color: '#8B1E3F', letterSpacing: '0.1em' }}
+            style={{ color: 'var(--fg-8b1e3f)', letterSpacing: '0.1em' }}
           >
             {QUOTE_TYPES.includes(quote.type) ? t(`types.${quote.type}`) : t('popup.defaultLabel')}
           </span>
           <button
             onClick={() => setOpen(false)}
-            className="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
+            className="p-1.5 rounded-lg text-[var(--fg-9ca3af)] hover:text-[var(--fg-374151)] hover:bg-[var(--bg-f3f4f6)] transition-colors"
             aria-label={t('popup.close')}
           >
             <X size={18} />
           </button>
         </div>
 
-        <div className="mx-6 h-px" style={{ background: '#F0EBE4' }} />
+        <div className="mx-6 h-px" style={{ background: 'var(--bg-f0ebe4)' }} />
 
         {/* Quote */}
         <div className="px-6 py-6">
           <p
             className="leading-relaxed text-center"
             style={{
-              color: '#241F1D',
+              color: 'var(--fg-241f1d)',
               fontFamily: 'Georgia, serif',
               fontSize: 'clamp(16px, 4vw, 20px)',
               lineHeight: 1.7,
@@ -119,7 +119,7 @@ export default function MisaoDanaPopup() {
           {quote.source && (
             <p
               className="text-sm text-center mt-4 font-semibold"
-              style={{ color: '#8B1E3F' }}
+              style={{ color: 'var(--fg-8b1e3f)' }}
             >
               — {quote.source}
             </p>
@@ -131,9 +131,9 @@ export default function MisaoDanaPopup() {
           <button
             onClick={() => setOpen(false)}
             className="w-full py-3 rounded-xl text-sm font-semibold text-white transition-colors"
-            style={{ backgroundColor: '#8B1E3F' }}
-            onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#7a1a37')}
-            onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#8B1E3F')}
+            style={{ backgroundColor: 'var(--bg-8b1e3f)' }}
+            onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'var(--bg-7a1a37)')}
+            onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'var(--bg-8b1e3f)')}
           >
             {t('popup.close')}
           </button>

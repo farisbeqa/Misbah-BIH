@@ -65,48 +65,48 @@ export default function AuthModal({ open, mode, onClose, onSuccess, onSwitchMode
     finally { setLoading(false) }
   }
 
-  const inputCls = "w-full px-4 py-2.5 text-sm text-warm-900 outline-none transition-all focus:ring-2 focus:ring-brand/20 focus:border-brand"
-  const inputStyle = { background: '#FAF7F2', border: '1px solid #E8E1DB', borderRadius: 6 }
+  const inputCls = "w-full px-4 py-2.5 text-sm text-[var(--fg-241f1d)] outline-none transition-all focus:ring-2 focus:ring-[color:color-mix(in_srgb,var(--line-8b1e3f)_20%,transparent)] focus:border-[var(--line-8b1e3f)]"
+  const inputStyle = { background: 'var(--bg-faf7f2)', border: '1px solid var(--line-e8e1db)', borderRadius: 6 }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0" style={{ background: 'rgba(20,17,16,0.65)', backdropFilter: 'blur(6px)' }} onClick={onClose} />
 
-      <div className="relative w-full max-w-sm animate-fade-up" style={{ background: '#FCFBFA', borderRadius: 12, boxShadow: '0 24px 64px rgba(20,17,16,0.28)', border: '1px solid #E8E1DB' }}>
+      <div className="relative w-full max-w-sm animate-fade-up" style={{ background: 'var(--bg-fcfbfa)', borderRadius: 12, boxShadow: '0 24px 64px rgba(20,17,16,0.28)', border: '1px solid var(--line-e8e1db)' }}>
 
         {/* Header */}
-        <div className="flex items-center justify-between px-6 pt-6 pb-4" style={{ borderBottom: '1px solid #E8E1DB' }}>
+        <div className="flex items-center justify-between px-6 pt-6 pb-4" style={{ borderBottom: '1px solid var(--line-e8e1db)' }}>
           <div className="flex items-center gap-2.5">
-            {isReg ? <UserPlus size={16} className="text-brand" /> : <LogIn size={16} className="text-brand flip-rtl" />}
-            <h2 className="font-extrabold text-warm-900 text-base tracking-tight">
+            {isReg ? <UserPlus size={16} className="text-[var(--fg-8b1e3f)]" /> : <LogIn size={16} className="text-[var(--fg-8b1e3f)] flip-rtl" />}
+            <h2 className="font-extrabold text-[var(--fg-241f1d)] text-base tracking-tight">
               {isReg ? t('modal.registerTitle') : t('modal.loginTitle')}
             </h2>
           </div>
-          <button onClick={onClose} className="text-warm-400 hover:text-warm-700 transition-colors p-1 rounded-lg hover:bg-warm-100">
+          <button onClick={onClose} className="text-[var(--fg-b8aca2)] hover:text-[var(--fg-5a4f49)] transition-colors p-1 rounded-lg hover:bg-[var(--bg-f5f2ef)]">
             <X size={16} />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="px-6 py-5 space-y-4">
           <div>
-            <label className="block font-mono text-[11px] text-warm-500 uppercase tracking-widest mb-2">
+            <label className="block font-mono text-[11px] text-[var(--fg-978a81)] uppercase tracking-widest mb-2">
               {t('modal.username')}
             </label>
             <input ref={inputRef} type="text" value={username} onChange={e => setUsername(e.target.value)}
               placeholder={isReg ? t('modal.usernamePlaceholderRegister') : t('modal.usernamePlaceholderLogin')}
               required autoComplete="username" className={inputCls} style={inputStyle} />
-            {isReg && <p className="font-mono text-[10px] text-warm-400 mt-1.5">{t('modal.usernameHint')}</p>}
+            {isReg && <p className="font-mono text-[10px] text-[var(--fg-b8aca2)] mt-1.5">{t('modal.usernameHint')}</p>}
           </div>
 
           <div>
-            <label className="block font-mono text-[11px] text-warm-500 uppercase tracking-widest mb-2">{t('modal.password')}</label>
+            <label className="block font-mono text-[11px] text-[var(--fg-978a81)] uppercase tracking-widest mb-2">{t('modal.password')}</label>
             <div className="relative">
               <input type={showPass ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)}
                 placeholder={isReg ? t('modal.passwordPlaceholderRegister') : t('modal.passwordPlaceholderLogin')}
                 required autoComplete={isReg ? 'new-password' : 'current-password'}
                 className={inputCls + ' pe-10'} style={inputStyle} />
               <button type="button" onClick={() => setShowPass(!showPass)}
-                className="absolute end-3 top-1/2 -translate-y-1/2 text-warm-400 hover:text-warm-600 transition-colors">
+                className="absolute end-3 top-1/2 -translate-y-1/2 text-[var(--fg-b8aca2)] hover:text-[var(--fg-746860)] transition-colors">
                 {showPass ? <EyeOff size={14} /> : <Eye size={14} />}
               </button>
             </div>
@@ -114,7 +114,7 @@ export default function AuthModal({ open, mode, onClose, onSuccess, onSwitchMode
 
           {isReg && (
             <div>
-              <label className="block font-mono text-[11px] text-warm-500 uppercase tracking-widest mb-2">{t('modal.confirmPassword')}</label>
+              <label className="block font-mono text-[11px] text-[var(--fg-978a81)] uppercase tracking-widest mb-2">{t('modal.confirmPassword')}</label>
               <input type={showPass ? 'text' : 'password'} value={confirm} onChange={e => setConfirm(e.target.value)}
                 placeholder={t('modal.confirmPasswordPlaceholder')} required autoComplete="new-password"
                 className={inputCls} style={inputStyle} />
@@ -122,34 +122,34 @@ export default function AuthModal({ open, mode, onClose, onSuccess, onSwitchMode
           )}
 
           {error && (
-            <div className="text-xs px-4 py-3 font-mono" style={{ background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: 6, color: '#991B1B' }}>
+            <div className="text-xs px-4 py-3 font-mono" style={{ background: 'var(--bg-fef2f2)', border: '1px solid var(--line-fecaca)', borderRadius: 6, color: 'var(--fg-991b1b)' }}>
               {error}
             </div>
           )}
 
           <button type="submit" disabled={loading}
             className="w-full text-white font-semibold py-2.5 text-sm transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
-            style={{ background: loading ? '#A94A61' : '#8B1E3F', borderRadius: 8 }}>
+            style={{ background: loading ? 'var(--bg-a94a61)' : 'var(--bg-8b1e3f)', borderRadius: 8 }}>
             {loading && <Loader2 size={14} className="animate-spin" />}
             {loading ? t('modal.pleaseWait') : isReg ? t('modal.createAccount') : t('modal.logIn')}
           </button>
           {isReg && (
-            <p className="text-[11px] text-warm-400 text-center leading-relaxed">
+            <p className="text-[11px] text-[var(--fg-b8aca2)] text-center leading-relaxed">
               {t.rich('modal.terms', {
-                terms: chunks => <a href={localizeHref('/pravila-koristenja')} target="_blank" className="text-brand hover:underline">{chunks}</a>,
-                privacy: chunks => <a href={localizeHref('/privatnost')} target="_blank" className="text-brand hover:underline">{chunks}</a>,
+                terms: chunks => <a href={localizeHref('/pravila-koristenja')} target="_blank" className="text-[var(--fg-8b1e3f)] hover:underline">{chunks}</a>,
+                privacy: chunks => <a href={localizeHref('/privatnost')} target="_blank" className="text-[var(--fg-8b1e3f)] hover:underline">{chunks}</a>,
               })}
             </p>
           )}
         </form>
 
-        <div className="px-6 pb-5 text-center text-sm text-warm-500">
+        <div className="px-6 pb-5 text-center text-sm text-[var(--fg-978a81)]">
           {isReg
             ? t.rich('modal.haveAccount', {
-                login: chunks => <button onClick={() => onSwitchMode('login')} className="text-brand font-semibold hover:text-brand-light transition-colors">{chunks}</button>,
+                login: chunks => <button onClick={() => onSwitchMode('login')} className="text-[var(--fg-8b1e3f)] font-semibold hover:text-[var(--fg-a94a61)] transition-colors">{chunks}</button>,
               })
             : t.rich('modal.noAccount', {
-                register: chunks => <button onClick={() => onSwitchMode('register')} className="text-brand font-semibold hover:text-brand-light transition-colors">{chunks}</button>,
+                register: chunks => <button onClick={() => onSwitchMode('register')} className="text-[var(--fg-8b1e3f)] font-semibold hover:text-[var(--fg-a94a61)] transition-colors">{chunks}</button>,
               })}
         </div>
       </div>

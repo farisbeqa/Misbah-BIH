@@ -55,13 +55,13 @@ function SectionHead({
   return (
     <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
       <div className="flex flex-col gap-4 max-w-[705px]">
-        <p className="font-medium text-[#8b1e3f] text-base">{tag}</p>
+        <p className="font-medium text-[var(--fg-8b1e3f)] text-base">{tag}</p>
         <div className="flex flex-col gap-6">
-          <h2 className="font-semibold text-[#141110]"
+          <h2 className="font-semibold text-[var(--fg-141110)]"
             style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}>
             {title}
           </h2>
-          <p className="font-normal text-[#746860]"
+          <p className="font-normal text-[var(--fg-746860)]"
             style={{ fontSize: 18, lineHeight: 1.5, letterSpacing: '-0.18px' }}>
             {description}
           </p>
@@ -69,7 +69,7 @@ function SectionHead({
       </div>
       {cta && (
         <Link href={cta.href}
-          className="bg-[#8b1e3f] text-white flex items-center gap-2 ps-8 pe-6 py-3 text-base font-normal shrink-0 hover:bg-[#7a1a37] transition-colors self-start lg:self-auto">
+          className="bg-[var(--bg-8b1e3f)] text-white flex items-center gap-2 ps-8 pe-6 py-3 text-base font-normal shrink-0 hover:bg-[var(--bg-7a1a37)] transition-colors self-start lg:self-auto">
           {cta.label}
           <ArrowUpRight />
         </Link>
@@ -87,28 +87,28 @@ type VideoRow = {
 function VideoCard({ v, locale }: { v: VideoRow; locale: Locale }) {
   return (
     <Link href={`/videos/${v.id}`} className="group block h-full">
-      <div className="bg-[#f5f2ef] overflow-hidden border border-black/5 flex flex-col h-full">
+      <div className="bg-[var(--bg-f5f2ef)] overflow-hidden border border-[var(--line-black5)] flex flex-col h-full">
         <div className="relative h-[228px] w-full shrink-0 overflow-hidden">
           {v.thumbnailUrl
             ? <img alt={v.title} src={v.thumbnailUrl} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-            : <div className="absolute inset-0 bg-[#e0d8d0] flex items-center justify-center">
-                <span className="text-[#a89888] text-4xl">▶</span>
+            : <div className="absolute inset-0 bg-[var(--bg-e0d8d0)] flex items-center justify-center">
+                <span className="text-[var(--fg-a89888)] text-4xl">▶</span>
               </div>
           }
-          <div className="absolute top-4 start-4 bg-[#faf5f5] px-2.5 py-1.5">
-            <span className="text-[#8b1e3f] uppercase" style={{ fontSize: 10, letterSpacing: '0.3px' }}>
+          <div className="absolute top-4 start-4 bg-[var(--bg-faf5f5)] px-2.5 py-1.5">
+            <span className="text-[var(--fg-8b1e3f)] uppercase" style={{ fontSize: 10, letterSpacing: '0.3px' }}>
               {v.platform}
             </span>
           </div>
         </div>
         <div className="flex flex-col gap-2.5 px-6 py-7 flex-1">
-          <p className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{formatShortDate(v.createdAt, locale)}</p>
-          <p className="font-medium text-[#241f1d] leading-[1.12] line-clamp-2 group-hover:text-[#8b1e3f] transition-colors"
+          <p className="font-medium text-[var(--fg-8b1e3f)] text-xs uppercase tracking-wide">{formatShortDate(v.createdAt, locale)}</p>
+          <p className="font-medium text-[var(--fg-241f1d)] leading-[1.12] line-clamp-2 group-hover:text-[var(--fg-8b1e3f)] transition-colors"
             style={{ fontSize: 20, letterSpacing: '-0.6px' }}>
             {v.title}
           </p>
           {v.description && (
-            <p className="font-normal text-[#5a4f49] text-base leading-normal line-clamp-2 mt-auto">{v.description}</p>
+            <p className="font-normal text-[var(--fg-5a4f49)] text-base leading-normal line-clamp-2 mt-auto">{v.description}</p>
           )}
         </div>
       </div>
@@ -122,20 +122,20 @@ type PostRow = { id: number; title: string; content: string; imageUrl?: string |
 function PostCard({ p, locale }: { p: PostRow; locale: Locale }) {
   return (
     <Link href={`/blog/${p.id}`} className="group block h-full">
-      <div className="bg-[#f5f2ef] overflow-hidden border border-black/5 flex flex-col h-full">
+      <div className="bg-[var(--bg-f5f2ef)] overflow-hidden border border-[var(--line-black5)] flex flex-col h-full">
         <div className="relative h-[228px] w-full shrink-0 overflow-hidden">
           {p.imageUrl
             ? <img alt={p.title} src={p.imageUrl} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-            : <div className="absolute inset-0 bg-[#e0d8d0]" />
+            : <div className="absolute inset-0 bg-[var(--bg-e0d8d0)]" />
           }
         </div>
         <div className="flex flex-col gap-2.5 px-6 py-7 flex-1">
-          <p className="font-medium text-[#8b1e3f] text-xs uppercase tracking-wide">{formatShortDate(p.createdAt, locale)}</p>
-          <p className="font-medium text-[#241f1d] leading-[1.12] line-clamp-2 group-hover:text-[#8b1e3f] transition-colors"
+          <p className="font-medium text-[var(--fg-8b1e3f)] text-xs uppercase tracking-wide">{formatShortDate(p.createdAt, locale)}</p>
+          <p className="font-medium text-[var(--fg-241f1d)] leading-[1.12] line-clamp-2 group-hover:text-[var(--fg-8b1e3f)] transition-colors"
             style={{ fontSize: 20, letterSpacing: '-0.6px' }}>
             {p.title}
           </p>
-          <p className="font-normal text-[#5a4f49] text-base leading-normal line-clamp-3 mt-auto">
+          <p className="font-normal text-[var(--fg-5a4f49)] text-base leading-normal line-clamp-3 mt-auto">
             {p.content.replace(/\n+/g, ' ').trim()}
           </p>
         </div>
@@ -147,8 +147,8 @@ function PostCard({ p, locale }: { p: PostRow; locale: Locale }) {
 // ── Empty state ──────────────────────────────────────────────────────────────
 function EmptySlate({ text }: { text: string }) {
   return (
-    <div className="flex items-center justify-center py-20 bg-[#f5f2ef] border border-black/5">
-      <p className="text-sm text-[#a89888]">{text}</p>
+    <div className="flex items-center justify-center py-20 bg-[var(--bg-f5f2ef)] border border-[var(--line-black5)]">
+      <p className="text-sm text-[var(--fg-a89888)]">{text}</p>
     </div>
   )
 }
@@ -169,25 +169,25 @@ export default async function HomePage() {
   const { predavanja, kuran, podcasts, posts, quotes } = await getData(locale)
 
   return (
-    <div className="min-h-screen w-full bg-white">
+    <div className="min-h-screen w-full bg-[var(--bg-ffffff)]">
       <MisaoDanaPopup />
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
-      <section className="bg-white w-full">
+      <section className="bg-[var(--bg-ffffff)] w-full">
         <div className="max-w-[1440px] mx-auto w-full flex flex-col lg:flex-row items-stretch min-h-[520px] lg:min-h-[640px]">
           {/* Left panel */}
-          <div className="bg-[#faf7f2] flex flex-col justify-end gap-16 lg:gap-20 px-6 sm:px-10 lg:px-[60px] py-16 lg:py-[104px] w-full lg:w-[55%] xl:w-[798px] shrink-0">
+          <div className="bg-[var(--bg-faf7f2)] flex flex-col justify-end gap-16 lg:gap-20 px-6 sm:px-10 lg:px-[60px] py-16 lg:py-[104px] w-full lg:w-[55%] xl:w-[798px] shrink-0">
             <div className="flex flex-col gap-2">
-              <p className={`text-base font-medium text-[#141110] text-center ${locale === 'ar' ? 'lg:text-right' : 'lg:text-left'}`}
+              <p className={`text-base font-medium text-[var(--fg-141110)] text-center ${locale === 'ar' ? 'lg:text-right' : 'lg:text-left'}`}
                 dir="rtl" style={{ fontFamily: "'Noto Sans Arabic', Manrope, sans-serif" }}>
                 بسم الله الرحمن الرحيم
               </p>
               <div className="flex flex-col gap-6 mt-2">
-                <h1 className="font-semibold text-[#141110]"
+                <h1 className="font-semibold text-[var(--fg-141110)]"
                   style={{ fontSize: 'clamp(32px, 5vw, 52px)', lineHeight: 1.3, letterSpacing: '-1.04px' }}>
                   {t('hero.title')}
                 </h1>
-                <p className="font-normal text-[#5a4f49]"
+                <p className="font-normal text-[var(--fg-5a4f49)]"
                   style={{ fontSize: 18, lineHeight: 1.5, letterSpacing: '-0.18px' }}>
                   {t('hero.text')}
                 </p>
@@ -195,19 +195,19 @@ export default async function HomePage() {
             </div>
             <div className="flex flex-wrap gap-4">
               <Link href="/predavanja/duga"
-                className="bg-[#8b1e3f] text-white flex items-center gap-2 ps-8 pe-6 py-3 text-base font-normal hover:bg-[#7a1a37] transition-colors">
+                className="bg-[var(--bg-8b1e3f)] text-white flex items-center gap-2 ps-8 pe-6 py-3 text-base font-normal hover:bg-[var(--bg-7a1a37)] transition-colors">
                 {t('hero.explore')}
                 <ArrowUpRight />
               </Link>
               <Link href="/autori"
-                className="border border-[#8b1e3f] text-[#8b1e3f] px-6 py-3 text-base font-normal hover:bg-[#faf5f5] transition-colors">
+                className="border border-[var(--line-8b1e3f)] text-[var(--fg-8b1e3f)] px-6 py-3 text-base font-normal hover:bg-[var(--bg-faf5f5)] transition-colors">
                 {t('hero.authors')}
               </Link>
             </div>
           </div>
 
           {/* Right: hero image */}
-          <div className="relative flex-1 min-w-0 min-h-[300px] lg:min-h-0 overflow-hidden bg-[#ede6db]">
+          <div className="relative flex-1 min-w-0 min-h-[300px] lg:min-h-0 overflow-hidden bg-[var(--bg-ede6db)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/hero.png" alt="" className="absolute inset-0 w-full h-full" style={{ objectFit: 'fill' }} />
           </div>
@@ -215,16 +215,16 @@ export default async function HomePage() {
       </section>
 
       {/* ── Benefits ─────────────────────────────────────────────────────── */}
-      <section className="bg-white w-full">
+      <section className="bg-[var(--bg-ffffff)] w-full">
         <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
           <div className="flex flex-col gap-4 max-w-[705px]">
-            <p className="font-medium text-[#8b1e3f] text-base">{t('benefits.tag')}</p>
+            <p className="font-medium text-[var(--fg-8b1e3f)] text-base">{t('benefits.tag')}</p>
             <div className="flex flex-col gap-6">
-              <h2 className="font-semibold text-[#141110]"
+              <h2 className="font-semibold text-[var(--fg-141110)]"
                 style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}>
                 {t('benefits.title')}
               </h2>
-              <p className="font-normal text-[#746860]"
+              <p className="font-normal text-[var(--fg-746860)]"
                 style={{ fontSize: 18, lineHeight: 1.5, letterSpacing: '-0.18px' }}>
                 {t('benefits.text')}
               </p>
@@ -232,17 +232,17 @@ export default async function HomePage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
             {BENEFITS.map(b => (
-              <div key={b.key} className="bg-[#faf5f5] flex flex-col gap-6 p-8" style={{ minHeight: 380 }}>
+              <div key={b.key} className="bg-[var(--bg-faf5f5)] flex flex-col gap-6 p-8" style={{ minHeight: 380 }}>
                 <div className="flex-1 overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={b.image} alt={t(`benefits.${b.key}.title`)} className="w-full h-full object-cover object-center" style={{ maxHeight: 220 }} />
                 </div>
                 <div className="flex flex-col gap-4 shrink-0">
-                  <h3 className="font-medium text-[#241f1d]"
+                  <h3 className="font-medium text-[var(--fg-241f1d)]"
                     style={{ fontSize: 24, lineHeight: 1.12, letterSpacing: '-0.72px' }}>
                     {t(`benefits.${b.key}.title`)}
                   </h3>
-                  <p className="font-normal text-[#5a4f49] text-base leading-normal">{t(`benefits.${b.key}.description`)}</p>
+                  <p className="font-normal text-[var(--fg-5a4f49)] text-base leading-normal">{t(`benefits.${b.key}.description`)}</p>
                 </div>
               </div>
             ))}
@@ -251,16 +251,16 @@ export default async function HomePage() {
       </section>
 
       {/* ── Team ─────────────────────────────────────────────────────────── */}
-      <section className="bg-[#fcfbfa] w-full">
+      <section className="bg-[var(--bg-fcfbfa)] w-full">
         <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
           <div className="flex flex-col gap-4 max-w-[705px]">
-            <p className="font-medium text-[#8b1e3f] text-base">{t('team.tag')}</p>
+            <p className="font-medium text-[var(--fg-8b1e3f)] text-base">{t('team.tag')}</p>
             <div className="flex flex-col gap-6">
-              <h2 className="font-semibold text-[#141110]"
+              <h2 className="font-semibold text-[var(--fg-141110)]"
                 style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}>
                 {t('team.title')}
               </h2>
-              <p className="font-normal text-[#746860]"
+              <p className="font-normal text-[var(--fg-746860)]"
                 style={{ fontSize: 18, lineHeight: 1.5, letterSpacing: '-0.18px' }}>
                 {t('team.text')}
               </p>
@@ -281,11 +281,11 @@ export default async function HomePage() {
         </div>
         <div className="relative max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-24 lg:py-32">
           <div className="max-w-[646px]">
-            <blockquote className="font-medium text-[#8b1e3f] leading-[1.08]"
+            <blockquote className="font-medium text-[var(--fg-8b1e3f)] leading-[1.08]"
               style={{ fontSize: 'clamp(32px, 5vw, 64px)', letterSpacing: '-2.56px' }}>
               &ldquo;{t('verse.text')}&rdquo;
             </blockquote>
-            <p className="font-medium text-[#8b1e3f] mt-8"
+            <p className="font-medium text-[var(--fg-8b1e3f)] mt-8"
               style={{ fontSize: 'clamp(18px, 2vw, 24px)', lineHeight: 1.12, letterSpacing: '-0.72px' }}>
               {t('verse.source')}
             </p>
@@ -294,7 +294,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Predavanja ───────────────────────────────────────────────────── */}
-      <section className="bg-white w-full">
+      <section className="bg-[var(--bg-ffffff)] w-full">
         <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
           <SectionHead
             tag={t('lectures.tag')}
@@ -312,7 +312,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Kur'an ───────────────────────────────────────────────────────── */}
-      <section style={{ backgroundColor: '#fcfbfa' }} className="w-full">
+      <section style={{ backgroundColor: 'var(--bg-fcfbfa)' }} className="w-full">
         <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
           <SectionHead
             tag={t('quran.tag')}
@@ -330,7 +330,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Podcast ──────────────────────────────────────────────────────── */}
-      <section className="bg-white w-full">
+      <section className="bg-[var(--bg-ffffff)] w-full">
         <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
           <SectionHead
             tag={t('podcast.tag')}
@@ -348,7 +348,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Blog ─────────────────────────────────────────────────────────── */}
-      <section style={{ backgroundColor: '#fcfbfa' }} className="w-full">
+      <section style={{ backgroundColor: 'var(--bg-fcfbfa)' }} className="w-full">
         <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-16 lg:py-20 flex flex-col gap-14">
           <SectionHead
             tag={t('blog.tag')}

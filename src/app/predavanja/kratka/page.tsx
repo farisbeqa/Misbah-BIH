@@ -37,12 +37,12 @@ export default function KratkaPredavanjaPage() {
   return (
     <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-12 sm:py-16" style={{ minHeight: '60vh' }}>
       <div className="mb-10">
-        <p className="font-medium text-[#8b1e3f] text-base mb-2">{t('shortLectures.tag')}</p>
-        <h1 className="font-semibold text-[#141110] mb-3"
+        <p className="font-medium text-[var(--fg-8b1e3f)] text-base mb-2">{t('shortLectures.tag')}</p>
+        <h1 className="font-semibold text-[var(--fg-141110)] mb-3"
           style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}>
           {t('shortLectures.title')}
         </h1>
-        <p className="font-normal text-[#746860]" style={{ fontSize: 18 }}>
+        <p className="font-normal text-[var(--fg-746860)]" style={{ fontSize: 18 }}>
           {t('shortLectures.text')}
         </p>
       </div>
@@ -52,9 +52,9 @@ export default function KratkaPredavanjaPage() {
           <button key={key} onClick={() => setTopic(key)}
             className="text-sm font-medium px-4 py-2 transition-all"
             style={{
-              border: topic === key ? 'none' : '1px solid #D6CCC3',
-              background: topic === key ? '#8B1E3F' : 'white',
-              color: topic === key ? '#fff' : '#5A4F49',
+              border: topic === key ? 'none' : '1px solid var(--line-d6ccc3)',
+              background: topic === key ? 'var(--bg-8b1e3f)' : 'var(--bg-ffffff)',
+              color: topic === key ? 'var(--fg-ffffff)' : 'var(--fg-5a4f49)',
             }}>
             {t(`topics.${key}`)}
           </button>
@@ -64,18 +64,18 @@ export default function KratkaPredavanjaPage() {
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="animate-pulse bg-[#f5f2ef] overflow-hidden border border-black/5">
-              <div className="h-[228px] bg-[#e0d8d0]" />
+            <div key={i} className="animate-pulse bg-[var(--bg-f5f2ef)] overflow-hidden border border-[var(--line-black5)]">
+              <div className="h-[228px] bg-[var(--bg-e0d8d0)]" />
               <div className="px-6 py-7 space-y-3">
-                <div className="h-2.5 bg-[#e0d8d0] rounded w-24" />
-                <div className="h-5 bg-[#e0d8d0] rounded w-3/4" />
+                <div className="h-2.5 bg-[var(--bg-e0d8d0)] rounded w-24" />
+                <div className="h-5 bg-[var(--bg-e0d8d0)] rounded w-3/4" />
               </div>
             </div>
           ))}
         </div>
       ) : videos.length === 0 ? (
-        <div className="flex items-center justify-center py-20 bg-[#f5f2ef] border border-black/5">
-          <p className="text-sm text-[#a89888]">{t('shortLectures.empty')}</p>
+        <div className="flex items-center justify-center py-20 bg-[var(--bg-f5f2ef)] border border-[var(--line-black5)]">
+          <p className="text-sm text-[var(--fg-a89888)]">{t('shortLectures.empty')}</p>
         </div>
       ) : (
         <>
@@ -89,10 +89,10 @@ export default function KratkaPredavanjaPage() {
           {visible < videos.length && (
             <div className="flex flex-col items-center gap-2 mt-10">
               <button onClick={() => setVisible(v => v + PAGE)}
-                className="px-8 py-3 border border-[#D6CCC3] text-[#5a4f49] text-sm font-medium hover:border-[#8b1e3f] hover:text-[#8b1e3f] transition-colors">
+                className="px-8 py-3 border border-[var(--line-d6ccc3)] text-[var(--fg-5a4f49)] text-sm font-medium hover:border-[var(--line-8b1e3f)] hover:text-[var(--fg-8b1e3f)] transition-colors">
                 {t('list.loadMore', { remaining: videos.length - visible })}
               </button>
-              <p className="text-xs text-[#a89888]">{t('list.shownOf', { shown: shown.length, total: videos.length })}</p>
+              <p className="text-xs text-[var(--fg-a89888)]">{t('list.shownOf', { shown: shown.length, total: videos.length })}</p>
             </div>
           )}
         </>

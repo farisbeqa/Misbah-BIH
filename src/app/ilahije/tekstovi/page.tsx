@@ -29,10 +29,10 @@ export default async function IlahijeTekstoviPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16" style={{ minHeight: '60vh' }}>
       <div className="mb-12">
-        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-2" style={{ color: '#241F1D' }}>
+        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-2" style={{ color: 'var(--fg-241f1d)' }}>
           {t('ilahijePage.title')}
         </h1>
-        <p className="text-sm" style={{ color: '#978A81' }}>
+        <p className="text-sm" style={{ color: 'var(--fg-978a81)' }}>
           {t('ilahijePage.subtitle')}
         </p>
       </div>

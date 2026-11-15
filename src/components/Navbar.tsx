@@ -7,6 +7,7 @@ import Link, { usePathname, useCurrentLocale } from '@/i18n/navigation'
 import { Menu, X, ChevronDown, LogOut } from 'lucide-react'
 import AuthModal from './AuthModal'
 import LanguageSwitcher from './LanguageSwitcher'
+import ThemeToggle from './ThemeToggle'
 
 interface AuthUser { id: number; username: string }
 
@@ -27,23 +28,23 @@ function NavDropdown({ open, setOpen, dropRef, label, isActive, items, pathname 
     <div ref={dropRef} className="relative">
       <button
         onClick={() => setOpen(v => !v)}
-        className="flex items-center gap-0.5 px-1 min-[1440px]:px-1.5 py-2 text-base whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
-        style={{ color: isActive ? '#8b1e3f' : '#5a4f49', fontWeight: isActive ? 600 : 400 }}
+        className="flex items-center gap-0.5 px-1 min-[1440px]:px-1.5 py-2 text-base whitespace-nowrap hover:text-[var(--fg-8b1e3f)] transition-colors"
+        style={{ color: isActive ? 'var(--fg-8b1e3f)' : 'var(--fg-5a4f49)', fontWeight: isActive ? 600 : 400 }}
       >
         {label}
         <ChevronDown size={13} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       {open && (
-        <div className="absolute top-full start-0 mt-1 bg-white shadow-lg border border-[#ede5dc] overflow-hidden z-50"
+        <div className="absolute top-full start-0 mt-1 bg-[var(--bg-ffffff)] shadow-lg border border-[var(--line-ede5dc)] overflow-hidden z-50"
           style={{ minWidth: 190 }}>
           {items.map((item, i) => (
             <div key={item.href}>
-              {i > 0 && <div className="border-t border-[#f0ebe4]" />}
+              {i > 0 && <div className="border-t border-[var(--line-f0ebe4)]" />}
               <Link
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="block px-4 py-3 text-sm hover:bg-[#faf7f2] transition-colors"
-                style={{ color: pathname === item.href ? '#8b1e3f' : '#5a4f49', fontWeight: pathname === item.href ? 600 : 400 }}
+                className="block px-4 py-3 text-sm hover:bg-[var(--bg-faf7f2)] transition-colors"
+                style={{ color: pathname === item.href ? 'var(--fg-8b1e3f)' : 'var(--fg-5a4f49)', fontWeight: pathname === item.href ? 600 : 400 }}
               >
                 {item.label}
               </Link>
@@ -171,19 +172,19 @@ export default function Navbar() {
   const isBlog       = pathname.startsWith('/blog') || pathname.startsWith('/price')
 
   const ls = (active: boolean) => ({
-    color:      active ? '#8b1e3f' : '#5a4f49',
+    color:      active ? 'var(--fg-8b1e3f)' : 'var(--fg-5a4f49)',
     fontWeight: active ? 600 : 400,
   })
 
   return (
     <>
       {/* Desktop nav */}
-      <nav className={`bg-white w-full sticky top-0 z-40 border-b border-gray-100 ${desktopOnly}`}>
+      <nav className={`bg-[var(--bg-ffffff)] w-full sticky top-0 z-40 border-b border-[var(--line-f3f4f6)] ${desktopOnly}`}>
       <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-5 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5 shrink-0">
-          <Image src="/logo.jpg" alt="Misbah EDU" width={56} height={56} className="object-cover mix-blend-multiply" />
-          <span className="font-bold text-[26px] leading-none" style={{ color: '#8b1e3f' }}>
-            Misbah <span style={{ color: '#c8a96b' }}>EDU</span>
+          <Image src="/logo.jpg" alt="Misbah EDU" width={56} height={56} className="site-logo object-cover mix-blend-multiply" />
+          <span className="font-bold text-[26px] leading-none" style={{ color: 'var(--fg-8b1e3f)' }}>
+            Misbah <span style={{ color: 'var(--fg-c8a96b)' }}>EDU</span>
           </span>
         </Link>
 
@@ -195,7 +196,7 @@ export default function Navbar() {
           />
           {plainLinksLeft(t).map(link => (
             <Link key={link.href} href={link.href}
-              className="px-1 min-[1440px]:px-1.5 py-2 text-base whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
+              className="px-1 min-[1440px]:px-1.5 py-2 text-base whitespace-nowrap hover:text-[var(--fg-8b1e3f)] transition-colors"
               style={ls(pathname === link.href)}>
               {link.label}
             </Link>
@@ -207,7 +208,7 @@ export default function Navbar() {
           />
           {plainLinksMid(t).map(link => (
             <Link key={link.href} href={link.href}
-              className="px-1 min-[1440px]:px-1.5 py-2 text-base whitespace-nowrap hover:text-[#8b1e3f] transition-colors"
+              className="px-1 min-[1440px]:px-1.5 py-2 text-base whitespace-nowrap hover:text-[var(--fg-8b1e3f)] transition-colors"
               style={ls(pathname === link.href)}>
               {link.label}
             </Link>
@@ -230,31 +231,34 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-3 min-[1440px]:gap-4 shrink-0">
-          <LanguageSwitcher />
+          <div className="flex items-center gap-1">
+            <ThemeToggle />
+            <LanguageSwitcher />
+          </div>
           {authChecked && (
             user ? (
               <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 text-sm" style={{ color: '#5a4f49' }}>
+                <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--fg-5a4f49)' }}>
                   <div className="w-8 h-8 flex items-center justify-center text-xs font-bold text-white"
-                    style={{ background: '#8b1e3f' }}>
+                    style={{ background: 'var(--bg-8b1e3f)' }}>
                     {user.username[0].toUpperCase()}
                   </div>
                   <span>{user.username}</span>
                 </div>
                 <button onClick={handleLogout}
-                  className="flex items-center gap-1 text-sm transition-colors hover:text-[#8b1e3f]"
-                  style={{ color: '#978a81' }}>
+                  className="flex items-center gap-1 text-sm transition-colors hover:text-[var(--fg-8b1e3f)]"
+                  style={{ color: 'var(--fg-978a81)' }}>
                   <LogOut size={13} /> {t('logout')}
                 </button>
               </div>
             ) : (
               <>
                 <button onClick={() => openModal('register')}
-                  className="bg-[#8b1e3f] text-white px-6 min-[1440px]:px-8 py-3 text-base font-normal hover:bg-[#7a1a37] transition-colors whitespace-nowrap">
+                  className="bg-[var(--bg-8b1e3f)] text-white px-6 min-[1440px]:px-8 py-3 text-base font-normal hover:bg-[var(--bg-7a1a37)] transition-colors whitespace-nowrap">
                   {t('register')}
                 </button>
                 <button onClick={() => openModal('login')}
-                  className="border border-[#8b1e3f] text-[#8b1e3f] px-5 min-[1440px]:px-6 py-3 text-base font-normal hover:bg-[#faf5f5] transition-colors whitespace-nowrap">
+                  className="border border-[var(--line-8b1e3f)] text-[var(--fg-8b1e3f)] px-5 min-[1440px]:px-6 py-3 text-base font-normal hover:bg-[var(--bg-faf5f5)] transition-colors whitespace-nowrap">
                   {t('login')}
                 </button>
               </>
@@ -265,32 +269,33 @@ export default function Navbar() {
       </nav>
 
       {/* Mobile nav bar */}
-      <nav className={`bg-white w-full sticky top-0 z-40 border-b border-gray-100 ${mobileOnly} flex items-center justify-between px-5 py-4`}>
+      <nav className={`bg-[var(--bg-ffffff)] w-full sticky top-0 z-40 border-b border-[var(--line-f3f4f6)] ${mobileOnly} flex items-center justify-between px-5 py-4`}>
         <Link href="/" className="flex items-center gap-2 shrink-0">
-          <Image src="/logo.jpg" alt="Misbah EDU" width={44} height={44} className="object-cover mix-blend-multiply" />
-          <span className="font-bold text-[20px] leading-none" style={{ color: '#8b1e3f' }}>
-            Misbah <span style={{ color: '#c8a96b' }}>EDU</span>
+          <Image src="/logo.jpg" alt="Misbah EDU" width={44} height={44} className="site-logo object-cover mix-blend-multiply" />
+          <span className="font-bold text-[20px] leading-none" style={{ color: 'var(--fg-8b1e3f)' }}>
+            Misbah <span style={{ color: 'var(--fg-c8a96b)' }}>EDU</span>
           </span>
         </Link>
         <div className="flex items-center gap-3">
+          <ThemeToggle variant="mobile" />
           <LanguageSwitcher variant="mobile" />
           <button onClick={() => setMobileOpen(v => !v)} className="p-1" aria-label={t('toggleMenu')}>
             {mobileOpen
-              ? <X size={24} style={{ color: '#8b1e3f' }} />
-              : <Menu size={24} style={{ color: '#141110' }} />
+              ? <X size={24} style={{ color: 'var(--fg-8b1e3f)' }} />
+              : <Menu size={24} style={{ color: 'var(--fg-141110)' }} />
             }
           </button>
         </div>
       </nav>
 
       {mobileOpen && (
-        <div className={`${mobileOnly} fixed top-[65px] left-0 right-0 bg-white border-b border-gray-100 px-5 pb-5 flex flex-col gap-0.5 z-30 shadow-md overflow-y-auto max-h-[calc(100vh-65px)]`}>
+        <div className={`${mobileOnly} fixed top-[65px] left-0 right-0 bg-[var(--bg-ffffff)] border-b border-[var(--line-f3f4f6)] px-5 pb-5 flex flex-col gap-0.5 z-30 shadow-md overflow-y-auto max-h-[calc(100vh-65px)]`}>
           <div className="flex flex-col pt-2">
             {MOBILE_NAV.map(entry => {
               if (!('items' in entry)) {
                 return (
                   <Link key={entry.href} href={entry.href} onClick={() => setMobileOpen(false)}
-                    className="py-3 text-base border-b border-[#f5f0eb] transition-colors hover:text-[#8b1e3f]"
+                    className="py-3 text-base border-b border-[var(--line-f5f0eb)] transition-colors hover:text-[var(--fg-8b1e3f)]"
                     style={ls(pathname === entry.href)}>
                     {entry.label}
                   </Link>
@@ -298,7 +303,7 @@ export default function Navbar() {
               }
               const expanded = mobileGroup === entry.label
               return (
-                <div key={entry.label} className="border-b border-[#f5f0eb]">
+                <div key={entry.label} className="border-b border-[var(--line-f5f0eb)]">
                   <button
                     onClick={() => setMobileGroup(expanded ? null : entry.label)}
                     className="w-full flex items-center justify-between py-3 text-base text-start"
@@ -308,10 +313,10 @@ export default function Navbar() {
                     <ChevronDown size={16} className={`transition-transform ${expanded ? 'rotate-180' : ''}`} />
                   </button>
                   {expanded && (
-                    <div className="flex flex-col pb-2 ps-4 ms-1 border-s-2 border-[#ede5dc]">
+                    <div className="flex flex-col pb-2 ps-4 ms-1 border-s-2 border-[var(--line-ede5dc)]">
                       {entry.items.map(item => (
                         <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)}
-                          className="py-2.5 text-[15px] transition-colors hover:text-[#8b1e3f]"
+                          className="py-2.5 text-[15px] transition-colors hover:text-[var(--fg-8b1e3f)]"
                           style={ls(pathname === item.href)}>
                           {item.label}
                         </Link>
@@ -325,25 +330,25 @@ export default function Navbar() {
           <div className="flex items-center gap-3 mt-4">
             {user ? (
               <div className="flex items-center justify-between w-full">
-                <div className="flex items-center gap-2 text-sm" style={{ color: '#5a4f49' }}>
+                <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--fg-5a4f49)' }}>
                   <div className="w-7 h-7 flex items-center justify-center text-xs font-bold text-white"
-                    style={{ background: '#8b1e3f' }}>
+                    style={{ background: 'var(--bg-8b1e3f)' }}>
                     {user.username[0].toUpperCase()}
                   </div>
                   {user.username}
                 </div>
-                <button onClick={handleLogout} className="text-sm flex items-center gap-1" style={{ color: '#978a81' }}>
+                <button onClick={handleLogout} className="text-sm flex items-center gap-1" style={{ color: 'var(--fg-978a81)' }}>
                   <LogOut size={13} /> {t('logout')}
                 </button>
               </div>
             ) : (
               <>
                 <button onClick={() => openModal('register')}
-                  className="flex-1 bg-[#8b1e3f] text-white py-3 text-base font-normal">
+                  className="flex-1 bg-[var(--bg-8b1e3f)] text-white py-3 text-base font-normal">
                   {t('register')}
                 </button>
                 <button onClick={() => openModal('login')}
-                  className="flex-1 border border-[#8b1e3f] text-[#8b1e3f] py-3 text-base font-normal">
+                  className="flex-1 border border-[var(--line-8b1e3f)] text-[var(--fg-8b1e3f)] py-3 text-base font-normal">
                   {t('login')}
                 </button>
               </>

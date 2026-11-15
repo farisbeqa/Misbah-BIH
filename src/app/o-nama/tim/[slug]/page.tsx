@@ -20,13 +20,13 @@ export default async function TimBioPage({ params }: { params: { slug: string } 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <Link href="/o-nama/impressum"
-        className="inline-flex items-center gap-2 text-warm-400 hover:text-warm-700 text-sm mb-8 transition-colors font-mono">
+        className="inline-flex items-center gap-2 text-[var(--fg-b8aca2)] hover:text-[var(--fg-5a4f49)] text-sm mb-8 transition-colors font-mono">
         <ArrowLeft size={14} className="flip-rtl" /> {t('back')}
       </Link>
 
       {/* Header card */}
       <div className="flex flex-col sm:flex-row gap-6 items-start mb-10 p-6 rounded-2xl"
-        style={{ background: '#FAF7F2', border: '1px solid #E8E1DB' }}>
+        style={{ background: 'var(--bg-faf7f2)', border: '1px solid var(--line-e8e1db)' }}>
         {bio.photo && (
           <div className="w-28 h-28 rounded-2xl overflow-hidden flex-shrink-0 shadow-sm">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -34,12 +34,12 @@ export default async function TimBioPage({ params }: { params: { slug: string } 
           </div>
         )}
         <div>
-          <p className="font-mono text-[11px] uppercase tracking-widest mb-1" style={{ color: '#A94A61' }}>
+          <p className="font-mono text-[11px] uppercase tracking-widest mb-1" style={{ color: 'var(--fg-a94a61)' }}>
             {bio.role}
           </p>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-warm-900 tracking-tight mb-2">{bio.name}</h1>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[var(--fg-241f1d)] tracking-tight mb-2">{bio.name}</h1>
           {bio.born && (
-            <p className="text-sm text-warm-500">
+            <p className="text-sm text-[var(--fg-978a81)]">
               <span className="font-medium">{t('born')}</span> {bio.born}
             </p>
           )}
@@ -50,12 +50,12 @@ export default async function TimBioPage({ params }: { params: { slug: string } 
       <div className="space-y-6">
         {bio.sections.map(section => (
           <section key={section.title} className="p-6 rounded-2xl"
-            style={{ background: '#FAF7F2', border: '1px solid #E8E1DB' }}>
-            <h2 className="font-bold text-warm-900 mb-4 text-base">{section.title}</h2>
+            style={{ background: 'var(--bg-faf7f2)', border: '1px solid var(--line-e8e1db)' }}>
+            <h2 className="font-bold text-[var(--fg-241f1d)] mb-4 text-base">{section.title}</h2>
             <ul className="space-y-2.5">
               {section.items.map((item, i) => (
-                <li key={i} className="flex gap-2.5 text-sm text-warm-700 leading-relaxed">
-                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#8B1E3F' }} />
+                <li key={i} className="flex gap-2.5 text-sm text-[var(--fg-5a4f49)] leading-relaxed">
+                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'var(--bg-8b1e3f)' }} />
                   {item}
                 </li>
               ))}
@@ -64,7 +64,7 @@ export default async function TimBioPage({ params }: { params: { slug: string } 
         ))}
       </div>
 
-      <p className="font-mono text-xs text-warm-300 mt-10 text-center">
+      <p className="font-mono text-xs text-[var(--fg-d6ccc3)] mt-10 text-center">
         © {new Date().getFullYear()} Misbah EDU
       </p>
     </div>

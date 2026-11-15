@@ -51,7 +51,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <Link href="/blog"
-        className="inline-flex items-center gap-2 text-warm-400 hover:text-warm-700 text-sm mb-10 transition-colors font-mono tracking-wide">
+        className="inline-flex items-center gap-2 text-[var(--fg-b8aca2)] hover:text-[var(--fg-5a4f49)] text-sm mb-10 transition-colors font-mono tracking-wide">
         <ArrowLeft size={14} className="flip-rtl" /> {t('blogPost.back')}
       </Link>
 
@@ -66,12 +66,12 @@ export default async function BlogPostPage({ params }: PageProps) {
         {/* Header */}
         <header className="mb-10">
           {/* Date */}
-          <time className="font-mono text-xs text-brand-light tracking-widest block mb-4">
+          <time className="font-mono text-xs text-[var(--fg-a94a61)] tracking-widest block mb-4">
             {formatDate(post.createdAt)}
           </time>
 
           {/* Title */}
-          <h1 className="text-2xl sm:text-3xl lg:text-[2rem] font-extrabold text-warm-900 leading-[1.2] tracking-tight mb-6 break-words">
+          <h1 className="text-2xl sm:text-3xl lg:text-[2rem] font-extrabold text-[var(--fg-241f1d)] leading-[1.2] tracking-tight mb-6 break-words">
             {post.title}
           </h1>
 
@@ -84,13 +84,13 @@ export default async function BlogPostPage({ params }: PageProps) {
             const isHamdo = post.author.toLowerCase().includes('hamdo')
             return (
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-brand flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                <div className="w-9 h-9 rounded-full bg-[var(--bg-8b1e3f)] flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
                   {initials}
                 </div>
                 <div>
-                  <p className="font-semibold text-warm-800 text-sm">{post.author}</p>
+                  <p className="font-semibold text-[var(--fg-3f3733)] text-sm">{post.author}</p>
                   {isHamdo && (
-                    <p className="font-mono text-warm-400 text-[11px]">{t('blogPost.hamdoRole')}</p>
+                    <p className="font-mono text-[var(--fg-b8aca2)] text-[11px]">{t('blogPost.hamdoRole')}</p>
                   )}
                 </div>
               </div>
@@ -116,9 +116,9 @@ export default async function BlogPostPage({ params }: PageProps) {
 
         {/* Footer */}
         <footer className="mt-12 pt-6 flex items-center justify-between flex-wrap gap-4"
-          style={{ borderTop: '1px solid #E8E1DB' }}>
-          <time className="font-mono text-[11px] text-warm-400">{formatDate(post.createdAt)}</time>
-          <Link href="/blog" className="font-mono text-xs text-brand hover:text-brand-light transition-colors tracking-wide">
+          style={{ borderTop: '1px solid var(--line-e8e1db)' }}>
+          <time className="font-mono text-[11px] text-[var(--fg-b8aca2)]">{formatDate(post.createdAt)}</time>
+          <Link href="/blog" className="font-mono text-xs text-[var(--fg-8b1e3f)] hover:text-[var(--fg-a94a61)] transition-colors tracking-wide">
             {`${rtl ? '→' : '←'} ${t('blogPost.allPosts')}`}
           </Link>
         </footer>
@@ -128,7 +128,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       <MoreFromAuthor author={post.author} title={found.title} className="mt-10" />
 
       {/* Likes + Comments */}
-      <div className="mt-12 space-y-8" style={{ borderTop: '1px solid #E8E1DB', paddingTop: 32 }}>
+      <div className="mt-12 space-y-8" style={{ borderTop: '1px solid var(--line-e8e1db)', paddingTop: 32 }}>
         <LikeButton targetType="blog" targetId={post.id} initialCount={post._count.likes} />
         <CommentsSection targetType="blog" targetId={post.id} />
       </div>

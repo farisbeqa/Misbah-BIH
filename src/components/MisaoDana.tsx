@@ -33,22 +33,22 @@ export default function MisaoDana({ quotes }: { quotes: Quote[] }) {
   const next = () => setActive(a => (a + 1) % quotes.length)
 
   return (
-    <section className="bg-[#f5f2ef] w-full">
+    <section className="bg-[var(--bg-f5f2ef)] w-full">
       <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 py-20 lg:py-[100px] flex flex-col gap-3">
-        <p className="font-medium text-[#8b1e3f] text-base leading-normal">{t('tag')}</p>
+        <p className="font-medium text-[var(--fg-8b1e3f)] text-base leading-normal">{t('tag')}</p>
 
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-20 items-start pt-4">
           {/* Left: heading + desc + arrows */}
           <div className="flex flex-col gap-8 lg:flex-1">
             <div className="flex flex-col gap-6">
               <h2
-                className="font-semibold text-[#141110]"
+                className="font-semibold text-[var(--fg-141110)]"
                 style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.3, letterSpacing: '-0.44px' }}
               >
                 {t('title')}
               </h2>
               <p
-                className="font-normal text-[#746860]"
+                className="font-normal text-[var(--fg-746860)]"
                 style={{ fontSize: '18px', lineHeight: 1.5, letterSpacing: '-0.18px' }}
               >
                 {t('text')}
@@ -58,14 +58,14 @@ export default function MisaoDana({ quotes }: { quotes: Quote[] }) {
               <button
                 onClick={prev}
                 aria-label={t('previous')}
-                className="bg-[#8b1e3f] p-3 hover:bg-[#7a1a37] transition-colors"
+                className="bg-[var(--bg-8b1e3f)] p-3 hover:bg-[var(--bg-7a1a37)] transition-colors"
               >
                 <ArrowUp />
               </button>
               <button
                 onClick={next}
                 aria-label={t('next')}
-                className="bg-[#8b1e3f] p-3 hover:bg-[#7a1a37] transition-colors"
+                className="bg-[var(--bg-8b1e3f)] p-3 hover:bg-[var(--bg-7a1a37)] transition-colors"
               >
                 <ArrowDown />
               </button>
@@ -84,24 +84,24 @@ export default function MisaoDana({ quotes }: { quotes: Quote[] }) {
                   style={{
                     flex: 1,
                     minHeight: 20,
-                    backgroundColor: i === active ? '#8b1e3f' : 'white',
+                    backgroundColor: i === active ? 'var(--bg-8b1e3f)' : 'var(--bg-ffffff)',
                   }}
                 />
               ))}
             </div>
 
             {/* Quote card */}
-            <div className="bg-white flex-1 overflow-hidden">
+            <div className="bg-[var(--bg-ffffff)] flex-1 overflow-hidden">
               <div className="flex flex-col gap-5 px-6 py-8">
                 <p
-                  className="font-normal text-[#8b1e3f] leading-[1.5]"
+                  className="font-normal text-[var(--fg-8b1e3f)] leading-[1.5]"
                   style={{ fontSize: 'clamp(18px, 2.5vw, 24px)', letterSpacing: '-0.24px' }}
                 >
                   {quotes[active].text}
                 </p>
                 {quotes[active].source && (
                   <p
-                    className="font-bold text-[#8b1e3f] leading-[1.5]"
+                    className="font-bold text-[var(--fg-8b1e3f)] leading-[1.5]"
                     style={{ fontSize: 'clamp(18px, 2.5vw, 24px)', letterSpacing: '-0.24px' }}
                   >
                     {quotes[active].source}
