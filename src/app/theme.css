@@ -208,6 +208,11 @@
 :root[data-theme="dark"] .theme-icon-sun,
 :root[data-theme="dark"] .theme-label-light { display: block; }
 
+/* Pictures with their own dark-theme version (home page drawings, public/benefits/dark) */
+.theme-dark-only { display: none; }
+:root[data-theme="dark"] .theme-dark-only { display: block; }
+:root[data-theme="dark"] .theme-light-only { display: none; }
+
 /* The bright fallback picture of cards (src/components/CardImage.tsx) is toned down a little */
 :root[data-theme="dark"] .card-fallback { filter: brightness(0.82); }
 

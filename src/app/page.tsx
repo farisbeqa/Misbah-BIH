@@ -228,7 +228,11 @@ export default async function HomePage() {
               <div key={b.key} className="bg-[var(--bg-faf5f5)] flex flex-col gap-6 p-8" style={{ minHeight: 380 }}>
                 <div className="flex-1 overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={b.image} alt={t(`benefits.${b.key}.title`)} className="w-full h-full object-cover object-center" style={{ maxHeight: 220 }} />
+                  <img src={b.image} alt={t(`benefits.${b.key}.title`)} className="theme-light-only w-full h-full object-cover object-center" style={{ maxHeight: 220 }} />
+                  {/* Dark theme: the same drawing in rose lines without the white fills (public/benefits/dark) */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={b.image.replace('/benefits/', '/benefits/dark/')} alt={t(`benefits.${b.key}.title`)} loading="lazy"
+                    className="theme-dark-only w-full h-full object-cover object-center" style={{ maxHeight: 220 }} />
                 </div>
                 <div className="flex flex-col gap-4 shrink-0">
                   <h3 className="font-medium text-[var(--fg-241f1d)]"
