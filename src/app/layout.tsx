@@ -10,7 +10,7 @@ import PozoviteNasButton from '@/components/PozoviteNasButton'
 import { LOCALES, LOCALE_INFO } from '@/i18n/config'
 import { clientMessages } from '@/i18n/messages'
 import { alternates, getLocale, href, requestPath } from '@/i18n/server'
-import { MEKTEB_URL } from '@/lib/links'
+import { MEKTEB_PUBLIC, MEKTEB_URL } from '@/lib/links'
 
 const manrope = Manrope({
   subsets: ['latin'],
@@ -148,15 +148,16 @@ async function jsonLd() {
         '@id': `${siteUrl}/#navigation`,
         name: t('navigation'),
         itemListElement: [
-          { '@type': 'SiteNavigationElement', position: 1, name: nav('lectures'), url: url('/predavanja/duga') },
-          { '@type': 'SiteNavigationElement', position: 2, name: nav('quran'), url: url('/kuran') },
-          { '@type': 'SiteNavigationElement', position: 3, name: nav('podcast'), url: url('/podcasts') },
-          { '@type': 'SiteNavigationElement', position: 4, name: nav('ilahije'), url: url('/ilahije/izvedba') },
-          { '@type': 'SiteNavigationElement', position: 5, name: 'Mekteb', url: MEKTEB_URL },
-          { '@type': 'SiteNavigationElement', position: 6, name: nav('stories'), url: url('/price') },
-          { '@type': 'SiteNavigationElement', position: 7, name: nav('blog'), url: url('/blog') },
-          { '@type': 'SiteNavigationElement', position: 8, name: nav('aboutUs'), url: url('/o-nama') },
-        ],
+          { name: nav('lectures'), url: url('/predavanja/duga') },
+          { name: nav('quran'), url: url('/kuran') },
+          { name: nav('podcast'), url: url('/podcasts') },
+          { name: nav('ilahije'), url: url('/ilahije/izvedba') },
+          // Mekteb only once its site is public (src/lib/links.ts)
+          ...(MEKTEB_PUBLIC ? [{ name: 'Mekteb', url: MEKTEB_URL }] : []),
+          { name: nav('stories'), url: url('/price') },
+          { name: nav('blog'), url: url('/blog') },
+          { name: nav('aboutUs'), url: url('/o-nama') },
+        ].map((item, i) => ({ '@type': 'SiteNavigationElement', position: i + 1, ...item })),
       },
       {
         '@type': 'Person',
