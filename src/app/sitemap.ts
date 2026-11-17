@@ -42,7 +42,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...allPaths().map(p => ({ url: `${BASE}/pozovite-nas${p.length ? '/' + p.join('/') : ''}`, lastModified: now, changeFrequency: 'monthly' as const, priority: p.length ? 0.5 : 0.8 })),
     { url: `${BASE}/privatnost`,        lastModified: now, changeFrequency: 'yearly',  priority: 0.2 },
     { url: `${BASE}/pravila-koristenja`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
-    { url: `${BASE}/mekteb`,            lastModified: now, changeFrequency: 'weekly',  priority: 0.7 },
     { url: `${BASE}/price`,             lastModified: now, changeFrequency: 'weekly',  priority: 0.7 },
   ]
 
@@ -50,16 +49,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let postRoutes:    MetadataRoute.Sitemap = []
   let ilahijeRoutes: MetadataRoute.Sitemap = []
   let duaRoutes:     MetadataRoute.Sitemap = []
-  let mektebRoutes:  MetadataRoute.Sitemap = []
   let pricaRoutes:   MetadataRoute.Sitemap = []
 
   try {
-    const [videos, posts, ilahijeTekstovi, duaTekstovi, mektebPosts, pricaList] = await Promise.all([
+    const [videos, posts, ilahijeTekstovi, duaTekstovi, pricaList] = await Promise.all([
       prisma.video.findMany({ where: { published: true }, select: { id: true, updatedAt: true }, orderBy: { createdAt: 'desc' } }),
       prisma.blogPost.findMany({ where: { published: true }, select: { id: true, updatedAt: true }, orderBy: { createdAt: 'desc' } }),
       prisma.ilahijaText.findMany({ where: { published: true }, select: { id: true, updatedAt: true } }),
       prisma.duaText.findMany({ where: { published: true }, select: { id: true, updatedAt: true } }),
-      prisma.mektebPost.findMany({ where: { published: true }, select: { id: true, updatedAt: true } }),
       prisma.prica.findMany({ where: { published: true }, select: { id: true, updatedAt: true } }),
     ])
 
@@ -67,11 +64,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     postRoutes    = posts.map(p => ({ url: `${BASE}/blog/${p.id}`,              lastModified: p.updatedAt, changeFrequency: 'monthly', priority: 0.7 }))
     ilahijeRoutes = ilahijeTekstovi.map(t => ({ url: `${BASE}/ilahije/tekstovi/${t.id}`, lastModified: t.updatedAt, changeFrequency: 'yearly',  priority: 0.4 }))
     duaRoutes     = duaTekstovi.map(t => ({ url: `${BASE}/zikrovi/tekstovi/${t.id}`,     lastModified: t.updatedAt, changeFrequency: 'yearly',  priority: 0.5 }))
-    mektebRoutes  = mektebPosts.map(p => ({ url: `${BASE}/mekteb/${p.id}`,      lastModified: p.updatedAt, changeFrequency: 'monthly', priority: 0.6 }))
     pricaRoutes   = pricaList.map(p => ({ url: `${BASE}/price/${p.id}`,         lastModified: p.updatedAt, changeFrequency: 'monthly', priority: 0.6 }))
   } catch (err) {
     console.error('[sitemap] DB fetch failed, returning static routes only:', err)
   }
 
-  return withLanguages([...staticRoutes, ...videoRoutes, ...postRoutes, ...ilahijeRoutes, ...duaRoutes, ...mektebRoutes, ...pricaRoutes])
+  return withLanguages([...staticRoutes, ...videoRoutes, ...postRoutes, ...ilahijeRoutes, ...duaRoutes, ...pricaRoutes])
 }

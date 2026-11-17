@@ -10,6 +10,7 @@ import PozoviteNasButton from '@/components/PozoviteNasButton'
 import { LOCALES, LOCALE_INFO } from '@/i18n/config'
 import { clientMessages } from '@/i18n/messages'
 import { alternates, getLocale, href, requestPath } from '@/i18n/server'
+import { MEKTEB_URL } from '@/lib/links'
 
 const manrope = Manrope({
   subsets: ['latin'],
@@ -151,7 +152,7 @@ async function jsonLd() {
           { '@type': 'SiteNavigationElement', position: 2, name: nav('quran'), url: url('/kuran') },
           { '@type': 'SiteNavigationElement', position: 3, name: nav('podcast'), url: url('/podcasts') },
           { '@type': 'SiteNavigationElement', position: 4, name: nav('ilahije'), url: url('/ilahije/izvedba') },
-          { '@type': 'SiteNavigationElement', position: 5, name: 'Mekteb EDU', url: url('/mekteb') },
+          { '@type': 'SiteNavigationElement', position: 5, name: 'Mekteb', url: MEKTEB_URL },
           { '@type': 'SiteNavigationElement', position: 6, name: nav('stories'), url: url('/price') },
           { '@type': 'SiteNavigationElement', position: 7, name: nav('blog'), url: url('/blog') },
           { '@type': 'SiteNavigationElement', position: 8, name: nav('aboutUs'), url: url('/o-nama') },

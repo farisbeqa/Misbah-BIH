@@ -35,6 +35,16 @@ const nextConfig = {
       { source: '/app/:path*', destination: '/app/index.html' },
     ];
   },
+  // Mekteb moved to its own site on a Misbah subdomain (MEKTEB_URL in src/lib/links.ts)
+  async redirects() {
+    const mekteb = 'https://mekteb.misbah-edu.com';
+    return [
+      { source: '/mekteb', destination: mekteb, permanent: false },
+      { source: '/mekteb/:path*', destination: mekteb, permanent: false },
+      { source: '/:locale(en|ar|de|tr)/mekteb', destination: mekteb, permanent: false },
+      { source: '/:locale(en|ar|de|tr)/mekteb/:path*', destination: mekteb, permanent: false },
+    ];
+  },
   async headers() {
     return [{ source: '/app/:path*', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] }];
   },

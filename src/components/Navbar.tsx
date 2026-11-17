@@ -8,6 +8,7 @@ import { Menu, X, ChevronDown, LogOut } from 'lucide-react'
 import AuthModal from './AuthModal'
 import LanguageSwitcher from './LanguageSwitcher'
 import ThemeToggle from './ThemeToggle'
+import { MEKTEB_URL } from '@/lib/links'
 
 interface AuthUser { id: number; username: string }
 
@@ -72,7 +73,8 @@ function useDropdown() {
 type T = ReturnType<typeof useTranslations<'nav'>>
 
 const plainLinksLeft = (t: T) => [{ href: '/kuran', label: t('quran') }]
-const plainLinksMid  = (t: T) => [{ href: '/podcasts', label: t('podcast') }, { href: '/mekteb', label: t('mekteb') }]
+// Mekteb is its own site on a Misbah subdomain (src/lib/links.ts)
+const plainLinksMid  = (t: T) => [{ href: '/podcasts', label: t('podcast') }, { href: MEKTEB_URL, label: t('mekteb') }]
 
 // Dropdown groups, shared by the desktop and mobile navigation
 const lecturesItems  = (t: T) => [
@@ -110,7 +112,7 @@ const mobileNav = (t: T): MobileEntry[] => [
   { href: '/kuran', label: t('quran') },
   { label: t('zikrAndDua'), items: zikrItems(t) },
   { href: '/podcasts', label: t('podcast') },
-  { href: '/mekteb',   label: t('mekteb') },
+  { href: MEKTEB_URL,  label: t('mekteb') },
   { label: t('ilahije'), items: ilahijeItems(t) },
   { label: t('community'), items: communityItems(t) },
   { label: t('blog'), items: blogItems(t) },
